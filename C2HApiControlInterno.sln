@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C2HApiControlInterno", "C2HApiControlInterno\C2HApiControlInterno.csproj", "{FDEB764D-F51A-462F-A1A5-62915E749C01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{6925B2AE-013B-4292-B209-82FA251E5A02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA", "DA\DA.csproj", "{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDEB764D-F51A-462F-A1A5-62915E749C01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDEB764D-F51A-462F-A1A5-62915E749C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDEB764D-F51A-462F-A1A5-62915E749C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDEB764D-F51A-462F-A1A5-62915E749C01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6925B2AE-013B-4292-B209-82FA251E5A02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6925B2AE-013B-4292-B209-82FA251E5A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6925B2AE-013B-4292-B209-82FA251E5A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6925B2AE-013B-4292-B209-82FA251E5A02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47D63EAE-C250-4662-B566-4E2EA12253FB}
+	EndGlobalSection
+EndGlobal
