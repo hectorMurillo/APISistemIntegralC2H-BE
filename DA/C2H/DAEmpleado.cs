@@ -165,6 +165,7 @@ namespace DA.C2H
             {
                 var parametros = new ConexionParameters();
                 empleado.FechaRegistro = DateTime.Now;
+                parametros.Add("@pCodigo", ConexionDbType.VarChar, empleado.Codigo);
                 parametros.Add("@pNombre", ConexionDbType.VarChar, empleado.Nombre);
                 parametros.Add("@pApellidoP", ConexionDbType.VarChar, empleado.ApellidoP);
                 parametros.Add("@pApellidoM", ConexionDbType.VarChar, empleado.ApellidoM);
