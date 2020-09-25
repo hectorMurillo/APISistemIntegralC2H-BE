@@ -24,6 +24,12 @@ namespace C2HApiControlInterno.Modules
             Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));            
             Post("/personalCargaDiesel/guardar", _ => PostPersonalCargaDiesel());
             Get("/personalCargaDiesel/{codPersonal}", x => GetPersonalCargaDiesel(x));
+
+
+            Get("/{codEmpleado}", x => ObtenerEmpleado(x));
+
+
+
         }
 
         private object GetPersonalCargaDiesel(dynamic x)
@@ -84,8 +90,15 @@ namespace C2HApiControlInterno.Modules
         private object PostEmpleado()
         {
             Result result = new Result();
-            var empleado = this.Bind<Model.Empleado>();
-            result = _DAempleado.GuardarEmpleado(empleado);
+            try
+            {
+                var empleado = this.Bind<Model.Empleado>();
+                result = _DAempleado.GuardarEmpleado(empleado);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
             return Response.AsJson(result);
         }
 
@@ -131,5 +144,46 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+
+
+
+        // obtener usuario por cod
+        private object ObtenerEmpleado(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                //Si no se ha logeado marcará error aqui
+                int codEmpleado = x.codEmpleado == null ? 0 : x.codEmpleado;
+                var codUsuario = this.BindUsuario().IdUsuario;
+                if (codEmpleado > 0)
+                {
+                    var r = _DAempleado.ObtenerEmpleado(codEmpleado);
+                    //result.Data = r.Data.ElementAtOrDefault(0);
+                    result.Data = r.Data;
+                    result.Message = r.Message;
+                    result.Value = r.Value;
+                }
+                else
+                {
+                    this.GetTodos();
+                    //return 0;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+
+
+
+
+
     }
 }

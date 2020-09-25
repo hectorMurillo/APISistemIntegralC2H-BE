@@ -101,8 +101,10 @@
     <Compile Include="RefreshTokenRepository.cs" />
     <Compile Include="Usuario\MenuModel.cs" />
     <Compile Include="Usuario\MenuPrincipalModel.cs" />
+    <Compile Include="Usuario\ModuloPermisoModel.cs" />
     <Compile Include="Usuario\TipoPermiso.cs" />
     <Compile Include="Usuario\UsuarioModel.cs" />
+    <Compile Include="Usuario\UsuarioPermisoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
