@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Usuario
+namespace Models.Configuracion
 {
-    public class ModuloPermisoModel
+    public class FuncionModel
     {
         public int IdOpcion { get; set; }
         public string Opcion { get; set; }
+        public bool Lectura { get; set; }
+        public bool Escritura { get; set; }
+
     }
 }
