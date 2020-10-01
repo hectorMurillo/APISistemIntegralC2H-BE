@@ -48,8 +48,8 @@ namespace C2HApiControlInterno.Modules
             resultModificado.Data = new List<Model.EstructuraModulo>();
             try
             {
-                var codUsuario = this.BindUsuario().IdUsuario;
-                result = _DAUsuario.ConsultaMenuPermisos(codUsuario);
+                var codUsuario = this.BindUsuario();
+                result = _DAUsuario.ConsultaMenuPermisos(1);
 
                 var estructuraMenu = new List<Model.EstructuraModulo>();
                 var estructuraModulo = new Model.EstructuraModulo();
