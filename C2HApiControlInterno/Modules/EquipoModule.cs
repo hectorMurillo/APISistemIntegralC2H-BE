@@ -14,7 +14,7 @@ namespace C2HApiControlInterno.Modules
         private readonly DA.C2H.DAEquipo _DAEquipo = null;
         public EquipoModule() : base("/equipos")
         {
-            this.RequiresAuthentication();
+          // this.RequiresAuthentication();
 
             _DAEquipo = new DA.C2H.DAEquipo();
             Get("/todos", _ => GetTodos());
@@ -26,11 +26,14 @@ namespace C2HApiControlInterno.Modules
             Get("/marcasCombo", _ => GetTodosMarcasCombo());
             Get("/tipoEquipoCombo", _ => GetTipoEquipoCombo());
             Get("/consumiblesCombo", _ => GetConsumibleCombo());
+            Get("/tiposEquipo/{codTipoEquipo}", x => GetTiposEquipo(x));
             Post("/guardar", _ => PostGuardarEquipo());
             Post("/guardar/marca", _ => PostGuardarMarca());
             Post("/guardar/modelo", _ => PostGuardarModelo());
             Post("guardar/tanque", _ => PostGuardarTanque());
+            Post("guardar/tipoEquipo", _ => PostGuardarTipoEquipo());
         }
+
 
         private object GetConsumibleCombo()
         {
@@ -219,6 +222,44 @@ namespace C2HApiControlInterno.Modules
             }
             catch (Exception ex)
             {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GetTiposEquipo(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                int codTipoEquipo = x.codTipoEquipo == null ? 0 : x.codTipoEquipo;
+
+                var r = _DAEquipo.ConsultaTiposEquipo(codTipoEquipo);
+
+                result.Data = r.Data;
+                result.Message = r.Message;
+                result.Value = r.Value;
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostGuardarTipoEquipo()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var tipoEquipo = this.Bind<Model.TipoEquipoModel>();
+                result = _DAEquipo.GuardarTipoEquipo(tipoEquipo);
+            }
+            catch (Exception ex)
+            {
+
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);

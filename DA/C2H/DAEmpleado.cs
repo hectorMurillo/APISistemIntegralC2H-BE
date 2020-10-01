@@ -192,5 +192,48 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<TipoEmpleado>> ConsultaTiposEmpleado(int codTipoEmpleado)
+        {
+            Result<List<TipoEmpleado>> result = new Result<List<TipoEmpleado>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCatTipoEmpleado", ConexionDbType.Int, codTipoEmpleado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<TipoEmpleado>("ProcCatTipoEmpleadoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarTipoEmpleado(TipoEmpleado tipoEmpleado)
+        {
+            Result result = new Result();
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCatTipoEmpleado", ConexionDbType.Int, tipoEmpleado.Codigo);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, tipoEmpleado.Descripcion);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, tipoEmpleado.Estatus);
+                parametros.Add("@pCodCatTipoEquipo", ConexionDbType.VarChar, tipoEmpleado.CodTipoEquipo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatTipoEmpleadoGuardar", parametros);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
