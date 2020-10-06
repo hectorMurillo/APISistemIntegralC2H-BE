@@ -90,6 +90,7 @@
     <Compile Include="Equipos\ModeloEquipoModel.cs" />
     <Compile Include="Equipos\TanquesCombustibleModel.cs" />
     <Compile Include="Equipos\TipoEquipoCombo.cs" />
+    <Compile Include="Equipos\TipoEquipoModel.cs" />
     <Compile Include="Generales\CodigoPostal.cs" />
     <Compile Include="GlobalesModel.cs" />
     <Compile Include="Materiales\EspecificacionesConcreto.cs" />

@@ -53,7 +53,8 @@ namespace Models
         // modificar la cadena de conexion - fija solo para pruebas
         //public static string ConexionPrincipal => "data source = 172.19.1.22; initial catalog = sid; user id = sa; password = Difarmer01";
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=C2HControlInterno;persist security info=True;user id=sa;password=1234;";
-        public static string ConexionPrincipal => @"data source=sql5052.site4now.net;initial catalog=DB_A55757_c2h;persist security info=True;user id=DB_A55757_c2h_admin;password=hector141093;";
+        //public static string ConexionPrincipal => @"data source=sql5052.site4now.net;initial catalog=DB_A55757_c2h;persist security info=True;user id=DB_A55757_c2h_admin;password=hector141093;";
+        public static string ConexionPrincipal => @"data source=DESKTOP-FDVVO85;initial catalog=DB_A55757_c2h;persist security info=True;user id=sa;password=123;";
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";
 

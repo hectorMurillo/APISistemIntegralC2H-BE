@@ -14,7 +14,7 @@ namespace C2HApiControlInterno.Modules
         private readonly DA.C2H.DAEmpleado _DAempleado = null;
         public EmpleadoModule() : base("/empleados")
         {
-            this.RequiresAuthentication();
+            //this.RequiresAuthentication();
             _DAempleado = new DA.C2H.DAEmpleado();
             Get("/todos", _ => GetTodos());
             Get("/tipos", _ => GetTipos());
@@ -24,6 +24,8 @@ namespace C2HApiControlInterno.Modules
             Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));            
             Post("/personalCargaDiesel/guardar", _ => PostPersonalCargaDiesel());
             Get("/personalCargaDiesel/{codPersonal}", x => GetPersonalCargaDiesel(x));
+            Get("/tiposEmpleado/{codTipoEmpleado}", x => GetTiposEmpleado(x));
+            Post("guardar/tipoEmpleado", _ => PostGuardarTipoEmpleado());
         }
 
         private object GetPersonalCargaDiesel(dynamic x)
@@ -127,6 +129,44 @@ namespace C2HApiControlInterno.Modules
             }
             catch (Exception ex)
             {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GetTiposEmpleado(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                int codTipoEmpleado = x.codTipoEmpleado == null ? 0 : x.codTipoEmpleado;
+
+                var r = _DAempleado.ConsultaTiposEmpleado(codTipoEmpleado);
+
+                result.Data = r.Data;
+                result.Message = r.Message;
+                result.Value = r.Value;
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostGuardarTipoEmpleado()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var tipoEmpleado = this.Bind<Model.TipoEmpleado>();
+                result = _DAempleado.GuardarTipoEmpleado(tipoEmpleado);
+            }
+            catch (Exception ex)
+            {
+
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);

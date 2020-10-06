@@ -11,5 +11,7 @@ namespace Models.Empleados
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
         public bool Estatus { get; set; }
+        public int CodTipoEquipo { get; set; }
+        public string NombreEquipo { get; set; }
     }
 }

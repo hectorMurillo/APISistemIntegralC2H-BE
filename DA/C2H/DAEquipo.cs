@@ -268,5 +268,47 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<Model.TipoEquipoModel>> ConsultaTiposEquipo(int codTipoEquipo)
+        {
+            Result<List<Model.TipoEquipoModel>> result = new Result<List<Model.TipoEquipoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCatTipoEquipo", ConexionDbType.Int, codTipoEquipo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.TipoEquipoModel>("ProcCatTipoEquipoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarTipoEquipo(Model.TipoEquipoModel tipoEquipo)
+        {
+            Result result = new Result();
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodTipoEquipo", ConexionDbType.Int, tipoEquipo.Codigo);
+                parametros.Add("@pNombre", ConexionDbType.VarChar, tipoEquipo.Nombre);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, tipoEquipo.Descripcion);
+                parametros.Add("@pAbreviacion", ConexionDbType.VarChar, tipoEquipo.Abreviacion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatTipoEquipoGuardar", parametros);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
