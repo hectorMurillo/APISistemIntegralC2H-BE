@@ -109,5 +109,46 @@ namespace DA.Authentication
             return r;
         }
 
+
+
+
+
+
+
+
+        public Result Login2(CredencialesModel credenciales)
+        {
+            var parametros = new ConexionParameters();
+            parametros.Add("@pNombreUsuario", ConexionDbType.VarChar, credenciales.Usuario);
+            //parametros.Add("@pCodSubUsuario", ConexionDbType.VarChar, credenciales.IdSubUsuario);
+            parametros.Add("@pPassword", ConexionDbType.VarChar, credenciales.Password);
+            parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+            parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+            var r = _conexion.RecordsetsExecute("ProcIdentificaUsuario", parametros);
+
+            if (r)
+            {
+                var datosUsuario = _conexion.RecordsetsResults<UsuarioModel>()?.FirstOrDefault();
+                var accessToken = Globales.GetJwt(datosUsuario);
+
+
+                var permisosUsuario = _conexion.RecordsetsResults<UsuarioPermiso>();
+
+
+                return new Result(
+                    parametros.Value("@pResultado").ToBoolean(),
+                    parametros.Value("@pMsg").ToString(),
+                    new
+                    {
+                        accessToken = accessToken,
+                        permisos = permisosUsuario
+                    });
+            }
+            return new Result(false, "credenciales invalidas");
+
+
+        }
+
     }
 }

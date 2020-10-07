@@ -77,22 +77,40 @@ namespace C2HApiControlInterno.Modules
             var r = _DAAuthentication.verificaPermisoURL(codUsuario, url);
             return Response.AsJson(r);
         }
+        //private object PostLogin()
+        //{
+        //    var credenciales = this.Bind<CredencialesModel>();
+
+        //    // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
+        //    var r = _DAAuthentication.Login(credenciales);
+
+        //    // insertar el accessToken aqui
+        //    if (r.Value)
+        //    {
+        //        var accessToken = Globales.GetJwt(r.Data);
+
+        //        return Response.AsJson(new Result(r.Value, r.Message, accessToken));
+        //    }
+
+        //    return Response.AsJson(r);
+
+        //}
+
         private object PostLogin()
         {
+
             var credenciales = this.Bind<CredencialesModel>();
 
             // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
-            var r = _DAAuthentication.Login(credenciales);
+            var r = _DAAuthentication.Login2(credenciales);
 
-            // insertar el accessToken aqui
             if (r.Value)
             {
-                var accessToken = Globales.GetJwt(r.Data);
-
-                return Response.AsJson(new Result(r.Value, r.Message, accessToken));
+                return Response.AsJson(new Result(r.Value, r.Message, r.Data));
             }
 
             return Response.AsJson(r);
+
 
         }
 

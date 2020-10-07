@@ -75,6 +75,7 @@
     <Compile Include="Clientes\ClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
+    <Compile Include="Configuracion\FuncionModel.cs" />
     <Compile Include="Empleados\DireccionXEmpleado.cs" />
     <Compile Include="Empleados\DocumentosEmpleado.cs" />
     <Compile Include="Empleados\Empleado.cs" />
@@ -102,8 +103,11 @@
     <Compile Include="RefreshTokenRepository.cs" />
     <Compile Include="Usuario\MenuModel.cs" />
     <Compile Include="Usuario\MenuPrincipalModel.cs" />
+    <Compile Include="Usuario\ModuloPermisoModel.cs" />
     <Compile Include="Usuario\TipoPermiso.cs" />
     <Compile Include="Usuario\UsuarioModel.cs" />
+    <Compile Include="Usuario\UsuarioPermiso.cs" />
+    <Compile Include="Usuario\UsuarioPermisoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
