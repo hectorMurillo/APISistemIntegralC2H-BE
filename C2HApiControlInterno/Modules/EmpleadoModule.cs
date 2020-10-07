@@ -26,6 +26,7 @@ namespace C2HApiControlInterno.Modules
             Get("/personalCargaDiesel/{codPersonal}", x => GetPersonalCargaDiesel(x));
             Get("/tiposEmpleado/{codTipoEmpleado}", x => GetTiposEmpleado(x));
             Post("guardar/tipoEmpleado", _ => PostGuardarTipoEmpleado());
+            //COMENTARIO DE PRUEBA 
         }
 
         private object GetPersonalCargaDiesel(dynamic x)
