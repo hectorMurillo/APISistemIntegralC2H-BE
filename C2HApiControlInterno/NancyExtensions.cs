@@ -14,7 +14,7 @@ namespace C2HApiControlInterno
                 IdUsuario = Convert.ToInt32(nancy.Context.CurrentUser.FindFirstValue("idUsuario")),
                 Usuario = nancy.Context.CurrentUser.FindFirstValue("usuario"),
                 Nombre = nancy.Context.CurrentUser.FindFirstValue("nombre"),
-                IdSubUsuario = Convert.ToInt32(nancy.Context.CurrentUser.FindFirstValue("idSubUsuario"))
+                //IdSubUsuario = Convert.ToInt32(nancy.Context.CurrentUser.FindFirstValue("idSubUsuario"))
             };
 
             return usuario;

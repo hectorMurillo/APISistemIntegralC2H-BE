@@ -58,10 +58,10 @@ namespace Models
 
 
         //BD PRUEBAS
-        //public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
+        public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
 
         //BD LOCAL
-        public static string ConexionPrincipal => @"data source=.;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=123;";
+        //public static string ConexionPrincipal => @"data source=.;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=123;";
 
 
 
