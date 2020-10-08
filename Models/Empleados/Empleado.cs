@@ -9,37 +9,39 @@ namespace Models.Empleados
 {
     public class Empleado
     {
-        CultureInfo ci = new CultureInfo("es-MX");
-        public int Codigo { get; set; }
-        public string Nombre { get; set; }
-        public string ApellidoP { get; set; }
-        public string ApellidoM { get; set; }
-        public string NombreCompleto
+        //CultureInfo ci = new CultureInfo("es-MX");
+        public string apellidoP { get; set; }
+        public string apellidoM { get; set; }
+        public string celular { get; set; }
+        //public int codigoTipo { get; set; }
+        public int codigoTipoEmpleado { get; set; }
+        public string correo { get; set; }
+        public DireccionXEmpleado direccion { get; set; }
+        public bool estatus { get; set; }
+        public string nombre { get; set; }
+        public string nombreCompleto
         {
             get
             {
-                return Nombre + " " + ApellidoP + " " + ApellidoM;
+                return nombre + " " + apellidoP + " " + apellidoM;
             }
             set
             {
 
             }
         }
-        public string RFC { get; set; }
-        public int CodigoTipo { get; set; }
-        public string Tipo { get; set; }
-        public bool Estatus { get; set; }
-        public string Correo { get; set; }
-        public string Telefono { get; set; }
-        public string Celular { get; set; }
-        public DateTime FechaRegistro { get; set; }
-        public string FechaCorta
-        {
-            get
-            {
-                return FechaRegistro.ToString("dd-MMMM-yyyy", ci);
-            }
-        }
-        public DireccionXEmpleado Direccion { get; set; }
+        public string rFC { get; set; }
+        public string telefono { get; set; }
+
+        public int codigo { get; set; }
+        public string tipo { get; set; }
+        public DateTime fechaRegistro { get; set; }
+        //public string fechaCorta
+        //{
+        //    get
+        //    {
+        //        return fechaRegistro.ToString("dd-MMMM-yyyy", ci);
+        //    }
+        //}
     }
 }

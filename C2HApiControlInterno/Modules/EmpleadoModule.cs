@@ -27,6 +27,7 @@ namespace C2HApiControlInterno.Modules
             Get("/tiposEmpleado/{codTipoEmpleado}", x => GetTiposEmpleado(x));
             Post("guardar/tipoEmpleado", _ => PostGuardarTipoEmpleado());
             //COMENTARIO DE PRUEBA 
+            Get("/{codEmpleado}", x => ObtenerEmpleado(x));
         }
 
         private object GetPersonalCargaDiesel(dynamic x)
@@ -168,6 +169,42 @@ namespace C2HApiControlInterno.Modules
             catch (Exception ex)
             {
 
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+
+
+
+
+        // obtener usuario por cod
+        private object ObtenerEmpleado(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                //Si no se ha logeado marcará error aqui
+                int codEmpleado = x.codEmpleado == null ? 0 : x.codEmpleado;
+                var codUsuario = this.BindUsuario().IdUsuario;
+                if (codEmpleado > 0)
+                {
+                    var r = _DAempleado.ObtenerEmpleado(codEmpleado);
+                    //result.Data = r.Data.ElementAtOrDefault(0);
+                    result.Data = r.Data;
+                    result.Message = r.Message;
+                    result.Value = r.Value;
+                }
+                else
+                {
+                    this.GetTodos();
+                    //return 0;
+                }
+
+            }
+            catch (Exception ex)
+            {
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);

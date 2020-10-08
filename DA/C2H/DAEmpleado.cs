@@ -164,23 +164,23 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                empleado.FechaRegistro = DateTime.Now;
-                parametros.Add("@pCodigo", ConexionDbType.VarChar, empleado.Codigo);
-                parametros.Add("@pNombre", ConexionDbType.VarChar, empleado.Nombre);
-                parametros.Add("@pApellidoP", ConexionDbType.VarChar, empleado.ApellidoP);
-                parametros.Add("@pApellidoM", ConexionDbType.VarChar, empleado.ApellidoM);
-                parametros.Add("@pRFC", ConexionDbType.VarChar, empleado.RFC);
-                parametros.Add("@pTipo", ConexionDbType.Int, empleado.CodigoTipo);
-                parametros.Add("@pEstatus", ConexionDbType.Bit, empleado.Estatus);
-                parametros.Add("@pTelefono", ConexionDbType.VarChar, empleado.Telefono);
-                parametros.Add("@pCelular", ConexionDbType.VarChar, empleado.Celular);
-                parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.Correo);
-                parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, empleado.FechaRegistro);
-                parametros.Add("@pCP", ConexionDbType.VarChar, empleado.Direccion.CP);
-                parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.Direccion.CodColonia);
-                parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.Direccion.CodMunicipio);
-                parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.Direccion.CodEstado);
-                parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.Direccion.CalleNumero);
+                empleado.fechaRegistro = DateTime.Now;
+                parametros.Add("@pCodigo", ConexionDbType.VarChar, empleado.codigo);
+                parametros.Add("@pNombre", ConexionDbType.VarChar, empleado.nombre);
+                parametros.Add("@pApellidoP", ConexionDbType.VarChar, empleado.apellidoP);
+                parametros.Add("@pApellidoM", ConexionDbType.VarChar, empleado.apellidoM);
+                parametros.Add("@pRFC", ConexionDbType.VarChar, empleado.rFC);
+                parametros.Add("@pCodTipoEmpleado", ConexionDbType.Int, empleado.codigoTipoEmpleado);
+                parametros.Add("@pEstatus", ConexionDbType.Bit, empleado.estatus);
+                parametros.Add("@pTelefono", ConexionDbType.VarChar, empleado.telefono);
+                parametros.Add("@pCelular", ConexionDbType.VarChar, empleado.celular);
+                parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
+                parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, empleado.fechaRegistro);
+                parametros.Add("@pCP", ConexionDbType.VarChar, empleado.direccion.cP);
+                parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.direccion.codColonia);
+                parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.direccion.codMunicipio);
+                parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.direccion.codEstado);
+                parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.calleNumero);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -235,5 +235,37 @@ namespace DA.C2H
             }
             return result;
         }
+
+
+
+        public Result ObtenerEmpleado(int codEmpleado)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcCatEmpleadoCon", parametros);
+
+                var empleado = _conexion.RecordsetsResults<Empleado>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { empleado }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
     }
 }

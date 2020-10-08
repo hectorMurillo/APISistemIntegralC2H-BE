@@ -8,12 +8,15 @@ namespace Models.Empleados
 {
     public class DireccionXEmpleado
     {
-        public int Codigo { get; set; }
-        public int CodEmpleado { get; set; }
-        public string CP { get; set; }
-        public int CodColonia { get; set; }
-        public int CodMunicipio { get; set; }
-        public int CodEstado { get; set; }
-        public string CalleNumero { get; set; }
+        public string cP { get; set; }
+        public string calleNumero { get; set; }
+        public int codColonia { get; set; }
+        public int codEstado { get; set; }
+        public int codMunicipio { get; set; }
+        //public int codigo { get; set; }
+        //public int codEmpleado { get; set; }
+        public string colonia { get; set; }
+        public string estado { get; set; }
+        public string municipio { get; set; }
     }
 }
