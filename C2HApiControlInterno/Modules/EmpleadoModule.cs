@@ -14,7 +14,7 @@ namespace C2HApiControlInterno.Modules
         private readonly DA.C2H.DAEmpleado _DAempleado = null;
         public EmpleadoModule() : base("/empleados")
         {
-            //this.RequiresAuthentication();
+            this.RequiresAuthentication();
             _DAempleado = new DA.C2H.DAEmpleado();
             Get("/todos", _ => GetTodos());
             Get("/tipos", _ => GetTipos());

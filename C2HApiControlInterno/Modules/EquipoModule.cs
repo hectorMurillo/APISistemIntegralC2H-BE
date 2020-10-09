@@ -14,7 +14,7 @@ namespace C2HApiControlInterno.Modules
         private readonly DA.C2H.DAEquipo _DAEquipo = null;
         public EquipoModule() : base("/equipos")
         {
-          // this.RequiresAuthentication();
+            this.RequiresAuthentication();
 
             _DAEquipo = new DA.C2H.DAEquipo();
             Get("/todos", _ => GetTodos());
