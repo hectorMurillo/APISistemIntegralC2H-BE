@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using Models.Clientes;
+using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
@@ -21,12 +22,28 @@ namespace C2HApiControlInterno.Modules
 
             _DAClientes = new DA.C2H.DAClientes();
             Get("/todos", _ => GetTodos());
+            Get("/clientes-combo", _ => GetClientesCombo());
             Get("/{codCliente}", x => GetCliente(x));
             Get("/sugerenciaUsuario/{codCliente}", x => GetSugerenciaUsuario(x));
             Get("/obtenerUsuarioCliente/{codCliente}", x => GetUsuario(x));
             Post("/guardarUsuarioCliente", _ => postUsuarioCliente());
             Post("/guardar", _ => PostCliente());
             Post("/direcciones/guardar", _ => PostClienteDireccion());
+            Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
+        }
+
+        private object GetClientesCombo()
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                result = _DAClientes.ClientesCombo();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetCliente(dynamic x)
@@ -89,6 +106,21 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object PostGuardarNuevoCliente()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var cliente = this.Bind<Model.ClientesModel>();
+                result = _DAClientes.ClienteGuardarForzar(cliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object GetSugerenciaUsuario(dynamic x)
         {
             Result<List<Model.UsuarioClienteModel>> result = new Result<List<Model.UsuarioClienteModel>>();
@@ -121,7 +153,7 @@ namespace C2HApiControlInterno.Modules
 
         private object PostClienteDireccion()
         {
-            Result result = new Result();
+            Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var direccion = this.Bind<Model.DireccionesXClientesModel>();

@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Clientes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,9 +109,9 @@ namespace DA.C2H
             return result;
         }
 
-        public Result DireccionesGuardar(Model.DireccionesXClientesModel direccion)
+        public Result<List<int>> DireccionesGuardar(Model.DireccionesXClientesModel direccion)
         {
-            Result result = new Result();
+            Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var parametros = new ConexionParameters();
@@ -127,7 +128,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcCatDireccionXClienteGuardar", parametros);
+                result = _conexion.ExecuteWithResults<int>("ProcCatDireccionXClienteGuardar", parametros);
             }
             catch (Exception ex)
             {
@@ -160,6 +161,45 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.Execute("ProcCatClienteGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<int>> ClienteGuardarForzar(Model.ClientesModel Cliente)
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pNombre", ConexionDbType.VarChar, Cliente.Nombre);
+                parametros.Add("@pApellidoP", ConexionDbType.VarChar, Cliente.ApellidoP);
+                parametros.Add("@pApellidoM", ConexionDbType.VarChar, Cliente.ApellidoM);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<int>("ProcCatClientesForzarGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<ClientesModel>> ClientesCombo()
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesComboCon", parametros);
             }
             catch (Exception ex)
             {

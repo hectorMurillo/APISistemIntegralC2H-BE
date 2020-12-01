@@ -141,6 +141,7 @@ namespace DA.Authentication
                     parametros.Value("@pMsg").ToString(),
                     new
                     {
+                        user = datosUsuario,
                         accessToken = accessToken,
                         permisos = permisosUsuario
                     });

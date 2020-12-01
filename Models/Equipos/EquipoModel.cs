@@ -9,6 +9,7 @@ namespace Models.Equipos
     public class EquipoModel
     {
         public int Codigo { get; set; }
+        public int CodTipoEquipo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int CodigoModelo { get; set; }

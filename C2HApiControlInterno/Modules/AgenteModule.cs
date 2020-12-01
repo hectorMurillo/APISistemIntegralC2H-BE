@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using Models.Clientes;
+using Nancy;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,13 @@ namespace C2HApiControlInterno.Modules
         private readonly DA.C2H.DAAgenteVentas _DAAgentesVentas = null;
         public AgenteModule() : base("/agentes")
         {
-            this.RequiresAuthentication();
+            //this.RequiresAuthentication();
 
             _DAAgentesVentas = new DA.C2H.DAAgenteVentas();
             Get("/todosCombo", _ => GetTodos());
 
         }
+
 
         private object GetTodos()
         {
