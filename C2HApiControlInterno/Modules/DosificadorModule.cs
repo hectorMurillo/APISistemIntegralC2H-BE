@@ -18,6 +18,7 @@ namespace C2HApiControlInterno.Modules
         public DosificadorModule() : base("/dosificador")
         {
             Get("/formulas", _ => GetFormulas());
+            Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
             Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
@@ -26,7 +27,20 @@ namespace C2HApiControlInterno.Modules
             Post("formula/guardar", _ => PostGuardarFormulaProducto());
         }
 
-        
+        private object GetUltimoFolioGinco()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                result = _DADosificador.ObtenerUltimoFolioGinco();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
 
         private object PostGuardarFormulaProducto()
         {
