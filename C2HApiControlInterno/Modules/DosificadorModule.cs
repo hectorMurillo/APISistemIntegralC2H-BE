@@ -19,6 +19,7 @@ namespace C2HApiControlInterno.Modules
         {
             Get("/formulas", _ => GetFormulas());
             Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
+            Get("/ultimo-folio-notaRemision/", _ => GetUltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
@@ -41,7 +42,20 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
+        private object GetUltimoFolioNotaRemision()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                result = _DADosificador.ObtenerUltimoFolioNR();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
         private object PostGuardarFormulaProducto()
         {
             Result<List<int>> result = new Result<List<int>>();

@@ -9,6 +9,8 @@ namespace Models.Dosificador
     public class NotaRemisionEncModel
     {
         public int FolioGinco { get; set; }
+
+        public int FolioNotaRemision { get; set; }
         public string HoraSalida { get; set; }
         public int CodCliente { get; set; }
         public int CodObra { get; set; }
