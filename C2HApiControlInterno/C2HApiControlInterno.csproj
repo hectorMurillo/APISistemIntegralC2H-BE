@@ -191,7 +191,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Reportes\rptPrueba.rpt" />
+    <Content Include="Reportes\rptNota.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
