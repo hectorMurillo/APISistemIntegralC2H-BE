@@ -38,6 +38,24 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<int>> ObtenerUltimoFolioNR()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<int>("ProcObtenerFolioNotaRemision", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
         public Result<List<FormulaModel>> ObtenerFormulas()
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
@@ -120,6 +138,7 @@ namespace DA.C2H
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFolioGinco", ConexionDbType.Int, notaRemision.FolioGinco);
+                parametros.Add("@pFolioNotaRemision", ConexionDbType.Int, notaRemision.FolioNotaRemision);
                 parametros.Add("@pHoraSalida", ConexionDbType.VarChar, notaRemision.HoraSalida);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, notaRemision.CodCliente);
                 parametros.Add("@pCodObra", ConexionDbType.Int, notaRemision.CodObra);
