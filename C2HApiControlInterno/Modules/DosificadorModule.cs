@@ -89,7 +89,13 @@ namespace C2HApiControlInterno.Modules
                     if (result.Value)
                     {
                         nota = datos.Data[0];
-                       
+
+                        var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                        if (!Directory.Exists(pathDirectorio))
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(pathDirectorio);
+                        }
+
                         var path = HttpRuntime.AppDomainAppPath;
                         string rutaPdf = "C:\\PRUEBAPRUEBA\\prueba.pdf";
                         string pdfBase64 = "";
