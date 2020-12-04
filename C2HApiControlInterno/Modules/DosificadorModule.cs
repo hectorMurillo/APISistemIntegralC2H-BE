@@ -80,35 +80,43 @@ namespace C2HApiControlInterno.Modules
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var notaRemision = this.Bind<NotaRemisionEncModel>();
-                //result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
-                //if (result.Value)
-                //{
+                result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
+                if (result.Value)
+                {
+                    var nota = new DatosNotaRemision();
+                    var datos = new Result<List<DatosNotaRemision>>();
+                    datos = _DADosificador.ObtenerDatosNota(notaRemision);
+                    if (result.Value)
+                    {
+                        nota = datos.Data[0];
+                       
+                        var path = HttpRuntime.AppDomainAppPath;
+                        string rutaPdf = "C:\\PRUEBAPRUEBA\\prueba.pdf";
+                        string pdfBase64 = "";
+                        Byte[] bytes;
 
+                        ReportDocument reporte = new ReportDocument();
+                        reporte.Load(path + "\\Reportes\\rptNota.rpt");
+                        reporte.SetParameterValue("@Folio", notaRemision.FolioNotaRemision);
+                        reporte.SetParameterValue("@Cliente", nota.Cliente);
+                        reporte.SetParameterValue("@Obra", nota.Obra);
+                        reporte.SetParameterValue("@Producto", nota.Producto);
+                        reporte.SetParameterValue("@Cantidad", notaRemision.Cantidad);
+                        reporte.SetParameterValue("@Operador", nota.Operador);
+                        reporte.SetParameterValue("@Equipo", nota.Equipo);
+                        reporte.SetParameterValue("@Vendedor", nota.Vendedor);
 
-                //}
-                var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\prueba.pdf";
-                string pdfBase64 = "";
-                Byte[] bytes;
+                        //reporte.SetDataSource();
+                        reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 
-                ReportDocument reporte = new ReportDocument();
-                reporte.Load(path + "\\Reportes\\rptNota.rpt");
-                reporte.SetParameterValue("@Folio", 10000);
-                reporte.SetParameterValue("@Cliente", notaRemision.CodCliente);
-                reporte.SetParameterValue("@Obra", notaRemision.CodObra);
-                reporte.SetParameterValue("@Producto", notaRemision.Producto);
-                reporte.SetParameterValue("@Cantidad", notaRemision.Cantidad);
-                reporte.SetParameterValue("@Operador", notaRemision.CodOperador_1);
-                reporte.SetParameterValue("@Equipo", notaRemision.CodEquipo_BB);
-                reporte.SetParameterValue("@Vendedor", notaRemision.codVendedor);
+                        bytes = File.ReadAllBytes(rutaPdf);
+                        pdfBase64 = Convert.ToBase64String(bytes);
+                        //Result.Data = pdfBase64;
+                        //File.Delete(rutaPdf);
+                    }
 
-                //reporte.SetDataSource();
-                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
-
-                bytes = File.ReadAllBytes(rutaPdf);
-                pdfBase64 = Convert.ToBase64String(bytes);
-                //Result.Data = pdfBase64;
-                //File.Delete(rutaPdf);
+                }
+                
             }
             catch (Exception ex)
             {

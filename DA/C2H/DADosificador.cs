@@ -186,5 +186,27 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<DatosNotaRemision>> ObtenerDatosNota(NotaRemisionEncModel notaRemision)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioNota", ConexionDbType.Int, notaRemision.FolioNotaRemision);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotaRemisionDatosCon", parametros);
+                //nota = result.Data;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+           
+            //return result;
+        }
     }
 }
