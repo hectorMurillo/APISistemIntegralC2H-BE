@@ -24,6 +24,7 @@ namespace Models.Clientes
 
         public string RFC { get; set; }
         public int RazonSocial { get; set; }
+        public string NombreComercial { get; set; }
         public string Alias { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
