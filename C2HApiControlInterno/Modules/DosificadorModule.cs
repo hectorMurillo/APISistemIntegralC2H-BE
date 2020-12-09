@@ -117,7 +117,7 @@ namespace C2HApiControlInterno.Modules
 
                         bytes = File.ReadAllBytes(rutaPdf);
                         pdfBase64 = Convert.ToBase64String(bytes);
-                        //Result.Data = pdfBase64;
+                        result.Data = pdfBase64;
                         //File.Delete(rutaPdf);
                     }
 
