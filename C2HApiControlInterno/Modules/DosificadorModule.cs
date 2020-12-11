@@ -75,10 +75,12 @@ namespace C2HApiControlInterno.Modules
         }
         private object PostGuardarNotaRemision()
         {
+
             Result result = new Result();
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Usuario;
                 var notaRemision = this.Bind<NotaRemisionEncModel>();
                 result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
                 if (result.Value)
@@ -104,6 +106,7 @@ namespace C2HApiControlInterno.Modules
                         ReportDocument reporte = new ReportDocument();
                         reporte.Load(path + "\\Reportes\\rptNota.rpt");
                         reporte.SetParameterValue("@Folio", notaRemision.FolioNotaRemision);
+                        reporte.SetParameterValue("@FolioGinco", notaRemision.FolioGinco);
                         reporte.SetParameterValue("@Cliente", nota.Cliente);
                         reporte.SetParameterValue("@Obra", nota.Obra);
                         reporte.SetParameterValue("@Producto", nota.Producto);
@@ -111,6 +114,16 @@ namespace C2HApiControlInterno.Modules
                         reporte.SetParameterValue("@Operador", nota.Operador);
                         reporte.SetParameterValue("@Equipo", nota.Equipo);
                         reporte.SetParameterValue("@Vendedor", nota.Vendedor);
+                        reporte.SetParameterValue("@Usuario", usuario);
+                        reporte.SetParameterValue("@Bombeable", notaRemision.ChKBombeable);
+                        reporte.SetParameterValue("@Imper", notaRemision.ChKImper);
+                        reporte.SetParameterValue("@Fibra", notaRemision.ChKFibra);
+                        reporte.SetParameterValue("@BombaEquipo", nota.BombaEquipo);
+
+
+                        //reporte.SetParameterValue("@Sello", usuario);
+
+
 
                         //reporte.SetDataSource();
                         reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
@@ -118,7 +131,7 @@ namespace C2HApiControlInterno.Modules
                         bytes = File.ReadAllBytes(rutaPdf);
                         pdfBase64 = Convert.ToBase64String(bytes);
                         result.Data = pdfBase64;
-                        //File.Delete(rutaPdf);
+                        File.Delete(rutaPdf);
                     }
 
                 }

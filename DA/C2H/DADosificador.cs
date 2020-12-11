@@ -144,7 +144,7 @@ namespace DA.C2H
                 parametros.Add("@pCodCliente", ConexionDbType.Int, notaRemision.CodCliente);
                 parametros.Add("@pCodObra", ConexionDbType.Int, notaRemision.CodObra);
                 parametros.Add("@pCodVendedor", ConexionDbType.Int, notaRemision.codVendedor);
-                parametros.Add("@pCodFormula", ConexionDbType.Int, notaRemision.CodFormula);
+                parametros.Add("@pCodFormula", ConexionDbType.Int, notaRemision.CodProducto);
                 parametros.Add("@pCodOperador1", ConexionDbType.Int, notaRemision.CodOperador_1);
                 parametros.Add("@pCodOperador2", ConexionDbType.Int, notaRemision.CodOperador_2);
                 parametros.Add("@pCodEquipo_CR", ConexionDbType.Int, notaRemision.CodEquipo_CR);
