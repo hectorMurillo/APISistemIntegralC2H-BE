@@ -14,5 +14,7 @@ namespace Models.Dosificador
         public string Operador { get; set; }
         public string Equipo { get; set; }
         public string Vendedor { get; set; }
+        public string BombaEquipo { get; set; }
+
     }
 }

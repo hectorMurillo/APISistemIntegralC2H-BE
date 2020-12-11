@@ -14,7 +14,9 @@ namespace Models.Dosificador
         public string HoraSalida { get; set; }
         public int CodCliente { get; set; }
         public int CodObra { get; set; }
-        public int CodFormula { get; set; }
+        //public int CodFormula { get; set; }
+        public int CodProducto { get; set; }
+
         public int codVendedor { get; set; }
         public int CodOperador_1 { get; set; }
         public int CodOperador_2 { get; set; }
