@@ -20,7 +20,7 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
-            Get("/formulas", _ => GetFormulas());
+            Get("/formulas/{codigo}", parametros => GetFormulas(parametros));
             Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
             Get("/ultimo-folio-notaRemision/", _ => GetUltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
@@ -130,12 +130,13 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object GetFormulas()
+        private object GetFormulas(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
             {
-                result = _DADosificador.ObtenerFormulas();
+                int codigo = parametros.codigo;
+                result = _DADosificador.ObtenerFormulas(codigo);
             }
             catch (Exception ex)
             {

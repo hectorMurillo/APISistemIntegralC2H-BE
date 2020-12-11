@@ -56,12 +56,13 @@ namespace DA.C2H
             return result;
         }
         
-        public Result<List<FormulaModel>> ObtenerFormulas()
+        public Result<List<FormulaModel>> ObtenerFormulas(int codCliente)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codCliente);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
