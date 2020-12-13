@@ -182,6 +182,7 @@
     <Compile Include="Modules\EquipoModule.cs" />
     <Compile Include="Modules\GeneralModule.cs" />
     <Compile Include="Modules\MaterialModule.cs" />
+    <Compile Include="Modules\PorteroModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
     <Compile Include="NancyExtensions.cs" />
