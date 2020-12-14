@@ -29,12 +29,14 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
+                var codUsuario = this.BindUsuario().IdUsuario;
+
                 int codEquipo = x.codEquipo;
                 int codOperador = x.codOperador;
                 decimal kilometraje = x.kilometraje;
                 decimal horometraje = x.horometraje;
 
-                //result = _DAPortero.GuardarEntradasSalidas(codEquipo, codOperador, kilometraje, horometraje);
+                result = _DAPortero.GuardarEntradasSalidas(codEquipo, codOperador, kilometraje, horometraje, codUsuario);
 
             }
             catch (Exception ex)
@@ -50,13 +52,15 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
+                var codUsuario = this.BindUsuario().IdUsuario;
+
                 int codEquipo = x.codEquipo;
                 int codOperador = x.codOperador;
                 decimal diesel = x.diesel;
                 decimal anticongelante = x.anticongelante;
                 decimal aceite = x.aceite;
 
-                //result = _DAPortero.GuardarSuministros(codEquipo, codOperador, diesel, anticongelante, aceite);
+                result = _DAPortero.GuardarSuministros(codEquipo, codOperador, diesel, anticongelante, aceite, codUsuario);
 
             }
             catch (Exception ex)

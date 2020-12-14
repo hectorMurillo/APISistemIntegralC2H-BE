@@ -18,7 +18,7 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result GuardarEntradasSalidas(int codEquipo, int codOperador, decimal kilometraje, decimal horometraje)
+        public Result GuardarEntradasSalidas(int codEquipo, int codOperador, decimal kilometraje, decimal horometraje, int codUsuario)
         {
             Result result = new Result();
             try
@@ -28,10 +28,11 @@ namespace DA.C2H
                 parametros.Add("@pCodOperador", ConexionDbType.Int, codOperador);
                 parametros.Add("@pKilometraje", ConexionDbType.Decimal, kilometraje);
                 parametros.Add("@pHorometraje", ConexionDbType.Decimal, horometraje);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcPorteroGuardarEntradasSalidas", parametros);
+                result = _conexion.Execute("ProcEquiposEntradasSalidasGuardar", parametros);
             }
             catch (Exception ex)
             {
@@ -41,7 +42,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarSuministros(int codEquipo, int codOperador, decimal diesel, decimal anticongelante, decimal aceite)
+        public Result GuardarSuministros(int codEquipo, int codOperador, decimal diesel, decimal anticongelante, decimal aceite, int codUsuario)
         {
             Result result = new Result();
             try
@@ -52,10 +53,11 @@ namespace DA.C2H
                 parametros.Add("@pDiesel", ConexionDbType.Decimal, diesel);
                 parametros.Add("@pAnticongelante", ConexionDbType.Decimal, anticongelante);
                 parametros.Add("@pAceite", ConexionDbType.Decimal, aceite);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcPorteroGuardarSuministros", parametros);
+                result = _conexion.Execute("ProcEquiposSuministrosGuardar", parametros);
 
             }
             catch (Exception ex)
