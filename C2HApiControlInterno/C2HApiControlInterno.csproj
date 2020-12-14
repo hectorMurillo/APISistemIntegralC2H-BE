@@ -175,6 +175,7 @@
     <Compile Include="Modules\AgenteModule.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
+    <Compile Include="Modules\CobranzaModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
     <Compile Include="Modules\DosificadorModule.cs" />
     <Compile Include="Modules\EmpleadoModule.cs" />

@@ -53,6 +53,7 @@
     <Compile Include="Authentication\DAAuthentication.cs" />
     <Compile Include="C2H\DAAgenteVentas.cs" />
     <Compile Include="C2H\DAClientes.cs" />
+    <Compile Include="C2H\DACobranza.cs" />
     <Compile Include="C2H\DAConfiguracion.cs" />
     <Compile Include="C2H\DADosificador.cs" />
     <Compile Include="C2H\DAEmpleado.cs" />
