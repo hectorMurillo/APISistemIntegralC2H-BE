@@ -175,6 +175,7 @@
     <Compile Include="Modules\AgenteModule.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
+    <Compile Include="Modules\CobranzaModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
     <Compile Include="Modules\DosificadorModule.cs" />
     <Compile Include="Modules\EmpleadoModule.cs" />
@@ -182,6 +183,8 @@
     <Compile Include="Modules\EquipoModule.cs" />
     <Compile Include="Modules\GeneralModule.cs" />
     <Compile Include="Modules\MaterialModule.cs" />
+    <Compile Include="Modules\OperadorModule.cs" />
+    <Compile Include="Modules\PorteroModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
     <Compile Include="NancyExtensions.cs" />

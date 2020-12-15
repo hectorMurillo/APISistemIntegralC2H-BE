@@ -53,6 +53,7 @@
     <Compile Include="Authentication\DAAuthentication.cs" />
     <Compile Include="C2H\DAAgenteVentas.cs" />
     <Compile Include="C2H\DAClientes.cs" />
+    <Compile Include="C2H\DACobranza.cs" />
     <Compile Include="C2H\DAConfiguracion.cs" />
     <Compile Include="C2H\DADosificador.cs" />
     <Compile Include="C2H\DAEmpleado.cs" />
@@ -60,7 +61,9 @@
     <Compile Include="C2H\DAEquipo.cs" />
     <Compile Include="C2H\DAGenerales.cs" />
     <Compile Include="C2H\DAMateriales.cs" />
+    <Compile Include="C2H\DAOperador.cs" />
     <Compile Include="C2H\DAUsuario.cs" />
+    <Compile Include="C2H\DAPortero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
