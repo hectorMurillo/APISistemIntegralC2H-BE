@@ -1,4 +1,5 @@
 ﻿using Models.Clientes;
+using Models.Dosificador;
 using Nancy;
 using Nancy.Security;
 using System;
@@ -18,9 +19,24 @@ namespace C2HApiControlInterno.Modules
 
             _DAAgentesVentas = new DA.C2H.DAAgenteVentas();
             Get("/todosCombo", _ => GetTodos());
+            Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
 
         }
 
+        private object NotasRemisionAgente(dynamic parametros)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                int codAgente = parametros.codAgente;
+                result = _DAAgentesVentas.ObtenerNotasRemisionAgente(codAgente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GetTodos()
         {

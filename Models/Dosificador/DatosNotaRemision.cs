@@ -8,16 +8,20 @@ namespace Models.Dosificador
 {
     public class DatosNotaRemision
     {
+        public int IdNotasRemisionEnc { get; set; }
         public int Folio { get; set; }
         public int FolioGinco { get; set; }
         public string Cliente { get; set; }
+        public string Estatus { get; set; }
         public string Obra { get; set; }
+        public string HoraSalida { get; set; }
         public string Producto { get; set; }
         public string Operador { get; set; }
         public string Equipo { get; set; }
         public string Vendedor { get; set; }
         public string BombaEquipo { get; set; }
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
+        public string FechaConFormato { get; set; }
         public bool Bombeable { get; set; }
         public bool Fibra { get; set; }
         public bool Imper { get; set; }

@@ -20,13 +20,15 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
-            Get("/formulas/{codigo}", parametros => GetFormulas(parametros));
             Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
+            Get("/notasRemision-canceladas/", _ => GetNotasRemisionCanceladas());
+            Get("/formulas/{codigo}", parametros => GetFormulas(parametros));
             Get("/ultimo-folio-notaRemision/", _ => GetUltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
 
+            Post("notaRemision/cancelar", _ => PostCancelarNotaRemision());
             Post("notaRemision/guardar", _ => PostGuardarNotaRemision());
             Post("formula/guardar", _ => PostGuardarFormulaProducto());
         }
@@ -44,6 +46,21 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object GetNotasRemisionCanceladas()
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                result = _DADosificador.ObtenerNotasRemisionCanceladas();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
 
         private object GetUltimoFolioNotaRemision()
         {
@@ -80,7 +97,7 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
-                var usuario = this.BindUsuario().Usuario;
+                var usuario = this.BindUsuario().Nombre;
                 var notaRemision = this.Bind<NotaRemisionEncModel>();
                 result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
                 if (result.Value)
@@ -195,6 +212,21 @@ namespace C2HApiControlInterno.Modules
                 bool bombeable = parametros.esBombeable;
                 int codOperador = parametros.codOperador;
                 result = _DADosificador.ObtenerEquipoOperador(bombeable,codOperador);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostCancelarNotaRemision()
+        {
+            Result result = new Result();
+            try
+            {
+                var notaRemision = this.Bind<DatosNotaRemision>();
+                result = _DADosificador.CancelarNotaRemision(notaRemision.Folio, notaRemision.FolioGinco);
             }
             catch (Exception ex)
             {
