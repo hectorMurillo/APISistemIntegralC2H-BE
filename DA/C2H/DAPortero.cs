@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Porteros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result GuardarEntradasSalidas(int codEquipo, int codOperador, decimal kilometraje, decimal horometraje, int codUsuario)
+        public Result GuardarEntradasSalidas(int codEquipo, int codOperador, decimal kilometraje, decimal horometraje, int codUsuario, bool entrada, int notaRemision, string observacion)
         {
             Result result = new Result();
             try
@@ -29,6 +30,9 @@ namespace DA.C2H
                 parametros.Add("@pKilometraje", ConexionDbType.Decimal, kilometraje);
                 parametros.Add("@pHorometraje", ConexionDbType.Decimal, horometraje);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pEntrada", ConexionDbType.Bit, entrada);
+                parametros.Add("@pNotaRemision", ConexionDbType.Int, notaRemision);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, observacion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -64,6 +68,26 @@ namespace DA.C2H
             {
                 result.Message = ex.Message;
                 result.Value = false;
+            }
+            return result;
+        }
+
+        public Result<List<EntradaSalida>> ObtenerEntradasSalidas(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<EntradaSalida>> result = new Result<List<EntradaSalida>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<EntradaSalida>("ProcEquiposEntradasSalidasCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
             }
             return result;
         }

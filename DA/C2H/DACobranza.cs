@@ -59,5 +59,29 @@ namespace DA.C2H
 
         }
 
+
+
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionSurtiendo()
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCobranzaNotasRemisionSurtiendoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+
+
+        
     }
 }

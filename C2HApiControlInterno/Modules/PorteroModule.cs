@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DA.C2H;
+using Models.Porteros;
 //using Models.Operador;
 using Nancy;
 using Nancy.ModelBinding;
@@ -20,8 +21,10 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAPortero = new DAPortero();
-            Get("/guardar-entradas-salidas/{codEquipo}/{codOperador}/{kilometraje}/{horometraje}", x => GuardarEntradasSalidas(x));
+            Get("/guardar-entradas-salidas/{codEquipo}/{codOperador}/{kilometraje}/{horometraje}/{entrada}/{notaRemision}/{observacion}", x => GuardarEntradasSalidas(x));
             Get("/guardar-suministros/{codEquipo}/{codOperador}/{diesel}/{anticongelante}/{aceite}", x => GuardarSuministros(x));
+            Get("/obtener-entradas-salidas/{fechaDesde}/{fechaHasta}", x => ObtenerEntradasSalidas(x));
+
         }
 
         private object GuardarEntradasSalidas(dynamic x)
@@ -35,8 +38,12 @@ namespace C2HApiControlInterno.Modules
                 int codOperador = x.codOperador;
                 decimal kilometraje = x.kilometraje;
                 decimal horometraje = x.horometraje;
+                bool entrada = x.entrada;
+                int notaRemision = x.notaRemision;
+                string observacion = x.observacion;
 
-                result = _DAPortero.GuardarEntradasSalidas(codEquipo, codOperador, kilometraje, horometraje, codUsuario);
+
+                result = _DAPortero.GuardarEntradasSalidas(codEquipo, codOperador, kilometraje, horometraje, codUsuario, entrada, notaRemision, observacion);
 
             }
             catch (Exception ex)
@@ -67,6 +74,23 @@ namespace C2HApiControlInterno.Modules
             {
                 result.Message = ex.Message;
                 result.Value = false;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerEntradasSalidas(dynamic x)
+        {
+            Result<List<EntradaSalida>> result = new Result<List<EntradaSalida>>();
+            try
+            {
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
+
+                result = _DAPortero.ObtenerEntradasSalidas(fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
             }
             return Response.AsJson(result);
         }

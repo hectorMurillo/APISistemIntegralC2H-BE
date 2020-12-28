@@ -24,8 +24,8 @@ namespace C2HApiControlInterno.Modules
 
             _DACobranza = new DACobranza();
             Get("/obtenerNotasRemision", _ => ObtenerNotasRemision());
-            Get("/obtenerNotasRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
-
+            Get("/obtenerNota sRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
+            Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
         }
 
         private object ObtenerNotasRemision()
@@ -98,6 +98,20 @@ namespace C2HApiControlInterno.Modules
             return result;
         }
 
+        private object ObtenerNotasRemisionSurtiendo()
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                //var codCliente = this.BindUsuario().IdUsuario;
+                result = _DACobranza.ObtenerNotasRemisionSurtiendo();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
 
 
