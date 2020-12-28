@@ -24,6 +24,8 @@ namespace C2HApiControlInterno.Modules
             Get("/guardar-entradas-salidas/{codEquipo}/{codOperador}/{kilometraje}/{horometraje}/{entrada}/{notaRemision}/{observacion}", x => GuardarEntradasSalidas(x));
             Get("/guardar-suministros/{codEquipo}/{codOperador}/{diesel}/{anticongelante}/{aceite}", x => GuardarSuministros(x));
             Get("/obtener-entradas-salidas/{fechaDesde}/{fechaHasta}", x => ObtenerEntradasSalidas(x));
+            Get("/obtener-suministros/{fechaDesde}/{fechaHasta}", x => ObtenerSuministros(x));
+
 
         }
 
@@ -87,6 +89,24 @@ namespace C2HApiControlInterno.Modules
                 DateTime fechaHasta = x.fechaHasta;
 
                 result = _DAPortero.ObtenerEntradasSalidas(fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+        private object ObtenerSuministros(dynamic x)
+        {
+            Result<List<Suministro>> result = new Result<List<Suministro>>();
+            try
+            {
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
+
+                result = _DAPortero.ObtenerSuministros(fechaDesde, fechaHasta);
             }
             catch (Exception ex)
             {
