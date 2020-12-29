@@ -31,5 +31,7 @@ namespace Models.Dosificador
         public bool Fibra { get; set; }
         public bool Imper { get; set; }
         public double Cantidad { get; set; }
+
+        public List<OperadorModel> Operadores { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace C2HApiControlInterno.Modules
             _DAAgentesVentas = new DA.C2H.DAAgenteVentas();
             Get("/todosCombo", _ => GetTodos());
             Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
+            Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
         }
 
@@ -37,6 +38,22 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object DetalleNotasRemisionAgente(dynamic parametros)
+        {
+            Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
+            try
+            {
+                int idNotaRemision = parametros.idNotaRemision;
+                result = _DAAgentesVentas.ObtenerDetalleClientesPorAgente(idNotaRemision);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
 
         private object GetTodos()
         {
