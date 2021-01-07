@@ -27,6 +27,7 @@ namespace C2HApiControlInterno.Modules
             Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
+            Get("/folio-pedido/{folioPedido}", parametros => GetFolioPedido(parametros));
 
             Post("notaRemision/cancelar", _ => PostCancelarNotaRemision());
             Post("notaRemision/guardar", _ => PostGuardarNotaRemision());
@@ -39,6 +40,20 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DADosificador.ObtenerUltimoFolioGinco();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        private object GetFolioPedido(dynamic parametros)
+        {
+            Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
+            try
+            {
+                int folioPedido = parametros.folioPedido;
+                result = _DADosificador.ObtenerPedido(folioPedido);
             }
             catch (Exception ex)
             {
