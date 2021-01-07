@@ -62,6 +62,7 @@
     <Compile Include="C2H\DAGenerales.cs" />
     <Compile Include="C2H\DAMateriales.cs" />
     <Compile Include="C2H\DAOperador.cs" />
+    <Compile Include="C2H\DAPedidos.cs" />
     <Compile Include="C2H\DAUsuario.cs" />
     <Compile Include="C2H\DAPortero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
