@@ -170,6 +170,25 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<PedidoModel>> ObtenerPedido(int folioPedido)
+        {
+            Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<PedidoModel>("ProcCatPedidoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result GuardarNotaRemision(NotaRemisionEncModel notaRemision, int codUsuario)
         {
             Result result = new Result();
