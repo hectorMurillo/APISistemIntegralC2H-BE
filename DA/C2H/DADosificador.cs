@@ -267,5 +267,31 @@ namespace DA.C2H
            
             //return result;
         }
+
+        public Result<int> VerificarNotaRemisionPedido(int folioPedido)
+        {
+            Result<int> result = new Result<int>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.ExecuteWithResults("ProcNotaRemisionVerificaPedidoCon", parametros, row =>
+                {
+                    result.Data = row["CantidadNotas"].ToInt32();
+
+                });
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

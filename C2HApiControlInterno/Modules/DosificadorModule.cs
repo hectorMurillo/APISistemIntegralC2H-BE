@@ -28,10 +28,28 @@ namespace C2HApiControlInterno.Modules
             Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
             Get("/folio-pedido/{folioPedido}", parametros => GetFolioPedido(parametros));
-
+            Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => GetVerificarNotasRemisionPedido(parametros));
             Post("notaRemision/cancelar", _ => PostCancelarNotaRemision());
             Post("notaRemision/guardar", _ => PostGuardarNotaRemision());
             Post("formula/guardar", _ => PostGuardarFormulaProducto());
+        }
+
+
+        
+
+        private object GetVerificarNotasRemisionPedido(dynamic parametros)
+        {
+            Result<int> result = new Result<int>();
+            try
+            {
+                int folioPedido = parametros.folioPedido;
+                result = _DADosificador.VerificarNotaRemisionPedido(folioPedido);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetUltimoFolioGinco()
