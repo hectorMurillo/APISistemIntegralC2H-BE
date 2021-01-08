@@ -195,24 +195,25 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pFolio", ConexionDbType.Int, notaRemision.Folio);
                 parametros.Add("@pFolioGinco", ConexionDbType.Int, notaRemision.FolioGinco);
-                parametros.Add("@pFolioNotaRemision", ConexionDbType.Int, notaRemision.FolioNotaRemision);
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, notaRemision.FolioPedido);
                 parametros.Add("@pHoraSalida", ConexionDbType.VarChar, notaRemision.HoraSalida);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, notaRemision.CodCliente);
                 parametros.Add("@pCodObra", ConexionDbType.Int, notaRemision.CodObra);
-                parametros.Add("@pCodVendedor", ConexionDbType.Int, notaRemision.codVendedor);
                 parametros.Add("@pCodFormula", ConexionDbType.Int, notaRemision.CodProducto);
+                parametros.Add("@pProducto", ConexionDbType.VarChar, notaRemision.Producto);
+                parametros.Add("@pCantidad", ConexionDbType.Decimal, notaRemision.Cantidad);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, notaRemision.CodVendedor);
                 parametros.Add("@pCodOperador1", ConexionDbType.Int, notaRemision.CodOperador_1);
                 parametros.Add("@pCodOperador2", ConexionDbType.Int, notaRemision.CodOperador_2);
                 parametros.Add("@pCodEquipo_CR", ConexionDbType.Int, notaRemision.CodEquipo_CR);
                 parametros.Add("@pCodEquipo_BB", ConexionDbType.Int, notaRemision.CodEquipo_BB);
-                parametros.Add("@pCantidad", ConexionDbType.Decimal, notaRemision.Cantidad);
                 parametros.Add("@pEsBombeable", ConexionDbType.Bit, notaRemision.ChKBombeable);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
-                parametros.Add("@pProducto", ConexionDbType.VarChar, notaRemision.Producto);
-
+                parametros.Add("@pCantidadNotas", ConexionDbType.Int, notaRemision.CantidadNotas);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -251,7 +252,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pFolioNota", ConexionDbType.Int, notaRemision.FolioNotaRemision);
+                //parametros.Add("@pFolioNota", ConexionDbType.Int, notaRemision.FolioNotaRemision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
