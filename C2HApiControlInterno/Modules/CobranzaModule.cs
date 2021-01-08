@@ -24,7 +24,7 @@ namespace C2HApiControlInterno.Modules
 
             _DACobranza = new DACobranza();
             Get("/obtenerNotasRemision", _ => ObtenerNotasRemision());
-            Get("/obtenerNota sRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
+            Get("/obtenerNotasRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
             Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
         }
 
