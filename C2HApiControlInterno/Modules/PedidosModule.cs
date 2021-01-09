@@ -1,6 +1,7 @@
 ﻿using DA.C2H;
 using Models.Pedidos;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace C2HApiControlInterno.Modules
 
             _DAPedidos = new DAPedidos();
             Get("/obtener-pedidos/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
+            Post("guardar", _ => GuardarPedido());
+
         }
 
 
@@ -39,5 +42,24 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+
+        private object GuardarPedido()
+        {
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var pedido = this.Bind<PedidoModel>();
+                result = _DAPedidos.GuardarPedido(pedido, codUsuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
     }
 }

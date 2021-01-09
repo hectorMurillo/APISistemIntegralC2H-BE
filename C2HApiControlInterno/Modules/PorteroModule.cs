@@ -21,31 +21,20 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAPortero = new DAPortero();
-            Get("/guardar-entradas-salidas/{codEquipo}/{codOperador}/{kilometraje}/{horometraje}/{entrada}/{notaRemision}/{observacion}", x => GuardarEntradasSalidas(x));
-            Get("/guardar-suministros/{codEquipo}/{codOperador}/{diesel}/{anticongelante}/{aceite}", x => GuardarSuministros(x));
+            Post("/guardar-entradas-salidas", _ => GuardarEntradasSalidas());
+            Post("/guardar-suministros", _ => GuardarSuministros());
             Get("/obtener-entradas-salidas/{fechaDesde}/{fechaHasta}", x => ObtenerEntradasSalidas(x));
             Get("/obtener-suministros/{fechaDesde}/{fechaHasta}", x => ObtenerSuministros(x));
-
-
         }
 
-        private object GuardarEntradasSalidas(dynamic x)
+        private object GuardarEntradasSalidas()
         {
             Result result = new Result();
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
-
-                int codEquipo = x.codEquipo;
-                int codOperador = x.codOperador;
-                decimal kilometraje = x.kilometraje;
-                decimal horometraje = x.horometraje;
-                bool entrada = x.entrada;
-                int notaRemision = x.notaRemision;
-                string observacion = x.observacion;
-
-
-                result = _DAPortero.GuardarEntradasSalidas(codEquipo, codOperador, kilometraje, horometraje, codUsuario, entrada, notaRemision, observacion);
+                var entradaSalida = this.Bind<EntradaSalidaModel>();
+                result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
 
             }
             catch (Exception ex)
@@ -56,20 +45,14 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GuardarSuministros(dynamic x)
+        private object GuardarSuministros()
         {
             Result result = new Result();
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
-
-                int codEquipo = x.codEquipo;
-                int codOperador = x.codOperador;
-                decimal diesel = x.diesel;
-                decimal anticongelante = x.anticongelante;
-                decimal aceite = x.aceite;
-
-                result = _DAPortero.GuardarSuministros(codEquipo, codOperador, diesel, anticongelante, aceite, codUsuario);
+                var suministros = this.Bind<SuministroModel>();
+                result = _DAPortero.GuardarSuministros(suministros, codUsuario);
 
             }
             catch (Exception ex)

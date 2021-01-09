@@ -19,20 +19,20 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result GuardarEntradasSalidas(int codEquipo, int codOperador, decimal kilometraje, decimal horometraje, int codUsuario, bool entrada, int notaRemision, string observacion)
+        public Result GuardarEntradasSalidas(EntradaSalidaModel entradaSalida , int codUsuario)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
-                parametros.Add("@pCodOperador", ConexionDbType.Int, codOperador);
-                parametros.Add("@pKilometraje", ConexionDbType.Decimal, kilometraje);
-                parametros.Add("@pHorometraje", ConexionDbType.Decimal, horometraje);
+                parametros.Add("@pCodEquipo", ConexionDbType.Int, entradaSalida.codEquipo);
+                parametros.Add("@pCodOperador", ConexionDbType.Int, entradaSalida.codOperador);
+                parametros.Add("@pKilometraje", ConexionDbType.Decimal, entradaSalida.kilometraje);
+                parametros.Add("@pHorometraje", ConexionDbType.Decimal, entradaSalida.horometraje);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pEntrada", ConexionDbType.Bit, entrada);
-                parametros.Add("@pNotaRemision", ConexionDbType.Int, notaRemision);
-                parametros.Add("@pObservacion", ConexionDbType.VarChar, observacion);
+                parametros.Add("@pEntrada", ConexionDbType.Bit, entradaSalida.entrada);
+                parametros.Add("@pNotaRemision", ConexionDbType.Int, entradaSalida.notaRemision);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, entradaSalida.observacion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -46,17 +46,17 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarSuministros(int codEquipo, int codOperador, decimal diesel, decimal anticongelante, decimal aceite, int codUsuario)
+        public Result GuardarSuministros(SuministroModel suministros, int codUsuario)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
-                parametros.Add("@pCodOperador", ConexionDbType.Int, codOperador);
-                parametros.Add("@pDiesel", ConexionDbType.Decimal, diesel);
-                parametros.Add("@pAnticongelante", ConexionDbType.Decimal, anticongelante);
-                parametros.Add("@pAceite", ConexionDbType.Decimal, aceite);
+                parametros.Add("@pCodEquipo", ConexionDbType.Int, suministros.codEquipo);
+                parametros.Add("@pCodOperador", ConexionDbType.Int, suministros.codOperador);
+                parametros.Add("@pDiesel", ConexionDbType.Decimal, suministros.diesel);
+                parametros.Add("@pAnticongelante", ConexionDbType.Decimal, suministros.anticongelante);
+                parametros.Add("@pAceite", ConexionDbType.Decimal, suministros.aceite);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
