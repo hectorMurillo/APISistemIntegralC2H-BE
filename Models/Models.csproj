@@ -107,8 +107,11 @@
     <Compile Include="Materiales\TMA.cs" />
     <Compile Include="Operadores\Operador.cs" />
     <Compile Include="Pedidos\Pedido.cs" />
+    <Compile Include="Pedidos\PedidoModel.cs" />
     <Compile Include="Porteros\EntradaSalida.cs" />
+    <Compile Include="Porteros\EntradaSalidaModel.cs" />
     <Compile Include="Porteros\Suministro.cs" />
+    <Compile Include="Porteros\SuministroModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefreshTokenRepository.cs" />
     <Compile Include="Usuario\MenuModel.cs" />

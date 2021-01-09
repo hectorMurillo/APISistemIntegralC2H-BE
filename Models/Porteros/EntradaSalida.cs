@@ -16,5 +16,6 @@ namespace Models.Porteros
         public string Usuario { get; set; }
         public bool Entrada { get; set; }
         public int NotaRemision { get; set; }
+        public string Observacion { get; set; }
     }
 }

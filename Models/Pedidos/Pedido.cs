@@ -8,13 +8,13 @@ namespace Models.Pedidos
 {
     public class Pedido
     {
-        public string Equipo { get; set; }
-        public string Operador { get; set; }
-        public decimal Kilometraje { get; set; }
-        public decimal Horometraje { get; set; }
-        public string Fecha { get; set; }
+        public int FolioPedido { get; set; }
+        public string Cliente { get; set; }
+        public string Vendedor { get; set; }
+        public string Obra { get; set; }
         public string Usuario { get; set; }
-        public bool Entrada { get; set; }
-        public int NotaRemision { get; set; }
+        public string FechaSalida { get; set; }
+        public string HoraSalida { get; set; }
+        public decimal Cantidad { get; set; }
     }
 }
