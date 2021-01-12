@@ -268,11 +268,12 @@ namespace DA.C2H
             //return result;
         }
 
-        public Result<int> VerificarNotaRemisionPedido(int folioPedido)
+        public Result<DatoModel> VerificarNotaRemisionPedido(int folioPedido)
         {
-            Result<int> result = new Result<int>();
+            Result<DatoModel> result = new Result<DatoModel>();
             try
             {
+                DatoModel dato = new DatoModel();
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
@@ -280,9 +281,13 @@ namespace DA.C2H
 
                 _conexion.ExecuteWithResults("ProcNotaRemisionVerificaPedidoCon", parametros, row =>
                 {
-                    result.Data = row["CantidadNotas"].ToInt32();
+
+                    dato.CantidadNotasRemision= row["CantidadNotas"].ToInt32();
+                    dato.SumaCantidadesNotaRemision = row["SumaCantidad"].ToInt32();
+
 
                 });
+                result.Data = dato;
                 result.Value = parametros.Value("@pResultado").ToBoolean();
                 result.Message = parametros.Value("@pMsg").ToString();
 

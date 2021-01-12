@@ -39,7 +39,7 @@ namespace C2HApiControlInterno.Modules
 
         private object GetVerificarNotasRemisionPedido(dynamic parametros)
         {
-            Result<int> result = new Result<int>();
+            Result<DatoModel> result = new Result<DatoModel>();
             try
             {
                 int folioPedido = parametros.folioPedido;
