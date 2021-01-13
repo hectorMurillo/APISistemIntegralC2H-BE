@@ -283,7 +283,7 @@ namespace DA.C2H
                 {
 
                     dato.CantidadNotasRemision= row["CantidadNotas"].ToInt32();
-                    dato.SumaCantidadesNotaRemision = row["SumaCantidad"].ToInt32();
+                    dato.SumaCantidadesNotaRemision = row["SumaCantidad"].ToDecimal();
 
 
                 });
