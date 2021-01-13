@@ -30,7 +30,7 @@ namespace Models.Dosificador
         public bool Bombeable { get; set; }
         public bool Fibra { get; set; }
         public bool Imper { get; set; }
-        public double Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
 
         public string FechaFormato { get; set; }
 
