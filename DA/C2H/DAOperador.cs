@@ -17,6 +17,7 @@ namespace DA.C2H
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
+
         public Result<List<Operador>> ObtenerOperadores()
         {
             Result<List<Operador>> result = new Result<List<Operador>>();
@@ -28,6 +29,25 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<Operador>("ProcCatOperadoresCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<Operador>> ObtenerOperadoresEntradasSalidas(bool entrada)
+        {
+            Result<List<Operador>> result = new Result<List<Operador>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pEntrada", ConexionDbType.Bit, entrada);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Operador>("ProcCatOperadoresEntradasSalidasCon", parametros);
             }
             catch (Exception ex)
             {

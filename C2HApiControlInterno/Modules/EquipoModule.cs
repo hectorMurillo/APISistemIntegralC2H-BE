@@ -32,6 +32,9 @@ namespace C2HApiControlInterno.Modules
             Post("/guardar/modelo", _ => PostGuardarModelo());
             Post("guardar/tanque", _ => PostGuardarTanque());
             Post("guardar/tipoEquipo", _ => PostGuardarTipoEquipo());
+
+            Get("/entradasSalidas/{entrada}", x => ObtenerEquiposEntradasSalidas(x));
+
         }
 
 
@@ -260,6 +263,22 @@ namespace C2HApiControlInterno.Modules
             catch (Exception ex)
             {
 
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerEquiposEntradasSalidas(dynamic x)
+        {
+            Result<List<Model.EquipoModel>> result = new Result<List<Model.EquipoModel>>();
+            try
+            {
+                bool entrada = x.entrada == null ? 0 : x.entrada;
+
+                result = _DAEquipo.ObtenerEquiposEntradasSalidas(entrada);
+            }
+            catch (Exception ex)
+            {
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);

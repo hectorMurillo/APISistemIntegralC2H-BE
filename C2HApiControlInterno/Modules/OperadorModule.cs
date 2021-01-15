@@ -21,6 +21,7 @@ namespace C2HApiControlInterno.Modules
 
             _DAOperador = new DAOperador();
             Get("/todos", _ => ObtenerOperadores());
+            Get("/entradasSalidas/{entrada}", x => ObtenerOperadoresEntradasSalidas(x));
         }
 
         private object ObtenerOperadores()
@@ -30,6 +31,21 @@ namespace C2HApiControlInterno.Modules
             {
                 //var codCliente = this.BindUsuario().IdUsuario;
                 result = _DAOperador.ObtenerOperadores();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerOperadoresEntradasSalidas(dynamic x)
+        {
+            Result<List<Operador>> result = new Result<List<Operador>>();
+            try
+            {
+                bool entrada = x.entrada == null ? 0 : x.entrada;
+                result = _DAOperador.ObtenerOperadoresEntradasSalidas(entrada);
             }
             catch (Exception ex)
             {
