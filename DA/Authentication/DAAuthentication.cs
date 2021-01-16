@@ -110,12 +110,6 @@ namespace DA.Authentication
         }
 
 
-
-
-
-
-
-
         public Result Login2(CredencialesModel credenciales)
         {
             var parametros = new ConexionParameters();
@@ -130,26 +124,29 @@ namespace DA.Authentication
             if (r)
             {
                 var datosUsuario = _conexion.RecordsetsResults<UsuarioModel>()?.FirstOrDefault();
-                var accessToken = Globales.GetJwt(datosUsuario);
+                   
+                if(datosUsuario!= null)
+                {
+                    var accessToken = Globales.GetJwt(datosUsuario);
 
 
-                var permisosUsuario = _conexion.RecordsetsResults<UsuarioPermiso>();
+                    var permisosUsuario = _conexion.RecordsetsResults<UsuarioPermiso>();
 
 
-                return new Result(
-                    parametros.Value("@pResultado").ToBoolean(),
-                    parametros.Value("@pMsg").ToString(),
-                    new
-                    {
-                        user = datosUsuario,
-                        accessToken = accessToken,
-                        permisos = permisosUsuario
-                    });
+                    return new Result(
+                        parametros.Value("@pResultado").ToBoolean(),
+                        parametros.Value("@pMsg").ToString(),
+                        new
+                        {
+                            user = datosUsuario,
+                            accessToken = accessToken,
+                            permisos = permisosUsuario
+                        });
+                }
+
+              
             }
             return new Result(false, "credenciales invalidas");
-
-
         }
-
     }
 }
