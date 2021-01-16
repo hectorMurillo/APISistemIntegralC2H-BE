@@ -156,7 +156,7 @@ namespace C2HApiControlInterno.Modules
 
                         ReportDocument reporte = new ReportDocument();
                         reporte.Load(path + "\\reportes\\rptnota.rpt");
-                        //reporte.setparametervalue("@folio", notaremision.folionotaremision);
+                        reporte.SetParameterValue("@folio", notaRemision.Folio);
                         reporte.SetParameterValue("@folioginco", notaRemision.FolioGinco);
                         reporte.SetParameterValue("@cliente", nota.Cliente);
                         reporte.SetParameterValue("@obra", nota.Obra);
@@ -166,7 +166,7 @@ namespace C2HApiControlInterno.Modules
                         reporte.SetParameterValue("@equipo", nota.Equipo);
                         reporte.SetParameterValue("@vendedor", nota.Vendedor);
                         reporte.SetParameterValue("@usuario", usuario);
-                        //reporte.setparametervalue("@bombeable", notaremision.chkbombeable);
+                        reporte.SetParameterValue("@bombeable", notaRemision.ChKBombeable);
                         reporte.SetParameterValue("@imper", notaRemision.ChKImper);
                         reporte.SetParameterValue("@fibra", notaRemision.ChKFibra);
                         reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);

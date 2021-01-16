@@ -90,38 +90,6 @@ namespace DA.C2H
 
                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotasRemisionAgente", parametros);
 
-                //foreach (DataRow row in table.Tables[0].Rows)
-                //{
-                //    notaRemision.IdNotasRemisionEnc = Convert.ToInt32(row["IdNotasRemisionEnc"]);
-                //    notaRemision.Folio = Convert.ToInt32(row["Folio"]);
-                //    notaRemision.FolioGinco = Convert.ToInt32(row["FolioGinco"]);
-                //    notaRemision.Cliente = Convert.ToString(row["Cliente"]);
-                //    notaRemision.Obra = Convert.ToString(row["Obra"]);
-                //    notaRemision.Formula = Convert.ToString(row["Formula"]);
-                //    notaRemision.Producto = Convert.ToString(row["Producto"]);
-                //    notaRemision.Cantidad = Convert.ToInt32(row["Cantidad"]);
-                //    notaRemision.Bombeable = Convert.ToBoolean(row["Bombeable"]);
-                //    notaRemision.Fibra = Convert.ToBoolean(row["Fibra"]);
-                //    notaRemision.Imper = Convert.ToBoolean(row["Imper"]);
-                //    notaRemision.Vendedor = Convert.ToString(row["Vendedor"]);
-                //    notaRemision.Estatus = Convert.ToString(row["Estatus"]);
-                //    notaRemision.HoraSalida = Convert.ToString(row["HoraSalida"]);
-                //    notaRemision.FechaConFormato = Convert.ToString(row["FechaConFormato"]);
-                //}
-
-                //List<OperadorModel> operadores = new List<OperadorModel>();
-                //foreach (DataRow row in table.Tables[1].Rows)
-                //{
-                //    OperadorModel operador = new OperadorModel();
-                //    operador.NombreCompleto = Convert.ToString(row["Operador"]);
-                //    operador.Equipo = Convert.ToString(row["Equipo"]);
-
-                //    operadores.Add(operador);
-                //}
-
-                //notaRemision.Operadores = operadores;
-                //result.Data = notaRemision;
-                //result.Value = true;
             }
             catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace C2HApiControlInterno.Modules
 
             _DA = new DA.C2H.DAGenerales();
             Get("/codigoPostal/{codigoPostal}", parametros => GetDatosCP(parametros));
-
+            Get("/parametro/{nombre}", parametros => GetParametro(parametros));
         }
 
         private object GetDatosCP(dynamic p)
@@ -24,6 +24,15 @@ namespace C2HApiControlInterno.Modules
             string codigoPostal = p.codigoPostal;
 
             var r = _DA.DetallesCodigoPostal(codigoPostal);
+
+            return Response.AsJson(r);
+        }
+
+        private object GetParametro(dynamic p)
+        {
+            string nombre = p.nombre;
+
+            var r = _DA.ObtenerParametro(nombre);
 
             return Response.AsJson(r);
         }

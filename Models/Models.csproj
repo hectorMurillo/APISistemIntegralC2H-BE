@@ -100,6 +100,7 @@
     <Compile Include="Equipos\TipoEquipoCombo.cs" />
     <Compile Include="Equipos\TipoEquipoModel.cs" />
     <Compile Include="Generales\CodigoPostal.cs" />
+    <Compile Include="Generales\ParametrosModel.cs" />
     <Compile Include="GlobalesModel.cs" />
     <Compile Include="Materiales\EspecificacionesConcreto.cs" />
     <Compile Include="Materiales\TipoConcreto.cs" />
