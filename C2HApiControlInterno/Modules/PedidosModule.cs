@@ -20,9 +20,8 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAPedidos = new DAPedidos();
-            Get("/obtener-pedidos/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
+            Get("/obtener-pedidos/{pedido}/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
             Post("guardar", _ => GuardarPedido());
-
         }
 
 
@@ -33,8 +32,9 @@ namespace C2HApiControlInterno.Modules
             {
                 DateTime fechaDesde = x.fechaDesde;
                 DateTime fechaHasta = x.fechaHasta;
+                int pedido = x.pedido;
 
-                result = _DAPedidos.ObtenerPedidos(fechaDesde, fechaHasta);
+                result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta);
             }
             catch (Exception ex)
             {

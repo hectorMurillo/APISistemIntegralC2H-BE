@@ -19,12 +19,13 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result<List<Pedido>> ObtenerPedidos(DateTime fechaDesde, DateTime fechaHasta)
+        public Result<List<Pedido>> ObtenerPedidos(int pedido, DateTime fechaDesde, DateTime fechaHasta)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pPedido", ConexionDbType.Int, pedido);
                 parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
                 parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
@@ -65,5 +66,6 @@ namespace DA.C2H
             }
             return result;
         }
+
     }
 }
