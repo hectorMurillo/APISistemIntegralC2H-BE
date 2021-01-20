@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
+using WarmPack.Extensions;
 
 namespace DA.C2H
 {
@@ -295,6 +296,31 @@ namespace DA.C2H
                 result.Message = ex.Message;
             }
             return result;
+        }
+
+        public Result GuardarProductosFormula(List<FormulaModel> excelCargado)
+        {
+            Result r = new Result();
+            String estadoCuenta = excelCargado.ToXml("Formula");
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                //parametros.Add("@pCodBanco", ConexionDbType.Bit, codBan/*co);*/
+                parametros.Add("@pXML", ConexionDbType.Xml, estadoCuenta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.Execute("ProcCatFormulasGuardar", parametros);
+
+             
+            }
+            catch (Exception ex)
+            {
+                r.Message = ex.Message;
+            }
+
+            return r;
         }
     }
 }

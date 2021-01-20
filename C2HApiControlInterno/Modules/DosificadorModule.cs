@@ -33,10 +33,25 @@ namespace C2HApiControlInterno.Modules
             Post("notaRemision/cancelar", _ => PostCancelarNotaRemision());
             Post("notaRemision/guardar", _ => PostGuardarNotaRemision());
             Post("formula/guardar", _ => PostGuardarFormulaProducto());
+            Post("productos-formula/guardar", _ => GuardarProductoFormula());
         }
 
-
         
+         private object GuardarProductoFormula()
+        {
+            Result result = new Result();
+            try
+            {
+                var formula = this.Bind<List<FormulaModel>>();
+                result = _DADosificador.GuardarProductosFormula(formula);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
 
         private object GetVerificarNotasRemisionPedido(dynamic parametros)
         {
