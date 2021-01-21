@@ -121,6 +121,7 @@
     <Compile Include="Usuario\UsuarioModel.cs" />
     <Compile Include="Usuario\UsuarioPermiso.cs" />
     <Compile Include="Usuario\UsuarioPermisoModel.cs" />
+    <Compile Include="Vendedores\Vendedor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

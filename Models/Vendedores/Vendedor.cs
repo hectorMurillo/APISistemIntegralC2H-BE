@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Operador
+namespace Models.Vendedores
 {
-    public class Operador
+    public class Vendedor
     {
         public int Codigo { get; set; }
         public string NombreCompleto { get; set; }
