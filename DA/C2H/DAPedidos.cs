@@ -46,6 +46,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, pedido.FolioPedido);
                 parametros.Add("@pHoraSalida", ConexionDbType.VarChar, pedido.HoraSalida);
                 parametros.Add("@pFechaSalida", ConexionDbType.VarChar, pedido.FechaSalida);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, pedido.CodCliente);

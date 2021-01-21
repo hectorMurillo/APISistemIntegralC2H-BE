@@ -22,9 +22,8 @@ namespace Models.Pedidos
         public decimal Cantidad { get; set; }
         public bool Cierre { get; set; }
         public decimal CantidadCierre { get; set; }
-
         public string FechaFormato { get; set; }
-
+        public string Estatus { get; set; }
 
     }
 }
