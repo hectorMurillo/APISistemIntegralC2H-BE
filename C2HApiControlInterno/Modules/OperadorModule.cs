@@ -23,6 +23,8 @@ namespace C2HApiControlInterno.Modules
             _DAOperador = new DAOperador();
             Get("/todos", _ => ObtenerOperadores());
             Get("/entradasSalidas/{entrada}", x => ObtenerOperadoresEntradasSalidas(x));
+            Get("/tipos", _ => ObtenerTiposOperadores());
+
             Post("guardar", _ => GuardarOperador());
 
         }
@@ -57,14 +59,28 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerTiposOperadores()
+        {
+            Result<List<OperadorTipo>> result = new Result<List<OperadorTipo>>();
+            try
+            {
+                result = _DAOperador.ObtenerTiposOperadores();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object GuardarOperador()
         {
             Result result = new Result();
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
-                var pedido = this.Bind<OperadorModel>();
-                result = _DAOperador.GuardarOperador(pedido, codUsuario);
+                var operador = this.Bind<OperadorModel>();
+                result = _DAOperador.GuardarOperador(operador, codUsuario);
             }
             catch (Exception ex)
             {
