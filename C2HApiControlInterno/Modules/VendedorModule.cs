@@ -1,6 +1,7 @@
 ﻿using DA.C2H;
 using Models.Vendedores;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,35 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAVendedor = new DAVendedor();
-            Get("/todos", _ => ObtenerVendedores());
+            Get("/todos/{codVendedor}", x => ObtenerVendedores(x));
+            Post("guardar", _ => GuardarVendedor());
+
         }
 
-        private object ObtenerVendedores()
+        private object ObtenerVendedores(dynamic x)
         {
             Result<List<Vendedor>> result = new Result<List<Vendedor>>();
             try
             {
-                result = _DAVendedor.ObtenerVendedores();
+                int codVendedor = x.codVendedor == null ? 0 : x.codVendedor;
+
+                result = _DAVendedor.ObtenerVendedores(codVendedor);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarVendedor()
+        {
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var vendedor = this.Bind<VendedorModel>();
+                result = _DAVendedor.GuardarVendedor(vendedor, codUsuario);
             }
             catch (Exception ex)
             {

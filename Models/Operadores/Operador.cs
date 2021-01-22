@@ -8,6 +8,9 @@ namespace Models.Operador
 {
     public class Operador
     {
+        public string Nombre { get; set; }
+        public string ApellidoP { get; set; }
+        public string ApellidoM { get; set; }
         public int Codigo { get; set; }
         public string NombreCompleto { get; set; }
         public string RFC { get; set; }

@@ -19,13 +19,13 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result<List<Operador>> ObtenerOperadores()
+        public Result<List<Operador>> ObtenerOperadores(int codOperador)
         {
             Result<List<Operador>> result = new Result<List<Operador>>();
             try
             {
                 var parametros = new ConexionParameters();
-                //parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
+                parametros.Add("@pCodOperador", ConexionDbType.Int, codOperador);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

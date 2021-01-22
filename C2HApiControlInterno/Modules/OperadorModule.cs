@@ -21,7 +21,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAOperador = new DAOperador();
-            Get("/todos", _ => ObtenerOperadores());
+            Get("/todos/{codOperador}", x => ObtenerOperadores(x));
             Get("/entradasSalidas/{entrada}", x => ObtenerOperadoresEntradasSalidas(x));
             Get("/tipos", _ => ObtenerTiposOperadores());
 
@@ -29,13 +29,13 @@ namespace C2HApiControlInterno.Modules
 
         }
 
-        private object ObtenerOperadores()
+        private object ObtenerOperadores(dynamic x)
         {
             Result<List<Operador>> result = new Result<List<Operador>>();
             try
             {
-                //var codCliente = this.BindUsuario().IdUsuario;
-                result = _DAOperador.ObtenerOperadores();
+                int codOperador = x.codOperador == null ? 0 : x.codOperador;
+                result = _DAOperador.ObtenerOperadores(codOperador);
             }
             catch (Exception ex)
             {
