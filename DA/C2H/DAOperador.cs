@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Operador;
+using Models.Operadores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,25 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<Operador>("ProcCatOperadoresEntradasSalidasCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarOperador(OperadorModel pedido, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcPedidosGuardar", parametros);
             }
             catch (Exception ex)
             {
