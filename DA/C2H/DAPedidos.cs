@@ -53,13 +53,31 @@ namespace DA.C2H
                 parametros.Add("@pCodObra", ConexionDbType.Int, pedido.CodObra);
                 parametros.Add("@pCodVendedor", ConexionDbType.Int, pedido.codVendedor);
                 parametros.Add("@pCantidad", ConexionDbType.Decimal, pedido.Cantidad);
-                parametros.Add("@pCierre", ConexionDbType.Decimal, !pedido.Cierre);
+                parametros.Add("@pCierre", ConexionDbType.Bit, pedido.Cierre);
                 parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, pedido.CantidadCierre);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.Execute("ProcPedidosGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<PedidoCierre>> ObtenerPedidosCierres(int folioPedido)
+        {
+            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<PedidoCierre>("ProcPedidosCierresCon", parametros);
             }
             catch (Exception ex)
             {
