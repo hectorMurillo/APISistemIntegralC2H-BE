@@ -86,5 +86,25 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<PedidoCierre>> GuardarCierre(int folioPedido, decimal cantidadCierreNuevo)
+        {
+            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, cantidadCierreNuevo);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, 1);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<PedidoCierre>("ProcPedidosCierresGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }
