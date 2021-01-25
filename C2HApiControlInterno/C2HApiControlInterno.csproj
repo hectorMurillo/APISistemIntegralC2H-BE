@@ -188,6 +188,7 @@
     <Compile Include="Modules\PorteroModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
+    <Compile Include="Modules\VendedorModule.cs" />
     <Compile Include="NancyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />

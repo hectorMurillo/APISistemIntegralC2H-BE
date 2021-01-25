@@ -9,6 +9,7 @@ namespace Models.Dosificador
     public class DatosNotaRemision
     {
         public int IdNotasRemisionEnc { get; set; }
+        public int FolioPedido { get; set; }
         public int Folio { get; set; }
         public int FolioGinco { get; set; }
         public string Cliente { get; set; }
@@ -30,9 +31,12 @@ namespace Models.Dosificador
         public bool Bombeable { get; set; }
         public bool Fibra { get; set; }
         public bool Imper { get; set; }
-        public double Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
+        public decimal CantidadPedido { get; set; }
 
         public string FechaFormato { get; set; }
+        public string NombreUsuario { get; set; }
+
 
 
         public List<OperadorModel> Operadores { get; set; }

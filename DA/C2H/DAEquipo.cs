@@ -310,5 +310,24 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<Model.EquipoModel>> ObtenerEquiposEntradasSalidas(bool entrada)
+        {
+            Result<List<Model.EquipoModel>> result = new Result<List<Model.EquipoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pEntrada", ConexionDbType.Bit, entrada);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.EquipoModel>("ProcCatEquiposEntradasSalidasCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }
