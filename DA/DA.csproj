@@ -65,6 +65,7 @@
     <Compile Include="C2H\DAPedidos.cs" />
     <Compile Include="C2H\DAUsuario.cs" />
     <Compile Include="C2H\DAPortero.cs" />
+    <Compile Include="C2H\DAVendedor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,8 +20,10 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAPedidos = new DAPedidos();
-            Get("/obtener-pedidos/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
+            Get("/obtener-pedidos/{pedido}/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
             Post("guardar", _ => GuardarPedido());
+            Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
+            Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
 
         }
 
@@ -33,8 +35,9 @@ namespace C2HApiControlInterno.Modules
             {
                 DateTime fechaDesde = x.fechaDesde;
                 DateTime fechaHasta = x.fechaHasta;
+                int pedido = x.pedido;
 
-                result = _DAPedidos.ObtenerPedidos(fechaDesde, fechaHasta);
+                result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta);
             }
             catch (Exception ex)
             {
@@ -53,6 +56,38 @@ namespace C2HApiControlInterno.Modules
                 var usuario = this.BindUsuario().Nombre;
                 var pedido = this.Bind<PedidoModel>();
                 result = _DAPedidos.GuardarPedido(pedido, codUsuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerCierres(dynamic x)
+        {
+            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
+            try
+            {
+                int folioPedido = x.folioPedido;
+                result = _DAPedidos.ObtenerPedidosCierres(folioPedido);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarCierres(dynamic x)
+        {
+            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
+            try
+            {
+                int folioPedido = x.folioPedido;
+                decimal cantidadCierreNuevo = x.cantidadCierreNuevo;
+
+                result = _DAPedidos.GuardarCierre(folioPedido, cantidadCierreNuevo);
             }
             catch (Exception ex)
             {

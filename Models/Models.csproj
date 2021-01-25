@@ -108,7 +108,10 @@
     <Compile Include="Materiales\TipoResistencia.cs" />
     <Compile Include="Materiales\TMA.cs" />
     <Compile Include="Operadores\Operador.cs" />
+    <Compile Include="Operadores\OperadorTipo.cs" />
+    <Compile Include="Operadores\OperadorModel.cs" />
     <Compile Include="Pedidos\Pedido.cs" />
+    <Compile Include="Pedidos\PedidoCierre.cs" />
     <Compile Include="Pedidos\PedidoModel.cs" />
     <Compile Include="Porteros\EntradaSalida.cs" />
     <Compile Include="Porteros\EntradaSalidaModel.cs" />
@@ -123,6 +126,8 @@
     <Compile Include="Usuario\UsuarioModel.cs" />
     <Compile Include="Usuario\UsuarioPermiso.cs" />
     <Compile Include="Usuario\UsuarioPermisoModel.cs" />
+    <Compile Include="Vendedores\Vendedor.cs" />
+    <Compile Include="Vendedores\VendedorModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
