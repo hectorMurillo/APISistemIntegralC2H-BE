@@ -9,6 +9,7 @@ namespace Models.Dosificador
     public class PedidoModel
     {
         public int IdCatPedidos { get; set; }
+		public int IdCatFormula { get; set; }
 		public int FolioPedido { get; set; }
 		public int CodCliente { get; set; }
 		public int CodVendedor { get; set; }
