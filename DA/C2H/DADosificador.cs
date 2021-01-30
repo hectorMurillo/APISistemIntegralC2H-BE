@@ -105,7 +105,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<FormulaModel>("ProcCatFormulasCon", parametros);
+                result = _conexion.ExecuteWithResults<FormulaModel>("ProcCatProductosCon", parametros);
             }
             catch (Exception ex)
             {
@@ -238,7 +238,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<int>("ProcCatFormulasGuardar", parametros);
+                result = _conexion.ExecuteWithResults<int>("ProcCatProductosGuardar", parametros);
             }
             catch (Exception ex)
             {
@@ -311,7 +311,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                r = _conexion.Execute("ProcCatFormulasGuardar", parametros);
+                r = _conexion.Execute("ProcCatProductosGuardar", parametros);
 
              
             }

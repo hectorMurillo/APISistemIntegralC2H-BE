@@ -40,6 +40,24 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<Pedido>> Pedidos()
+        {
+            Result<List<Pedido>> result = new Result<List<Pedido>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Pedido>("ProcCatPedidosCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result GuardarPedido(PedidoModel pedido, int codUsuario)
         {
             Result result = new Result();

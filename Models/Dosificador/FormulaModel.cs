@@ -15,6 +15,8 @@ namespace Models.Dosificador
         public string Resistencia { get; set; }
         public int TMA { get; set; }
         public string Revenimiento { get; set; }
+        public decimal PrecioMinimo { get; set; }
+        public decimal PrecioMaximo { get; set; }
         public string Adicionantes { get; set; }
     }
 }
