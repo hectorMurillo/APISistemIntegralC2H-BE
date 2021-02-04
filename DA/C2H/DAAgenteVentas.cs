@@ -39,13 +39,13 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<ClientesModel>> ObtenerClientesPorAgente(int codVenta)
+        public Result<List<ClientesModel>> ObtenerClientesPorAgente(int codAgente)
         {
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pCodigo", ConexionDbType.Int, codVenta);
+                parametros.Add("@pCodigo", ConexionDbType.Int, codAgente);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

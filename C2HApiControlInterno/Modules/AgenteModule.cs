@@ -22,6 +22,25 @@ namespace C2HApiControlInterno.Modules
             Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
+            Get("/clientes/{codAgente}", parametros => ClientesPorAgente(parametros));
+            
+
+        }
+
+
+        private object ClientesPorAgente(dynamic parametros)
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                int codAgente = parametros.codAgente;
+                result = _DAAgentesVentas.ObtenerClientesPorAgente(codAgente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object NotasRemisionAgente(dynamic parametros)
