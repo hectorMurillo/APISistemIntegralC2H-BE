@@ -19,5 +19,6 @@ namespace Models.Pedidos
         public float CantidadCierre { get; set; }
         public string Estatus { get; set; }
         public bool TieneCierre { get; set; }
+        public int codProducto { get; set; }
     }
 }

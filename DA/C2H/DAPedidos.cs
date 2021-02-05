@@ -74,6 +74,7 @@ namespace DA.C2H
                 parametros.Add("@pCierre", ConexionDbType.Bit, pedido.Cierre);
                 parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, pedido.CantidadCierre);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pCodProducto", ConexionDbType.Int, pedido.codProducto);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

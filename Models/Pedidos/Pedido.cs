@@ -25,5 +25,6 @@ namespace Models.Pedidos
         //public string FechaFormato { get; set; }
         public string Estatus { get; set; }
         public bool TieneCierres { get; set; }
+        public int CodProducto { get; set; }
     }
 }
