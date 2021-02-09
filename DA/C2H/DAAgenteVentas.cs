@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.AgenteVentas;
 using Models.Clientes;
 using Models.Dosificador;
 using System;
@@ -58,6 +59,25 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<ProductosClienteModel>> ObtenerProductosPorCliente(int codAgente, int codCliente)
+        {
+            Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ProductosClienteModel>("ProcProductosXClienteCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
         public Result<List<OperadorModel>> ObtenerDetalleClientesPorAgente(int idNotaRemision)
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();

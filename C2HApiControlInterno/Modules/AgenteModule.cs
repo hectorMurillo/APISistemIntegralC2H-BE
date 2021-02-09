@@ -1,4 +1,5 @@
-﻿using Models.Clientes;
+﻿using Models.AgenteVentas;
+using Models.Clientes;
 using Models.Dosificador;
 using Nancy;
 using Nancy.Security;
@@ -23,10 +24,25 @@ namespace C2HApiControlInterno.Modules
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
             Get("/clientes/{codAgente}", parametros => ClientesPorAgente(parametros));
-            
+            Get("/productos-cliente/{codAgente}/{codCliente}", parametros => ProductosXCliente(parametros));
 
         }
 
+        private object ProductosXCliente(dynamic parametros)
+        {
+            Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();
+            try
+            {
+                int codAgente = parametros.codAgente;
+                int codCliente = parametros.codCliente;
+                result = _DAAgentesVentas.ObtenerProductosPorCliente(codAgente, codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object ClientesPorAgente(dynamic parametros)
         {
