@@ -5,6 +5,7 @@ using Models.Dosificador;
 using Models.Equipos;
 using Nancy;
 using Nancy.ModelBinding;
+using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,8 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
+            //this.RequiresAuthentication();
+
             Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
             Get("/notasRemision-canceladas/", _ => GetNotasRemisionCanceladas());
             Get("/formulas/{codigo}", parametros => GetFormulas(parametros));

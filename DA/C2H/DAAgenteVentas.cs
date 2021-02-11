@@ -117,5 +117,29 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result GuardarPrecioProductoXCliente(PrecioProductoModel producto)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, producto.CodAgente);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, producto.CodCliente);
+                parametros.Add("@pCodProducto", ConexionDbType.Int, producto.CodProducto);
+                parametros.Add("@pPrecio", ConexionDbType.Decimal, producto.Precio);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcProductosXClienteGuardar", parametros);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
     }
 }

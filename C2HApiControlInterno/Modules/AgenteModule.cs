@@ -2,6 +2,7 @@
 using Models.Clientes;
 using Models.Dosificador;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,26 @@ namespace C2HApiControlInterno.Modules
 
             Get("/clientes/{codAgente}", parametros => ClientesPorAgente(parametros));
             Get("/productos-cliente/{codAgente}/{codCliente}", parametros => ProductosXCliente(parametros));
-
+            Post("/guardar-precio-productoXCliente", _ => GuardarPrecioProductoXCliente());
         }
 
+        
+
+        private object GuardarPrecioProductoXCliente()
+        {
+            Result result = new Result();
+            try
+            {
+                var producto = this.Bind<PrecioProductoModel>();
+                 result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message; 
+            }
+            return Response.AsJson(result);
+        }
         private object ProductosXCliente(dynamic parametros)
         {
             Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();

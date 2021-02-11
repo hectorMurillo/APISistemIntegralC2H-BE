@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AgenteVentas\AgenteVentasCombo.cs" />
     <Compile Include="AgenteVentas\AgenteVentasModel.cs" />
+    <Compile Include="AgenteVentas\PrecioProductoModel.cs" />
     <Compile Include="AgenteVentas\ProductosClienteModel.cs" />
     <Compile Include="Authentication\CredencialesModel.cs" />
     <Compile Include="Authentication\RecuperarPassword.cs" />
