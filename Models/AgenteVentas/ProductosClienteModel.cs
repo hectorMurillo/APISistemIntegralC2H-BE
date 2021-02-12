@@ -12,6 +12,8 @@ namespace Models.AgenteVentas
 		public int CodCliente { get; set; }
 		public int CodAgente { get; set; }
 		public int CodProducto { get; set; }
+		public string Nomenclatura { get; set; }
+		public string DescripcionProducto { get; set; }
 		public decimal Precio { get; set; }
 		public DateTime Fecha { get; set; }
 
