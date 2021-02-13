@@ -124,6 +124,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodProductoXCliente", ConexionDbType.Int, producto.CodProductoXCliente);
                 parametros.Add("@pCodAgente", ConexionDbType.Int, producto.CodAgente);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, producto.CodCliente);
                 parametros.Add("@pCodProducto", ConexionDbType.Int, producto.CodProducto);

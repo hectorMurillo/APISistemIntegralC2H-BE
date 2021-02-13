@@ -37,8 +37,7 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var producto = this.Bind<PrecioProductoModel>();
-                 result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto);
-                return null;
+                result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto);
             }
             catch (Exception ex)
             {

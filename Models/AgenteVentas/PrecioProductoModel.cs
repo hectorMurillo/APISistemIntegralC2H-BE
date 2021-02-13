@@ -8,6 +8,7 @@ namespace Models.AgenteVentas
 {
     public class PrecioProductoModel
     {
+        public int CodProductoXCliente { get; set; }
         public int CodAgente { get; set; }
         public int CodProducto { get; set; }
         public int CodCliente { get; set; }
