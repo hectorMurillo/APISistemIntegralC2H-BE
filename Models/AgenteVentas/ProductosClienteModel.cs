@@ -15,6 +15,7 @@ namespace Models.AgenteVentas
 		public string Nomenclatura { get; set; }
 		public string DescripcionProducto { get; set; }
 		public decimal Precio { get; set; }
+		public bool Disabled { get; set; }
 		public DateTime Fecha { get; set; }
 
 	}
