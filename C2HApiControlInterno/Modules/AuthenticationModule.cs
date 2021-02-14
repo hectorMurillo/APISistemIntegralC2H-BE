@@ -98,62 +98,92 @@ namespace C2HApiControlInterno.Modules
 
         private object PostLogin()
         {
-
-            var credenciales = this.Bind<CredencialesModel>();
-
-            // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
-            var r = _DAAuthentication.Login2(credenciales);
-
-            if (r.Value)
+            try
             {
-                return Response.AsJson(new Result(r.Value, r.Message, r.Data));
+                var credenciales = this.Bind<CredencialesModel>();
+
+                // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
+                var r = _DAAuthentication.Login2(credenciales);
+
+                if (r.Value)
+                {
+                    return Response.AsJson(new Result(r.Value, r.Message, r.Data));
+                }
+
+                return Response.AsJson(r);
             }
+            catch (Exception ex)
+            {
 
-            return Response.AsJson(r);
-
-
+                return Response.AsJson(ex);
+            }
         }
 
         private object PostLogout()
         {
-            var p = this.BindModel();
+            try
+            {
+                var p = this.BindModel();
 
-            string refreshToken = p.refresh_token;
+                string refreshToken = p.refresh_token;
 
-            // borrar el refreshToken para que no se puedan solicitar mas tokens
-            Globales.RefreshTokens.RemoveAll(t => t.Uid == refreshToken);
+                // borrar el refreshToken para que no se puedan solicitar mas tokens
+                Globales.RefreshTokens.RemoveAll(t => t.Uid == refreshToken);
 
-            return Response.AsJson(new Result(true, "Se ha completado el comando correctamente"));
+                return Response.AsJson(new Result(true, "Se ha completado el comando correctamente"));
+            }
+            catch (Exception ex)
+            {
+
+                return Response.AsJson(ex);
+            }
+          
         }
 
         private object PostRenovarToken()
         {
-            var p = this.BindModel();
-
-            string refreshToken = p.refresh_token;
-
-            //var token = Globales.RefreshTokens.SingleOrDefault(x => x.Uid == refreshToken);
-            var token = RefreshTokenRepository.Encontrar(refreshToken);
-            if (token != null)
+            try
             {
-                var tokenNew = Globales.GetJwt(token.Usuario);
+                var p = this.BindModel();
 
-                return Response.AsJson(tokenNew);
+                string refreshToken = p.refresh_token;
+
+                //var token = Globales.RefreshTokens.SingleOrDefault(x => x.Uid == refreshToken);
+                var token = RefreshTokenRepository.Encontrar(refreshToken);
+                if (token != null)
+                {
+                    var tokenNew = Globales.GetJwt(token.Usuario);
+
+                    return Response.AsJson(tokenNew);
+                }
+                else
+                {
+                    return Response.AsJson("Token inválido", HttpStatusCode.Unauthorized);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Response.AsJson("Token inválido", HttpStatusCode.Unauthorized);
+                return Response.AsJson(ex);
             }
+           
         }
 
         private object postVerificarNombreUsuario()
         {
-            var usuario = this.BindModel();
-            string idUsuario = usuario.IdUsuario;
+            try
+            {
+                var usuario = this.BindModel();
+                string idUsuario = usuario.IdUsuario;
 
-            var r = _DAAuthentication.postVerificarNombreUsuario(idUsuario);
+                var r = _DAAuthentication.postVerificarNombreUsuario(idUsuario);
 
-            return Response.AsJson(r);
+                return Response.AsJson(r);
+            }
+            catch (Exception ex)
+            {
+                return Response.AsJson(ex);
+            }
+          
         }
     }
 }
