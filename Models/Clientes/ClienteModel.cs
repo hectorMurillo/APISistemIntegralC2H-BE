@@ -42,5 +42,7 @@ namespace Models.Clientes
         public int codEmpleadoVendedor { get; set; }
         public string NombreVendedor { get; set; }
         public string Usuario { get; set; }
+        public int codVendedor { get; set; }
+
     }
 }

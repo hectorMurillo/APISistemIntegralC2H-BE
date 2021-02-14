@@ -79,9 +79,28 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionEntradasSalidas(bool entrada)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pEntrada", ConexionDbType.Bit, entrada);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCobranzaNotasRemisionEntradasSalidasCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
 
 
-        
+
+
     }
 }

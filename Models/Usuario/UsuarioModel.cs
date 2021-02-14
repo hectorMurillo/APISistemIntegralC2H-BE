@@ -13,5 +13,6 @@ namespace Models.Usuario
         //public int IdSubUsuario { get; set; }
         public string Usuario { get; set; }
         public string Nombre { get; set; }
+        public int Agente { get; set; }
     }
 }

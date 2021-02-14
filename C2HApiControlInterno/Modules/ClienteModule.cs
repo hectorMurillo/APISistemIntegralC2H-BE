@@ -30,6 +30,8 @@ namespace C2HApiControlInterno.Modules
             Post("/guardar", _ => PostCliente());
             Post("/direcciones/guardar", _ => PostClienteDireccion());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
+            Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
+
         }
 
         private object GetClientesCombo()
@@ -166,7 +168,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object GetTodos()
         {
             Result result = new Result();
@@ -176,6 +177,23 @@ namespace C2HApiControlInterno.Modules
                 var codUsuario = this.BindUsuario().IdUsuario;
 
                 result = _DAClientes.ConsultaClientes(codUsuario, 0);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        //
+        private object ObtenerClientesAgente(dynamic x)
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            int codAgente = x.codAgente;
+
+            try
+            {
+                result = _DAClientes.ObtenerClientesAgente(codAgente);
             }
             catch (Exception ex)
             {

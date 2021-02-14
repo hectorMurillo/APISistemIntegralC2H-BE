@@ -26,6 +26,7 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerNotasRemision", _ => ObtenerNotasRemision());
             Get("/obtenerNotasRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
             Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
+            Get("/obtener-notas-remision/{entrada}", x => ObtenerNotasRemisionEntradasSalidas(x));
         }
 
         private object ObtenerNotasRemision()
@@ -42,7 +43,6 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-
 
         public object ObtenerDatosReporte(dynamic parametros)
         {
@@ -113,6 +113,21 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+
+        private object ObtenerNotasRemisionEntradasSalidas(dynamic parametros)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                bool entrada = parametros.entrada;
+                result = _DACobranza.ObtenerNotasRemisionEntradasSalidas(entrada);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
 
     }

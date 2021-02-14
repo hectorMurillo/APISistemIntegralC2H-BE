@@ -178,6 +178,7 @@ namespace DA.C2H
                 parametros.Add("@pNombre", ConexionDbType.VarChar, Cliente.Nombre);
                 parametros.Add("@pApellidoP", ConexionDbType.VarChar, Cliente.ApellidoP);
                 parametros.Add("@pApellidoM", ConexionDbType.VarChar, Cliente.ApellidoM);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, Cliente.codVendedor);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -200,6 +201,25 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesComboCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<ClientesModel>> ObtenerClientesAgente(int codAgente)
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesAgenteCon", parametros);
             }
             catch (Exception ex)
             {
