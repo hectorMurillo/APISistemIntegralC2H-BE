@@ -31,7 +31,7 @@ namespace C2HApiControlInterno.Modules
             Post("/logout", _ => PostLogout());
 
             Post("/renovar-token", _ => PostRenovarToken());            
-            Post("/verificaPermisoURL", _ => postVerificaPermisoURL());
+            Post("/verificaPermisoURL/{url}/{codUsuario}", x => postVerificaPermisoURL(x));
             Post("/verificar-nombre-usuario", _ => postVerificarNombreUsuario());
             //Post("/recuperar-password-correo", _ => postRecuperarPasswordEnviaCorreo());
             //Post("/recuperar-password-verificar", _ => postRecuperarPasswordEnviaVerifica());
@@ -68,14 +68,18 @@ namespace C2HApiControlInterno.Modules
 
         //    return Response.AsJson(r);
         //}
-        private object postVerificaPermisoURL()
+        private object postVerificaPermisoURL(dynamic x)
         {
-            var p = this.BindModel();
-            var codUsuario = this.BindUsuario().IdUsuario;
-            string url = p.uRL;
+            //var p = this.BindModel();
+            //var codUsuario = this.BindUsuario().IdUsuario;
+            //string url = p.uRL;
+
+            string url = x.url;
+            int codUsuario = x.codUsuario;
 
             var r = _DAAuthentication.verificaPermisoURL(codUsuario, url);
             return Response.AsJson(r);
+            //return Response.AsJson(new Result(r.Value, r.Message));
         }
         //private object PostLogin()
         //{
