@@ -213,7 +213,7 @@ namespace DA.C2H
                 parametros.Add("@pEsBombeable", ConexionDbType.Bit, notaRemision.ChKBombeable);
                 parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
-                parametros.Add("@pCantidadNotas", ConexionDbType.Int, notaRemision.CantidadNotas);
+                parametros.Add("@pCantidadRestantePedido", ConexionDbType.Decimal, notaRemision.CantidadRestantePedido);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
@@ -281,8 +281,8 @@ namespace DA.C2H
                 _conexion.ExecuteWithResults("ProcNotaRemisionVerificaPedidoCon", parametros, row =>
                 {
 
-                    dato.CantidadNotasRemision= row["CantidadNotas"].ToInt32();
-                    dato.SumaCantidadesNotaRemision = row["SumaCantidad"].ToDecimal();
+                    dato.cantidadRecomendar = row["Cantidad"].ToDecimal();
+                    dato.cantidadRestantePedido = row["CantidadRestante"].ToDecimal();
 
 
                 });

@@ -8,7 +8,7 @@ namespace Models.Dosificador
 {
     public class DatoModel
     {
-        public int CantidadNotasRemision { get; set; }
-        public decimal SumaCantidadesNotaRemision { get; set; }
+        public decimal cantidadRecomendar { get; set; }
+        public decimal cantidadRestantePedido { get; set; }
     }
 }

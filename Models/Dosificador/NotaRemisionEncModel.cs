@@ -29,7 +29,7 @@ namespace Models.Dosificador
         public bool ChKImper { get; set; }
         public DateTime Fecha { get; set; }
         public int CodUsuario { get; set; }
-        public int CantidadNotas { get; set; }
+        public Decimal CantidadRestantePedido { get; set; }
 
     }
 }
