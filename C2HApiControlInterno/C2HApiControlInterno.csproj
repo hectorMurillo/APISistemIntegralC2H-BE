@@ -189,8 +189,15 @@
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
     <Compile Include="Modules\VendedorModule.cs" />
+    <Compile Include="Modules\VentasModule.cs" />
     <Compile Include="NancyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\RptMensualMetros.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RptMensualMetros.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +206,9 @@
     <Content Include="Reportes\rptNota.rpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Reportes\Reportes.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -206,7 +216,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\RptMensualMetros.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RptMensualMetros.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DA\DA.csproj">
       <Project>{5782A02B-E6BA-433F-92DC-3F9BE1EC6D55}</Project>
@@ -216,6 +231,9 @@
       <Project>{6925B2AE-013B-4292-B209-82FA251E5A02}</Project>
       <Name>Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
