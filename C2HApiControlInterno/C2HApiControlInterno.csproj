@@ -209,6 +209,7 @@
     <None Include="Reportes\Reportes.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Reportes\RptMensualClientes.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Models.Ventas
 {
-    public class RptMensualMetros
+    public class RptMensualClientes
     {
         public decimal Cantidad { get; set; }
         public string Cliente { get; set; }
+        public int CodCliente { get; set; }
         public string Obra { get; set; }
         public string Agente { get; set; }
+        public DateTime Fecha { get; set; }
     }
 }

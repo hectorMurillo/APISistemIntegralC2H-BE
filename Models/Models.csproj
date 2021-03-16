@@ -130,6 +130,7 @@
     <Compile Include="Usuario\UsuarioPermisoModel.cs" />
     <Compile Include="Vendedores\Vendedor.cs" />
     <Compile Include="Vendedores\VendedorModel.cs" />
+    <Compile Include="Ventas\RptMensualClientes.cs" />
     <Compile Include="Ventas\RptMensualMetros.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -38,5 +38,31 @@ namespace DA.C2H
 
         }
 
+        public Result<List<RptMensualClientes>> ReporteMensualClientes(DateTime fechaDesde, DateTime fechaHasta, int agente)
+        {
+            Result<List<RptMensualClientes>> result = new Result<List<RptMensualClientes>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pAgente", ConexionDbType.Int, agente);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptMensualClientes>("ProcVentasRptMensualClientes", parametros);
+
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Value = false;
+            }
+            return result;
+
+        }
+
     }
 }
