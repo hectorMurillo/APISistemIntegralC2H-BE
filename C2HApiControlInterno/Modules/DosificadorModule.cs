@@ -181,6 +181,7 @@ namespace C2HApiControlInterno.Modules
                         reporte.SetParameterValue("@producto", nota.Producto);
                         reporte.SetParameterValue("@cantidad", notaRemision.Cantidad);
                         reporte.SetParameterValue("@operador", nota.Operador);
+                        reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
                         reporte.SetParameterValue("@equipo", nota.Equipo);
                         reporte.SetParameterValue("@vendedor", nota.Vendedor);
                         reporte.SetParameterValue("@usuario", usuario);
@@ -253,6 +254,20 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerOperadoresCamionRevolvedor(dynamic parametros)
+        {
+            Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
+            try
+            {
+                bool esBombeable = parametros.bombeable;
+                result = _DADosificador.ObtenerOperadoresCamionRevolvedor();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
         private object GetEquipoOperador(dynamic parametros)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();

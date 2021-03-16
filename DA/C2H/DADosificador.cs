@@ -151,6 +151,24 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<OperadorModel>> ObtenerOperadoresCamionRevolvedor()
+        {
+            Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorModel>("ProcOperadoresCamionRevolvedorCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
         public Result<List<EquipoModel>> ObtenerEquipoOperador(bool bombeable,int codOperador)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();

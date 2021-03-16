@@ -33,12 +33,9 @@ namespace Models.Dosificador
         public bool Imper { get; set; }
         public decimal Cantidad { get; set; }
         public decimal CantidadPedido { get; set; }
-
         public string FechaFormato { get; set; }
         public string NombreUsuario { get; set; }
-
-
-
+        public string Nomenclatura { get; set; }
         public List<OperadorModel> Operadores { get; set; }
     }
 }
