@@ -24,18 +24,20 @@ namespace C2HApiControlInterno.Modules
         {
             //this.RequiresAuthentication();
 
-            Get("/ultimo-folio-ginco/", _ => GetUltimoFolioGinco());
-            Get("/notasRemision-canceladas/", _ => GetNotasRemisionCanceladas());
-            Get("/formulas/{codigo}", parametros => GetFormulas(parametros));
-            Get("/ultimo-folio-notaRemision/", _ => GetUltimoFolioNotaRemision());
-            Get("/obras-clientes/{codCliente}", parametros => GetObrasCliente(parametros));
-            Get("/operadores/{bombeable}", parametros => GetOperadores(parametros));
-            Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => GetEquipoOperador(parametros));
-            Get("/folio-pedido/{folioPedido}", parametros => GetFolioPedido(parametros));
-            Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => GetVerificarNotasRemisionPedido(parametros));
-            Post("notaRemision/cancelar", _ => PostCancelarNotaRemision());
-            Post("notaRemision/guardar", _ => PostGuardarNotaRemision());
-            Post("formula/guardar", _ => PostGuardarFormulaProducto());
+            Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
+            Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
+            Get("/formulas/{codigo}", parametros => Formulas(parametros));
+            Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
+            Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
+            Get("/operadores/{bombeable}", parametros => Operadores(parametros));
+            Get("/operadores-camion-revolvedor", _ => ObtenerOperadoresCamionRevolvedor());
+            Get("/operadores-camion-bombeable", _ => ObtenerOperadoresCamionBombeable());
+            Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => EquipoOperador(parametros));
+            Get("/folio-pedido/{folioPedido}", parametros => FolioPedido(parametros));
+            Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => VerificarNotasRemisionPedido(parametros));
+            Post("notaRemision/cancelar", _ => CancelarNotaRemision());
+            Post("notaRemision/guardar", _ => GuardarNotaRemision());
+            Post("formula/guardar", _ => GuardarFormulaProducto());
             Post("productos-formula/guardar", _ => GuardarProductoFormula());
         }
 
@@ -56,7 +58,7 @@ namespace C2HApiControlInterno.Modules
         }
 
 
-        private object GetVerificarNotasRemisionPedido(dynamic parametros)
+        private object VerificarNotasRemisionPedido(dynamic parametros)
         {
             Result<DatoModel> result = new Result<DatoModel>();
             try
@@ -71,7 +73,7 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GetUltimoFolioGinco()
+        private object UltimoFolioGinco()
         {
             Result<List<int>> result = new Result<List<int>>();
             try
@@ -84,7 +86,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object GetFolioPedido(dynamic parametros)
+        private object FolioPedido(dynamic parametros)
         {
             Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
             try
@@ -99,7 +101,7 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GetNotasRemisionCanceladas()
+        private object NotasRemisionCanceladas()
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
@@ -114,7 +116,7 @@ namespace C2HApiControlInterno.Modules
         }
         
 
-        private object GetUltimoFolioNotaRemision()
+        private object UltimoFolioNotaRemision()
         {
             Result<List<int>> result = new Result<List<int>>();
             try
@@ -128,7 +130,7 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
         
-        private object PostGuardarFormulaProducto()
+        private object GuardarFormulaProducto()
         {
             Result<List<int>> result = new Result<List<int>>();
             try
@@ -142,7 +144,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object PostGuardarNotaRemision()
+        private object GuardarNotaRemision()
         {
 
             Result result = new Result();
@@ -210,7 +212,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object GetFormulas(dynamic parametros)
+        private object Formulas(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
@@ -225,7 +227,7 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GetObrasCliente(dynamic parametros)
+        private object ObrasCliente(dynamic parametros)
         {
             Result<List<ObrasModel>> result = new Result<List<ObrasModel>>();
             try
@@ -239,7 +241,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object GetOperadores(dynamic parametros)
+        private object Operadores(dynamic parametros)
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
             try
@@ -254,12 +256,11 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ObtenerOperadoresCamionRevolvedor(dynamic parametros)
+        private object ObtenerOperadoresCamionRevolvedor()
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
             try
             {
-                bool esBombeable = parametros.bombeable;
                 result = _DADosificador.ObtenerOperadoresCamionRevolvedor();
             }
             catch (Exception ex)
@@ -268,7 +269,22 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        private object GetEquipoOperador(dynamic parametros)
+
+        private object ObtenerOperadoresCamionBombeable()
+        {
+            Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerOperadoresCamionBombeable();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object EquipoOperador(dynamic parametros)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
@@ -284,7 +300,7 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object PostCancelarNotaRemision()
+        private object CancelarNotaRemision()
         {
             Result result = new Result();
             try
