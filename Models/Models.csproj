@@ -132,6 +132,7 @@
     <Compile Include="Vendedores\VendedorModel.cs" />
     <Compile Include="Ventas\RptMensualClientes.cs" />
     <Compile Include="Ventas\RptMensualMetros.cs" />
+    <Compile Include="Ventas\RptMensualMetrosModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
