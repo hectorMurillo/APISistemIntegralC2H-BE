@@ -30,6 +30,10 @@
         <xs:element name="Cantidad" type="xs:decimal"/>
         <xs:element name="Cliente" type="xs:string"/>
         <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Agente" type="xs:string"/>
+        <xs:element name ="Fecha" type ="xs:dateTime"/>
+        <xs:element name="Producto" type="xs:string"/>
+        <xs:element name="Nomenclatura" type="xs:string"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
