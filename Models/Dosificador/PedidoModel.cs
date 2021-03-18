@@ -16,6 +16,7 @@ namespace Models.Dosificador
 		public int CodObra { get; set; }
 		public decimal Cantidad { get; set; }
 		public string HoraSalida { get; set; }
+		public bool TieneNotaRemision { get; set; }
 		public DateTime Fecha { get; set; }
 
 	}
