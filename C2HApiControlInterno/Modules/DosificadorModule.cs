@@ -35,6 +35,8 @@ namespace C2HApiControlInterno.Modules
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => EquipoOperador(parametros));
             Get("/folio-pedido/{folioPedido}", parametros => FolioPedido(parametros));
             Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => VerificarNotasRemisionPedido(parametros));
+            Get("/notasRemision-especial/{codigo}", parametros => ObtenerNotasRemisionEspecial(parametros));
+            
             Post("notaRemision/cancelar", _ => CancelarNotaRemision());
             Post("notaRemision/guardar", _ => GuardarNotaRemision());
             Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
@@ -249,6 +251,21 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerNotasRemisionEspecial(dynamic parametros)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                int codigo = parametros.codigo;
+                result = _DADosificador.ObtenerNotasRemisionEspecial(codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
         private object ObrasCliente(dynamic parametros)
         {
             Result<List<ObrasModel>> result = new Result<List<ObrasModel>>();

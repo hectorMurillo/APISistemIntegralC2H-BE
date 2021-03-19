@@ -274,6 +274,7 @@ namespace DA.C2H
                 parametros.Add("@pFolio", ConexionDbType.Int, notaRemision.Folio);
                 parametros.Add("@pFolioGinco", ConexionDbType.Int, notaRemision.FolioGinco);
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, notaRemision.FolioPedido);
+                parametros.Add("@pFolioPadre", ConexionDbType.Int, notaRemision.FolioPadre);
                 parametros.Add("@pHoraSalida", ConexionDbType.VarChar, notaRemision.HoraSalida);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, notaRemision.CodCliente);
                 parametros.Add("@pCodObra", ConexionDbType.Int, notaRemision.CodObra);
@@ -300,7 +301,7 @@ namespace DA.C2H
                     nota.CodEquipo_CR = row["CodEquipo"].ToInt32();
                     nota.FolioGinco = row["FolioGinco"].ToInt32();
                     nota.CodProducto = row["CodFormula"].ToInt32();
-
+                    nota.FolioPadre = row["FolioPadre"].ToInt32();
                     result.Data = nota;
                 });
                 result.Value = parametros.Value("@pResultado").ToBoolean();
@@ -351,6 +352,26 @@ namespace DA.C2H
             }
             return result;
            
+        }
+
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionEspecial(int codigo)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotaRemisionPadre", ConexionDbType.Int, codigo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotaRemisionEspecialCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
         }
 
         public Result<DatoModel> VerificarNotaRemisionPedido(int folioPedido)
