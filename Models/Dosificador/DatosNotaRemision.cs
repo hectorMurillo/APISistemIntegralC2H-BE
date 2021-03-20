@@ -13,6 +13,7 @@ namespace Models.Dosificador
         public int Folio { get; set; }
         public int FolioGinco { get; set; }
         public string Cliente { get; set; }
+        public string Domicilio { get; set; }
         public string Estatus { get; set; }
         public string Obra { get; set; }
         public string HoraSalida { get; set; }
