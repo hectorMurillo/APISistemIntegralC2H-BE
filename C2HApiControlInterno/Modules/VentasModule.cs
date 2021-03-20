@@ -26,6 +26,10 @@ namespace C2HApiControlInterno.Modules
             Post("/reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ReporteMensualMetrosCubicos(x));
             Get("/reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ReporteMensualClientes(x));
 
+            Post("/reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ReporteMensualVolumenXObras(x));
+
+
+
         }
 
         private object ReporteMensualMetrosCubicos(dynamic x)
@@ -102,6 +106,47 @@ namespace C2HApiControlInterno.Modules
                 File.Delete(rutaPdf);
             }
             else {
+                result.Value = false;
+                result.Message = r.Message;
+            }
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ReporteMensualVolumenXObras(dynamic x)
+        {
+            Result result = new Result();
+
+            var reporteVolumenXObras = this.Bind<RptReporteVolumenObras>();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            var r = new Result<List<RptMensualMetros>>();
+            r = _DAVentas.ReporteVolumenXObras(reporteVolumenXObras, fechaDesde, fechaHasta);
+
+            if (r.Value)
+            {
+                var path = HttpRuntime.AppDomainAppPath;
+                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptVolumenXObraTEST.pdf";
+                string pdfBase64 = "";
+                Byte[] bytes;
+
+                ReportDocument reporte = new ReportDocument();
+                reporte.Load(path + "\\Reportes\\RptVolumenXObra.rpt");
+                reporte.SetDataSource(r.Data);
+                reporte.SetParameterValue("fechaDesde", fechaDesde);
+                reporte.SetParameterValue("fechaHasta", fechaHasta);
+                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+                bytes = File.ReadAllBytes(rutaPdf);
+                pdfBase64 = Convert.ToBase64String(bytes);
+                result.Data = pdfBase64;
+                result.Value = r.Value;
+                File.Delete(rutaPdf);
+            }
+            else
+            {
                 result.Value = false;
                 result.Message = r.Message;
             }

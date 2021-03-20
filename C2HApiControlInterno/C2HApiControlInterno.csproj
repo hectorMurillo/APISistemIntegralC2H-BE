@@ -210,6 +210,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Reportes\RptMensualClientes.rpt" />
+    <Content Include="Reportes\RptVolumenXObra.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

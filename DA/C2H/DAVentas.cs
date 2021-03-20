@@ -71,5 +71,31 @@ namespace DA.C2H
 
         }
 
+        public Result<List<RptMensualMetros>> ReporteVolumenXObras(RptReporteVolumenObras reporte, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptMensualMetros>> result = new Result<List<RptMensualMetros>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pAgente", ConexionDbType.Int, reporte.codVendedor);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, reporte.codCliente);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptMensualMetros>("ProcVentasRptVolumenXObra", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }
