@@ -20,5 +20,9 @@ namespace Models.Pedidos
         public string Estatus { get; set; }
         public bool TieneCierre { get; set; }
         public int codProducto { get; set; }
+
+        public bool TieneDescuento { get; set; }
+        public decimal PorcentajeDescuento { get; set; }
+
     }
 }

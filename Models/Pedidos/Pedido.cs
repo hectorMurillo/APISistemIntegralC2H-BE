@@ -29,5 +29,9 @@ namespace Models.Pedidos
 
         public string FormatoCantidad { get; set; }
 
+        public bool TieneDescuento { get; set; }
+        public decimal PorcentajeDescuento { get; set; }
+
+
     }
 }

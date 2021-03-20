@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             Post("guardar", _ => GuardarPedido());
             Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
             Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
-
+            Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
         }
 
 
@@ -111,5 +111,21 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object PedidosDetenidos(dynamic x)
+        {
+            Result<List<Pedido>> result = new Result<List<Pedido>>();
+            int folioPedido = x.folioPedido;
+
+            try
+            {
+                result = _DAPedidos.ObtenerPedidosDetenidos(folioPedido);
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
     }
 }
