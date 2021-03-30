@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
 using Model = Models.Generales;
-
 namespace DA.C2H
 {
     public class DAGenerales
