@@ -97,5 +97,32 @@ namespace DA.C2H
 
         }
 
+        public Result<List<RptMensualProductos>> ReporteMensualProductos(RptMensualProductos reporte, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptMensualProductos>> result = new Result<List<RptMensualProductos>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                //el parametro del producto despues sera XML, al igual que los otros reportes, por que vendra una lista seleccionada.
+                parametros.Add("@pCodProducto", ConexionDbType.Int, reporte.codProducto);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, reporte.codVendedor);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptMensualProductos>("ProcVentasRptMensualProductos", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }
