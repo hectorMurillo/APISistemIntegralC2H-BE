@@ -339,7 +339,7 @@ namespace DA.C2H
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
-                var parametros = new ConexionParameters();
+                var parametros = new ConexionParameters(); 
                 parametros.Add("@pFolioNota", ConexionDbType.Int, notaRemision.Folio);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
@@ -354,13 +354,14 @@ namespace DA.C2H
            
         }
 
-        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionEspecial(int codigo)
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionEspecial(int codigo, int folioGinco)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pIdNotaRemisionPadre", ConexionDbType.Int, codigo);
+                parametros.Add("@pFolioGinco", ConexionDbType.Int, folioGinco);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
