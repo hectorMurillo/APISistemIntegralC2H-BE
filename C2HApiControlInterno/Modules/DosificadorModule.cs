@@ -163,14 +163,16 @@ namespace C2HApiControlInterno.Modules
                     {
                         nota = datos.Data[0];
 
-                        var pathdirectorio = "c:\\pruebaprueba\\";
+                        //var pathdirectorio = "c:\\pruebaprueba\\";                        
+                        var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
                         if (!Directory.Exists(pathdirectorio))
                         {
                             DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
                         }
                         
                         var path = HttpRuntime.AppDomainAppPath;
-                        string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+                        //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+                        string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
                         string pdfbase64 = "";
                         byte[] bytes;
 

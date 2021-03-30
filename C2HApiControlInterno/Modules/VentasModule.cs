@@ -42,7 +42,8 @@ namespace C2HApiControlInterno.Modules
             if (r.Value)
             {
                 var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualMetrosTEST.pdf";
+                //string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualMetrosTEST.pdf";
+                string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\RptMensualMetrosTEST.pdf";
                 string pdfBase64 = "";
                 Byte[] bytes;
 
@@ -82,7 +83,10 @@ namespace C2HApiControlInterno.Modules
             if (r.Value)
             {
                 var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualClientesTEST.pdf";
+
+                string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\RptMensualClientesTEST.pdf";
+
+                //string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualClientesTEST.pdf";
                 string pdfBase64 = "";
                 Byte[] bytes;
                 //var totalClientes = r.Data.GroupBy(a => a.CodCliente).Count;

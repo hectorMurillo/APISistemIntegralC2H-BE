@@ -50,8 +50,9 @@ namespace C2HApiControlInterno.Bootstrapper
 
             pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
             {
-                //Access-Control-Allow-Origin
+                //Access - Control - Allow - Origin
                 ctx.Response
+                //.WithHeaders("Access-Control-Allow-Origin","*")
                 .WithHeader("Access-Control-Allow-Origin", "*")
                 .WithHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
                 .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-Type, Authorization");
