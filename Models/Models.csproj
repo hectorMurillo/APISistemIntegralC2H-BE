@@ -159,6 +159,8 @@
     <Compile Include="Ventas\RptMensualClientes.cs" />
     <Compile Include="Ventas\RptMensualMetros.cs" />
     <Compile Include="Ventas\RptMensualMetrosModel.cs" />
+    <Compile Include="Ventas\RptMensualProductos.cs" />
+    <Compile Include="Ventas\RptReporteVolumenObras.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

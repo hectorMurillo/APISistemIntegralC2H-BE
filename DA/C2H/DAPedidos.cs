@@ -75,6 +75,8 @@ namespace DA.C2H
                 parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, pedido.CantidadCierre);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pCodProducto", ConexionDbType.Int, pedido.codProducto);
+                parametros.Add("@pTieneDescuento", ConexionDbType.Bit, pedido.TieneDescuento);
+                parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, pedido.PorcentajeDescuento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -124,6 +126,26 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<Pedido>> ObtenerPedidosDetenidos(int folioPedido)
+        {
+            Result<List<Pedido>> result = new Result<List<Pedido>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Pedido>("ProcPedidosDetenidosCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
 
     }
 }

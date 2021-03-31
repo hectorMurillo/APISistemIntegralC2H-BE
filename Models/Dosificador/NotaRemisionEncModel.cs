@@ -11,6 +11,7 @@ namespace Models.Dosificador
         public int Folio { get; set; }
         public int FolioGinco { get; set; }
         public int FolioPedido { get; set; }
+        public int FolioPadre { get; set; }
         public int CodFormula { get; set; }
         public int CodCliente { get; set; }
         public int CodObra { get; set; }

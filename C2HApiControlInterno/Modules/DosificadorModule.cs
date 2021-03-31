@@ -35,13 +35,16 @@ namespace C2HApiControlInterno.Modules
             Get("/equipo-operador/{codOperador}/{esBombeable}", parametros => EquipoOperador(parametros));
             Get("/folio-pedido/{folioPedido}", parametros => FolioPedido(parametros));
             Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => VerificarNotasRemisionPedido(parametros));
+            Get("/notasRemision-especial/{codigo}/{folioGinco}", parametros => ObtenerNotasRemisionEspecial(parametros));
+            
             Post("notaRemision/cancelar", _ => CancelarNotaRemision());
             Post("notaRemision/guardar", _ => GuardarNotaRemision());
+            Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
             Post("formula/guardar", _ => GuardarFormulaProducto());
             Post("productos-formula/guardar", _ => GuardarProductoFormula());
         }
 
-        
+
          private object GuardarProductoFormula()
         {
             Result result = new Result();
@@ -154,14 +157,14 @@ namespace C2HApiControlInterno.Modules
                 var usuario = this.BindUsuario().Nombre;
                 var notaRemision = this.Bind<NotaRemisionEncModel>();
                 result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
-                if (result.Value)
-                {
-                    var nota = new DatosNotaRemision();
-                    var datos = new Result<List<DatosNotaRemision>>();
-                    datos = _DADosificador.ObtenerDatosNota(notaRemision);
-                    if (result.Value)
-                    {
-                        nota = datos.Data[0];
+                //if (result.Value)
+                //{
+                //    var nota = new DatosNotaRemision();
+                //    var datos = new Result<List<DatosNotaRemision>>();
+                //    datos = _DADosificador.ObtenerDatosNota(notaRemision);
+                //    if (result.Value)
+                //    {
+                //        nota = datos.Data[0];
 
                         //var pathdirectorio = "c:\\pruebaprueba\\";                        
                         var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -176,36 +179,36 @@ namespace C2HApiControlInterno.Modules
                         string pdfbase64 = "";
                         byte[] bytes;
 
-                        ReportDocument reporte = new ReportDocument();
-                        reporte.Load(path + "\\reportes\\rptnota.rpt");
-                        reporte.SetParameterValue("@folio", notaRemision.Folio);
-                        reporte.SetParameterValue("@folioginco", notaRemision.FolioGinco);
-                        reporte.SetParameterValue("@cliente", nota.Cliente);
-                        reporte.SetParameterValue("@obra", nota.Obra);
-                        reporte.SetParameterValue("@producto", nota.Producto);
-                        reporte.SetParameterValue("@cantidad", notaRemision.Cantidad);
-                        reporte.SetParameterValue("@operador", nota.Operador);
-                        reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                        reporte.SetParameterValue("@equipo", nota.Equipo);
-                        reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                        reporte.SetParameterValue("@usuario", usuario);
-                        reporte.SetParameterValue("@bombeable", notaRemision.ChKBombeable);
-                        reporte.SetParameterValue("@imper", notaRemision.ChKImper);
-                        reporte.SetParameterValue("@fibra", notaRemision.ChKFibra);
-                        reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+                //        ReportDocument reporte = new ReportDocument();
+                //        reporte.Load(path + "\\reportes\\rptnota.rpt");
+                //        reporte.SetParameterValue("@folio", notaRemision.Folio);
+                //        reporte.SetParameterValue("@folioginco", notaRemision.FolioGinco);
+                //        reporte.SetParameterValue("@cliente", nota.Cliente);
+                //        reporte.SetParameterValue("@obra", nota.Obra);
+                //        reporte.SetParameterValue("@producto", nota.Producto);
+                //        reporte.SetParameterValue("@cantidad", notaRemision.Cantidad);
+                //        reporte.SetParameterValue("@operador", nota.Operador);
+                //        reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                //        reporte.SetParameterValue("@equipo", nota.Equipo);
+                //        reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                //        reporte.SetParameterValue("@usuario", usuario);
+                //        reporte.SetParameterValue("@bombeable", notaRemision.ChKBombeable);
+                //        reporte.SetParameterValue("@imper", notaRemision.ChKImper);
+                //        reporte.SetParameterValue("@fibra", notaRemision.ChKFibra);
+                //        reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
 
-                        //reporte.setparametervalue("@sello", usuario);
+                //        //reporte.setparametervalue("@sello", usuario);
 
-                        //reporte.setdatasource();
-                        reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+                //        //reporte.setdatasource();
+                //        reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
 
-                        bytes = File.ReadAllBytes(rutapdf);
-                        pdfbase64 = Convert.ToBase64String(bytes);
-                        result.Data = pdfbase64;
-                        File.Delete(rutapdf);
-                    }
+                //        bytes = File.ReadAllBytes(rutapdf);
+                //        pdfbase64 = Convert.ToBase64String(bytes);
+                //        result.Data = pdfbase64;
+                //        File.Delete(rutapdf);
+                //    }
 
-                }
+                //}
 
             }
             catch (Exception ex)
@@ -214,6 +217,27 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object AgregarNotaRemisionEspecial()
+        {
+
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var notaRemision = this.Bind<NotaRemisionEncModel>();
+                result = _DADosificador.AgregarNotaRemisionEspecial(notaRemision, codUsuario);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+
         private object Formulas(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
@@ -229,6 +253,22 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerNotasRemisionEspecial(dynamic parametros)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                int codigo = parametros.codigo;
+                int folioGinco = parametros.folioGinco;
+                result = _DADosificador.ObtenerNotasRemisionEspecial(codigo, folioGinco);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
         private object ObrasCliente(dynamic parametros)
         {
             Result<List<ObrasModel>> result = new Result<List<ObrasModel>>();
