@@ -27,7 +27,6 @@ namespace C2HApiControlInterno.Modules
             Get("/reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ReporteMensualClientes(x));
             Post("/reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ReporteMensualVolumenXObras(x));
             Post("/reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ReporteMensualProductos(x));
-
         }
 
         private object ReporteMensualMetrosCubicos(dynamic x)
