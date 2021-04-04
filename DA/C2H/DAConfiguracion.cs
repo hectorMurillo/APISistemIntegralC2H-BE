@@ -83,7 +83,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarFuncionesUsuario(List<FuncionModel> datos, int codUsuario, int codSucursal)
+        public Result GuardarFuncionesUsuario(List<FuncionModel> datos, int codUsuario, int codSucursal, int usuarioMovimiento)
         {
             string funciones = datos.ToXml("Funciones");
             var r = new Result();
@@ -93,6 +93,7 @@ namespace DA.C2H
                 parametros.Add("@pFunciones", ConexionDbType.Xml, funciones);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pCodModulo", ConexionDbType.Int, codSucursal);
+                parametros.Add("@pCodUsuarioMovto", ConexionDbType.Int, usuarioMovimiento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 r = _conexion.Execute("ProcFuncionesPermisosGuardar", parametros);
@@ -105,6 +106,29 @@ namespace DA.C2H
                 return r;
             }
         }
+
+        public Result<List<UsuarioPermiso>> ObtenerPermisosUsuario(int codUsuario)
+        {
+            Result<List<UsuarioPermiso>> result = new Result<List<UsuarioPermiso>>();
+            try
+            {
+                ConexionParameters parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<UsuarioPermiso>("ProcConfiguracionPermisosUsuarioObtener", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+
+
 
     }
 }
