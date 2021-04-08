@@ -252,10 +252,16 @@ namespace DA.C2H
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
                 parametros.Add("@pCantidadRestantePedido", ConexionDbType.Decimal, notaRemision.CantidadRestantePedido);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcNotaRemisionGuardar", parametros);
+                
+                _conexion.Execute("ProcNotaRemisionGuardar", parametros);
+
+                result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
             }
             catch (Exception ex)
             {
@@ -271,6 +277,7 @@ namespace DA.C2H
             {
                 
                 var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, notaRemision.IdNotasRemisionEnc);
                 parametros.Add("@pFolio", ConexionDbType.Int, notaRemision.Folio);
                 parametros.Add("@pFolioGinco", ConexionDbType.Int, notaRemision.FolioGinco);
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, notaRemision.FolioPedido);
@@ -334,13 +341,13 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<DatosNotaRemision>> ObtenerDatosNota(NotaRemisionEncModel notaRemision)
+        public Result<List<DatosNotaRemision>> ObtenerDatosNota(int idNotaRemision)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
                 var parametros = new ConexionParameters(); 
-                parametros.Add("@pFolioNota", ConexionDbType.Int, notaRemision.Folio);
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, idNotaRemision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

@@ -36,6 +36,7 @@ namespace C2HApiControlInterno.Modules
             Get("/folio-pedido/{folioPedido}", parametros => FolioPedido(parametros));
             Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => VerificarNotasRemisionPedido(parametros));
             Get("/notasRemision-especial/{codigo}/{folioGinco}", parametros => ObtenerNotasRemisionEspecial(parametros));
+            Get("/notaRemision/pdf/{folio}", parametros => ObtenerPdfNotaRemision(parametros));
             
             Post("notaRemision/cancelar", _ => CancelarNotaRemision());
             Post("notaRemision/guardar", _ => GuardarNotaRemision());
@@ -157,59 +158,6 @@ namespace C2HApiControlInterno.Modules
                 var usuario = this.BindUsuario().Nombre;
                 var notaRemision = this.Bind<NotaRemisionEncModel>();
                 result = _DADosificador.GuardarNotaRemision(notaRemision, codUsuario);
-                //if (result.Value)
-                //{
-                //    var nota = new DatosNotaRemision();
-                //    var datos = new Result<List<DatosNotaRemision>>();
-                //    datos = _DADosificador.ObtenerDatosNota(notaRemision);
-                //    if (result.Value)
-                //    {
-                //        nota = datos.Data[0];
-
-                        //var pathdirectorio = "c:\\pruebaprueba\\";                        
-                        var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
-                        if (!Directory.Exists(pathdirectorio))
-                        {
-                            DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
-                        }
-                        
-                        var path = HttpRuntime.AppDomainAppPath;
-                        //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
-                        string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
-                        string pdfbase64 = "";
-                        byte[] bytes;
-
-                //        ReportDocument reporte = new ReportDocument();
-                //        reporte.Load(path + "\\reportes\\rptnota.rpt");
-                //        reporte.SetParameterValue("@folio", notaRemision.Folio);
-                //        reporte.SetParameterValue("@folioginco", notaRemision.FolioGinco);
-                //        reporte.SetParameterValue("@cliente", nota.Cliente);
-                //        reporte.SetParameterValue("@obra", nota.Obra);
-                //        reporte.SetParameterValue("@producto", nota.Producto);
-                //        reporte.SetParameterValue("@cantidad", notaRemision.Cantidad);
-                //        reporte.SetParameterValue("@operador", nota.Operador);
-                //        reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                //        reporte.SetParameterValue("@equipo", nota.Equipo);
-                //        reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                //        reporte.SetParameterValue("@usuario", usuario);
-                //        reporte.SetParameterValue("@bombeable", notaRemision.ChKBombeable);
-                //        reporte.SetParameterValue("@imper", notaRemision.ChKImper);
-                //        reporte.SetParameterValue("@fibra", notaRemision.ChKFibra);
-                //        reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
-
-                //        //reporte.setparametervalue("@sello", usuario);
-
-                //        //reporte.setdatasource();
-                //        reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
-
-                //        bytes = File.ReadAllBytes(rutapdf);
-                //        pdfbase64 = Convert.ToBase64String(bytes);
-                //        result.Data = pdfbase64;
-                //        File.Delete(rutapdf);
-                //    }
-
-                //}
-
             }
             catch (Exception ex)
             {
@@ -217,6 +165,63 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object ObtenerPdfNotaRemision(dynamic parametros)
+        {
+            Result result = new Result();
+            var usuario = this.BindUsuario().Nombre;
+            var folio = parametros.folio;
+            var nota = new DatosNotaRemision();
+            var datos = new Result<List<DatosNotaRemision>>();
+            datos = _DADosificador.ObtenerDatosNota(folio);
+
+            nota = datos.Data[0];
+
+            var pathdirectorio = "c:\\pruebaprueba\\";
+            //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+            if (!Directory.Exists(pathdirectorio))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
+            }
+
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+            //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
+            string pdfbase64 = "";
+            byte[] bytes;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\reportes\\rptnota.rpt");
+            reporte.SetParameterValue("@folio", nota.Folio);
+            reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+            reporte.SetParameterValue("@cliente", nota.Cliente);
+            reporte.SetParameterValue("@obra", nota.Obra);
+            reporte.SetParameterValue("@producto", nota.Producto);
+            reporte.SetParameterValue("@cantidad", nota.Cantidad);
+            reporte.SetParameterValue("@operador",nota.Operador);
+            reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+            reporte.SetParameterValue("@equipo", nota.Equipo);
+            reporte.SetParameterValue("@vendedor", nota.Vendedor);
+            reporte.SetParameterValue("@usuario", usuario);
+            reporte.SetParameterValue("@bombeable", nota.Bombeable);
+            reporte.SetParameterValue("@imper", nota.Imper);
+            reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+
+            //reporte.setparametervalue("@sello", usuario);
+
+            //reporte.setdatasource();
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+
+            bytes = File.ReadAllBytes(rutapdf);
+            pdfbase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfbase64;
+            File.Delete(rutapdf);
+            result.Value = true;
+
+            return Response.AsJson(result); ;
+        
+        
+    }
 
         private object AgregarNotaRemisionEspecial()
         {

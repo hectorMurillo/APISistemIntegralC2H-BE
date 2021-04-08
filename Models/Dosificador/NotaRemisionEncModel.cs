@@ -8,6 +8,7 @@ namespace Models.Dosificador
 {
     public class NotaRemisionEncModel
     {
+        public int IdNotasRemisionEnc { get; set; }
         public int Folio { get; set; }
         public int FolioGinco { get; set; }
         public int FolioPedido { get; set; }
@@ -25,7 +26,7 @@ namespace Models.Dosificador
         public string Producto { get; set; }
         public float Cantidad { get; set; }
         public string Estatus { get; set; }
-        public string HoraSalida { get; set; }
+        public string HoraSalida { get; set; } = "12:00";
         public bool ChKFibra { get; set; }
         public bool ChKImper { get; set; }
         public DateTime Fecha { get; set; }
