@@ -205,6 +205,7 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@usuario", usuario);
             reporte.SetParameterValue("@bombeable", nota.Bombeable);
             reporte.SetParameterValue("@imper", nota.Imper);
+            reporte.SetParameterValue("@fibra", nota.Fibra);
             reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
 
             //reporte.setparametervalue("@sello", usuario);

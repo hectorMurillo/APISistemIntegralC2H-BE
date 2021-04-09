@@ -12,8 +12,8 @@ namespace API.Models
     {
         public static void Guardar(RefreshTokenItemModel item)
         {
-            using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))
-            //using (var db = new LiteDatabase(@"c:\temp\refresh.db"))
+            //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))
+            using (var db = new LiteDatabase(@"c:\temp\refresh.db"))
             {
                 var tokens = db.GetCollection<RefreshTokenItemModel>("refreshTokens");
                 tokens.DeleteMany(x => x.Usuario.IdUsuario == item.Usuario.IdUsuario);
