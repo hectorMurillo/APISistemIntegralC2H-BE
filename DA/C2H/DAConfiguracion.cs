@@ -127,8 +127,5 @@ namespace DA.C2H
             return result;
         }
 
-
-
-
     }
 }
