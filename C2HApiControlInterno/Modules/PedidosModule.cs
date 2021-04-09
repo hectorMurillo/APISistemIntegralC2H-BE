@@ -147,6 +147,5 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-
     }
 }

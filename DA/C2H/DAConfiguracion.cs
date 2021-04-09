@@ -107,5 +107,28 @@ namespace DA.C2H
             }
         }
 
+        public Result<List<UsuarioPermiso>> ObtenerPermisosUsuario(int codUsuario)
+        {
+            Result<List<UsuarioPermiso>> result = new Result<List<UsuarioPermiso>>();
+            try
+            {
+                ConexionParameters parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<UsuarioPermiso>("ProcConfiguracionPermisosUsuarioObtener", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+
+
+
     }
 }
