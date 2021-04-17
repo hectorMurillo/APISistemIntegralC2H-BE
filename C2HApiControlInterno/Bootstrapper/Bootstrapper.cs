@@ -12,6 +12,7 @@ using Nancy.Configuration;
 
 namespace C2HApiControlInterno.Bootstrapper
 {
+
     public class Bootstrapper : DefaultNancyBootstrapper
     {
         public override void Configure(INancyEnvironment environment)
