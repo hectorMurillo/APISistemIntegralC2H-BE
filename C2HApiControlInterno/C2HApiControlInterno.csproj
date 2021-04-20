@@ -183,6 +183,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper\Bootstrapper.cs" />
     <Compile Include="DynamicModelBinder.cs" />
+    <Compile Include="EnviarCorreo.cs" />
     <Compile Include="Modules\AgenteModule.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
