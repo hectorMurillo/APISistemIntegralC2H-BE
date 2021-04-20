@@ -35,24 +35,5 @@ namespace DA.C2H
             }
             return result;
         }
-
-        public Result<List<Model.ParametrosModel>> ObtenerParametro(string codigoPostal)
-        {
-            Result<List<Model.ParametrosModel>> result = new Result<List<Model.ParametrosModel>>();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pBuscar", ConexionDbType.VarChar, codigoPostal);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-
-                result = _conexion.ExecuteWithResults<Model.ParametrosModel>("ProcParametrosCon", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
     }
 }

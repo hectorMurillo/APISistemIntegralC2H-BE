@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using DA.C2H;
+using Nancy;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace C2HApiControlInterno.Modules
     public class GeneralModule : NancyModule
     {
         private readonly DA.C2H.DAGenerales _DA = null;
+        private readonly DAHerramientas _DAHerramientas = null;
         public GeneralModule() : base("generales")
         {
             this.RequiresAuthentication();
-
+            _DAHerramientas = new DAHerramientas();
             _DA = new DA.C2H.DAGenerales();
             Get("/codigoPostal/{codigoPostal}", parametros => GetDatosCP(parametros));
             Get("/parametro/{nombre}", parametros => GetParametro(parametros));
@@ -32,7 +34,7 @@ namespace C2HApiControlInterno.Modules
         {
             string nombre = p.nombre;
 
-            var r = _DA.ObtenerParametro(nombre);
+            var r = _DAHerramientas.ObtenerParametro(nombre);
 
             return Response.AsJson(r);
         }

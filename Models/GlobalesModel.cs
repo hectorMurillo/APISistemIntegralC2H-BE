@@ -17,7 +17,10 @@ namespace Models
     public class Globales
     {
         private static AppConfiguration _Configuracion;
-
+        public static string CorreoAutomatico = "";
+        public static string CorreoAutomaticoPassword = "";
+        public static string Host = "";
+        public static int Port = 0;
         // opciones de configuracion        
         public static AppConfiguration Configuracion
         {

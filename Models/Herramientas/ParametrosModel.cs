@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Generales
+namespace Models.Herramientas
 {
     public class ParametrosModel
     {
-        public int IdParametros { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Valor { get; set; }

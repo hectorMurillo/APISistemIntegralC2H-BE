@@ -35,6 +35,8 @@ namespace C2HApiControlInterno
         //    }
         //}
 
+ 
+
         public static UsuarioModel BindUsuario(this NancyModule nancy)
         {
             if (nancy.Context.CurrentUser == null) return new UsuarioModel() { Usuario = "Usuario desconocido", IdUsuario = 0, Nombre = "No hay ningun usuario logeado" };

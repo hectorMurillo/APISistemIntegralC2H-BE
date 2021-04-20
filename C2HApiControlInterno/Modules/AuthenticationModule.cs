@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using DA.Authentication;
+using DA.C2H;
 using Models;
 using Models.Authentication;
 using Nancy;
@@ -23,8 +24,7 @@ namespace C2HApiControlInterno.Modules
         public AuthenticationModule() : base("/seguridad")
         {
             _DAAuthentication = new DAAuthentication();
-
-
+          
             // bloque de seguridad aqui
             Post("/login", _ => PostLogin());
 
@@ -37,6 +37,7 @@ namespace C2HApiControlInterno.Modules
             //Post("/recuperar-password-verificar", _ => postRecuperarPasswordEnviaVerifica());
             //Post("/recuperar-password-restablecer", _ => postRecuperarPasswordEnviaRestablecer());
         }
+
 
         //private object postRecuperarPasswordEnviaRestablecer()
         //{
@@ -105,8 +106,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var credenciales = this.Bind<CredencialesModel>();
-                EnviarCorreo env = new EnviarCorreo();
-                env.sendMail();
+                //EnviarCorreo env = new EnviarCorreo();
+                //env.SendMail("Este es un mensaje de prueba","a");
                 // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
                 var r = _DAAuthentication.Login2(credenciales);
 

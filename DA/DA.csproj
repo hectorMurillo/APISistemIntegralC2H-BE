@@ -66,7 +66,8 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.8.0\lib\net45\Microsoft.IdentityModel.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Models">
+    <Reference Include="Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Models\bin\Debug\Models.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -99,6 +100,7 @@
     <Compile Include="C2H\DAEmpresas.cs" />
     <Compile Include="C2H\DAEquipo.cs" />
     <Compile Include="C2H\DAGenerales.cs" />
+    <Compile Include="C2H\DAHerramientas.cs" />
     <Compile Include="C2H\DAMateriales.cs" />
     <Compile Include="C2H\DAOperador.cs" />
     <Compile Include="C2H\DAPedidos.cs" />
