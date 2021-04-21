@@ -106,8 +106,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var credenciales = this.Bind<CredencialesModel>();
-                //EnviarCorreo env = new EnviarCorreo();
-                //env.SendMail("Este es un mensaje de prueba","a");
+                EnviarCorreo env = new EnviarCorreo();
+                env.SendMail("Este es un mensaje de prueba", "a");
                 // validar el usuario aqui, modificar el store que se manda llamar dentro del método Login
                 var r = _DAAuthentication.Login2(credenciales);
 

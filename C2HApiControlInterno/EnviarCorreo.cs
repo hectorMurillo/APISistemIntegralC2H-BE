@@ -71,6 +71,7 @@ namespace C2HApiControlInterno
             Result r = new Result();
             try
             {
+             
                 string htmlBody = @"<html>
                                      <head>
                                         <title> Correo Automatico </title>
@@ -106,7 +107,9 @@ namespace C2HApiControlInterno
                                                    </td>
                                                </tr>  
                                          <tr style = ""font-size:2px;background-color:#FF3333"" >  
-                                              <td colspan = ""2"" > &nbsp;</td>
+                                              <td colspan = ""2"" > Hi! <br>
+                            <img src=cid:myImageID>
+                            </td></td>
                                          </tr>
                                          <tr>
                                               <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" >
@@ -157,16 +160,57 @@ namespace C2HApiControlInterno
                                     </body>
                                 </html>";
                 WarmPack.Utilities.MailSender email = new WarmPack.Utilities.MailSender(Globales.Host, Globales.Port, false, Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                email.Send(Globales.CorreoAutomatico, "christianal@difarmer.com", "Correo Automatico", htmlBody, true);
-
+                //email.Send(Globales.CorreoAutomatico, "cris_ales@live.com.mx", "Correo Automatico", htmlBody, true);
+                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "asdads","biiin");
                 r.Value = true;
-                return Response.AsJson(r); ;
+                return null;
             }
             catch (Exception ex)
             {
                 r.Value = false;
                 return Response.AsJson(new Result(ex));
             }
+        }
+
+        protected void sendHtmlEmail(string from_Email, string to_Email, string body, string from_Name, string Subject)
+        {
+            //create an instance of new mail message
+            MailMessage mail = new MailMessage();
+
+            //set the HTML format to true
+            mail.IsBodyHtml = true;
+
+            //create Alrternative HTML view
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+
+            //Add Image
+            LinkedResource theEmailImage = new LinkedResource("C:\\temp\\img.png");
+            theEmailImage.ContentId = "myImageID";
+
+            //Add the Image to the Alternate view
+            htmlView.LinkedResources.Add(theEmailImage);
+
+            //Add view to the Email Message
+            mail.AlternateViews.Add(htmlView);
+
+            //set the "from email" address and specify a friendly 'from' name
+            mail.From = new MailAddress(from_Email, from_Name);
+
+            //set the "to" email address
+            mail.To.Add(to_Email);
+
+            //set the Email subject
+            mail.Subject = Subject;
+
+            //set the SMTP info
+            System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico,Globales.CorreoAutomaticoPassword);
+            SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
+            smtp.EnableSsl = false;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = cred;
+            //send the email
+            smtp.Send(mail);
         }
     }
 }
