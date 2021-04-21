@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
 using WarmPack.Classes;
 
@@ -72,96 +73,68 @@ namespace C2HApiControlInterno
             try
             {
              
-                string htmlBody = @"<html>
-                                     <head>
-                                        <title> Correo Automatico </title>
-                                          <style type = ""text/css"">
-	                                        #panelCheckBox
-	                                        {
-                                               border: solid 3px #00B201;
-	                                            background-color:#00C254;
-	                                            padding - left:10px;
-                                                    font - family:Arial;
-                                                    font - weight:Bold;
-                                                }
-	                                        .check
-                                            {
-                                                width: 15px;
-                                                height: 15px;
-                                                border: solid 2px #DDDDDD;	    	                    
-	                                            background-color:#FFFFFF;	            
-	                                        }
-	                                        .regla
-                                            {
-                                                    background - color:#00C254;
-				                                border: solid 3px #00B201;
-	                                        }
-	                                        #pie{clear: both;}
-	                                    </style>
-                                    </head>
-                                <body>
-                                    <table style = ""width:100%"" >
-                                         <tr>
-                                             <td colspan = ""2"" style = ""font-size:24px;font-weight:bold;font-family:arial;text-align:center"" >
-                                                    C&oacute;digo de barras no registrado
-                                                   </td>
-                                               </tr>  
-                                         <tr style = ""font-size:2px;background-color:#FF3333"" >  
-                                              <td colspan = ""2"" > Hi! <br>
-                            <img src=cid:myImageID>
-                            </td></td>
-                                         </tr>
-                                         <tr>
-                                              <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" >
-                                                                </br> Cedis: <b> CULIACAN </b>
-                                                               </td>
-                                          </tr>
-                                          <tr>       
-                                              <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:5px"" >
-                                                     </br> C&oacute;digo de barras: <b> " + "asdasdasd" + @" </b>
-                                                       </td>
-                                                   </tr>
-                                                   <tr>
-                                                       <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" >
-                                                              </br> Descripci&oacute;n: <b> " + "asdasdasd" + @"</b>
-                                                                   </td>
-                                                               </tr>
-                                                               <tr>
-                                                                   <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" >
-                                              </br> Comentario: <b> " + "asdasdasd" + @"</b>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" >
-                                                       </br> Orden de Compra: <b> " + "asdasdasd" + @"</b>
-                                               </td>
-                                           </tr>
-                                           <tr>
-                                               <td colspan = ""2"" style = ""font-size:14px;font-family:arial;text-align:center;margin:10px"" > 
-                                                </br> Proveedor: <b> " + "asdasdasd" + @"</b>
-                                            </td>
-                                           </tr>
-                                           <tr>
-                                           <td></td>
-                                            <td>
-                                              <br/> 
-                                                <b> Report&oacute;:</b> " + "asdasdasd" + @"<br/>
-                                           </td>
-                                           </tr>
-                                           <tr style= ""font-size:2px;background-color:FF3333"" >
-                                           <td style= ""background-color:#ffffff"" ></td><td width = ""70%"" > &nbsp;</td>
-                                           </tr>
-                                           </table>
-                                          <div id =""#pie"" >
-                                              <div style = ""text-align: right; font-style: italic;"" >
-                                                La captura del artículo se encuentra en el archivo adjunto
-                                                 </div>
-                                               </div>
-                                    </body>
-                                </html>";
-                WarmPack.Utilities.MailSender email = new WarmPack.Utilities.MailSender(Globales.Host, Globales.Port, false, Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
+                string htmlBody = @"
+        
+<html>
+
+<body style=""margin: 0; padding: 0;"">
+    <table  cellpadding=""0"" cellspacing=""0"" width=""100%"">
+        <tr>
+            <td>
+                <table align=""center""  cellpadding=""0"" cellspacing=""0"" width=""800""
+                    style=""border-collapse: collapse;"">
+                    <tr bgcolor=""#70bbd9"">
+                        <td align=""left"" bgcolor=""white"" style=""padding: 10px 0px 10px 0;"">
+                            <img src=cid:logotipo alt=""Creating Email Magic"" width=""200"" height=""95""
+                                style=""display: block;"" />
+                        </td>
+                        <td align=""right"" bgcolor=""white"" style=""padding: 10px 0px 10px 0px;"" >
+                            <div style=""font-size: 24px;"">Christian alvarado</div>
+                        </td>
+
+                    </tr>
+    
+                    <tr>
+                        <td align=""center"" bgcolor=""#0076AC"" style=""padding: 0px 0px 10px 0;"" colspan=""2"" >
+                            <div style=""font-style: oblique; font-size: 18px;color: white; text-align: right; margin-right: 10px;"">12/05/2015</div>  
+                            <div style=""font-size: 25px; color: white;"">¡Estamos a punto de hacer equipo contigo!</div>
+                            <div style=""font-size: 20px; color: white;"">Vamos rumbo a tu obra, esperemos estes conforme con nuestros servicios</div>
+                        </td >
+                    </tr>
+                    <tr>
+                        <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
+                            <div style=""border: 5px solid gray ;width:60%; font-size: 20px; "">
+                                 <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
+                                    <b>Número de Nota de Remisión: </b>158787 
+                                 </div> 
+                                 <div style=""margin-bottom: 5px; color: black;"">
+                                    <b>Tu Agente de Ventas: </b>Miguel Perez 
+                                 </div>
+                                <div style=""margin-bottom: 50px; color: black;"">
+                                    <b>Obra: </b>colonia nice 
+                                </div>
+                             </div>
+                        </td >
+                    </tr>
+                    <tr>
+                        <td align=""right"" bgcolor=""#0076AC"" style=""padding: 10px 10px 20px 0;""  colspan=""2"" >
+                            <div style=""font-size: 16px; margin-bottom: 5px;  color: white;"">Queremos seguir construyendo contigo </div>
+                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: 654-87-89</div>
+                            <div style=""font-size: 16px;  color: white;"">WhatsApp Vendedor: 656-54-54</div>
+                        </td >
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+                                    ";
+
+                //WarmPack.Utilities.MailSender email = new WarmPack.Utilities.MailSender(Globales.Host, Globales.Port, false, Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
                 //email.Send(Globales.CorreoAutomatico, "cris_ales@live.com.mx", "Correo Automatico", htmlBody, true);
-                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "asdads","biiin");
+               
+                sendHtmlEmail(Globales.CorreoAutomatico, "c21.hector@gmail.com", htmlBody, "Concretos2H","Pedido Generado");
                 r.Value = true;
                 return null;
             }
@@ -181,11 +154,12 @@ namespace C2HApiControlInterno
             mail.IsBodyHtml = true;
 
             //create Alrternative HTML view
-            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
 
+            var prueba = AppDomain.CurrentDomain.BaseDirectory + "bin";
             //Add Image
-            LinkedResource theEmailImage = new LinkedResource("C:\\temp\\img.png");
-            theEmailImage.ContentId = "myImageID";
+            LinkedResource theEmailImage = new LinkedResource(prueba + "\\logotipo.jpg", MediaTypeNames.Image.Jpeg);
+            theEmailImage.ContentId = "logotipo";
 
             //Add the Image to the Alternate view
             htmlView.LinkedResources.Add(theEmailImage);
