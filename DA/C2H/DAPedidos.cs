@@ -146,6 +146,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result AutorizarPedidoDetenido(int folio, bool autorizado, string observacion)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
+                parametros.Add("@pAutorizado", ConexionDbType.Bit, autorizado);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, observacion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcPedidosGuardarPedidoDetenido", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }
