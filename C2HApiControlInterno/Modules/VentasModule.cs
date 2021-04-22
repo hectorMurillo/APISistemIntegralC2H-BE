@@ -27,6 +27,8 @@ namespace C2HApiControlInterno.Modules
             Get("/reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ReporteMensualClientes(x));
             Post("/reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ReporteMensualVolumenXObras(x));
             Post("/reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ReporteMensualProductos(x));
+            Get("/obtener-demanda-articulos/", _ => ObtenerDemandaArticulo());
+
 
         }
 
@@ -215,5 +217,16 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        private object ObtenerDemandaArticulo()
+        {
+            //Result result = new Result();
+
+            var r = new Result<List<DemandaArticulo>>();
+            r = _DAVentas.ObtenerDemandaArticulo();
+
+            return Response.AsJson(r);
+
+
+        }
     }
 }

@@ -124,5 +124,43 @@ namespace DA.C2H
 
         }
 
+        //public Result<List<RptMensualClientes>> ObtenerDemandaArticulo()
+        //{
+        //    Result<List<RptMensualClientes>> result = new Result<List<RptMensualClientes>>();
+        //    try
+        //    {
+        //        var parametros = new ConexionParameters();
+        //        parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+        //        parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+        //        result = _conexion.ExecuteWithResults<RptMensualClientes>("ProcVentasRptMensualClientes", parametros);
+
+        //        result.Value = parametros.Value("@pResultado").ToBoolean();
+        //        result.Message = parametros.Value("@pMsg").ToString();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Message = ex.Message;
+        //        result.Value = false;
+        //    }
+        //    return result;
+
+        //}
+
+        public Result<List<DemandaArticulo>> ObtenerDemandaArticulo()
+        {
+            ConexionParameters parametros = new ConexionParameters();
+            parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+            parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+            var r = _conexion.ExecuteWithResults<DemandaArticulo>("ProcVentasDemandaArticulos", parametros);
+
+            return r;
+        }
+
+
+
+
+
     }
 }
