@@ -150,6 +150,9 @@
   <ItemGroup>
     <Content Include="DLL\WarmPack.Database.dll" />
     <Content Include="DLL\WarmPack.dll" />
+    <Content Include="Images\logotipo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

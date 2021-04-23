@@ -134,57 +134,60 @@ namespace C2HApiControlInterno
                 //WarmPack.Utilities.MailSender email = new WarmPack.Utilities.MailSender(Globales.Host, Globales.Port, false, Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
                 //email.Send(Globales.CorreoAutomatico, "cris_ales@live.com.mx", "Correo Automatico", htmlBody, true);
                
-                sendHtmlEmail(Globales.CorreoAutomatico, "c21.hector@gmail.com", htmlBody, "Concretos2H","Pedido Generado");
+                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "Concretos2H","Pedido Generado");
                 r.Value = true;
                 return null;
             }
             catch (Exception ex)
             {
                 r.Value = false;
-                return Response.AsJson(new Result(ex));
+                r.Message = ex.Message;
+                return Response.AsJson(r);
             }
         }
 
-        protected void sendHtmlEmail(string from_Email, string to_Email, string body, string from_Name, string Subject)
+        protected object sendHtmlEmail(string from_Email, string to_Email, string body, string from_Name, string Subject)
         {
-            //create an instance of new mail message
-            MailMessage mail = new MailMessage();
+            Result r = new Result();
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = true;
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
 
-            //set the HTML format to true
-            mail.IsBodyHtml = true;
+                var path = AppDomain.CurrentDomain.BaseDirectory + "bin";
+                LinkedResource theEmailImage = new LinkedResource(path + "\\Images\\logotipo.jpg", MediaTypeNames.Image.Jpeg);
+                theEmailImage.ContentId = "logotipo";
 
-            //create Alrternative HTML view
-            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+                htmlView.LinkedResources.Add(theEmailImage);
 
-            var prueba = AppDomain.CurrentDomain.BaseDirectory + "bin";
-            //Add Image
-            LinkedResource theEmailImage = new LinkedResource(prueba + "\\logotipo.jpg", MediaTypeNames.Image.Jpeg);
-            theEmailImage.ContentId = "logotipo";
+                mail.AlternateViews.Add(htmlView);
 
-            //Add the Image to the Alternate view
-            htmlView.LinkedResources.Add(theEmailImage);
+                mail.From = new MailAddress(from_Email, from_Name);
 
-            //Add view to the Email Message
-            mail.AlternateViews.Add(htmlView);
+                mail.To.Add(to_Email);
 
-            //set the "from email" address and specify a friendly 'from' name
-            mail.From = new MailAddress(from_Email, from_Name);
+                mail.Subject = Subject;
 
-            //set the "to" email address
-            mail.To.Add(to_Email);
+                System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
+                SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
+                smtp.EnableSsl = false;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = cred;
+               
+                smtp.Send(mail);
+                r.Value = true;
+                return Response.AsJson(r);
+            }
+            catch (Exception ex)
+            {
 
-            //set the Email subject
-            mail.Subject = Subject;
-
-            //set the SMTP info
-            System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico,Globales.CorreoAutomaticoPassword);
-            SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
-            smtp.EnableSsl = false;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = cred;
-            //send the email
-            smtp.Send(mail);
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
+            }
+           
         }
     }
 }
