@@ -23,16 +23,25 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
             _DAVentas = new DAVentas();
 
-            Post("/reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ReporteMensualMetrosCubicos(x));
-            Get("/reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ReporteMensualClientes(x));
-            Post("/reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ReporteMensualVolumenXObras(x));
-            Post("/reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ReporteMensualProductos(x));
+            //ReporteMensualMetrosCubicos
+            Post("/obtener-reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualMetrosCubicos(x));
+            Post("/imprimir-reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualMetrosCubicos(x));
+            //ReporteMensualMetrosCubicos
+            Post("/obtener-reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ObtenerReporteMensualClientes(x));
+            Post("/imprimir-reporte-mensual-clientes/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualClientes(x));
+            //ReporteVolumenXObras
+            Post("/obtener-reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualVolumenXObras(x));
+            Post("/imprimir-reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualVolumenXObras(x));
+
+            //Imprimir
+
+            Post("/imprimir-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualProductos(x));
             Get("/obtener-demanda-articulos/", _ => ObtenerDemandaArticulo());
 
 
         }
 
-        private object ReporteMensualMetrosCubicos(dynamic x)
+        private object ObtenerReporteMensualMetrosCubicos(dynamic x)
         {
             Result result = new Result();
 
@@ -43,35 +52,50 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var r = new Result<List<RptMensualMetros>>();
-                r = _DAVentas.ReporteMensualMetrosCubicos(reporteMensualMetros, fechaDesde, fechaHasta);
+                r = _DAVentas.ObtenerReporteMensualMetrosCubicos(reporteMensualMetros, fechaDesde, fechaHasta);
+                result.Data = r.Data;
+                result.Value = r.Value;
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Message = ex.Message;
+            }
 
-                if (r.Value)
-                {
-                    var totalMetrosVendidos = r.Data.Sum(s => s.Cantidad);
-                    var path = HttpRuntime.AppDomainAppPath;
-                    string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualMetrosTEST.pdf";
-                    string pdfBase64 = "";
-                    Byte[] bytes;
+            return Response.AsJson(result);
 
-                    ReportDocument reporte = new ReportDocument();
-                    reporte.Load(path + "\\Reportes\\RptMensualMetros.rpt");
-                    reporte.SetDataSource(r.Data);
-                    reporte.SetParameterValue("fechaDesde", fechaDesde);
-                    reporte.SetParameterValue("fechaHasta", fechaHasta);
-                    reporte.SetParameterValue("totalMetrosVendidos", totalMetrosVendidos);
-                    reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+        }
 
-                    bytes = File.ReadAllBytes(rutaPdf);
-                    pdfBase64 = Convert.ToBase64String(bytes);
-                    result.Data = pdfBase64;
-                    result.Value = r.Value;
-                    File.Delete(rutaPdf);
-                }
-                else
-                {
-                    result.Value = false;
-                    result.Message = r.Message;
-                }
+        private object ImprimirReporteMensualMetrosCubicos(dynamic x)
+        {
+            Result result = new Result();
+
+            var reporteMensualMetros = this.Bind<List<RptMensualMetros>>();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            try
+            {
+                var totalMetrosVendidos = reporteMensualMetros.Sum(s => s.Cantidad);
+                var path = HttpRuntime.AppDomainAppPath;
+                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualMetrosTEST.pdf";
+                string pdfBase64 = "";
+                Byte[] bytes;
+
+                ReportDocument reporte = new ReportDocument();
+                reporte.Load(path + "\\Reportes\\RptMensualMetros.rpt");
+                reporte.SetDataSource(reporteMensualMetros);
+                reporte.SetParameterValue("fechaDesde", fechaDesde);
+                reporte.SetParameterValue("fechaHasta", fechaHasta);
+                reporte.SetParameterValue("totalMetrosVendidos", totalMetrosVendidos);
+                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+                bytes = File.ReadAllBytes(rutaPdf);
+                pdfBase64 = Convert.ToBase64String(bytes);
+                result.Data = pdfBase64;
+                result.Value = true;
+                File.Delete(rutaPdf);
+                
             }
             catch (Exception ex)
             {
@@ -83,7 +107,7 @@ namespace C2HApiControlInterno.Modules
             
         }
 
-        private object ReporteMensualClientes(dynamic x)
+        private object ObtenerReporteMensualClientes(dynamic x)
         {
             Result result = new Result();
 
@@ -93,39 +117,55 @@ namespace C2HApiControlInterno.Modules
 
             var r = new Result<List<RptMensualClientes>>();
             r = _DAVentas.ReporteMensualClientes(fechaDesde, fechaHasta, agente);
-
-            if (r.Value)
-            {
-                var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualClientesTEST.pdf";
-                string pdfBase64 = "";
-                Byte[] bytes;
-                //var totalClientes = r.Data.GroupBy(a => a.CodCliente).Count;
-                int total = r.Data.GroupBy(i => i.CodCliente).Select(group => group.First()).Count();
-
-                ReportDocument reporte = new ReportDocument();
-                reporte.Load(path + "\\Reportes\\RptMensualClientes.rpt");
-                reporte.SetDataSource(r.Data);
-                reporte.SetParameterValue("fechaDesde", fechaDesde);
-                reporte.SetParameterValue("fechaHasta", fechaHasta);
-                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
-
-                bytes = File.ReadAllBytes(rutaPdf);
-                pdfBase64 = Convert.ToBase64String(bytes);
-                result.Data = pdfBase64;
-                result.Value = r.Value;
-                File.Delete(rutaPdf);
-            }
-            else {
-                result.Value = false;
-                result.Message = r.Message;
-            }
+            result.Data = r.Data;
+            result.Value = r.Value;
 
             return Response.AsJson(result);
 
         }
 
-        private object ReporteMensualVolumenXObras(dynamic x)
+        private object ImprimirReporteMensualClientes(dynamic x)
+        {
+            Result result = new Result();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            var reporteMensualClientes = this.Bind<List<RptMensualClientes>>();
+
+
+            //DateTime fechaDesde = x.fechaDesde;
+            //DateTime fechaHasta = x.fechaHasta;
+            //int agente = x.agente;
+
+            //var r = new Result<List<RptMensualClientes>>();
+            //r = _DAVentas.ReporteMensualClientes(fechaDesde, fechaHasta, agente);
+
+
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptMensualClientesTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+            //var totalClientes = r.Data.GroupBy(a => a.CodCliente).Count;
+            int total = reporteMensualClientes.GroupBy(i => i.CodCliente).Select(group => group.First()).Count();
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptMensualClientes.rpt");
+            reporte.SetDataSource(reporteMensualClientes);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+            
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ObtenerReporteMensualVolumenXObras(dynamic x)
         {
             Result result = new Result();
 
@@ -135,39 +175,43 @@ namespace C2HApiControlInterno.Modules
 
             var r = new Result<List<RptMensualMetros>>();
             r = _DAVentas.ReporteVolumenXObras(reporteVolumenXObras, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            return Response.AsJson(result);
 
-            if (r.Value)
-            {
-                var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\RptVolumenXObraTEST.pdf";
-                string pdfBase64 = "";
-                Byte[] bytes;
+        }
 
-                ReportDocument reporte = new ReportDocument();
-                reporte.Load(path + "\\Reportes\\RptVolumenXObra.rpt");
-                reporte.SetDataSource(r.Data);
-                reporte.SetParameterValue("fechaDesde", fechaDesde);
-                reporte.SetParameterValue("fechaHasta", fechaHasta);
-                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+        private object ImprimirReporteMensualVolumenXObras(dynamic x)
+        {
+            Result result = new Result();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            var reporteMensualVolumenXObra = this.Bind<List<RptMensualMetros>>();
 
-                bytes = File.ReadAllBytes(rutaPdf);
-                pdfBase64 = Convert.ToBase64String(bytes);
-                result.Data = pdfBase64;
-                result.Value = r.Value;
-                File.Delete(rutaPdf);
-            }
-            else
-            {
-                result.Value = false;
-                result.Message = r.Message;
-            }
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptVolumenXObraTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptVolumenXObra.rpt");
+            reporte.SetDataSource(reporteMensualVolumenXObra);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
 
             return Response.AsJson(result);
 
         }
 
 
-        private object ReporteMensualProductos(dynamic x)
+        private object ImprimirReporteMensualProductos(dynamic x)
         {
             Result result = new Result();
 
