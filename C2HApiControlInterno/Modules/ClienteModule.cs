@@ -31,6 +31,8 @@ namespace C2HApiControlInterno.Modules
             Post("/direcciones/guardar", _ => PostClienteDireccion());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
             Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
+            Get("/clientes-detenidos", _ => GetClientesDetenidos());
+
 
         }
 
@@ -194,6 +196,20 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DAClientes.ObtenerClientesAgente(codAgente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GetClientesDetenidos()
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                result = _DAClientes.ClientesDetenidos();
             }
             catch (Exception ex)
             {
