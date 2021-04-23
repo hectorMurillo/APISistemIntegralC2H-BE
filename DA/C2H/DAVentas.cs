@@ -124,5 +124,16 @@ namespace DA.C2H
 
         }
 
+        public Result<List<DemandaArticulo>> ObtenerDemandaArticulo()
+        {
+            ConexionParameters parametros = new ConexionParameters();
+            parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+            parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+            var r = _conexion.ExecuteWithResults<DemandaArticulo>("ProcVentasDemandaArticulos", parametros);
+
+            return r;
+        }
+
     }
 }
