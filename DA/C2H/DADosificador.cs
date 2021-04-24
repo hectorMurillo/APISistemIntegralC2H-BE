@@ -437,5 +437,26 @@ namespace DA.C2H
 
             return r;
         }
+
+        public Result<List<DatosNotaRemision>> ObtenerDatosClienteNota(int idNotaRemicion)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+         
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pidNotaRemision", ConexionDbType.Int, idNotaRemicion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCatClienteNotaRemision", parametros);
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

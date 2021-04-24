@@ -1,5 +1,6 @@
 ﻿using DA.C2H;
 using Models;
+using Models.Dosificador;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -30,44 +31,7 @@ namespace C2HApiControlInterno
             Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
         }
 
-        public void sendMailTest()
-        {
-            SmtpClient client = new SmtpClient()
-            {
-                Host = "mail.concretos2h.com",
-                Port = 8889,
-                EnableSsl = false,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential()
-                {
-                    UserName = "atencion@concretos2h.com",
-                    Password = "_atencion1234"
-
-                }
-            };
-
-            MailAddress fromEmail = new MailAddress("atencion@concretos2h.com", "prueba");
-            MailAddress toEmail = new MailAddress("cris_ales@live.com.mx", "bien");
-            MailMessage message = new MailMessage(){
-                From = fromEmail,
-                Subject = "asd",
-                Body = "epalemipiernita"
-            };
-
-            message.To.Add(toEmail);
-            try
-            {
-                client.Send(message);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        public object SendMail(string mensaje,string destinatario)
+        public Result SendMail(DatosNotaRemision data)
         {
             Result r = new Result();
             try
@@ -89,15 +53,15 @@ namespace C2HApiControlInterno
                                 style=""display: block;"" />
                         </td>
                         <td align=""right"" bgcolor=""white"" style=""padding: 10px 0px 10px 0px;"" >
-                            <div style=""font-size: 24px;"">Christian alvarado</div>
+                            <div style=""font-size: 24px;"">" + data.Cliente + @"</div>
                         </td>
 
                     </tr>
     
                     <tr>
                         <td align=""center"" bgcolor=""#0076AC"" style=""padding: 0px 0px 10px 0;"" colspan=""2"" >
-                            <div style=""font-style: oblique; font-size: 18px;color: white; text-align: right; margin-right: 10px;"">12/05/2015</div>  
-                            <div style=""font-size: 25px; color: white;"">¡Estamos a punto de hacer equipo contigo!</div>
+                            <div style=""font-style: oblique; font-size: 18px;color: white; text-align: right; margin-right: 10px;"">24/04/2021</div>  
+                            <div style=""font-size: 25px; color: white;"">¡ESTAMOS A PUNTO DE HACER EQUIPO CONTIGO!</div>
                             <div style=""font-size: 20px; color: white;"">Vamos rumbo a tu obra, esperemos estes conforme con nuestros servicios</div>
                         </td >
                     </tr>
@@ -105,13 +69,16 @@ namespace C2HApiControlInterno
                         <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
                             <div style=""border: 5px solid gray ;width:60%; font-size: 20px; "">
                                  <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
-                                    <b>Número de Nota de Remisión: </b>158787 
+                                    <b>Número de Nota de Remisión: </b>" + data.Folio+ @"
+                                 </div> 
+                                <div style=""margin-top: 50px;  color: black;"">
+                                    <b>Folio del Pedido: </b>" + data.FolioPedido + @"
                                  </div> 
                                  <div style=""margin-bottom: 5px; color: black;"">
-                                    <b>Tu Agente de Ventas: </b>Miguel Perez 
+                                    <b>Tu Agente de Ventas: </b>" + data.Vendedor + @"
                                  </div>
                                 <div style=""margin-bottom: 50px; color: black;"">
-                                    <b>Obra: </b>colonia nice 
+                                    <b>Obra: </b>"+data.Obra+ @"
                                 </div>
                              </div>
                         </td >
@@ -119,8 +86,8 @@ namespace C2HApiControlInterno
                     <tr>
                         <td align=""right"" bgcolor=""#0076AC"" style=""padding: 10px 10px 20px 0;""  colspan=""2"" >
                             <div style=""font-size: 16px; margin-bottom: 5px;  color: white;"">Queremos seguir construyendo contigo </div>
-                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: 654-87-89</div>
-                            <div style=""font-size: 16px;  color: white;"">WhatsApp Vendedor: 656-54-54</div>
+                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: "+data.TelefonoEmpresa+ @"</div>
+                            <div style=""font-size: 16px;  color: white;"">Celular Vendedor: "+data.CelularVendedor+@"</div>
                         </td >
                     </tr>
                 </table>
@@ -131,22 +98,19 @@ namespace C2HApiControlInterno
 </html>
                                     ";
 
-                //WarmPack.Utilities.MailSender email = new WarmPack.Utilities.MailSender(Globales.Host, Globales.Port, false, Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                //email.Send(Globales.CorreoAutomatico, "cris_ales@live.com.mx", "Correo Automatico", htmlBody, true);
-               
-                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "Concretos2H","Pedido Generado");
+                sendHtmlEmail(Globales.CorreoAutomatico, data.CorreoCliente, htmlBody, "Concretos2H","Pedido Generado");
                 r.Value = true;
-                return null;
+                return r;
             }
             catch (Exception ex)
             {
                 r.Value = false;
                 r.Message = ex.Message;
-                return Response.AsJson(r);
+                return r;
             }
         }
 
-        protected object sendHtmlEmail(string from_Email, string to_Email, string body, string from_Name, string Subject)
+        protected Result sendHtmlEmail(string from_Email, string to_Email, string body, string from_Name, string Subject)
         {
             Result r = new Result();
             try
@@ -178,14 +142,14 @@ namespace C2HApiControlInterno
                
                 smtp.Send(mail);
                 r.Value = true;
-                return Response.AsJson(r);
+                return r;
             }
             catch (Exception ex)
             {
 
                 r.Value = false;
                 r.Message = ex.Message;
-                return Response.AsJson(r);
+                return r;
             }
            
         }

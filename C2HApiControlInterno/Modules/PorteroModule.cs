@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DA.C2H;
+using Models.Dosificador;
 using Models.Porteros;
 //using Models.Operador;
 using Nancy;
@@ -15,12 +16,13 @@ namespace C2HApiControlInterno.Modules
     public class PorteroModule : NancyModule
     {
         private readonly DAPortero _DAPortero = null;
-
+        private readonly DADosificador _DADosificador = null;
         public PorteroModule() : base("/porteros")
         {
             this.RequiresAuthentication();
 
             _DAPortero = new DAPortero();
+            _DADosificador = new DADosificador();
             Post("/guardar-entradas-salidas", _ => GuardarEntradasSalidas());
             Post("/guardar-suministros", _ => GuardarSuministros());
             Get("/obtener-entradas-salidas/{fechaDesde}/{fechaHasta}", x => ObtenerEntradasSalidas(x));
@@ -30,11 +32,20 @@ namespace C2HApiControlInterno.Modules
         private object GuardarEntradasSalidas()
         {
             Result result = new Result();
+            EnviarCorreo email = new EnviarCorreo();
+            List<DatosNotaRemision> notaRemisionCliente = new List<DatosNotaRemision>();
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var entradaSalida = this.Bind<EntradaSalidaModel>();
                 result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
+
+                if (result.Value)
+                {
+                    int idNotaRemision = int.Parse(entradaSalida.notaRemision.ToString());
+                    var r  = this._DADosificador.ObtenerDatosClienteNota(idNotaRemision);
+                    email.SendMail(r.Data[0]);
+                }
 
             }
             catch (Exception ex)

@@ -38,5 +38,8 @@ namespace Models.Dosificador
         public string NombreUsuario { get; set; }
         public string Nomenclatura { get; set; }
         public List<OperadorModel> Operadores { get; set; }
+        public string CelularVendedor { get; set; }
+        public string TelefonoEmpresa { get; set; }
+        public string CorreoCliente { get; set; }
     }
 }
