@@ -227,5 +227,23 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<ClientesModel>> ClientesDetenidos()
+        {
+            Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesDetenidosCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

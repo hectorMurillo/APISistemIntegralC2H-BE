@@ -43,6 +43,6 @@ namespace Models.Clientes
         public string NombreVendedor { get; set; }
         public string Usuario { get; set; }
         public int codVendedor { get; set; }
-
+        public string estatusNuevo { get; set; }
     }
 }
