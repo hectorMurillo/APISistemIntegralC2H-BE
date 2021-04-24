@@ -71,7 +71,7 @@ namespace C2HApiControlInterno
                                  <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
                                     <b>Número de Nota de Remisión: </b>" + data.Folio+ @"
                                  </div> 
-                                <div style=""margin-top: 50px;  color: black;"">
+                                <div style=""margin-bottom: 5px;color: black;"">
                                     <b>Folio del Pedido: </b>" + data.FolioPedido + @"
                                  </div> 
                                  <div style=""margin-bottom: 5px; color: black;"">
