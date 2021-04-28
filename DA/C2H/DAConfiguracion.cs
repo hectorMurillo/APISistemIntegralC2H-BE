@@ -83,7 +83,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarFuncionesUsuario(List<FuncionModel> datos, int codUsuario, int codSucursal)
+        public Result GuardarFuncionesUsuario(List<FuncionModel> datos, int codUsuario, int codSucursal, int usuarioMovimiento)
         {
             string funciones = datos.ToXml("Funciones");
             var r = new Result();
@@ -93,6 +93,7 @@ namespace DA.C2H
                 parametros.Add("@pFunciones", ConexionDbType.Xml, funciones);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pCodModulo", ConexionDbType.Int, codSucursal);
+                parametros.Add("@pCodUsuarioMovto", ConexionDbType.Int, usuarioMovimiento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 r = _conexion.Execute("ProcFuncionesPermisosGuardar", parametros);

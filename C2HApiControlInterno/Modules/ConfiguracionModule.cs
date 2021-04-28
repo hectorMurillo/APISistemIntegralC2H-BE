@@ -24,7 +24,8 @@ namespace C2HApiControlInterno.Modules
             Get("/usuarios", _ => ObtenerUsuarios());
             Get("/modulos", _ => ObtenerModulos());
             Get("/funciones/{codModulo}/{codUsuario}", parametro => ObtenerFuncionesUsuario(parametro));
-            Post("/funciones/guardar/{codModulo}/{codUsuario}", parametro => GuardarFuncionesUsuario(parametro));
+            Post("/funciones/guardar/{codModulo}/{codUsuario}/{usuarioMovimiento}", parametro => GuardarFuncionesUsuario(parametro));
+
         }
 
 
@@ -73,8 +74,6 @@ namespace C2HApiControlInterno.Modules
 
         }
 
-
-
         private dynamic GuardarFuncionesUsuario(dynamic arg)
         {
             Result result = new Result();
@@ -82,8 +81,9 @@ namespace C2HApiControlInterno.Modules
             {
                 int codUsuario = arg.codUsuario;
                 int codModulo = arg.codModulo;
+                int usuarioMovimiento = arg.usuarioMovimiento;
                 var datos = this.Bind<List<FuncionModel>>();
-                result = _DAConfiguracion.GuardarFuncionesUsuario(datos, codUsuario, codModulo);
+                result = _DAConfiguracion.GuardarFuncionesUsuario(datos, codUsuario, codModulo, usuarioMovimiento);
 
             }
             catch (Exception ex)
@@ -94,10 +94,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
 
         }
-
-
-
-
 
     }
 }
