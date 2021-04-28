@@ -308,7 +308,7 @@ namespace DA.C2H
                     nota.CodEquipo_CR = row["CodEquipo"].ToInt32();
                     nota.FolioGinco = row["FolioGinco"].ToInt32();
                     nota.CodProducto = row["CodFormula"].ToInt32();
-                    nota.FolioPadre = row["FolioPadre"].ToInt32();
+                    //nota.FolioPadre = row["FolioPadre"].ToInt32();
                     result.Data = nota;
                 });
                 result.Value = parametros.Value("@pResultado").ToBoolean();
