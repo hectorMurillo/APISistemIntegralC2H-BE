@@ -41,5 +41,9 @@ namespace Models.Dosificador
         public string CelularVendedor { get; set; }
         public string TelefonoEmpresa { get; set; }
         public string CorreoCliente { get; set; }
+
+        public int CodOperador { get; set; }
+        public int CodEquipo { get; set; }
+
     }
 }
