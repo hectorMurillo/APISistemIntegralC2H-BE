@@ -23,10 +23,6 @@ namespace C2HApiControlInterno.Modules
             //this.RequiresAuthentication();
             _DAVentas = new DAVentas();
 
-            //Post("/reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ReporteMensualMetrosCubicos(x));
-            //Get("/reporte-mensual-clientes/{fechaDesde}/{fechaHasta}/{agente}", x => ReporteMensualClientes(x));
-            //Post("/reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ReporteMensualVolumenXObras(x));
-
             //ReporteMensualMetrosCubicos
             Post("/obtener-reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualMetrosCubicos(x));
             Post("/imprimir-reporte-mensual-metros/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualMetrosCubicos(x));
@@ -40,7 +36,6 @@ namespace C2HApiControlInterno.Modules
             Post("/obtener-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualProductos(x));
             Post("/imprimir-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualProductos(x));
 
-            //Post("/reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ReporteMensualProductos(x));
             Get("/obtener-demanda-articulos/", _ => ObtenerDemandaArticulo());
 
         }
