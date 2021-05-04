@@ -59,6 +59,29 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+  <xs:element name="RptEquiposEntradasSalidas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CodEquipo" type="xs:integer"/>
+        <xs:element name="CodOperador" type="xs:integer"/>
+        <xs:element name="KilometrajeSalida" type="xs:decimal"/>
+        <xs:element name="HorometrajeSalida" type="xs:decimal"/>
+        <xs:element name="FechaSalida" type="xs:string"/>
+        <xs:element name="HoraSalida" type="xs:string"/>
+        <xs:element name="KilometrajeEntrada" type="xs:decimal"/>
+        <xs:element name="HorometrajeEntrada" type="xs:decimal"/>
+        <xs:element name="FechaEntrada" type="xs:string"/>
+        <xs:element name="HoraEntrada" type="xs:string"/>
+        <xs:element name="NotaRemision" type="xs:integer"/>
+        <xs:element name="TiempoFuera" type="xs:string"/>
+        <xs:element name="KilometrosRecorridos" type="xs:decimal"/>
+        <xs:element name="HorometrajeRecorrido" type="xs:decimal"/>
+        <xs:element name="Equipo" type="xs:string"/>
+        <xs:element name="Operador" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   
   
   <!--<xs:element name ="AltaDeClientes">

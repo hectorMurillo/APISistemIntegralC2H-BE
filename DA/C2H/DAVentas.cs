@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Reportes;
 using Models.Ventas;
 using System;
 using System.Collections.Generic;
@@ -134,6 +135,32 @@ namespace DA.C2H
 
             return r;
         }
+
+        public Result<List<RptEntradasSalidas>> ObtenerReporteEquipos(int codEquipo, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptEntradasSalidas>> result = new Result<List<RptEntradasSalidas>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptEntradasSalidas>("ProcReporteEntradasSalidasCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
 
     }
 }
