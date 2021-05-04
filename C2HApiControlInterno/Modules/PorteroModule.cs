@@ -39,14 +39,6 @@ namespace C2HApiControlInterno.Modules
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var entradaSalida = this.Bind<EntradaSalidaModel>();
                 result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
-
-                if (result.Value)
-                {
-                    int idNotaRemision = int.Parse(entradaSalida.notaRemision.ToString());
-                    var r  = this._DADosificador.ObtenerDatosClienteNota(idNotaRemision);
-                    email.SendMail(r.Data[0]);
-                }
-
             }
             catch (Exception ex)
             {
