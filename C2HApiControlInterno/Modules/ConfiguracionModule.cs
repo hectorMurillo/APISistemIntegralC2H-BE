@@ -25,6 +25,7 @@ namespace C2HApiControlInterno.Modules
             Get("/modulos", _ => ObtenerModulos());
             Get("/funciones/{codModulo}/{codUsuario}", parametro => ObtenerFuncionesUsuario(parametro));
             Post("/funciones/guardar/{codModulo}/{codUsuario}/{usuarioMovimiento}", parametro => GuardarFuncionesUsuario(parametro));
+            Post("/obtener-permisos/{codUsuario}", parametro => ObtenerPermisosUsuario(parametro));
 
         }
 
@@ -95,5 +96,36 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        private dynamic ObtenerPermisosUsuario(dynamic arg)
+        {
+            try
+            {
+                int codUsuario = arg.codUsuario;
+                var r = _DAConfiguracion.ObtenerPermisosUsuario(codUsuario);
+
+                if (r.Value)
+                {
+                    return Response.AsJson(new Result(r.Value, r.Message, r.Data));
+                }
+
+                return Response.AsJson(r);
+            }
+            catch (Exception ex)
+            {
+
+                return Response.AsJson(ex);
+            }
+
+        }
+
+        
+
+
+        //var r = _DAAuthentication.Login2(credenciales);
+
+        //        if (r.Value)
+        //        {
+        //            return Response.AsJson(new Result(r.Value, r.Message, r.Data));
+        //        }
     }
 }
