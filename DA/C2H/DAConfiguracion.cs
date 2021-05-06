@@ -107,5 +107,43 @@ namespace DA.C2H
             }
         }
 
+        public Result ObtenerPermisosUsuario(int codUsuario)
+        {
+            var parametros = new ConexionParameters();
+            parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+            parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+            parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+            var r = _conexion.RecordsetsExecute("ProcUsuarioObtenerPermisos", parametros);
+
+            if (r)
+            {
+                var datosUsuario = _conexion.RecordsetsResults<UsuarioModel>()?.FirstOrDefault();
+
+                if (datosUsuario != null)
+                {
+                    var accessToken = Globales.GetJwt(datosUsuario);
+
+                    var permisosUsuario = _conexion.RecordsetsResults<UsuarioPermiso>();
+
+
+                    return new Result(
+                        parametros.Value("@pResultado").ToBoolean(),
+                        parametros.Value("@pMsg").ToString(),
+                        new
+                        {
+                            user = datosUsuario,
+                            accessToken = accessToken,
+                            permisos = permisosUsuario
+                        });
+                }
+
+
+            }
+            return new Result(false, "algo no salio bien");
+        }
+
+        
+
     }
 }
