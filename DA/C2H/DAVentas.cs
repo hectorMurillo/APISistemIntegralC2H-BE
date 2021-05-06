@@ -136,7 +136,7 @@ namespace DA.C2H
             return r;
         }
 
-        public Result<List<RptEntradasSalidas>> ObtenerReporteEquipos(int codEquipo, DateTime fechaDesde, DateTime fechaHasta)
+        public Result<List<RptEntradasSalidas>> ObtenerReporteEntradasSalidas(int codEquipo, DateTime fechaDesde, DateTime fechaHasta)
         {
             Result<List<RptEntradasSalidas>> result = new Result<List<RptEntradasSalidas>>();
             try
@@ -149,6 +149,31 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<RptEntradasSalidas>("ProcReporteEntradasSalidasCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
+        public Result<List<RptEquipos>> ObtenerReporteEquipos(int codEquipo, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptEquipos>> result = new Result<List<RptEquipos>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptEquipos>("ProcReporteEquiposCon", parametros);
                 result.Value = parametros.Value("@pResultado").ToBoolean();
                 result.Message = parametros.Value("@pMsg").ToString();
 

@@ -197,6 +197,7 @@
     <Content Include="Reportes\RptVolumenXObra.rpt" />
     <Content Include="Reportes\RptMensualProductos.rpt" />
     <Content Include="Reportes\RptEntradasSalidas.rpt" />
+    <Content Include="Reportes\RptEquipos.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

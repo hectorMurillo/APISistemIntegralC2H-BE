@@ -36,9 +36,12 @@ namespace C2HApiControlInterno.Modules
             //ReporteVolumenXObras
             Post("/obtener-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualProductos(x));
             Post("/imprimir-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualProductos(x));
+            //ReporteEntradasSalidas
+            Post("/obtener-reporte-entradas-salidas/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualEntradasSalidas(x));
+            Post("/imprimir-reporte-entradas-salidas/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualEntradasSalidas(x));
             //ReporteEquipos
-            Post("/obtener-reporte-entradas-salidas/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteEquipos(x));
-            Post("/imprimir-reporte-entradas-salidas/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteEntradasSalidas(x));
+            Post("/obtener-reporte-mensual-equipos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualEquipos(x));
+            Post("/imprimir-reporte-mensual-equipos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualEquipos(x));
 
             Get("/obtener-demanda-articulos/", _ => ObtenerDemandaArticulo());
 
@@ -267,7 +270,7 @@ namespace C2HApiControlInterno.Modules
 
         }
 
-        private object ObtenerReporteEquipos(dynamic x)
+        private object ObtenerReporteMensualEntradasSalidas(dynamic x)
         {
             Result result = new Result();
 
@@ -276,7 +279,7 @@ namespace C2HApiControlInterno.Modules
             DateTime fechaHasta = x.fechaHasta;
 
             var r = new Result<List<RptEntradasSalidas>>();
-            r = _DAVentas.ObtenerReporteEquipos(codEquipo, fechaDesde, fechaHasta);
+            r = _DAVentas.ObtenerReporteEntradasSalidas(codEquipo, fechaDesde, fechaHasta);
             result.Data = r.Data;
             result.Value = r.Value;
             result.Message = r.Message;
@@ -285,7 +288,7 @@ namespace C2HApiControlInterno.Modules
 
         }
 
-        private object ImprimirReporteEntradasSalidas(dynamic x)
+        private object ImprimirReporteMensualEntradasSalidas(dynamic x)
         {
             Result result = new Result();
             DateTime fechaDesde = x.fechaDesde;
@@ -303,6 +306,60 @@ namespace C2HApiControlInterno.Modules
 
             ReportDocument reporte = new ReportDocument();
             reporte.Load(path + "\\Reportes\\RptEntradasSalidas.rpt");
+            reporte.SetDataSource(reporteEntradasSalidas);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.SetParameterValue("equipo", equipoReporte);
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ObtenerReporteMensualEquipos(dynamic x)
+        {
+            Result result = new Result();
+
+            var codEquipo = x.codEquipo;
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            var r = new Result<List<RptEquipos>>();
+            r = _DAVentas.ObtenerReporteEquipos(codEquipo, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            result.Message = r.Message;
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ImprimirReporteMensualEquipos(dynamic x)
+        {
+            Result result = new Result();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            int equipo = x.codEquipo;
+
+            var reporteEntradasSalidas = this.Bind<List<RptEquipos>>();
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptEquiposTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+
+            string equipoReporte = equipo == 0 ? "Todos" : reporteEntradasSalidas[0].equipo;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptEquipos.rpt");
             reporte.SetDataSource(reporteEntradasSalidas);
             reporte.SetParameterValue("fechaDesde", fechaDesde);
             reporte.SetParameterValue("fechaHasta", fechaHasta);
