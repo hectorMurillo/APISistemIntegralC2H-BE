@@ -57,14 +57,15 @@ namespace DA.C2H
             return result;
         }
 
-        public Result CancelarNotaRemision(int folio, int folioGinco)
+        public Result CancelarNotaRemision(DatosNotaRemision notaRemision)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pFolio", ConexionDbType.Int, folio);
-                parametros.Add("@pFolioGinco", ConexionDbType.Int, folioGinco);
+                parametros.Add("@pFolio", ConexionDbType.Int, notaRemision.Folio);
+                parametros.Add("@pFolioGinco", ConexionDbType.Int, notaRemision.FolioGinco);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, notaRemision.Observacion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
