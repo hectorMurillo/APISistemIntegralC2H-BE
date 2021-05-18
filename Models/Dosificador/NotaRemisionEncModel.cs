@@ -32,7 +32,9 @@ namespace Models.Dosificador
         public DateTime Fecha { get; set; }
         public int CodUsuario { get; set; }
         public Decimal CantidadRestantePedido { get; set; }
+        public bool Foraneo { get; set; }
 
+        public ParametrosEspecialesModel parametrosEspeciales { get; set; }
     }
 }
 
