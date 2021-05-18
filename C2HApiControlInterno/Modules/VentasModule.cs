@@ -42,8 +42,14 @@ namespace C2HApiControlInterno.Modules
             //ReporteEquipos
             Post("/obtener-reporte-mensual-equipos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualEquipos(x));
             Post("/imprimir-reporte-mensual-equipos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualEquipos(x));
-
+            
             Get("/obtener-demanda-articulos/", _ => ObtenerDemandaArticulo());
+            //ReporteNocturnos
+            Post("/obtener-reporte-nocturnos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualNocturnos(x));
+            Post("/imprimir-reporte-nocturnos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualNocturnos(x));
+            //ReporteForaneos
+            Post("/obtener-reporte-foraneos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualForaneos(x));
+            Post("/imprimir-reporte-foraneos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualForaneos(x));
 
         }
 
@@ -387,6 +393,114 @@ namespace C2HApiControlInterno.Modules
 
             return Response.AsJson(r);
 
+
+        }
+
+        private object ObtenerReporteMensualNocturnos(dynamic x)
+        {
+            Result result = new Result();
+
+            var codEquipo = x.codEquipo;
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            var r = new Result<List<RptEntradasSalidas>>();
+            r = _DAVentas.ObtenerReporteMensualNocturnos(codEquipo, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            result.Message = r.Message;
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ImprimirReporteMensualNocturnos(dynamic x)
+        {
+            Result result = new Result();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            int equipo = x.codEquipo;
+
+            var reporteEntradasSalidas = this.Bind<List<RptEntradasSalidas>>();
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptNocturnosTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+
+            string equipoReporte = equipo == 0 ? "Todos" : reporteEntradasSalidas[0].equipo;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptNocturnos.rpt");
+            reporte.SetDataSource(reporteEntradasSalidas);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.SetParameterValue("equipo", equipoReporte);
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ObtenerReporteMensualForaneos(dynamic x)
+        {
+            Result result = new Result();
+
+            var codEquipo = x.codEquipo;
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            var r = new Result<List<RptEntradasSalidas>>();
+            r = _DAVentas.ObtenerReporteMensualForaneos(codEquipo, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            result.Message = r.Message;
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ImprimirReporteMensualForaneos(dynamic x)
+        {
+            Result result = new Result();
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            int equipo = x.codEquipo;
+
+            var reporteEntradasSalidas = this.Bind<List<RptEntradasSalidas>>();
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptForaneosTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+
+            string equipoReporte = equipo == 0 ? "Todos" : reporteEntradasSalidas[0].equipo;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptForaneos.rpt");
+            reporte.SetDataSource(reporteEntradasSalidas);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.SetParameterValue("equipo", equipoReporte);
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+
+
+            return Response.AsJson(result);
 
         }
 
