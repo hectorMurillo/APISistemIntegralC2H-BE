@@ -354,7 +354,7 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var notaRemision = this.Bind<DatosNotaRemision>();
-                result = _DADosificador.CancelarNotaRemision(notaRemision.Folio, notaRemision.FolioGinco);
+                result = _DADosificador.CancelarNotaRemision(notaRemision);
             }
             catch (Exception ex)
             {
