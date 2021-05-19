@@ -254,7 +254,7 @@ namespace DA.C2H
                 parametros.Add("@pCantidadRestantePedido", ConexionDbType.Decimal, notaRemision.CantidadRestantePedido);
                 parametros.Add("@pForaneo", ConexionDbType.Bit, notaRemision.Foraneo);
                 parametros.Add("@pIva", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Iva);
-                parametros.Add("@pCodOperadorReubidado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
+                parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
                 parametros.Add("@pReubicado", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Reubicado);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
