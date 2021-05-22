@@ -302,6 +302,10 @@ namespace DA.C2H
                 parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
                 parametros.Add("@pCantidadRestantePedido", ConexionDbType.Decimal, notaRemision.CantidadRestantePedido);
+                parametros.Add("@pForaneo", ConexionDbType.Bit, notaRemision.Foraneo);
+                parametros.Add("@pIva", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Iva);
+                parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
+                parametros.Add("@pReubicado", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Reubicado);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);

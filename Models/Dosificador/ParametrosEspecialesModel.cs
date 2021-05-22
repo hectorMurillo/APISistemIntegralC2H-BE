@@ -8,8 +8,8 @@ namespace Models.Dosificador
 {
     public class ParametrosEspecialesModel
     {
-        public int CodOperador { get; set; }
-        public decimal Iva { get; set; }
-        public decimal Reubicado { get; set; }
+        public int CodOperador { get; set; } = 0;
+        public decimal Iva { get; set; } = 0;
+        public decimal Reubicado { get; set; } = 0;
     }
 }
