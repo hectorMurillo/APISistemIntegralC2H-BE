@@ -17,8 +17,6 @@ namespace DA.C2H
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
-
-
         public Result ConsultaClientes(int codUsuario, int codCliente)
         {
             Result result = new Result();
@@ -35,13 +33,40 @@ namespace DA.C2H
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
+                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
 
                 return new Result()
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente }
+                    Data = new { cliente, direccionesXCliente, contactosXCliente }
                 };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<int>> ContactoGuardar(ContactoXClienteModel contacto)
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                
+                parametros.Add("@pCodContacto", ConexionDbType.Int, contacto.CodContacto);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, contacto.CodCliente);
+                parametros.Add("@pNombreContacto", ConexionDbType.VarChar, contacto.NombreContacto);
+                parametros.Add("@pTelefono", ConexionDbType.VarChar, contacto.Telefono);
+                parametros.Add("@pTelefonoMovil", ConexionDbType.VarChar, contacto.TelefonoMovil);
+                parametros.Add("@pCorreo", ConexionDbType.VarChar, contacto.Correo);
+                parametros.Add("@pContactoPrincipal", ConexionDbType.Bit, contacto.ContactoPrincipal);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<int>("ProcCaContactosXClienteGuardar", parametros);
             }
             catch (Exception ex)
             {
@@ -61,6 +86,7 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<Model.UsuarioClienteModel>("ProcUsuarioClienteCon", parametros);
+                //var res_ = _conexion.ExecuteScript()
             }
             catch (Exception ex)
             {
@@ -137,9 +163,9 @@ namespace DA.C2H
             return result;
         }
 
-        public Result ClienteGuardar(Model.ClientesModel Cliente)
+        public Result<List<int>> ClienteGuardar(Model.ClientesModel Cliente)
         {
-            Result result = new Result();
+            Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var parametros = new ConexionParameters();
@@ -149,18 +175,20 @@ namespace DA.C2H
                 parametros.Add("@pApellidoM", ConexionDbType.VarChar, Cliente.ApellidoM);
                 parametros.Add("@pCodigoCliente", ConexionDbType.Int, Cliente.Codigo);
                 parametros.Add("@pRFC", ConexionDbType.VarChar, Cliente.RFC);
-                parametros.Add("@pRazonSocial", ConexionDbType.Int, Cliente.RazonSocial);
-                parametros.Add("@pAlias", ConexionDbType.VarChar, Cliente.Alias);
+                parametros.Add("@pRazonSocial", ConexionDbType.VarChar, Cliente.RazonSocial);
+                //parametros.Add("@pAlias", ConexionDbType.VarChar, Cliente.Alias);
                 parametros.Add("@pTelefono", ConexionDbType.VarChar, Cliente.Telefono);
                 parametros.Add("@pCelular", ConexionDbType.VarChar, Cliente.Celular);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, Cliente.Correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cliente.FechaRegistro);
                 parametros.Add("@pCredito", ConexionDbType.Decimal, Cliente.Credito);
                 parametros.Add("@pCodVendedor", ConexionDbType.VarChar, Cliente.codEmpleadoVendedor);
+                parametros.Add("@pRegimenFiscal", ConexionDbType.VarChar, Cliente.regimenFiscal);
+                parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Cliente.NombreComercial);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcCatClienteGuardar", parametros);
+                result = _conexion.ExecuteWithResults<int>("ProcCatClienteGuardar", parametros);
             }
             catch (Exception ex)
             {
