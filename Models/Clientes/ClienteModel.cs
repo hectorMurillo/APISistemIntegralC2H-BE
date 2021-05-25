@@ -23,7 +23,7 @@ namespace Models.Clientes
         public string ApellidoM { get; set; }
 
         public string RFC { get; set; }
-        public int RazonSocial { get; set; }
+        public string RazonSocial { get; set; }
         public string NombreComercial { get; set; }
         public string Alias { get; set; }
         public string Telefono { get; set; }
@@ -44,5 +44,6 @@ namespace Models.Clientes
         public string Usuario { get; set; }
         public int codVendedor { get; set; }
         public string estatusNuevo { get; set; }
+        public string regimenFiscal { get; set; }
     }
 }

@@ -29,13 +29,27 @@ namespace C2HApiControlInterno.Modules
             Post("/guardarUsuarioCliente", _ => postUsuarioCliente());
             Post("/guardar", _ => PostCliente());
             Post("/direcciones/guardar", _ => PostClienteDireccion());
+            Post("/contactos/guardar", _ => PostClienteContacto());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
             Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
-            Get("/clientes-detenidos", _ => GetClientesDetenidos());
+            Get("/clientes-detenidos", _ => GetClientesDetenidos());            
 
+        }        
 
+        private object PostClienteContacto()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var contacto = this.Bind<Model.ContactoXClienteModel>();
+                result = _DAClientes.ContactoGuardar(contacto);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
-
         private object GetClientesCombo()
         {
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
@@ -142,7 +156,7 @@ namespace C2HApiControlInterno.Modules
 
         private object PostCliente()
         {
-            Result result = new Result();
+            Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var cliente = this.Bind<Model.ClientesModel>();

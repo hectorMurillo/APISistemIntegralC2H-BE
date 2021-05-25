@@ -1,5 +1,5 @@
-﻿using API.Models;
-using DA.Authentication;
+﻿using DA.Authentication;
+using API.Models;
 using DA.C2H;
 using Models;
 using Models.Authentication;
@@ -24,15 +24,17 @@ namespace C2HApiControlInterno.Modules
         public AuthenticationModule() : base("/seguridad")
         {
             _DAAuthentication = new DAAuthentication();
-          
+
             // bloque de seguridad aqui
             Post("/login", _ => PostLogin());
 
             Post("/logout", _ => PostLogout());
 
-            Post("/renovar-token", _ => PostRenovarToken());            
+            Post("/renovar-token", _ => PostRenovarToken());
             Post("/verificaPermisoURL/{url}/{codUsuario}", x => postVerificaPermisoURL(x));
             Post("/verificar-nombre-usuario", _ => postVerificarNombreUsuario());
+
+            Post("/verificaPermisoModulo/{modulo}/{codUsuario}", x => postVerificaPermiso(x));
             //Post("/recuperar-password-correo", _ => postRecuperarPasswordEnviaCorreo());
             //Post("/recuperar-password-verificar", _ => postRecuperarPasswordEnviaVerifica());
             //Post("/recuperar-password-restablecer", _ => postRecuperarPasswordEnviaRestablecer());
@@ -69,6 +71,17 @@ namespace C2HApiControlInterno.Modules
 
         //    return Response.AsJson(r);
         //}
+        private object postVerificaPermiso(dynamic x)
+        {
+            string modulo = x.modulo;
+            //string codUsuario = x.codUsuario;
+            int codUsuario = this.BindUsuario().IdUsuario;
+
+            var r = _DAAuthentication.verificaPermiso(codUsuario, modulo);
+            return Response.AsJson(r);
+        }
+
+
         private object postVerificaPermisoURL(dynamic x)
         {
             //var p = this.BindModel();
@@ -143,7 +156,7 @@ namespace C2HApiControlInterno.Modules
 
                 return Response.AsJson(ex);
             }
-          
+
         }
 
         private object PostRenovarToken()
@@ -171,7 +184,7 @@ namespace C2HApiControlInterno.Modules
             {
                 return Response.AsJson(ex);
             }
-           
+
         }
 
         private object postVerificarNombreUsuario()
@@ -189,7 +202,7 @@ namespace C2HApiControlInterno.Modules
             {
                 return Response.AsJson(ex);
             }
-          
+
         }
     }
 }

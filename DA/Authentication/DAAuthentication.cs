@@ -72,6 +72,24 @@ namespace DA.Authentication
             return r;
         }
 
+        public Result<bool> verificaPermiso(int codUsuario, string modulo)
+        {
+
+            try
+            {
+                string query = $"SELECT dbo.FnVerificaPermiso({codUsuario},'{modulo}')";
+                var r = _conexion.ExecuteScalar<bool>(query);
+                return r;
+            }
+            catch (Exception ex)
+            {
+                var r = new Result<bool>();
+                r.Value = false;
+                r.Message = ex.Message;
+                return r;
+            }
+        }
+
         public Result<string> postRecuperarPasswordEnviaVerificar(string referencia)
         {
             var parametros = new ConexionParameters();
@@ -124,8 +142,8 @@ namespace DA.Authentication
             if (r)
             {
                 var datosUsuario = _conexion.RecordsetsResults<UsuarioModel>()?.FirstOrDefault();
-                   
-                if(datosUsuario!= null)
+
+                if (datosUsuario != null)
                 {
                     var accessToken = Globales.GetJwt(datosUsuario);
 
@@ -144,7 +162,7 @@ namespace DA.Authentication
                         });
                 }
 
-              
+
             }
             return new Result(false, "credenciales invalidas");
         }
