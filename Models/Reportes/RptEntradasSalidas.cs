@@ -24,5 +24,7 @@ namespace Models.Reportes
         public decimal horometrajeRecorrido { get; set; }
         public string equipo { get; set; }
         public string operador { get; set; }
+        public decimal cantidad { get; set; }
+
     }
 }

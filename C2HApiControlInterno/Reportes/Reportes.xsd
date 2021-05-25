@@ -60,6 +60,7 @@
         <xs:element name="HorometrajeRecorrido" type="xs:decimal"/>
         <xs:element name="Equipo" type="xs:string"/>
         <xs:element name="Operador" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

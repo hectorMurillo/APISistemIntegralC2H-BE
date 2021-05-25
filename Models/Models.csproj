@@ -111,6 +111,7 @@
     <Compile Include="Dosificador\NotaRemisionEncModel.cs" />
     <Compile Include="Dosificador\ObrasModel.cs" />
     <Compile Include="Dosificador\OperadorModel.cs" />
+    <Compile Include="Dosificador\ParametrosEspecialesModel.cs" />
     <Compile Include="Dosificador\PedidoModel.cs" />
     <Compile Include="Empleados\DireccionXEmpleado.cs" />
     <Compile Include="Empleados\DocumentosEmpleado.cs" />
