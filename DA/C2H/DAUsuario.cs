@@ -65,5 +65,28 @@ namespace DA.C2H
             return result;
         }
 
+
+        public Result ActualizarEstatusUsuario(int idUsuario, bool activar)
+        {
+
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pActivar", ConexionDbType.Bit, activar);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, idUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcUsuariosActualizarEstatus", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }

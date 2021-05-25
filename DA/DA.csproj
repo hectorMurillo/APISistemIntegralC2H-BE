@@ -67,10 +67,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Models\bin\Debug\Models.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>False</Private>
+      <HintPath>..\Models\bin\Debug\Models.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

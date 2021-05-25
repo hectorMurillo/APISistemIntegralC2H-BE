@@ -23,6 +23,7 @@ namespace C2HApiControlInterno.Modules
             //Post("/menu-principal", _ => postMenuPrincipal());
             Get("/obtenerMenu", _ => getMenuPrincipal());
             Get("/todos", _ => GetTodos());
+            Get("/actualizar-estatus/{idUsuario}/{activar}", x => ActualizarEstatusUsuario(x));
         }
 
         private object GetTodos()
@@ -149,6 +150,26 @@ namespace C2HApiControlInterno.Modules
             //}
             #endregion
             return Response.AsJson(resultModificado);
+        }
+
+        private object ActualizarEstatusUsuario(dynamic x)
+        {
+
+            Result result = new Result();
+
+            try
+            {
+                int idUsuario = x.idUsuario;
+                bool activar = x.activar;
+
+                result = _DAUsuario.ActualizarEstatusUsuario(idUsuario, activar);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+
         }
     }
 }
