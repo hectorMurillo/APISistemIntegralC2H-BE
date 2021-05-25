@@ -33,7 +33,7 @@ namespace C2HApiControlInterno.Modules
             //ReporteVolumenXObras
             Post("/obtener-reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualVolumenXObras(x));
             Post("/imprimir-reporte-volumen-obra/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualVolumenXObras(x));
-            //ReporteVolumenXObras
+            //ReporteMensualProductos
             Post("/obtener-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ObtenerReporteMensualProductos(x));
             Post("/imprimir-reporte-mensual-productos/{fechaDesde}/{fechaHasta}", x => ImprimirReporteMensualProductos(x));
             //ReporteEntradasSalidas

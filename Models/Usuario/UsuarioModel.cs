@@ -14,5 +14,9 @@ namespace Models.Usuario
         public string Usuario { get; set; }
         public string Nombre { get; set; }
         public int Agente { get; set; }
+        public string NombreCompleto { get; set; }
+        public string TipoEmpleado { get; set; }
+        public string Estatus { get; set; }
+        public string FechaUltimaConexion { get; set; }
     }
 }
