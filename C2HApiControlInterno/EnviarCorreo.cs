@@ -31,7 +31,7 @@ namespace C2HApiControlInterno
             Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
         }
 
-        public Result SendMail(DatosNotaRemision data)
+        public Result SendMail()
         {
             Result r = new Result();
             try
@@ -53,7 +53,7 @@ namespace C2HApiControlInterno
                                 style=""display: block;"" />
                         </td>
                         <td align=""right"" bgcolor=""white"" style=""padding: 10px 0px 10px 0px;"" >
-                            <div style=""font-size: 24px;"">" + data.Cliente + @"</div>
+                            <div style=""font-size: 24px;""</div>
                         </td>
 
                     </tr>
@@ -67,27 +67,18 @@ namespace C2HApiControlInterno
                     </tr>
                     <tr>
                         <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
-                            <div style=""border: 5px solid gray ;width:60%; font-size: 20px; "">
+                            <div style=""border: 5px solid gray ;width:10%; font-size: 20px; "">
                                  <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
-                                    <b>Número de Nota de Remisión: </b>" + data.Folio+ @"
+                                    <a href=""http://localhost:8080/#/feedback"">Encuesta Concretos 2H</a>""
                                  </div> 
-                                <div style=""margin-bottom: 5px;color: black;"">
-                                    <b>Folio del Pedido: </b>" + data.FolioPedido + @"
-                                 </div> 
-                                 <div style=""margin-bottom: 5px; color: black;"">
-                                    <b>Tu Agente de Ventas: </b>" + data.Vendedor + @"
-                                 </div>
-                                <div style=""margin-bottom: 50px; color: black;"">
-                                    <b>Obra: </b>"+data.Obra+ @"
-                                </div>
                              </div>
                         </td >
                     </tr>
                     <tr>
                         <td align=""right"" bgcolor=""#0076AC"" style=""padding: 10px 10px 20px 0;""  colspan=""2"" >
                             <div style=""font-size: 16px; margin-bottom: 5px;  color: white;"">Queremos seguir construyendo contigo </div>
-                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: "+data.TelefonoEmpresa+ @"</div>
-                            <div style=""font-size: 16px;  color: white;"">Celular Vendedor: "+data.CelularVendedor+@"</div>
+                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: ""</div>
+                            <div style=""font-size: 16px;  color: white;"">Celular Vendedor: ""</div>
                         </td >
                     </tr>
                 </table>
@@ -98,7 +89,7 @@ namespace C2HApiControlInterno
 </html>
                                     ";
 
-                sendHtmlEmail(Globales.CorreoAutomatico, data.CorreoCliente, htmlBody, "Concretos2H","Pedido Generado");
+                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "Concretos2H","Pedido Generado");
                 r.Value = true;
                 return r;
             }

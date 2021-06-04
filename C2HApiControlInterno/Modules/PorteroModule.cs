@@ -36,9 +36,13 @@ namespace C2HApiControlInterno.Modules
             List<DatosNotaRemision> notaRemisionCliente = new List<DatosNotaRemision>();
             try
             {
-                var codUsuario = this.BindUsuario().IdUsuario;
-                var entradaSalida = this.Bind<EntradaSalidaModel>();
-                result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
+                //var codUsuario = this.BindUsuario().IdUsuario;
+                //var entradaSalida = this.Bind<EntradaSalidaModel>();
+                //result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
+
+                EnviarCorreo correo = new EnviarCorreo();
+                correo.SendMail();
+
             }
             catch (Exception ex)
             {
