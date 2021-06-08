@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DA.C2H;
 using Models.Dosificador;
+using Models.Herramientas;
 using Models.Porteros;
 //using Models.Operador;
 using Nancy;
@@ -31,17 +32,22 @@ namespace C2HApiControlInterno.Modules
 
         private object GuardarEntradasSalidas()
         {
-            Result result = new Result();
-            EnviarCorreo email = new EnviarCorreo();
+            ResultadoModel result = new ResultadoModel();
+            EnviarCorreo correo = new EnviarCorreo();
+
             List<DatosNotaRemision> notaRemisionCliente = new List<DatosNotaRemision>();
             try
             {
-                //var codUsuario = this.BindUsuario().IdUsuario;
-                //var entradaSalida = this.Bind<EntradaSalidaModel>();
-                //result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var entradaSalida = this.Bind<EntradaSalidaModel>();
+                result = _DAPortero.GuardarEntradasSalidas(entradaSalida, codUsuario);
 
-                EnviarCorreo correo = new EnviarCorreo();
-                correo.SendMail();
+                if(result.CodRespuesta != 0)
+                {
+
+                   var r =  _DAPortero.EnviarCorreoEvaluacion(entradaSalida.idNotasRemisionEnc);
+                   correo.SendMail(r.Data[0].FolioPedido, r.Data[0].Correo);
+                }
 
             }
             catch (Exception ex)

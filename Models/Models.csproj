@@ -132,6 +132,7 @@
     <Compile Include="Generales\CodigoPostal.cs" />
     <Compile Include="GlobalesModel.cs" />
     <Compile Include="Herramientas\ParametrosModel.cs" />
+    <Compile Include="Herramientas\ResultadoModel.cs" />
     <Compile Include="Materiales\EspecificacionesConcreto.cs" />
     <Compile Include="Materiales\TipoConcreto.cs" />
     <Compile Include="Materiales\TipoObra.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Pedidos\PedidoModel.cs" />
     <Compile Include="Porteros\EntradaSalida.cs" />
     <Compile Include="Porteros\EntradaSalidaModel.cs" />
+    <Compile Include="Porteros\PedidoCorreoModel.cs" />
     <Compile Include="Porteros\Suministro.cs" />
     <Compile Include="Porteros\SuministroModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

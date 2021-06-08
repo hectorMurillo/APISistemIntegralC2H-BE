@@ -31,12 +31,12 @@ namespace C2HApiControlInterno
             Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
         }
 
-        public Result SendMail()
+        public Result SendMail(int FolioPedido, string correoCliente)
         {
             Result r = new Result();
             try
             {
-             
+                string urlEvaluacion = "http://localhost:8080/#/feedback/" + FolioPedido.ToString();
                 string htmlBody = @"
         
 <html>
@@ -69,7 +69,8 @@ namespace C2HApiControlInterno
                         <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
                             <div style=""border: 5px solid gray ;width:10%; font-size: 20px; "">
                                  <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
-                                    <a href=""http://localhost:8080/#/feedback"">Encuesta Concretos 2H</a>""
+                                    <a href=" + urlEvaluacion +">" + @" Encuesta Concretos 2H</a>
+
                                  </div> 
                              </div>
                         </td >
@@ -89,7 +90,7 @@ namespace C2HApiControlInterno
 </html>
                                     ";
 
-                sendHtmlEmail(Globales.CorreoAutomatico, "cris_ales@live.com.mx", htmlBody, "Concretos2H","Pedido Generado");
+                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H","Pedido Generado");
                 r.Value = true;
                 return r;
             }
