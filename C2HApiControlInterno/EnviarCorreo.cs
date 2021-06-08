@@ -37,8 +37,9 @@ namespace C2HApiControlInterno
             try
             {
                 string urlEvaluacion = "http://localhost:8080/#/feedback/" + FolioPedido.ToString();
+
                 string htmlBody = @"
-        
+ 
 <html>
 
 <body style=""margin: 0; padding: 0;"">
@@ -59,27 +60,42 @@ namespace C2HApiControlInterno
                     </tr>
     
                     <tr>
-                        <td align=""center"" bgcolor=""#0076AC"" style=""padding: 0px 0px 10px 0;"" colspan=""2"" >
+                        <td  bgcolor=""#0076AC"" style=""padding: 10px 0px 10px 0;"" colspan=""2"" >
                             <div style=""font-style: oblique; font-size: 18px;color: white; text-align: right; margin-right: 10px;"">24/04/2021</div>  
-                            <div style=""font-size: 25px; color: white;"">¡ESTAMOS A PUNTO DE HACER EQUIPO CONTIGO!</div>
-                            <div style=""font-size: 20px; color: white;"">Vamos rumbo a tu obra, esperemos estes conforme con nuestros servicios</div>
+                            <div style=""font-size: 20px; color: white; margin-right: 10px; margin-left: 10px"">Estimado CHRISTIAN ALVARADO</div>
+                            <BR><BR>
+                            <div style=""font-size: 17px; color: white;  margin-right: 10px; margin-left: 10px"">
+                                Concretos 2H, Empresa experta en la fabricación y comercialización de concreto y materiales para la construcción en cualquier obra, especializados en concretos de alta resistencia.
+                            </div>
+                            <BR>
+                             <div style=""font-size: 17px; color: white; margin-right: 10px; margin-left: 10px "">
+                               La encuesta llevará aproximadamente 5 minutos responderla. 
+                               Las respuestas que otorgue se mantendrán estrictamente confidenciales y serán usadas únicamente con únicamente con fines estadísticos.
+                            </div>
                         </td >
                     </tr>
                     <tr>
                         <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
-                            <div style=""border: 5px solid gray ;width:10%; font-size: 20px; "">
+                            <div style=""border: 5px solid gray ;width:40%; font-size: 20px; "">
                                  <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
-                                    <a href=" + urlEvaluacion +">" + @" Encuesta Concretos 2H</a>
-
-                                 </div> 
+                                 <a style=""font: bold 18px Arial;
+                                            text-decoration: none;   
+                                            background-color:orange;  
+                                            color: #333333; 
+                                          border-left: 10px solid orange; 
+                                            border-bottom: 10px solid orange;  
+                                            border-right: 10px solid orange;  
+                                            border-top: 10px solid orange; "" 
+                                    href=" + urlEvaluacion + ">" + @" Aceptar y responder</a>
+                                   </div> 
                              </div>
                         </td >
                     </tr>
                     <tr>
                         <td align=""right"" bgcolor=""#0076AC"" style=""padding: 10px 10px 20px 0;""  colspan=""2"" >
                             <div style=""font-size: 16px; margin-bottom: 5px;  color: white;"">Queremos seguir construyendo contigo </div>
-                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: ""</div>
-                            <div style=""font-size: 16px;  color: white;"">Celular Vendedor: ""</div>
+                            <div style=""font-size: 16px;margin-bottom: 5px;  color: white;"">Telefono: 72 71488</div>
+                            <div style=""font-size: 16px;  color: white;"">Celular Vendedor: 672 111 8956</div>
                         </td >
                     </tr>
                 </table>
@@ -88,9 +104,10 @@ namespace C2HApiControlInterno
     </table>
 </body>
 </html>
-                                    ";
+";
 
-                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H","Pedido Generado");
+
+                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H", "¡Comparta su opinión sobre nosotros!");
                 r.Value = true;
                 return r;
             }
