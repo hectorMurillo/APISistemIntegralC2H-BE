@@ -17,10 +17,24 @@ namespace Models
     public class Globales
     {
         private static AppConfiguration _Configuracion;
+        private static bool produccion = false;
         public static string CorreoAutomatico = "";
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
         public static int Port = 0;
+        public static string FolderPDF = "";
+        public static string PathDB = "";
+        //var pathdirectorio = "c:\\pruebaprueba\\";
+        //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+        //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))              
+
+
+        public static void ObtenerInformacionGlobal()
+        {
+            FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+            PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db";
+        }
+
         // opciones de configuracion        
         public static AppConfiguration Configuracion
         {
@@ -40,13 +54,11 @@ namespace Models
             }
         }
 
-        // modificar la clave de seguridad del token
-        //public static string Key => "D1f4rM3r01!!";
+        // modificar la clave de seguridad del token        
         public static string Key => "C0NCR3T0S2H!!";
 
 
-        // modificar el emisor del token si es necesario
-        //public static string ValidIssuer = "http://www.difarmer.com";
+        // modificar el emisor del token si es necesario        
         public static string ValidIssuer = "http://www.concretos2h.com";
 
 
@@ -61,10 +73,10 @@ namespace Models
 
 
         //BD PRUEBAS
-        public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
+        //public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
 
         //BD LOCAL
-        //public static string ConexionPrincipal => @"data source=.;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=123;";
+        public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
 
 
 

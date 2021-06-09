@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WarmPack.Classes;
-
+using Models;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -37,7 +37,7 @@ namespace C2HApiControlInterno.Modules
             Get("/verificar-notasRemision-pedido/{folioPedido}", parametros => VerificarNotasRemisionPedido(parametros));
             Get("/notasRemision-especial/{codigo}/{folioGinco}", parametros => ObtenerNotasRemisionEspecial(parametros));
             Get("/notaRemision/pdf/{folio}", parametros => ObtenerPdfNotaRemision(parametros));
-            
+
             Post("notaRemision/cancelar", _ => CancelarNotaRemision());
             Post("notaRemision/guardar", _ => GuardarNotaRemision());
             Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
@@ -46,7 +46,7 @@ namespace C2HApiControlInterno.Modules
         }
 
 
-         private object GuardarProductoFormula()
+        private object GuardarProductoFormula()
         {
             Result result = new Result();
             try
@@ -118,7 +118,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        
+
 
         private object UltimoFolioNotaRemision()
         {
@@ -133,7 +133,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        
+
         private object GuardarFormulaProducto()
         {
             Result<List<int>> result = new Result<List<int>>();
@@ -177,7 +177,7 @@ namespace C2HApiControlInterno.Modules
 
             nota = datos.Data[0];
 
-            var pathdirectorio = "c:\\pruebaprueba\\";
+            var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             if (!Directory.Exists(pathdirectorio))
             {
@@ -185,8 +185,9 @@ namespace C2HApiControlInterno.Modules
             }
 
             var path = HttpRuntime.AppDomainAppPath;
-            string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+            //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
             //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
+            string rutapdf = Globales.FolderPDF;
             string pdfbase64 = "";
             byte[] bytes;
 
@@ -220,9 +221,9 @@ namespace C2HApiControlInterno.Modules
             result.Value = true;
 
             return Response.AsJson(result); ;
-        
-        
-    }
+
+
+        }
 
         private object AgregarNotaRemisionEspecial()
         {
@@ -242,7 +243,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        
+
 
         private object Formulas(dynamic parametros)
         {
@@ -274,7 +275,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-        
+
         private object ObrasCliente(dynamic parametros)
         {
             Result<List<ObrasModel>> result = new Result<List<ObrasModel>>();

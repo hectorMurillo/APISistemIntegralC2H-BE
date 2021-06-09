@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Models;
 namespace API.Models
 {
     public static class RefreshTokenRepository
     {
         public static void Guardar(RefreshTokenItemModel item)
         {
-            //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))
-            using (var db = new LiteDatabase(@"c:\temp\refresh.db"))
+            Globales.ObtenerInformacionGlobal();
+            //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))                        
+            using (var db = new LiteDatabase(Globales.PathDB))
             {
                 var tokens = db.GetCollection<RefreshTokenItemModel>("refreshTokens");
                 tokens.DeleteMany(x => x.Usuario.IdUsuario == item.Usuario.IdUsuario);
@@ -29,9 +30,10 @@ namespace API.Models
         public static RefreshTokenItemModel Encontrar(string uuid)
         {
             RefreshTokenItemModel item = null;
+            Globales.ObtenerInformacionGlobal();
 
             //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))
-            using (var db = new LiteDatabase(@"c:\temp\refresh.db"))
+            using (var db = new LiteDatabase(Globales.PathDB))
             {
                 var tokens = db.GetCollection<RefreshTokenItemModel>("refreshTokens");
 

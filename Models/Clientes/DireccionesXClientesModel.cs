@@ -13,13 +13,14 @@ namespace Models.Clientes
         public string CP { get; set; } = "";
         public int CodEstado { get; set; }
         public int CodColonia { get; set; }
-        public string Colonia { get; set; } = "";
+        public string Colonia { get; set; }
         public string CalleNumero { get; set; } = "";
+        public string Municipio { get; set; } = "";
         public string Domicilio
         {
             get
             {
-                return $"{CalleNumero}, {Colonia} CP {CP}";
+                return $"{CalleNumero}, {Colonia}, {Municipio}";
             }
         }
         public int CodTipoObra { get; set; }
@@ -28,5 +29,7 @@ namespace Models.Clientes
         public string URLGoogleMaps { get; set; } = "";
         public decimal Latitud { get; set; }
         public decimal Longitud { get; set; }
+        public bool Fiscal { get; set; }
+        public bool Entrega { get; set; }
     }
 }

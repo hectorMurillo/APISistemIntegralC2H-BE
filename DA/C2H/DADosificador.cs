@@ -95,7 +95,7 @@ namespace DA.C2H
             }
             return result;
         }
-        
+
         public Result<List<FormulaModel>> ObtenerFormulas(int codCliente)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
@@ -124,7 +124,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<ObrasModel>("ProcCatObrasClientesCon", parametros);
+                result = _conexion.ExecuteWithResults<ObrasModel>("ProcCatDireccionesCon", parametros);
             }
             catch (Exception ex)
             {
@@ -187,7 +187,7 @@ namespace DA.C2H
             }
             return result;
         }
-        
+
 
         public Result<List<EquipoModel>> ObtenerEquipoOperador(bool bombeable,int codOperador)
         {
@@ -261,7 +261,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                
+
                 _conexion.Execute("ProcNotaRemisionGuardar", parametros);
 
                 result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
@@ -280,7 +280,7 @@ namespace DA.C2H
             Result result = new Result();
             try
             {
-                
+
                 var parametros = new ConexionParameters();
                 parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, notaRemision.IdNotasRemisionEnc);
                 parametros.Add("@pFolio", ConexionDbType.Int, notaRemision.Folio);
@@ -335,8 +335,7 @@ namespace DA.C2H
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pNomenclatura", ConexionDbType.VarChar, formula.Nomenclatura );
+                var parametros = new ConexionParameters();               
                 parametros.Add("@pDescripcion", ConexionDbType.VarChar, formula.Descripcion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
@@ -355,7 +354,7 @@ namespace DA.C2H
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
-                var parametros = new ConexionParameters(); 
+                var parametros = new ConexionParameters();
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, idNotaRemision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
@@ -367,7 +366,7 @@ namespace DA.C2H
                 result.Message = ex.Message;
             }
             return result;
-           
+
         }
 
         public Result<List<DatosNotaRemision>> ObtenerNotasRemisionEspecial(int codigo, int folioGinco)
@@ -437,7 +436,7 @@ namespace DA.C2H
 
                 r = _conexion.Execute("ProcCatProductosGuardar", parametros);
 
-             
+
             }
             catch (Exception ex)
             {
@@ -450,7 +449,7 @@ namespace DA.C2H
         public Result<List<DatosNotaRemision>> ObtenerDatosClienteNota(int idNotaRemicion)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
-         
+
             try
             {
                 var parametros = new ConexionParameters();

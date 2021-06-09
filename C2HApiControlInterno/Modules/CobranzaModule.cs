@@ -11,6 +11,7 @@ using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using WarmPack.Classes;
+using Models;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -58,7 +59,8 @@ namespace C2HApiControlInterno.Modules
             {
                 nota = datos.Data[0];
 
-                var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                //var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                var pathDirectorio = Globales.FolderPDF;
                 //var pathDirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
                 if (!Directory.Exists(pathDirectorio))
                 {
@@ -66,7 +68,7 @@ namespace C2HApiControlInterno.Modules
                 }
 
                 var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = "C:\\PRUEBAPRUEBA\\prueba.pdf";
+                string rutaPdf = Globales.FolderPDF;
                 //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
                 string pdfBase64 = "";
                 Byte[] bytes;

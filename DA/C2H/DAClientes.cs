@@ -55,7 +55,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                
+
                 parametros.Add("@pCodContacto", ConexionDbType.Int, contacto.CodContacto);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, contacto.CodCliente);
                 parametros.Add("@pNombreContacto", ConexionDbType.VarChar, contacto.NombreContacto);
@@ -151,6 +151,8 @@ namespace DA.C2H
                 parametros.Add("@pCodTipoObra", ConexionDbType.Int, direccion.CodTipoObra);
                 parametros.Add("@pLatitude", ConexionDbType.Decimal, direccion.Latitud);
                 parametros.Add("@pLongitud", ConexionDbType.Decimal, direccion.Longitud);
+                parametros.Add("@pEntrega", ConexionDbType.Bit, direccion.Entrega);
+                parametros.Add("@pFiscal", ConexionDbType.Bit, direccion.Fiscal);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
