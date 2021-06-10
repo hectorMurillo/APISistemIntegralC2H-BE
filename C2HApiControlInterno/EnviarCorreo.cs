@@ -36,7 +36,7 @@ namespace C2HApiControlInterno
             Result r = new Result();
             try
             {
-                string urlEvaluacion = "http://localhost:8080/#/feedback/" + FolioPedido.ToString();
+                string urlEvaluacion = "http://localhost:8080/#/valoracion/" + FolioPedido.ToString();
 
                 string htmlBody = @"
  
@@ -70,14 +70,14 @@ namespace C2HApiControlInterno
                             <BR>
                              <div style=""font-size: 17px; color: white; margin-right: 10px; margin-left: 10px "">
                                La encuesta llevará aproximadamente 5 minutos responderla. 
-                               Las respuestas que otorgue se mantendrán estrictamente confidenciales y serán usadas únicamente con únicamente con fines estadísticos.
+                               Las respuestas que otorgue se mantendrán estrictamente confidenciales y serán usadas únicamente con fines estadísticos.
                             </div>
                         </td >
                     </tr>
                     <tr>
                         <td align=""center"" bgcolor=""white"" style=""padding: 5px 0px 5px 0;"" colspan=""2"">
                             <div style=""border: 5px solid gray ;width:40%; font-size: 20px; "">
-                                 <div style=""margin-bottom: 5px; margin-top: 50px;  color: black;"">
+                                 <div style=""margin-bottom: 15px; margin-top: 10px;  color: black;"">
                                  <a style=""font: bold 18px Arial;
                                             text-decoration: none;   
                                             background-color:orange;  
@@ -107,7 +107,7 @@ namespace C2HApiControlInterno
 ";
 
 
-                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H", "¡Comparta su opinión sobre nosotros!");
+                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H", "Estimado Cliente ¡Queremos saber tu opinión!");
                 r.Value = true;
                 return r;
             }
@@ -142,14 +142,36 @@ namespace C2HApiControlInterno
 
                 mail.Subject = Subject;
 
-                System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
-                smtp.EnableSsl = false;
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = cred;
-               
-                smtp.Send(mail);
+                //System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
+                //SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
+                //smtp.EnableSsl = false;
+                //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtp.UseDefaultCredentials = false;
+                //smtp.Credentials = cred;
+
+                //smtp.Send(mail);
+           
+                //r.Value = true;
+                //return r;
+
+                using(var client = new SmtpClient(Globales.Host, Globales.Port))
+                {
+                    client.Credentials = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
+                    client.EnableSsl = false;
+
+                    try
+                    {
+                        Console.WriteLine("Attempting to send email...");
+                        client.Send(mail);
+                        client.Dispose();
+                        Console.WriteLine("Email sent!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("The email was not sent.");
+                        Console.WriteLine("Error message: " + ex.Message);
+                    }
+                }
                 r.Value = true;
                 return r;
             }
