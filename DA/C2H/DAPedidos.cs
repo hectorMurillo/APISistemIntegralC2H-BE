@@ -77,6 +77,8 @@ namespace DA.C2H
                 parametros.Add("@pCodProducto", ConexionDbType.Int, pedido.codProducto);
                 parametros.Add("@pTieneDescuento", ConexionDbType.Bit, pedido.TieneDescuento);
                 parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, pedido.PorcentajeDescuento);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, pedido.Observacion);
+
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

@@ -31,7 +31,7 @@ namespace Models.Pedidos
 
         public bool TieneDescuento { get; set; }
         public decimal PorcentajeDescuento { get; set; }
-
+        public string Observacion { get; set; }
 
     }
 }
