@@ -1,6 +1,7 @@
 ﻿using DA.C2H;
 using Models;
 using Models.Dosificador;
+using Models.Porteros;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,12 @@ namespace C2HApiControlInterno
             Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
         }
 
-        public Result SendMail(int FolioPedido, string correoCliente)
+        public Result SendMail(PedidoCorreoModel data)
         {
             Result r = new Result();
             try
             {
-                string urlEvaluacion = "http://localhost:8080/#/valoracion/" + FolioPedido.ToString();
+                string urlEvaluacion = "http://localhost:8080/#/encuesta/" + data.FolioPedido.ToString();
 
                 string htmlBody = @"
  
@@ -62,7 +63,7 @@ namespace C2HApiControlInterno
                     <tr>
                         <td  bgcolor=""#0076AC"" style=""padding: 10px 0px 10px 0;"" colspan=""2"" >
                             <div style=""font-style: oblique; font-size: 18px;color: white; text-align: right; margin-right: 10px;"">24/04/2021</div>  
-                            <div style=""font-size: 20px; color: white; margin-right: 10px; margin-left: 10px"">Estimado CHRISTIAN ALVARADO</div>
+                            <div style=""font-size: 20px; color: white; margin-right: 10px; margin-left: 10px"">Estimado " + data.NombreComercial + @"</div>
                             <BR><BR>
                             <div style=""font-size: 17px; color: white;  margin-right: 10px; margin-left: 10px"">
                                 Concretos 2H, Empresa experta en la fabricación y comercialización de concreto y materiales para la construcción en cualquier obra, especializados en concretos de alta resistencia.
@@ -107,7 +108,7 @@ namespace C2HApiControlInterno
 ";
 
 
-                sendHtmlEmail(Globales.CorreoAutomatico, correoCliente , htmlBody, "Concretos2H", "Estimado Cliente ¡Queremos saber tu opinión!");
+                sendHtmlEmail(Globales.CorreoAutomatico, data.Correo , htmlBody, "Concretos2H", "Estimado Cliente ¡Queremos saber tu opinión!");
                 r.Value = true;
                 return r;
             }
@@ -142,29 +143,15 @@ namespace C2HApiControlInterno
 
                 mail.Subject = Subject;
 
-                //System.Net.NetworkCredential cred = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                //SmtpClient smtp = new SmtpClient(Globales.Host, Globales.Port);
-                //smtp.EnableSsl = false;
-                //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //smtp.UseDefaultCredentials = false;
-                //smtp.Credentials = cred;
-
-                //smtp.Send(mail);
-           
-                //r.Value = true;
-                //return r;
-
                 using(var client = new SmtpClient(Globales.Host, Globales.Port))
                 {
                     client.Credentials = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                    client.EnableSsl = false;
+                    //client.EnableSsl = false;
 
                     try
                     {
-                        Console.WriteLine("Attempting to send email...");
                         client.Send(mail);
                         client.Dispose();
-                        Console.WriteLine("Email sent!");
                     }
                     catch (Exception ex)
                     {
