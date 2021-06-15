@@ -275,5 +275,56 @@ namespace DA.C2H
             }
             return result;
         }
+
+
+
+        public Result ObtenerClientesCobranza()
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcCobranzaCatClientesCon", parametros);
+
+                var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { cliente }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result ActualizarEstatusCliente(int codCliente, bool activar)
+        {
+
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pActivar", ConexionDbType.Bit, activar);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcClientesActualizarEstatus", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
     }
 }

@@ -329,5 +329,27 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result ActualizarEstatusEquipo(int codEquipo, bool activar)
+        {
+
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pActivar", ConexionDbType.Bit, activar);
+                parametros.Add("@pCodEquipo", ConexionDbType.Int, codEquipo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcEquiposActualizarEstatus", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
     }
 }

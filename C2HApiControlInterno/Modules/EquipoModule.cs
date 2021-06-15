@@ -34,6 +34,7 @@ namespace C2HApiControlInterno.Modules
             Post("guardar/tipoEquipo", _ => PostGuardarTipoEquipo());
 
             Get("/entradasSalidas/{entrada}", x => ObtenerEquiposEntradasSalidas(x));
+            Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusEquipo(x));
 
         }
 
@@ -282,6 +283,26 @@ namespace C2HApiControlInterno.Modules
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);
+        }
+
+        private object ActualizarEstatusEquipo(dynamic x)
+        {
+
+            Result result = new Result();
+
+            try
+            {
+                int codigo = x.codigo;
+                bool activar = x.activar;
+
+                result = _DAEquipo.ActualizarEstatusEquipo(codigo, activar);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+
         }
     }
 }

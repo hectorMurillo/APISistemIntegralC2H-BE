@@ -32,9 +32,11 @@ namespace C2HApiControlInterno.Modules
             Post("/contactos/guardar", _ => PostClienteContacto());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
             Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
-            Get("/clientes-detenidos", _ => GetClientesDetenidos());            
+            Get("/clientes-detenidos", _ => GetClientesDetenidos());
+            Get("/cobranza", _ => ObtenerClientesCobranza());
+            Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusCliente(x));
 
-        }        
+        }
 
         private object PostClienteContacto()
         {
@@ -232,5 +234,38 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerClientesCobranza()
+        {
+            Result result = new Result();
+            try
+            {
+                result = _DAClientes.ObtenerClientesCobranza();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ActualizarEstatusCliente(dynamic x)
+        {
+
+            Result result = new Result();
+
+            try
+            {
+                int codigo = x.codigo;
+                bool activar = x.activar;
+
+                result = _DAClientes.ActualizarEstatusCliente(codigo, activar);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+
+        }
     }
 }
