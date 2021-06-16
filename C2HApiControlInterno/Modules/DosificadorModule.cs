@@ -16,7 +16,7 @@ using Models;
 
 namespace C2HApiControlInterno.Modules
 {
-    public class DosificadorModule:NancyModule
+    public class DosificadorModule : NancyModule
     {
 
         DADosificador _DADosificador = new DADosificador();
@@ -187,7 +187,7 @@ namespace C2HApiControlInterno.Modules
             var path = HttpRuntime.AppDomainAppPath;
             //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
             //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
-            string rutapdf = Globales.FolderPDF;
+            string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
             string pdfbase64 = "";
             byte[] bytes;
 
@@ -199,7 +199,7 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@obra", nota.Obra);
             reporte.SetParameterValue("@producto", nota.Producto);
             reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            reporte.SetParameterValue("@operador",nota.Operador);
+            reporte.SetParameterValue("@operador", nota.Operador);
             reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
             reporte.SetParameterValue("@equipo", nota.Equipo);
             reporte.SetParameterValue("@vendedor", nota.Vendedor);
@@ -340,7 +340,7 @@ namespace C2HApiControlInterno.Modules
             {
                 bool bombeable = parametros.esBombeable;
                 int codOperador = parametros.codOperador;
-                result = _DADosificador.ObtenerEquipoOperador(bombeable,codOperador);
+                result = _DADosificador.ObtenerEquipoOperador(bombeable, codOperador);
             }
             catch (Exception ex)
             {

@@ -17,6 +17,32 @@ namespace DA.C2H
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
+
+        public Result<List<DireccionesXClientesModel>> consultaDireccion(int codDireccion)
+        {
+            Result<List<Model.DireccionesXClientesModel>> result = new Result<List<Model.DireccionesXClientesModel>>();
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodDireccion", ConexionDbType.Int, codDireccion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+
+                result = _conexion.ExecuteWithResults<Model.DireccionesXClientesModel>("ProcCatDireccionCon", parametros);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Value = false;
+                result.Data = null;
+                return result;
+            }
+        }
+
         public Result ConsultaClientes(int codUsuario, int codCliente)
         {
             Result result = new Result();
@@ -275,9 +301,6 @@ namespace DA.C2H
             }
             return result;
         }
-
-
-
         public Result ObtenerClientesCobranza()
         {
             Result result = new Result();
@@ -326,5 +349,7 @@ namespace DA.C2H
             return result;
 
         }
+
+
     }
 }

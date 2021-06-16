@@ -124,7 +124,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<ObrasModel>("ProcCatDireccionesClientesCon", parametros);
+                result = _conexion.ExecuteWithResults<ObrasModel>("ProcCatDireccionesClienteCon", parametros);
             }
             catch (Exception ex)
             {
@@ -189,7 +189,7 @@ namespace DA.C2H
         }
 
 
-        public Result<List<EquipoModel>> ObtenerEquipoOperador(bool bombeable,int codOperador)
+        public Result<List<EquipoModel>> ObtenerEquipoOperador(bool bombeable, int codOperador)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
@@ -335,7 +335,7 @@ namespace DA.C2H
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                var parametros = new ConexionParameters();               
+                var parametros = new ConexionParameters();
                 parametros.Add("@pDescripcion", ConexionDbType.VarChar, formula.Descripcion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
