@@ -169,6 +169,7 @@
     <Compile Include="Modules\NotificacionesModule.cs" />
     <Compile Include="Modules\OperadorModule.cs" />
     <Compile Include="Modules\PedidosModule.cs" />
+    <Compile Include="Modules\PlantaModule.cs" />
     <Compile Include="Modules\PorteroModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />

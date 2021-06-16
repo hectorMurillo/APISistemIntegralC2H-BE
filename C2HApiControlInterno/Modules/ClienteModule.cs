@@ -5,6 +5,7 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using WarmPack.Classes;
 using Model = Models.Clientes;
@@ -26,6 +27,7 @@ namespace C2HApiControlInterno.Modules
             Get("/{codCliente}", x => GetCliente(x));
             Get("/sugerenciaUsuario/{codCliente}", x => GetSugerenciaUsuario(x));
             Get("/obtenerUsuarioCliente/{codCliente}", x => GetUsuario(x));
+            Get("/direccion/{codDireccion}", x => GetDireccion(x));
             Post("/guardarUsuarioCliente", _ => postUsuarioCliente());
             Post("/guardar", _ => PostCliente());
             Post("/direcciones/guardar", _ => PostClienteDireccion());
@@ -35,6 +37,26 @@ namespace C2HApiControlInterno.Modules
             Get("/clientes-detenidos", _ => GetClientesDetenidos());
             Get("/cobranza", _ => ObtenerClientesCobranza());
             Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusCliente(x));
+        }
+
+
+
+        private object GetDireccion(dynamic x)
+        {
+            int codDireccion = x.codDireccion;
+
+            Result<List<DireccionesXClientesModel>> result = new Result<List<DireccionesXClientesModel>>();
+
+            try
+            {
+                //Mando llamar al DA que manda llamar al stored y el resultado lo guardo en result
+                result = _DAClientes.consultaDireccion(codDireccion);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
 
         }
 
