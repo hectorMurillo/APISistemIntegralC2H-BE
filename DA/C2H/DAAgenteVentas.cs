@@ -128,7 +128,9 @@ namespace DA.C2H
                 parametros.Add("@pCodAgente", ConexionDbType.Int, producto.CodAgente);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, producto.CodCliente);
                 parametros.Add("@pCodProducto", ConexionDbType.Int, producto.CodProducto);
-                parametros.Add("@pPrecio", ConexionDbType.Decimal, producto.Precio);
+                parametros.Add("@pPrecioConIva", ConexionDbType.Decimal, producto.PrecioConIva);
+                parametros.Add("@pPrecioSinIva", ConexionDbType.Decimal, producto.PrecioSinIva);
+                parametros.Add("@pIva", ConexionDbType.Decimal, producto.Iva);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

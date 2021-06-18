@@ -12,6 +12,8 @@ namespace Models.AgenteVentas
         public int CodAgente { get; set; }
         public int CodProducto { get; set; }
         public int CodCliente { get; set; }
-        public decimal Precio { get; set; }
+        public decimal PrecioSinIva { get; set; }
+        public decimal PrecioConIva { get; set; }
+        public decimal Iva { get; set; }
     }
 }

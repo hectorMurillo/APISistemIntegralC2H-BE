@@ -10,6 +10,7 @@ namespace Models.Clientes
     public class ClientesModel
     {
         CultureInfo ci = new CultureInfo("es-MX");
+        public int Indice { get; set; }
         public int Codigo { get; set; }
         public string NombreCompleto
         {
