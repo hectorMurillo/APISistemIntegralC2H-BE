@@ -95,6 +95,7 @@
     <Compile Include="C2H\DAClientes.cs" />
     <Compile Include="C2H\DACobranza.cs" />
     <Compile Include="C2H\DAConfiguracion.cs" />
+    <Compile Include="C2H\DACorreo.cs" />
     <Compile Include="C2H\DADosificador.cs" />
     <Compile Include="C2H\DAEmpleado.cs" />
     <Compile Include="C2H\DAEmpresas.cs" />
