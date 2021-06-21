@@ -250,8 +250,8 @@ namespace C2HApiControlInterno.Modules
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
             {
-                int codigo = parametros.codigo;
-                result = _DADosificador.ObtenerFormulas(codigo);
+                string producto = parametros.codigo;
+                result = _DADosificador.ObtenerFormulas(producto);
             }
             catch (Exception ex)
             {
