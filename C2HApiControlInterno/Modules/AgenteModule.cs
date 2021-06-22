@@ -24,8 +24,8 @@ namespace C2HApiControlInterno.Modules
             Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
-            Get("/clientes/{codAgente}", parametros => ClientesPorAgente(parametros));
-            Get("/productos-cliente/{codAgente}/{codCliente}", parametros => ProductosXCliente(parametros));
+            Get("/clientes", _ => ClientesPorAgente());
+            Get("/productos-cliente/{codCliente}", parametros => ProductosXCliente(parametros));
             Post("/guardar-precio-productoXCliente", _ => GuardarPrecioProductoXCliente());
         }
 
@@ -37,7 +37,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var producto = this.Bind<PrecioProductoModel>();
-                result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto);
+                int codAgente = this.BindUsuario().IdUsuario;
+                result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto, codAgente);
             }
             catch (Exception ex)
             {
@@ -50,7 +51,7 @@ namespace C2HApiControlInterno.Modules
             Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();
             try
             {
-                int codAgente = parametros.codAgente;
+                int codAgente = this.BindUsuario().IdUsuario;
                 int codCliente = parametros.codCliente;
                 result = _DAAgentesVentas.ObtenerProductosPorCliente(codAgente, codCliente);
             }
@@ -61,12 +62,12 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ClientesPorAgente(dynamic parametros)
+        private object ClientesPorAgente()
         {
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
             try
             {
-                int codAgente = parametros.codAgente;
+                int codAgente = this.BindUsuario().IdUsuario;
                 result = _DAAgentesVentas.ObtenerClientesPorAgente(codAgente);
             }
             catch (Exception ex)

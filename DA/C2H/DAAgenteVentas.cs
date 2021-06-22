@@ -118,14 +118,14 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarPrecioProductoXCliente(PrecioProductoModel producto)
+        public Result GuardarPrecioProductoXCliente(PrecioProductoModel producto,int  codAgente)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodProductoXCliente", ConexionDbType.Int, producto.CodProductoXCliente);
-                parametros.Add("@pCodAgente", ConexionDbType.Int, producto.CodAgente);
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, producto.CodCliente);
                 parametros.Add("@pCodProducto", ConexionDbType.Int, producto.CodProducto);
                 parametros.Add("@pPrecioConIva", ConexionDbType.Decimal, producto.PrecioConIva);
