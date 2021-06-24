@@ -18,6 +18,8 @@ namespace Models.Dosificador
 		public string HoraSalida { get; set; }
 		public bool TieneNotaRemision { get; set; }
 		public DateTime Fecha { get; set; }
+        public string Cliente { get; set; }
+        public string Vendedor { get; set; }
 
-	}
+    }
 }

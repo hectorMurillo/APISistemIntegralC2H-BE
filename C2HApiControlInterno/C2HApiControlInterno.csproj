@@ -157,6 +157,7 @@
     <Compile Include="EnviarCorreo.cs" />
     <Compile Include="Modules\AgenteModule.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />
+    <Compile Include="Modules\BuscadorModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
     <Compile Include="Modules\CobranzaModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
