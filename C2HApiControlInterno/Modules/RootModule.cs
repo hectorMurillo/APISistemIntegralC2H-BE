@@ -24,7 +24,7 @@ namespace C2HApiControlInterno.Modules
         {
             EnviarCorreo correo = new EnviarCorreo();
             PedidoCorreoModel data = new PedidoCorreoModel();
-            data.Correo = "hector.murillo@concretos.com";
+            data.Correo = "hector.murillo@concretos2h.com";
             data.NombreComercial = "test";
             data.FolioPedido = 1;
             correo.SendMail(data);

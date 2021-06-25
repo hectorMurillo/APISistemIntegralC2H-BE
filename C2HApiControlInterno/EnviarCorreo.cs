@@ -38,20 +38,24 @@ namespace C2HApiControlInterno
             try
             {
                 string urlEvaluacion = "http://localhost:8080/#/encuesta/" + data.FolioPedido.ToString();
-                string quickLink = "https://www.google.com/";
-                string htmlBody = @"
-                                <html>
-                                    <body>
-                                        <img src=cid:correo usemap=""#image-map"">
-                                        <map name =""image-map"">
-                                            <area target = ""_blank"" alt="""" title ="""" href=""www.google.com"" coords=""140,420,361,473"" shape=""rect"">
-                                        </map>
-                                    </body>
-                                 </html>
-                ";
-                string html = "<h1>PRUEBA DE CORREO V_1, No es la Imagen Final (8</h1><img src=cid:correo usemap ='#clickMap'>";
-                html += "<map id =\"clickMap\" name=\"clickMap\">" +
-                         "<area shape =\"rect\" coords =\"140,420,361,473\" href =" + quickLink + "></map>";
+                string urlGoogle = "https://www.google.com";
+                string urlFb = "https://www.facebook.com/Concretos-2H-Culiacan-2240349032865063";
+                string urlWeb = "https://www.concretos2h.com.mx/";
+                //string htmlBody = @"
+                //                <html>
+                //                    <body>
+                //                        <img src=cid:correo usemap=""#image-map"">
+                //                        <map name =""image-map"">
+                //                            <area target = ""_blank"" alt="""" title ="""" href=""www.google.com"" coords=""140,420,361,473"" shape=""rect"">
+                //                        </map>
+                //                    </body>
+                //                 </html>
+                //";
+                string html = "<img src=cid:correo usemap ='#clickMap'>";
+                html +=  "<map id =\"clickMap\" name=\"clickMap\">" +
+                         "<area shape =\"rect\" coords =\"146,381,383,441\" href =" + urlGoogle + ">" +
+                         " <area shape =\"rect\" coords =\"194,584,226,615\" href =" + urlFb + ">" +
+                         " <area shape =\"rect\" coords =\"315,585,348,615\" href =" + urlWeb + "></map>";
                 //                string htmlBody = @"
 
                 //<html>
