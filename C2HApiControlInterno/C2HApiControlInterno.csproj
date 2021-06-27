@@ -146,6 +146,9 @@
   <ItemGroup>
     <Content Include="DLL\WarmPack.Database.dll" />
     <Content Include="DLL\WarmPack.dll" />
+    <Content Include="Images\correo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\logotipo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -157,6 +160,7 @@
     <Compile Include="EnviarCorreo.cs" />
     <Compile Include="Modules\AgenteModule.cs" />
     <Compile Include="Modules\AuthenticationModule.cs" />
+    <Compile Include="Modules\BuscadorModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
     <Compile Include="Modules\CobranzaModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />

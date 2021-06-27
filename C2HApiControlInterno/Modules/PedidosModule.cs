@@ -21,7 +21,6 @@ namespace C2HApiControlInterno.Modules
 
             _DAPedidos = new DAPedidos();
             Get("/obtener-pedidos/{pedido}/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
-            Get("/consultar-pedidos/", _ => Pedidos());
             Post("guardar", _ => GuardarPedido());
             Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
             Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
@@ -43,21 +42,6 @@ namespace C2HApiControlInterno.Modules
                 int pedido = x.pedido;
 
                 result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return Response.AsJson(result);
-        }
-
-        private object Pedidos()
-        {
-            Result<List<Pedido>> result = new Result<List<Pedido>>();
-            try
-            {
-
-                result = _DAPedidos.Pedidos();
             }
             catch (Exception ex)
             {
