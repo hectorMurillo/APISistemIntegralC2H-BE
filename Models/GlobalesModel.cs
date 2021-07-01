@@ -22,6 +22,9 @@ namespace Models
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
         public static int Port = 0;
+        public static string URLEncuesta = "";
+        public static string URLWeb = "";
+        public static string URLFacebook = "";
         public static string FolderPDF = "";
         public static string PathDB = "";
         //var pathdirectorio = "c:\\pruebaprueba\\";
