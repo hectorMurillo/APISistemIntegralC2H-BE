@@ -26,6 +26,8 @@ namespace C2HApiControlInterno.Modules
             Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
             Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
             Get("/autorizar-pedido-detenido/{folioPedido}/{autorizado}/{observacion}", x => AutorizarPedidoDetenido(x));
+            Get("/cambiar-estatus/{folioPedido}/{confirmado}", x => CambiarEstatusPedido(x));
+            Post("/reagendar-pedido/", _ => ReagendarPedido());
 
         }
 
@@ -125,6 +127,40 @@ namespace C2HApiControlInterno.Modules
                 string observacion = parametros.observacion;
 
                 result = _DAPedidos.AutorizarPedidoDetenido(folioPedido, autorizado, observacion);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object CambiarEstatusPedido(dynamic parametros)
+        {
+            Result result = new Result();
+
+            try
+            {
+                int folioPedido = parametros.folioPedido;
+                bool confirmado = parametros.confirmado;
+
+                result = _DAPedidos.CambiarEstatusPedido(folioPedido, confirmado);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ReagendarPedido()
+        {
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var pedido = this.Bind<PedidoReagendarModel>();
+                result = _DAPedidos.ReagendarPedido(pedido, codUsuario);
             }
             catch (Exception ex)
             {

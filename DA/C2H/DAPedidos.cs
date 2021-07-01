@@ -151,5 +151,48 @@ namespace DA.C2H
             return result;
         }
 
+        public Result CambiarEstatusPedido(int folio, bool confirmado)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
+                parametros.Add("@pConfirmado", ConexionDbType.Bit, confirmado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcPedidosEstatusCambiar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result ReagendarPedido(PedidoReagendarModel pedido, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, pedido.FolioPedido);
+                parametros.Add("@pHoraSalida", ConexionDbType.VarChar, pedido.HoraSalida);
+                parametros.Add("@pFechaSalida", ConexionDbType.VarChar, pedido.FechaSalida);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, pedido.Motivo);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcPedidoReagendadoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }
