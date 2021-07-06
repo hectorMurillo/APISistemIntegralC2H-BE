@@ -59,13 +59,14 @@ namespace DA.C2H
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+                //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
 
                 return new Result()
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente, contactosXCliente }
+                    //Data = new { cliente, direccionesXCliente, contactosXCliente }
+                    Data = new { cliente, direccionesXCliente}
                 };
             }
             catch (Exception ex)
