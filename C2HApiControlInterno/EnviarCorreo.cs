@@ -30,6 +30,9 @@ namespace C2HApiControlInterno
             Globales.Host = _DAHerramientas.ObtenerParametro("HostCorreo").Data.Valor;
             Globales.CorreoAutomatico = _DAHerramientas.ObtenerParametro("CorreoPrincipal").Data.Valor;
             Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
+            //Globales.URLEncuesta = _DAHerramientas.ObtenerParametro("URLEncuesta").Data.Valor;
+            //Globales.URLFacebook = _DAHerramientas.ObtenerParametro("URLFacebook").Data.Valor;
+            //Globales.URLWeb = _DAHerramientas.ObtenerParametro("URLWeb").Data.Valor;
         }
 
         public Result SendMail(PedidoCorreoModel data)
@@ -37,16 +40,12 @@ namespace C2HApiControlInterno
             Result r = new Result();
             try
             {
-                string urlEvaluacion = "http://localhost:8080/#/encuesta/" + data.FolioPedido.ToString();
-                string urlGoogle = "https://www.google.com";
-                string urlFb = "https://www.facebook.com/Concretos-2H-Culiacan-2240349032865063";
-                string urlWeb = "https://www.concretos2h.com.mx/";
 
                 string html = "<img src=cid:correo usemap ='#clickMap'>";
                 html +=  "<map id =\"clickMap\" name=\"clickMap\">" +
-                         "<area shape =\"rect\" coords =\"146,381,383,441\" href =" + urlGoogle + ">" +
-                         " <area shape =\"rect\" coords =\"194,584,226,615\" href =" + urlFb + ">" +
-                         " <area shape =\"rect\" coords =\"315,585,348,615\" href =" + urlWeb + "></map>";
+                         "<area shape =\"rect\" coords =\"146,381,383,441\" href =" + Globales.URLEncuesta + ">" +
+                         " <area shape =\"rect\" coords =\"194,584,226,615\" href =" + Globales.URLFacebook + ">" +
+                         " <area shape =\"rect\" coords =\"315,585,348,615\" href =" + Globales.URLWeb + "></map>";
 
 
                 sendHtmlEmail(Globales.CorreoAutomatico, data.Correo , html, "Concretos2H", "Estimado Cliente ¡Queremos saber tu opinión!");
@@ -86,8 +85,10 @@ namespace C2HApiControlInterno
 
                 using(var client = new SmtpClient(Globales.Host, Globales.Port))
                 {
+                    client.EnableSsl = true;
+                    client.UseDefaultCredentials = false;
+                    client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                     client.Credentials = new System.Net.NetworkCredential(Globales.CorreoAutomatico, Globales.CorreoAutomaticoPassword);
-                    //client.EnableSsl = false;
 
                     try
                     {
@@ -96,7 +97,7 @@ namespace C2HApiControlInterno
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("The email was not sent.");
+                        Console.WriteLine("En Correo no fue enviado");
                         Console.WriteLine("Error message: " + ex.Message);
                     }
                 }

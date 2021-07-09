@@ -22,6 +22,9 @@ namespace Models
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
         public static int Port = 0;
+        public static string URLEncuesta = "";
+        public static string URLWeb = "";
+        public static string URLFacebook = "";
         public static string FolderPDF = "";
         public static string PathDB = "";
         //var pathdirectorio = "c:\\pruebaprueba\\";
@@ -73,12 +76,11 @@ namespace Models
 
 
         //BD PRUEBAS
-        public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
+        //public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
-
-
+        public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
 
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";

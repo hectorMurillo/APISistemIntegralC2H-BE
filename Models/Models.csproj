@@ -105,6 +105,7 @@
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
     <Compile Include="Configuracion\FuncionModel.cs" />
+    <Compile Include="Contactos\PuestosContactosModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
     <Compile Include="Dosificador\FormulaModel.cs" />
