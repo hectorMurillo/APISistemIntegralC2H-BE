@@ -111,13 +111,14 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<Pedido>> ObtenerPedidosDetenidos(int folioPedido)
+        public Result<List<Pedido>> ObtenerPedidosDetenidos(int folioPedido, int codUsuario)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

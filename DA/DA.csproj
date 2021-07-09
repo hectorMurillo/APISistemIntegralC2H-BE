@@ -104,6 +104,7 @@
     <Compile Include="C2H\DAGenerales.cs" />
     <Compile Include="C2H\DAHerramientas.cs" />
     <Compile Include="C2H\DAMateriales.cs" />
+    <Compile Include="C2H\DANoticias.cs" />
     <Compile Include="C2H\DANotificaciones.cs" />
     <Compile Include="C2H\DAOperador.cs" />
     <Compile Include="C2H\DAPedidos.cs" />

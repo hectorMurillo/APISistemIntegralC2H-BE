@@ -104,9 +104,11 @@ namespace C2HApiControlInterno.Modules
             Result<List<Pedido>> result = new Result<List<Pedido>>();
             int folioPedido = x.folioPedido;
 
+            var codUsuario = this.BindUsuario().IdUsuario;
+
             try
             {
-                result = _DAPedidos.ObtenerPedidosDetenidos(folioPedido);
+                result = _DAPedidos.ObtenerPedidosDetenidos(folioPedido, codUsuario);
             }
             catch (Exception ex)
             {

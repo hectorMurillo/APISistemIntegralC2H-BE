@@ -138,6 +138,7 @@
     <Compile Include="Materiales\TipoObra.cs" />
     <Compile Include="Materiales\TipoResistencia.cs" />
     <Compile Include="Materiales\TMA.cs" />
+    <Compile Include="Noticias\Noticias.cs" />
     <Compile Include="Operadores\Operador.cs" />
     <Compile Include="Operadores\OperadorTipo.cs" />
     <Compile Include="Operadores\OperadorModel.cs" />
