@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Cobranza;
 using Models.Dosificador;
 using System;
 using System.Collections.Generic;
@@ -98,9 +99,25 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<NotaRemisionCobranza>> ObtenerNotasRemisionCobranza(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-
-
+                result = _conexion.ExecuteWithResults<NotaRemisionCobranza>("ProcCobranzaNotasDeRemisionCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

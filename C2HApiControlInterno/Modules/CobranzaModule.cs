@@ -12,6 +12,7 @@ using Nancy.ModelBinding;
 using Nancy.Security;
 using WarmPack.Classes;
 using Models;
+using Models.Cobranza;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -28,6 +29,8 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerNotasRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
             Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
             Get("/obtener-notas-remision/{entrada}", x => ObtenerNotasRemisionEntradasSalidas(x));
+            Get("/obtener-notas-remision-cobranza/{fechaDesde}/{fechaHasta}", x => ObtenerNotasRemisionCobranza(x));
+
         }
 
         private object ObtenerNotasRemision()
@@ -117,7 +120,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object ObtenerNotasRemisionEntradasSalidas(dynamic parametros)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
@@ -133,6 +135,21 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerNotasRemisionCobranza(dynamic x)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
 
+                result = _DACobranza.ObtenerNotasRemisionCobranza(fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
     }
 }
