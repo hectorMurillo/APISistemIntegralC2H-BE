@@ -24,5 +24,32 @@ namespace Models.Cobranza
         public decimal Cantidad { get; set; }
         public string Estatus { get; set; }
         public string EstatusPago { get; set; }
+        public decimal Importe { get; set; }
+        public decimal Abonado { get; set; }
+        
+        public string ImporteFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", Importe);
+            }
+        }
+
+        public string AbonadoFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", Abonado);
+            }
+        }
+
+        public decimal Diferencia
+        {
+            get
+            {
+                return Importe - Abonado;
+            }
+        }
+
     }
 }

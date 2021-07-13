@@ -30,6 +30,8 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
             Get("/obtener-notas-remision/{entrada}", x => ObtenerNotasRemisionEntradasSalidas(x));
             Get("/obtener-notas-remision-cobranza/{fechaDesde}/{fechaHasta}", x => ObtenerNotasRemisionCobranza(x));
+            Post("/notas-remision-guardar-pago/{idNotasRemisionEnc}/{importeAbonar}", x => GuardarPagoNotaRemision(x));
+
 
         }
 
@@ -144,6 +146,24 @@ namespace C2HApiControlInterno.Modules
                 DateTime fechaHasta = x.fechaHasta;
 
                 result = _DACobranza.ObtenerNotasRemisionCobranza(fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarPagoNotaRemision(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                var codCliente = this.BindUsuario().IdUsuario;
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+                decimal importeAbonar = x.importeAbonar;
+
+                result = _DACobranza.GuardarPagoNotaRemision(idNotasRemisionEnc, importeAbonar, codCliente);
             }
             catch (Exception ex)
             {
