@@ -17,7 +17,7 @@ namespace API.Models
             using (var db = new LiteDatabase(Globales.PathDB))
             {
                 var tokens = db.GetCollection<RefreshTokenItemModel>("refreshTokens");
-                tokens.DeleteMany(x => x.Usuario.IdUsuario == item.Usuario.IdUsuario);
+                tokens.Delete(x => x.Usuario.IdUsuario == item.Usuario.IdUsuario);
 
 
                 tokens.Insert(item);

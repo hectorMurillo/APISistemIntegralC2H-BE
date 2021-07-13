@@ -177,7 +177,7 @@ namespace C2HApiControlInterno.Modules
 
             nota = datos.Data[0];
 
-            var pathdirectorio = Globales.FolderPDF;
+            var pathdirectorio = Globales.FolderPDF; 
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             if (!Directory.Exists(pathdirectorio))
             {

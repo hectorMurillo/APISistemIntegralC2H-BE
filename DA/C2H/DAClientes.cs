@@ -65,12 +65,13 @@ namespace DA.C2H
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    //Data = new { cliente, direccionesXCliente, contactosXCliente }
                     Data = new { cliente, direccionesXCliente}
                 };
             }
             catch (Exception ex)
             {
+                result.Value = false;
+                result.Data = null;
                 result.Message = ex.Message;
             }
             return result;
