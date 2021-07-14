@@ -37,7 +37,7 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var producto = this.Bind<PrecioProductoModel>();
-                int codAgente = this.BindUsuario().IdUsuario;
+                int codAgente = this.BindUsuario().CodEmpleado;
                 result = _DAAgentesVentas.GuardarPrecioProductoXCliente(producto, codAgente);
             }
             catch (Exception ex)
@@ -82,7 +82,8 @@ namespace C2HApiControlInterno.Modules
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
-                int codAgente = parametros.codAgente;
+                //int codAgente = parametros.codAgente;
+                int codAgente = this.BindUsuario().CodEmpleado;
                 result = _DAAgentesVentas.ObtenerNotasRemisionAgente(codAgente);
             }
             catch (Exception ex)
