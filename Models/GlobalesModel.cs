@@ -5,6 +5,7 @@ using Models.Usuario;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Models
         public static string URLFacebook = "";
         public static string FolderPDF = "";
         public static string PathDB = "";
+        public static string PathTemp = "";
         //var pathdirectorio = "c:\\pruebaprueba\\";
         //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
         //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))              
@@ -36,6 +38,12 @@ namespace Models
         {
             FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db";
+            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\";
+
+            if (!(Directory.Exists(PathTemp)))
+            {
+                Directory.CreateDirectory(PathTemp);
+            }
         }
 
         // opciones de configuracion        

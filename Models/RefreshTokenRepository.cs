@@ -13,6 +13,8 @@ namespace API.Models
         public static void Guardar(RefreshTokenItemModel item)
         {
             Globales.ObtenerInformacionGlobal();
+
+
             //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))                        
             using (var db = new LiteDatabase(Globales.PathDB))
             {
