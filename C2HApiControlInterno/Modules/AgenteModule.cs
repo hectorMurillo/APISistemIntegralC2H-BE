@@ -51,7 +51,7 @@ namespace C2HApiControlInterno.Modules
             Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();
             try
             {
-                int codAgente = this.BindUsuario().IdUsuario;
+                int codAgente = this.BindUsuario().CodEmpleado;
                 int codCliente = parametros.codCliente;
                 result = _DAAgentesVentas.ObtenerProductosPorCliente(codAgente, codCliente);
             }
@@ -67,7 +67,7 @@ namespace C2HApiControlInterno.Modules
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
             try
             {
-                int codAgente = this.BindUsuario().IdUsuario;
+                int codAgente = this.BindUsuario().CodEmpleado;
                 result = _DAAgentesVentas.ObtenerClientesPorAgente(codAgente);
             }
             catch (Exception ex)

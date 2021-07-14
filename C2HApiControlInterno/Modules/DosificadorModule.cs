@@ -22,7 +22,7 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
-            //this.RequiresAuthentication();
+            this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());

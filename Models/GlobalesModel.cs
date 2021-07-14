@@ -110,6 +110,7 @@ namespace Models
             {
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.Usuario),
                 new Claim("idUsuario", usuario.IdUsuario.ToString()),
+                new Claim("codEmpleado", usuario.CodEmpleado.ToString()),
                 new Claim("usuario", usuario.Usuario),
                 new Claim("nombre", usuario.Nombre),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

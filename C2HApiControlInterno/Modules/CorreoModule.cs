@@ -10,9 +10,11 @@ namespace C2HApiControlInterno.Modules
 {
     public class CorreoModule : NancyModule
     {
-        private readonly DACorreo _DACorreo;
+        private readonly DACorreo _DACorreo = null;
+
         public CorreoModule() : base("correos")
         {
+            _DACorreo = new DACorreo();
             Post("/guardarValoracion", _ => GuardarValoracionServicio());
             Post("/verificarEncuesta", _ => VerificarEncuesta());
         }
