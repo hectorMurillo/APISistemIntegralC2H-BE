@@ -119,5 +119,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result GuardarPagoNotaRemision(int idNotasRemisionEnc, decimal importeAbonar, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, idNotasRemisionEnc);
+                parametros.Add("@pImportePagado", ConexionDbType.Decimal, importeAbonar);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCobranzaNotaRemisionPagoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }
