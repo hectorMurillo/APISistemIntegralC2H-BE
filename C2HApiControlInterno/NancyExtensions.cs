@@ -41,9 +41,12 @@ namespace C2HApiControlInterno
         {
             if (nancy.Context.CurrentUser == null) return new UsuarioModel() { Usuario = "Usuario desconocido", IdUsuario = 0, Nombre = "No hay ningun usuario logeado" };
 
+            var algo = nancy.Context.CurrentUser.FindFirst("CodEmpleado")?.Value;
+
             var usuario = new UsuarioModel()
             {
                 IdUsuario = Convert.ToInt32(nancy.Context.CurrentUser.FindFirst("idUsuario")?.Value),
+                CodEmpleado = Convert.ToInt32(nancy.Context.CurrentUser.FindFirst("codEmpleado")?.Value),
                 Usuario = nancy.Context.CurrentUser.FindFirst("usuario")?.Value,
                 Nombre = nancy.Context.CurrentUser.FindFirst("nombre")?.Value,
                 //IdSubUsuario = Convert.ToInt32(nancy.Context.CurrentUser.FindFirst("idSubUsuario").Value)
