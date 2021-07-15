@@ -140,5 +140,43 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<NotaRemisionCobranza>> ObtenerNotaRemisionCobranza(int idNotasRemisionEnc)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, idNotasRemisionEnc);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<NotaRemisionCobranza>("ProcCobranzaNotaDeRemisionCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<DetalleAbonosNotaRemision>> ObtenerDetalleAbonosNotaRemision(int idNotasRemisionEnc)
+        {
+            Result<List<DetalleAbonosNotaRemision>> result = new Result<List<DetalleAbonosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, idNotasRemisionEnc);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DetalleAbonosNotaRemision>("ProcCobranzaDetalleAbonosNotaDeRemisionCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }

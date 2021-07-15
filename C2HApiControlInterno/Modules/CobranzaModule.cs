@@ -32,6 +32,10 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-notas-remision-cobranza/{fechaDesde}/{fechaHasta}", x => ObtenerNotasRemisionCobranza(x));
             Post("/notas-remision-guardar-pago/{idNotasRemisionEnc}/{importeAbonar}", x => GuardarPagoNotaRemision(x));
 
+            Get("/obtener-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerNotaRemisionCobranza(x));
+            Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
+
+
 
         }
 
@@ -164,6 +168,38 @@ namespace C2HApiControlInterno.Modules
                 decimal importeAbonar = x.importeAbonar;
 
                 result = _DACobranza.GuardarPagoNotaRemision(idNotasRemisionEnc, importeAbonar, codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerNotaRemisionCobranza(dynamic x)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+
+                result = _DACobranza.ObtenerNotaRemisionCobranza(idNotasRemisionEnc);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerDetalleAbonosNotaRemision(dynamic x)
+        {
+            Result<List<DetalleAbonosNotaRemision>> result = new Result<List<DetalleAbonosNotaRemision>>();
+            try
+            {
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+
+                result = _DACobranza.ObtenerDetalleAbonosNotaRemision(idNotasRemisionEnc);
             }
             catch (Exception ex)
             {

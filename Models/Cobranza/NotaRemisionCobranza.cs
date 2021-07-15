@@ -51,5 +51,13 @@ namespace Models.Cobranza
             }
         }
 
+        public string DiferenciaFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", Diferencia);
+            }
+        }
+
     }
 }
