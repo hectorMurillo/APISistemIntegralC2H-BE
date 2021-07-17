@@ -1,4 +1,5 @@
-﻿using Models.Porteros;
+﻿using Models;
+using Models.Porteros;
 using Nancy;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace C2HApiControlInterno.Modules
 
         private object GetRoot()
         {
+            Globales.ObtenerInformacionGlobal();
             return Response.AsJson("API C2H FUNCIONANDO! 👍");
         }
 
