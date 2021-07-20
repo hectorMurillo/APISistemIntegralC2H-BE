@@ -14,5 +14,6 @@ namespace Models.Comisiones
         public decimal Maximo { get; set; }
         public string Estatus { get; set; }
         public bool FijaParaTodos { get; set; }
+        public bool Seleccionado { get; set; }
     }
 }

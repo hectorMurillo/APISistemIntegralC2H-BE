@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Comisiones;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -43,5 +44,7 @@ namespace Models.Empleados
         //        return fechaRegistro.ToString("dd-MMMM-yyyy", ci);
         //    }
         //}
+
+        public List<ComisionModel> comisiones { get; set; }
     }
 }
