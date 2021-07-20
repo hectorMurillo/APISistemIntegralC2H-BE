@@ -1,4 +1,6 @@
-﻿using Nancy;
+﻿using DA.C2H;
+using Models.Comisiones;
+using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
@@ -12,10 +14,12 @@ namespace C2HApiControlInterno.Modules
     public class EmpleadoModule: NancyModule
     {
         private readonly DA.C2H.DAEmpleado _DAempleado = null;
+        private readonly DAComisiones _DAComisiones = null;
         public EmpleadoModule() : base("/empleados")
         {
             this.RequiresAuthentication();
             _DAempleado = new DA.C2H.DAEmpleado();
+            _DAComisiones = new DAComisiones();
             Get("/todos", _ => GetTodos());
             Get("/tipos", _ => GetTipos());
             Post("/SubTipos", _ => GetSubTipos());
@@ -28,6 +32,22 @@ namespace C2HApiControlInterno.Modules
             Post("guardar/tipoEmpleado", _ => PostGuardarTipoEmpleado());
             //COMENTARIO DE PRUEBA 
             Get("/{codEmpleado}", x => ObtenerEmpleado(x));
+
+            Get("/comision", _ => GetTodos());
+        }
+
+        private object ObtenerComisiones()
+        {
+            Result<List<ComisionModel>> result = new Result<List<ComisionModel>>();
+            try
+            {
+                result = _DAComisiones.ObtenerNotasRemision();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetPersonalCargaDiesel(dynamic x)

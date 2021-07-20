@@ -163,6 +163,7 @@
     <Compile Include="Modules\BuscadorModule.cs" />
     <Compile Include="Modules\ClienteModule.cs" />
     <Compile Include="Modules\CobranzaModule.cs" />
+    <Compile Include="Modules\ComisionesModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
     <Compile Include="Modules\ContactosModule.cs" />
     <Compile Include="Modules\CorreoModule.cs" />
