@@ -181,6 +181,7 @@ namespace DA.C2H
                 parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.direccion.codMunicipio);
                 parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.direccion.codEstado);
                 parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.calleNumero);
+                parametros.Add("@pComisionesXML", ConexionDbType.Xml,"");
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
