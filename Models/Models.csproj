@@ -134,6 +134,7 @@
     <Compile Include="Equipos\TipoEquipoCombo.cs" />
     <Compile Include="Equipos\TipoEquipoModel.cs" />
     <Compile Include="Generales\CodigoPostal.cs" />
+    <Compile Include="Generales\ListExtencion.cs" />
     <Compile Include="GlobalesModel.cs" />
     <Compile Include="Herramientas\ParametrosModel.cs" />
     <Compile Include="Herramientas\ResultadoModel.cs" />

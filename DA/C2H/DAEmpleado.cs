@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WarmPack.Database;
 using Models.Empleados;
 using WarmPack.Classes;
+using Models.Generales;
 
 namespace DA.C2H
 {
@@ -176,12 +177,12 @@ namespace DA.C2H
                 parametros.Add("@pCelular", ConexionDbType.VarChar, empleado.celular);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, empleado.fechaRegistro);
-                parametros.Add("@pCP", ConexionDbType.VarChar, empleado.direccion.cP);
-                parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.direccion.codColonia);
-                parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.direccion.codMunicipio);
-                parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.direccion.codEstado);
-                parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.calleNumero);
-                parametros.Add("@pComisionesXML", ConexionDbType.Xml,"");
+                parametros.Add("@pCP", ConexionDbType.VarChar, empleado.direccion.CP);
+                parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.direccion.CodColonia);
+                parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.direccion.CodMunicipio);
+                parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.direccion.CodEstado);
+                parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.CalleNumero);
+                parametros.Add("@pComisionesXML", ConexionDbType.Xml,empleado.comisiones.ToXml("Comisiones"));
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
