@@ -36,5 +36,43 @@ namespace DA.C2H
             }
             return result;
         }
+
+
+        public Result<List<EmpleadosComisionModel>> ObtenerEmpleadosConComisiones()
+        {
+            Result<List<EmpleadosComisionModel>> result = new Result<List<EmpleadosComisionModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<EmpleadosComisionModel>("ProcComisionesEmpleadosGeneralCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<ComisionesXEmpleadoModel>> ObtenerComisionesPorEmpleado(int codEmpleado)
+        {
+            Result<List<ComisionesXEmpleadoModel>> result = new Result<List<ComisionesXEmpleadoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ComisionesXEmpleadoModel>("ProcComisionesXEmpleadoDetalleCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

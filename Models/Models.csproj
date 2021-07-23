@@ -106,7 +106,9 @@
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
     <Compile Include="Cobranza\DetalleAbonosNotaRemision.cs" />
     <Compile Include="Cobranza\NotaRemisionCobranza.cs" />
+    <Compile Include="Comisiones\ComisionesXEmpleadoModel.cs" />
     <Compile Include="Comisiones\ComisionModel.cs" />
+    <Compile Include="Comisiones\EmpleadosComisionModel.cs" />
     <Compile Include="Configuracion\FuncionModel.cs" />
     <Compile Include="Contactos\PuestosContactosModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />

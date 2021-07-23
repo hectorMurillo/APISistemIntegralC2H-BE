@@ -15,9 +15,12 @@ namespace C2HApiControlInterno.Modules
         private readonly DAComisiones _DAComisiones = null;
         public ComisionesModule() : base("/comisiones")
         {
-            this.RequiresAuthentication();
+            //this.RequiresAuthentication();
             _DAComisiones = new DAComisiones();
             Get("/obtenerComisiones", _ => ObtenerComisiones());
+            Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
+
+            Post("/obtenerComisionesPorEmpleado", _ => ObtenerComisionesPorEmpleado());
         }
 
         private object ObtenerComisiones()
@@ -33,5 +36,36 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object ObtenerEmpleadosConComisiones()
+        {
+            Result<List<EmpleadosComisionModel>> result = new Result<List<EmpleadosComisionModel>>();
+            try
+            {
+                result = _DAComisiones.ObtenerEmpleadosConComisiones();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerComisionesPorEmpleado()
+        {
+            Result<List<ComisionesXEmpleadoModel>> result = new Result<List<ComisionesXEmpleadoModel>>();
+            try
+            {
+                var parametro = this.BindModel();
+                int codEmpleado = parametro.codEmpleado;
+                result = _DAComisiones.ObtenerComisionesPorEmpleado(codEmpleado);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
     }
 }
