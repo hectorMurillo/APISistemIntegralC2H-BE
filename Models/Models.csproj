@@ -104,6 +104,7 @@
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
+    <Compile Include="Cobranza\DatosCredito.cs" />
     <Compile Include="Cobranza\DetalleAbonosNotaRemision.cs" />
     <Compile Include="Cobranza\NotaRemisionCobranza.cs" />
     <Compile Include="Comisiones\ComisionesXEmpleadoModel.cs" />

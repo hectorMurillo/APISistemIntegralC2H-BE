@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Clientes;
+using Models.Cobranza;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,11 +62,16 @@ namespace DA.C2H
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
                 //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
 
+                _conexion.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
+
+                var datosCredito = _conexion.RecordsetsResults<DatosCredito>();
+                var notasRemision = _conexion.RecordsetsResults<NotaRemisionCobranza>();
+
                 return new Result()
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente}
+                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision }
                 };
             }
             catch (Exception ex)
@@ -295,6 +301,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
+                _conexion.Execute("ProcCatClientesVerificarCon", parametros);
                 result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesDetenidosCon", parametros);
             }
             catch (Exception ex)
