@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using WarmPack.Database;
 using Models.Empleados;
 using WarmPack.Classes;
-using Models.Generales;
+using System.Data;
+using Models.Comisiones;
+using WarmPack.Extensions;
 
 namespace DA.C2H
 {
@@ -243,6 +245,7 @@ namespace DA.C2H
         public Result ObtenerEmpleado(int codEmpleado)
         {
             Result result = new Result();
+            DataSet ds = new DataSet();
             try
             {
                 var parametros = new ConexionParameters();
@@ -250,16 +253,41 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                _conexion.RecordsetsExecute("ProcCatEmpleadoCon", parametros);
+                //_conexion.RecordsetsExecute("ProcCatEmpleadoCon", parametros);
 
-                var empleado = _conexion.RecordsetsResults<Empleado>();
+               result =  _conexion.ExecuteWithResults("ProcCatEmpleadoCon", parametros, out ds);
 
-                return new Result()
+
+                if (result.Value)
                 {
-                    Value = parametros.Value("@pResultado").ToBoolean(),
-                    Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { empleado }
-                };
+                    Empleado emp = new Empleado();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        emp.codigo = int.Parse(dr[0].ToString());
+                        emp.nombre = dr[1].ToString();
+                        emp.apellidoM = dr[2].ToString();
+                        emp.apellidoP = dr[3].ToString();
+                        emp.rFC = dr[4].ToString();
+                        emp.codigoTipoEmpleado = int.Parse(dr[5].ToString());
+                        emp.tipo = dr[6].ToString();
+                        emp.estatus = bool.Parse(dr[7].ToString());
+                        emp.correo = dr[8].ToString();
+                        emp.telefono =dr[9].ToString();
+                        emp.celular = dr[10].ToString();
+                    }
+                    emp.comisiones = ds.Tables[1].ToList<ComisionModel>();
+
+                    result.Data = emp;
+                }
+                   
+                //var empleado = _conexion.RecordsetsResults<Empleado>();
+
+                //return new Result()
+                //{
+                //    Value = parametros.Value("@pResultado").ToBoolean(),
+                //    Message = parametros.Value("@pMsg").ToString(),
+                //    Data = new { empleado }
+                //};
             }
             catch (Exception ex)
             {
