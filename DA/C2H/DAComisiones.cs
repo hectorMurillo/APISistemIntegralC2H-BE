@@ -21,9 +21,9 @@ namespace DA.C2H
 
         
 
-        public Result<List<ComisionModel>> GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado)
+        public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado)
         {
-            Result<List<ComisionModel>> result = new Result<List<ComisionModel>>();
+            var r = new Result();
             try
             {
                 var parametros = new ConexionParameters();
@@ -32,13 +32,14 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<ComisionModel>("ProcCatComisionesXEmpleadoGuardar", parametros);
+               r = _conexion.Execute("ProcCatComisionesXEmpleadoGuardar", parametros);
             }
             catch (Exception ex)
             {
-                result.Message = ex.Message;
+                r.Value = false;
+                r.Message = ex.Message;
             }
-            return result;
+            return r;
         }
 
         public Result<List<ComisionModel>> ObtenerNotasRemision()

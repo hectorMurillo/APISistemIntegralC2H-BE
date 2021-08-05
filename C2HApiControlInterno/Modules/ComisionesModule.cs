@@ -26,7 +26,7 @@ namespace C2HApiControlInterno.Modules
 
         private object GuardarComisionesEmpleado()
         {
-            Result<List<ComisionesXEmpleadoModel>> result = new Result<List<ComisionesXEmpleadoModel>>();
+            var r = new Result();
             try
             {
                 List<ComisionesXEmpleadoModel> lstComisiones = new List<ComisionesXEmpleadoModel>();
@@ -43,13 +43,15 @@ namespace C2HApiControlInterno.Modules
                 }
                 int codEmpleado = parametro.data.codEmpleado;
 
-                _DAComisiones.GuardarComisionesEmpleado(lstComisiones, codEmpleado);
+                r =  _DAComisiones.GuardarComisionesEmpleado(lstComisiones, codEmpleado);
             }
             catch (Exception ex)
             {
-                result.Message = ex.Message;
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
             }
-            return Response.AsJson(result);
+            return Response.AsJson(r);
         }
 
         private object ObtenerComisiones()
