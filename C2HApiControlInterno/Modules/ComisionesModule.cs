@@ -38,12 +38,13 @@ namespace C2HApiControlInterno.Modules
                 {
                     ComisionesXEmpleadoModel comision = new ComisionesXEmpleadoModel();
                     comision.Codigo = element.codigo;
+                    comision.CodTipoComision = element.codTipoComision;
                     comision.Monto = element.monto;
                     lstComisiones.Add(comision);
                 }
                 int codEmpleado = parametro.data.codEmpleado;
-
-                r =  _DAComisiones.GuardarComisionesEmpleado(lstComisiones, codEmpleado);
+                DateTime fechaComision = parametro.data.fechaComision;
+                r =  _DAComisiones.GuardarComisionesEmpleado(lstComisiones, codEmpleado, fechaComision);
             }
             catch (Exception ex)
             {
@@ -89,7 +90,8 @@ namespace C2HApiControlInterno.Modules
             {
                 var parametro = this.BindModel();
                 int codEmpleado = parametro.codEmpleado;
-                result = _DAComisiones.ObtenerComisionesPorEmpleado(codEmpleado);
+                DateTime diaComision = parametro.diaComision;
+                result = _DAComisiones.ObtenerComisionesPorEmpleado(codEmpleado, diaComision);
             }
             catch (Exception ex)
             {

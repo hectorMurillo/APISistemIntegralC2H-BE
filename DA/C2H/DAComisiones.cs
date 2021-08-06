@@ -21,7 +21,7 @@ namespace DA.C2H
 
         
 
-        public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado)
+        public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado, DateTime fechaComision)
         {
             var r = new Result();
             try
@@ -29,6 +29,7 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodEmpleado", ConexionDbType.VarChar, codEmpleado);
                 parametros.Add("@pComisiones", ConexionDbType.Xml, comisiones.ToXml("Comisiones"));
+                parametros.Add("@pFechaComision", ConexionDbType.Date, fechaComision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -80,13 +81,14 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<ComisionesXEmpleadoModel>> ObtenerComisionesPorEmpleado(int codEmpleado)
+        public Result<List<ComisionesXEmpleadoModel>> ObtenerComisionesPorEmpleado(int codEmpleado, DateTime diaComision)
         {
             Result<List<ComisionesXEmpleadoModel>> result = new Result<List<ComisionesXEmpleadoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pFecha", ConexionDbType.Date, diaComision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
