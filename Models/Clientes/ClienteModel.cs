@@ -46,10 +46,13 @@ namespace Models.Clientes
         public int codVendedor { get; set; }
         public string estatusNuevo { get; set; }
         public string regimenFiscal { get; set; }
-        public int Plazo { get; set; }
+        //public int Plazo { get; set; }
         public decimal CreditoDisponible { get; set; }
         public string CreditoDisponibleFormato { get { return String.Format("${0:n}", CreditoDisponible); } }
-
-
+        public int DiaRevision { get; set; }
+        public int CodTipoCliente { get; set; }
+        public int CodSegmento { get; set; }
+        public int CodTipoClienteCredito { get; set; }
+        public int CodTipoListaPrecio { get; set; }
     }
 }

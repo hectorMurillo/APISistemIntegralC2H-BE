@@ -10,6 +10,8 @@ namespace Models.Cobranza
     {
         public decimal Credito { get; set; }
         public decimal CreditoDisponible { get; set; }
+        public decimal CreditoUtilizado { get; set; }
+        public int DiasPlazo { get; set; }
 
         public string CreditoFormato
         {
@@ -24,6 +26,14 @@ namespace Models.Cobranza
             get
             {
                 return String.Format("{0:C}", CreditoDisponible);
+            }
+        }
+
+        public string CreditoUtilizadoFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", CreditoUtilizado);
             }
         }
     }

@@ -103,6 +103,10 @@
     <Compile Include="Clientes\ClienteModel.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
+    <Compile Include="Clientes\Segmento.cs" />
+    <Compile Include="Clientes\TipoCliente.cs" />
+    <Compile Include="Clientes\TipoClienteCredito.cs" />
+    <Compile Include="Clientes\TipoListaPrecio.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
     <Compile Include="Cobranza\DatosCredito.cs" />
     <Compile Include="Cobranza\DetalleAbonosNotaRemision.cs" />
