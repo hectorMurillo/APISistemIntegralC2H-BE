@@ -21,6 +21,38 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
 
             Post("/obtenerComisionesPorEmpleado", _ => ObtenerComisionesPorEmpleado());
+            Post("/guardar-comisiones", _ => GuardarComisionesEmpleado());
+        }
+
+        private object GuardarComisionesEmpleado()
+        {
+            var r = new Result();
+            try
+            {
+                List<ComisionesXEmpleadoModel> lstComisiones = new List<ComisionesXEmpleadoModel>();
+                var parametro = this.BindModel();
+                
+                var comisiones = parametro.data.comisiones;
+
+                foreach (var element in comisiones)
+                {
+                    ComisionesXEmpleadoModel comision = new ComisionesXEmpleadoModel();
+                    comision.Codigo = element.codigo;
+                    comision.CodTipoComision = element.codTipoComision;
+                    comision.Monto = element.monto;
+                    lstComisiones.Add(comision);
+                }
+                int codEmpleado = parametro.data.codEmpleado;
+                DateTime fechaComision = parametro.data.fechaComision;
+                r =  _DAComisiones.GuardarComisionesEmpleado(lstComisiones, codEmpleado, fechaComision);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
+            }
+            return Response.AsJson(r);
         }
 
         private object ObtenerComisiones()
@@ -58,7 +90,8 @@ namespace C2HApiControlInterno.Modules
             {
                 var parametro = this.BindModel();
                 int codEmpleado = parametro.codEmpleado;
-                result = _DAComisiones.ObtenerComisionesPorEmpleado(codEmpleado);
+                DateTime diaComision = parametro.diaComision;
+                result = _DAComisiones.ObtenerComisionesPorEmpleado(codEmpleado, diaComision);
             }
             catch (Exception ex)
             {

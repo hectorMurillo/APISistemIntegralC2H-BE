@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
+using WarmPack.Extensions;
 
 namespace DA.C2H
 {
@@ -16,6 +17,30 @@ namespace DA.C2H
         public DAComisiones()
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
+        }
+
+        
+
+        public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado, DateTime fechaComision)
+        {
+            var r = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.VarChar, codEmpleado);
+                parametros.Add("@pComisiones", ConexionDbType.Xml, comisiones.ToXml("Comisiones"));
+                parametros.Add("@pFechaComision", ConexionDbType.Date, fechaComision);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+               r = _conexion.Execute("ProcCatComisionesXEmpleadoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
         }
 
         public Result<List<ComisionModel>> ObtenerNotasRemision()
@@ -56,13 +81,14 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<ComisionesXEmpleadoModel>> ObtenerComisionesPorEmpleado(int codEmpleado)
+        public Result<List<ComisionesXEmpleadoModel>> ObtenerComisionesPorEmpleado(int codEmpleado, DateTime diaComision)
         {
             Result<List<ComisionesXEmpleadoModel>> result = new Result<List<ComisionesXEmpleadoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pFecha", ConexionDbType.Date, diaComision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
