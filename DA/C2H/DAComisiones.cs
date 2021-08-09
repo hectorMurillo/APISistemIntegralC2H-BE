@@ -43,13 +43,13 @@ namespace DA.C2H
             return r;
         }
 
-        public Result<List<ComisionModel>> ObtenerNotasRemision()
+        public Result<List<ComisionModel>> ObtenerComisiones(int codTipoEmpleado)
         {
             Result<List<ComisionModel>> result = new Result<List<ComisionModel>>();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pBuscar", ConexionDbType.VarChar,"");
+                parametros.Add("@pTipoEmpleado", ConexionDbType.Int, codTipoEmpleado);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

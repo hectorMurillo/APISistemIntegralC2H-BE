@@ -17,7 +17,7 @@ namespace C2HApiControlInterno.Modules
         {
             //this.RequiresAuthentication();
             _DAComisiones = new DAComisiones();
-            Get("/obtenerComisiones", _ => ObtenerComisiones());
+            Post("/obtenerComisiones", _ => ObtenerComisiones());
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
 
             Post("/obtenerComisionesPorEmpleado", _ => ObtenerComisionesPorEmpleado());
@@ -60,7 +60,9 @@ namespace C2HApiControlInterno.Modules
             Result<List<ComisionModel>> result = new Result<List<ComisionModel>>();
             try
             {
-                result = _DAComisiones.ObtenerNotasRemision();
+                var parametro = this.BindModel();
+                int codTipoEmpleado = parametro.codTipoEmpleado;
+                result = _DAComisiones.ObtenerComisiones(codTipoEmpleado);
             }
             catch (Exception ex)
             {

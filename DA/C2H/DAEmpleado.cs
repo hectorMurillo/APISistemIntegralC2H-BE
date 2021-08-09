@@ -177,7 +177,7 @@ namespace DA.C2H
                 parametros.Add("@pEstatus", ConexionDbType.Bit, empleado.estatus);
                 parametros.Add("@pTelefono", ConexionDbType.VarChar, empleado.telefono);
                 parametros.Add("@pCelular", ConexionDbType.VarChar, empleado.celular);
-                parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
+                    parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, empleado.fechaRegistro);
                 parametros.Add("@pCP", ConexionDbType.VarChar, empleado.direccion.CP);
                 parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.direccion.CodColonia);
@@ -261,6 +261,7 @@ namespace DA.C2H
                 if (result.Value)
                 {
                     Empleado emp = new Empleado();
+               
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
                         emp.codigo = int.Parse(dr[0].ToString());
@@ -272,10 +273,13 @@ namespace DA.C2H
                         emp.tipo = dr[6].ToString();
                         emp.estatus = bool.Parse(dr[7].ToString());
                         emp.correo = dr[8].ToString();
-                        emp.telefono =dr[9].ToString();
+                        emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
                     }
-                    emp.comisiones = ds.Tables[1].ToList<ComisionModel>();
+
+                    if (ds.Tables.Count > 1){
+                        emp.comisiones = ds.Tables[1].ToList<ComisionModel>();
+                    } 
 
                     result.Data = emp;
                 }

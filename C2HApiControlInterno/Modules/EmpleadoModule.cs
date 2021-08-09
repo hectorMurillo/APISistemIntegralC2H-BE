@@ -36,19 +36,6 @@ namespace C2HApiControlInterno.Modules
             Get("/comision", _ => GetTodos());
         }
 
-        private object ObtenerComisiones()
-        {
-            Result<List<ComisionModel>> result = new Result<List<ComisionModel>>();
-            try
-            {
-                result = _DAComisiones.ObtenerNotasRemision();
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return Response.AsJson(result);
-        }
 
         private object GetPersonalCargaDiesel(dynamic x)
         {
