@@ -79,7 +79,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
+
+
+  <xs:element name="RptComisiones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CodOperador" type="xs:integer"/>
+        <xs:element name="Operador" type="xs:string"/>
+        <xs:element name="NumViajes" type="xs:integer"/>
+        <xs:element name="Desayunos" type="xs:integer"/>
+        <xs:element name="Cenas" type="xs:integer"/>
+        <xs:element name="Foraneos" type="xs:integer"/>
+        <xs:element name="Nocturnos" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
  
 </xs:schema>
 
