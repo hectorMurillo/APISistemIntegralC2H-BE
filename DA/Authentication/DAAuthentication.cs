@@ -165,7 +165,7 @@ namespace DA.Authentication
 
 
             }
-            return new Result(false, "credenciales invalidas");
+            return new Result(false, parametros.Value("@pMsg").ToString());
         }
     }
 }

@@ -15,5 +15,6 @@ namespace Models.Generales
         public string Estado { get; set; }
         public int CodigoMunicipio { get; set; }
         public string Municipio { get; set; }
+        public string    Ciudad { get; set; }
     }
 }
