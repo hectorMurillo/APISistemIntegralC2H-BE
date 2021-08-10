@@ -161,6 +161,7 @@
     <Compile Include="Modules\CobranzaModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
     <Compile Include="Modules\CorreoModule.cs" />
+    <Compile Include="Modules\CuentasModule.cs" />
     <Compile Include="Modules\DosificadorModule.cs" />
     <Compile Include="Modules\EmpleadoModule.cs" />
     <Compile Include="Modules\EmpresaModule.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Modules\PedidosModule.cs" />
     <Compile Include="Modules\PlantaModule.cs" />
     <Compile Include="Modules\PorteroModule.cs" />
+    <Compile Include="Modules\ProveedorModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
     <Compile Include="Modules\VendedorModule.cs" />

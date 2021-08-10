@@ -73,7 +73,8 @@ namespace Models
 
 
         //BD PRUEBAS
-        public static string ConexionPrincipal => @"data source=sql5081.site4now.net;initial catalog=DB_A55757_prueba;persist security info=True;user id=DB_A55757_prueba_admin;password=_C0NCR3T05D0SH;";
+        public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#A8F6612A\tsql\query;Initial Catalog=DB_A55757_prueba;Integrated Security=True
+";
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";

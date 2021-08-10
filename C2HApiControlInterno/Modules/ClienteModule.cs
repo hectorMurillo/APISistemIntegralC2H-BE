@@ -19,7 +19,7 @@ namespace C2HApiControlInterno.Modules
 
         public ClienteModule() : base("/clientes")
         {
-            this.RequiresAuthentication();
+            //this.RequiresAuthentication();
 
             _DAClientes = new DA.C2H.DAClientes();
             Get("/todos", _ => GetTodos());
