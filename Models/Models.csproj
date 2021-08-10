@@ -158,6 +158,7 @@
     <Compile Include="Pedidos\PedidoCierre.cs" />
     <Compile Include="Pedidos\PedidoModel.cs" />
     <Compile Include="Pedidos\PedidoReagendarModel.cs" />
+    <Compile Include="Plantas\Planta.cs" />
     <Compile Include="Porteros\EntradaSalida.cs" />
     <Compile Include="Porteros\EntradaSalidaModel.cs" />
     <Compile Include="Porteros\PedidoCorreoModel.cs" />

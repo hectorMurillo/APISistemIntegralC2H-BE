@@ -45,12 +45,12 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pFolioNota", ConexionDbType.Int, folioNota);
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, folioNota);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotaRemisionDatosCon", parametros);
-                
+
             }
             catch (Exception ex)
             {
@@ -139,7 +139,6 @@ namespace DA.C2H
             }
             return result;
         }
-
         public Result<List<NotaRemisionCobranza>> ObtenerNotaRemisionCobranza(int idNotasRemisionEnc)
         {
             Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
@@ -177,6 +176,5 @@ namespace DA.C2H
             }
             return result;
         }
-
     }
 }

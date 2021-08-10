@@ -1,5 +1,6 @@
 ﻿using DA.C2H;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,22 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerMenu", _ => getMenuPrincipal());
             Get("/todos", _ => GetTodos());
             Get("/actualizar-estatus/{idUsuario}/{activar}", x => ActualizarEstatusUsuario(x));
+            Post("/guardar", _ => PostGuardarUsuario());
+        }
+
+        private object PostGuardarUsuario()
+        {
+            Result result = new Result();
+            try
+            {
+                var usuario = this.Bind<Model.UsuarioModel>();
+                result = _DAUsuario.GuardarUsuario(usuario);
+            }
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetTodos()

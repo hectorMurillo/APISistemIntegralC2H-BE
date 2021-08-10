@@ -47,6 +47,28 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result GuardarUsuario(Model.UsuarioModel usuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigoEmpleado", ConexionDbType.Int, usuario.CodEmpleado);
+                parametros.Add("@pNombreUsuario", ConexionDbType.VarChar, usuario.Usuario);
+                parametros.Add("@pContrasena", ConexionDbType.VarChar, usuario.Contrasena);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatUsuarioGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<Model.UsuarioModel>> ConsultaUsuarios()
         {
             Result<List<Model.UsuarioModel>> result = new Result<List<Model.UsuarioModel>>();
