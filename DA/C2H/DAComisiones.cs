@@ -20,9 +20,9 @@ namespace DA.C2H
         }
 
         
-        public Result ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal)
+        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal)
         {
-            var r = new Result();
+            var r = new Result<List<ReporteComisionesModel>>();
             try
             {
 
@@ -33,7 +33,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                r = _conexion.Execute("ProcRptComisiones", parametros);
+                r = _conexion.ExecuteWithResults<ReporteComisionesModel>("ProcRptComisiones", parametros);
             }
             catch (Exception ex)
             {
