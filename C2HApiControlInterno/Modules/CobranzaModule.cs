@@ -12,6 +12,7 @@ using Nancy.ModelBinding;
 using Nancy.Security;
 using WarmPack.Classes;
 using Models;
+using Models.Cobranza;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -28,6 +29,12 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerNotasRemision/{folio}", parametros => ObtenerDatosReporte(parametros));
             Get("/obtener-notas-surtiendo", _ => ObtenerNotasRemisionSurtiendo());
             Get("/obtener-notas-remision/{entrada}", x => ObtenerNotasRemisionEntradasSalidas(x));
+            Get("/obtener-notas-remision-cobranza/{fechaDesde}/{fechaHasta}", x => ObtenerNotasRemisionCobranza(x));
+            Post("/notas-remision-guardar-pago/{idNotasRemisionEnc}/{importeAbonar}", x => GuardarPagoNotaRemision(x));
+            Get("/obtener-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerNotaRemisionCobranza(x));
+            Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
+
+
         }
 
         private object ObtenerNotasRemision()
@@ -60,6 +67,7 @@ namespace C2HApiControlInterno.Modules
                 nota = datos.Data[0];
 
                 //var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                Globales.ObtenerInformacionGlobal();
                 var pathDirectorio = Globales.FolderPDF;
                 //var pathDirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
                 if (!Directory.Exists(pathDirectorio))
@@ -68,7 +76,7 @@ namespace C2HApiControlInterno.Modules
                 }
 
                 var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = Globales.FolderPDF;
+                string rutaPdf = Globales.FolderPDF + "\\prueba.pdf";
                 //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
                 string pdfBase64 = "";
                 Byte[] bytes;
@@ -117,7 +125,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object ObtenerNotasRemisionEntradasSalidas(dynamic parametros)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
@@ -133,6 +140,70 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object ObtenerNotasRemisionCobranza(dynamic x)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
 
+                result = _DACobranza.ObtenerNotasRemisionCobranza(fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarPagoNotaRemision(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                var codCliente = this.BindUsuario().IdUsuario;
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+                decimal importeAbonar = x.importeAbonar;
+
+                result = _DACobranza.GuardarPagoNotaRemision(idNotasRemisionEnc, importeAbonar, codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        private object ObtenerNotaRemisionCobranza(dynamic x)
+        {
+            Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();
+            try
+            {
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+
+                result = _DACobranza.ObtenerNotaRemisionCobranza(idNotasRemisionEnc);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerDetalleAbonosNotaRemision(dynamic x)
+        {
+            Result<List<DetalleAbonosNotaRemision>> result = new Result<List<DetalleAbonosNotaRemision>>();
+            try
+            {
+                int idNotasRemisionEnc = x.idNotasRemisionEnc;
+
+                result = _DACobranza.ObtenerDetalleAbonosNotaRemision(idNotasRemisionEnc);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
     }
 }

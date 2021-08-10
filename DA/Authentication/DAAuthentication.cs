@@ -37,6 +37,7 @@ namespace DA.Authentication
                 r.Data = new UsuarioModel();
 
                 r.Data.Usuario = row["Usuario"].ToString();
+                r.Data.CodEmpleado = row["CodEmpleado"].ToInt32();
                 //r.Data.IdSubUsuario = row["SubUsuario"].ToInt32();
                 r.Data.IdUsuario = row["Codigo"].ToInt32();
                 r.Data.Nombre = row["Nombre"].ToString();
@@ -164,7 +165,7 @@ namespace DA.Authentication
 
 
             }
-            return new Result(false, "credenciales invalidas");
+            return new Result(false, parametros.Value("@pMsg").ToString());
         }
     }
 }

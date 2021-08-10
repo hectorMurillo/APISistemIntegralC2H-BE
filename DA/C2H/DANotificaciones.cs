@@ -20,16 +20,24 @@ namespace DA.C2H
         }
         public Result<List<NotificacionModel>> UltimasNotificaciones(int codUsuario)
         {
-            var parametros = new ConexionParameters();
-            parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-            parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-            parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-            _conexion.ConexionTimeOut = 120;
+                _conexion.ConexionTimeOut = 120;
 
-            var r = _conexion.ExecuteWithResults<NotificacionModel>("ProcNotificacionesCon", parametros);
+                var r = _conexion.ExecuteWithResults<NotificacionModel>("ProcNotificacionesCon", parametros);
 
-            return r;
+                return r;
+            }
+            catch(Exception ex)
+            {
+                return new Result<List<NotificacionModel>>(ex);
+            }
+            
         }
 
         public Result NotificacionesRedireccionadas(int codUsuario, int codNotificacion, bool todasLeidas)

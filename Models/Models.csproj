@@ -52,8 +52,8 @@
       <HintPath>..\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LiteDB, Version=5.0.8.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.5.0.8\lib\net45\LiteDB.dll</HintPath>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.8.0\lib\net45\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
@@ -104,9 +104,20 @@
     <Compile Include="Clientes\ClienteModel.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
+    <Compile Include="Clientes\Segmento.cs" />
+    <Compile Include="Clientes\TipoCliente.cs" />
+    <Compile Include="Clientes\TipoClienteCredito.cs" />
+    <Compile Include="Clientes\TipoListaPrecio.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
+    <Compile Include="Cobranza\DatosCredito.cs" />
+    <Compile Include="Cobranza\DetalleAbonosNotaRemision.cs" />
+    <Compile Include="Cobranza\NotaRemisionCobranza.cs" />
+    <Compile Include="Comisiones\ComisionesXEmpleadoModel.cs" />
+    <Compile Include="Comisiones\ComisionModel.cs" />
+    <Compile Include="Comisiones\EmpleadosComisionModel.cs" />
     <Compile Include="Configuracion\FuncionModel.cs" />
     <Compile Include="Cuentas\CuentaModel.cs" />
+    <Compile Include="Contactos\PuestosContactosModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
     <Compile Include="Dosificador\FormulaModel.cs" />
@@ -132,6 +143,7 @@
     <Compile Include="Equipos\TipoEquipoCombo.cs" />
     <Compile Include="Equipos\TipoEquipoModel.cs" />
     <Compile Include="Generales\CodigoPostal.cs" />
+    <Compile Include="Generales\ListExtencion.cs" />
     <Compile Include="GlobalesModel.cs" />
     <Compile Include="Herramientas\ParametrosModel.cs" />
     <Compile Include="Herramientas\ResultadoModel.cs" />
@@ -140,12 +152,15 @@
     <Compile Include="Materiales\TipoObra.cs" />
     <Compile Include="Materiales\TipoResistencia.cs" />
     <Compile Include="Materiales\TMA.cs" />
+    <Compile Include="Noticias\Noticias.cs" />
     <Compile Include="Operadores\Operador.cs" />
     <Compile Include="Operadores\OperadorTipo.cs" />
     <Compile Include="Operadores\OperadorModel.cs" />
     <Compile Include="Pedidos\Pedido.cs" />
     <Compile Include="Pedidos\PedidoCierre.cs" />
     <Compile Include="Pedidos\PedidoModel.cs" />
+    <Compile Include="Pedidos\PedidoReagendarModel.cs" />
+    <Compile Include="Plantas\Planta.cs" />
     <Compile Include="Porteros\EntradaSalida.cs" />
     <Compile Include="Porteros\EntradaSalidaModel.cs" />
     <Compile Include="Porteros\PedidoCorreoModel.cs" />

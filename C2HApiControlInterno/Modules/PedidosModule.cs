@@ -21,12 +21,13 @@ namespace C2HApiControlInterno.Modules
 
             _DAPedidos = new DAPedidos();
             Get("/obtener-pedidos/{pedido}/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
-            Get("/consultar-pedidos/", _ => Pedidos());
             Post("guardar", _ => GuardarPedido());
             Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
             Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
             Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
             Get("/autorizar-pedido-detenido/{folioPedido}/{autorizado}/{observacion}", x => AutorizarPedidoDetenido(x));
+            Get("/cambiar-estatus/{folioPedido}/{confirmado}", x => CambiarEstatusPedido(x));
+            Post("/reagendar-pedido/", _ => ReagendarPedido());
 
         }
 
@@ -41,21 +42,6 @@ namespace C2HApiControlInterno.Modules
                 int pedido = x.pedido;
 
                 result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return Response.AsJson(result);
-        }
-
-        private object Pedidos()
-        {
-            Result<List<Pedido>> result = new Result<List<Pedido>>();
-            try
-            {
-
-                result = _DAPedidos.Pedidos();
             }
             catch (Exception ex)
             {
@@ -118,9 +104,11 @@ namespace C2HApiControlInterno.Modules
             Result<List<Pedido>> result = new Result<List<Pedido>>();
             int folioPedido = x.folioPedido;
 
+            var codUsuario = this.BindUsuario().IdUsuario;
+
             try
             {
-                result = _DAPedidos.ObtenerPedidosDetenidos(folioPedido);
+                result = _DAPedidos.ObtenerPedidosDetenidos(folioPedido, codUsuario);
             }
             catch (Exception ex)
             {
@@ -141,6 +129,40 @@ namespace C2HApiControlInterno.Modules
                 string observacion = parametros.observacion;
 
                 result = _DAPedidos.AutorizarPedidoDetenido(folioPedido, autorizado, observacion);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object CambiarEstatusPedido(dynamic parametros)
+        {
+            Result result = new Result();
+
+            try
+            {
+                int folioPedido = parametros.folioPedido;
+                bool confirmado = parametros.confirmado;
+
+                result = _DAPedidos.CambiarEstatusPedido(folioPedido, confirmado);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ReagendarPedido()
+        {
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var pedido = this.Bind<PedidoReagendarModel>();
+                result = _DAPedidos.ReagendarPedido(pedido, codUsuario);
             }
             catch (Exception ex)
             {

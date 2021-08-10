@@ -22,7 +22,7 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
-            //this.RequiresAuthentication();
+            this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
@@ -177,7 +177,7 @@ namespace C2HApiControlInterno.Modules
 
             nota = datos.Data[0];
 
-            var pathdirectorio = Globales.FolderPDF;
+            var pathdirectorio = Globales.FolderPDF; 
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             if (!Directory.Exists(pathdirectorio))
             {

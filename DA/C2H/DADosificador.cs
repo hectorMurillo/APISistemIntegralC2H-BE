@@ -424,13 +424,13 @@ namespace DA.C2H
         public Result GuardarProductosFormula(List<FormulaModel> excelCargado)
         {
             Result r = new Result();
-            String estadoCuenta = excelCargado.ToXml("Formula");
+            String productos = excelCargado.ToXml("Formula");
 
             try
             {
                 var parametros = new ConexionParameters();
                 //parametros.Add("@pCodBanco", ConexionDbType.Bit, codBan/*co);*/
-                parametros.Add("@pXML", ConexionDbType.Xml, estadoCuenta);
+                parametros.Add("@pXML", ConexionDbType.Xml, productos);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

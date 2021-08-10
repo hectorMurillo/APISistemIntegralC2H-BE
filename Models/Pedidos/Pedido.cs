@@ -26,7 +26,7 @@ namespace Models.Pedidos
         public string Estatus { get; set; }
         public bool TieneCierres { get; set; }
         public int CodProducto { get; set; }
-
+        public string Nomenclatura { get; set; }
         public string FormatoCantidad { get; set; }
 
         public bool TieneDescuento { get; set; }

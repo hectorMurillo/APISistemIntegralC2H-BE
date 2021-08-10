@@ -92,9 +92,12 @@
   <ItemGroup>
     <Compile Include="Authentication\DAAuthentication.cs" />
     <Compile Include="C2H\DAAgenteVentas.cs" />
+    <Compile Include="C2H\DABuscador.cs" />
     <Compile Include="C2H\DAClientes.cs" />
     <Compile Include="C2H\DACobranza.cs" />
+    <Compile Include="C2H\DAComisiones.cs" />
     <Compile Include="C2H\DAConfiguracion.cs" />
+    <Compile Include="C2H\DAContactos.cs" />
     <Compile Include="C2H\DACorreo.cs" />
     <Compile Include="C2H\DACuentas.cs" />
     <Compile Include="C2H\DADosificador.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="C2H\DAGenerales.cs" />
     <Compile Include="C2H\DAHerramientas.cs" />
     <Compile Include="C2H\DAMateriales.cs" />
+    <Compile Include="C2H\DANoticias.cs" />
     <Compile Include="C2H\DANotificaciones.cs" />
     <Compile Include="C2H\DAOperador.cs" />
     <Compile Include="C2H\DAPedidos.cs" />

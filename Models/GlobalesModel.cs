@@ -5,6 +5,7 @@ using Models.Usuario;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -22,8 +23,12 @@ namespace Models
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
         public static int Port = 0;
+        public static string URLEncuesta = "";
+        public static string URLWeb = "";
+        public static string URLFacebook = "";
         public static string FolderPDF = "";
         public static string PathDB = "";
+        public static string PathTemp = "";
         //var pathdirectorio = "c:\\pruebaprueba\\";
         //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
         //using (var db = new LiteDatabase("h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db"))              
@@ -33,6 +38,12 @@ namespace Models
         {
             FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db";
+            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\";
+
+            if (!(Directory.Exists(PathTemp)))
+            {
+                Directory.CreateDirectory(PathTemp);
+            }
         }
 
         // opciones de configuracion        
@@ -73,13 +84,18 @@ namespace Models
 
 
         //BD PRUEBAS
+<<<<<<< HEAD
         public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#A8F6612A\tsql\query;Initial Catalog=DB_A55757_prueba;Integrated Security=True
 ";
+=======
+        //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
+        
+        public static string ConexionPrincipal => @"data source=SQL5061.site4now.net; initial catalog=db_a55757_v2; persist security info=True;user id=db_a55757_v2_admin; password=_C0NCR3T05D0SH;";
+>>>>>>> MasterProduccion
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
-
-
+        //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
 
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";
@@ -101,8 +117,10 @@ namespace Models
             {
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.Usuario),
                 new Claim("idUsuario", usuario.IdUsuario.ToString()),
+                new Claim("codEmpleado", usuario.CodEmpleado.ToString()),
                 new Claim("usuario", usuario.Usuario),
                 new Claim("nombre", usuario.Nombre),
+                new Claim("codEmpleado",usuario.CodEmpleado.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(), ClaimValueTypes.Integer64)
             };

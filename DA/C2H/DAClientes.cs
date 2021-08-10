@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Clientes;
+using Models.Cobranza;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,13 @@ namespace DA.C2H
     public class DAClientes
     {
         private readonly Conexion _conexion = null;
+        private readonly Conexion _conexion2 = null;
+
         public DAClientes()
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
+            _conexion2 = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
+
         }
 
         public Result<List<DireccionesXClientesModel>> consultaDireccion(int codDireccion)
@@ -45,6 +50,7 @@ namespace DA.C2H
 
         public Result ConsultaClientes(int codUsuario, int codCliente)
         {
+
             Result result = new Result();
             try
             {
@@ -55,21 +61,28 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 //result = _conexion.ExecuteWithResults<Model.Clientes>("ProcCatClientesCon", parametros);
-                _conexion.RecordsetsExecute("ProcCatClientesCon", parametros);
+                _conexion.RecordsetsExecute("ProcCatClientesConNUEVO", parametros);
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+                //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+
+                _conexion2.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
+
+                var datosCredito = _conexion2.RecordsetsResults<DatosCredito>();
+                var notasRemision = _conexion2.RecordsetsResults<NotaRemisionCobranza>();
 
                 return new Result()
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente, contactosXCliente }
+                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision }
                 };
             }
             catch (Exception ex)
             {
+                result.Value = false;
+                result.Data = null;
                 result.Message = ex.Message;
             }
             return result;
@@ -213,6 +226,11 @@ namespace DA.C2H
                 parametros.Add("@pCodVendedor", ConexionDbType.VarChar, Cliente.codEmpleadoVendedor);
                 parametros.Add("@pRegimenFiscal", ConexionDbType.VarChar, Cliente.regimenFiscal);
                 parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Cliente.NombreComercial);
+                parametros.Add("@pCodTipoCliente", ConexionDbType.Int, Cliente.CodTipoCliente);
+                parametros.Add("@pCodSegmento", ConexionDbType.Int, Cliente.CodSegmento);
+                parametros.Add("@pCodTipoClienteCredito", ConexionDbType.Int, Cliente.CodTipoClienteCredito);
+                parametros.Add("@pCodTipoListaPrecio", ConexionDbType.Int, Cliente.CodTipoListaPrecio);
+                parametros.Add("@pDiaRevision", ConexionDbType.Int, Cliente.DiaRevision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -293,6 +311,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
+                _conexion.Execute("ProcCatClientesVerificarCon", parametros);
                 result = _conexion.ExecuteWithResults<Model.ClientesModel>("ProcCatClientesDetenidosCon", parametros);
             }
             catch (Exception ex)
@@ -350,6 +369,77 @@ namespace DA.C2H
 
         }
 
+        public Result<List<TipoCliente>> ObtenerTiposCliente()
+        {
+            Result<List<TipoCliente>> result = new Result<List<TipoCliente>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<TipoCliente>("ProcCatClientesTiposClienteCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<Segmento>> ObtenerSegmentos()
+        {
+            Result<List<Segmento>> result = new Result<List<Segmento>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Segmento>("ProcCatClientesSegmentosCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<TipoClienteCredito>> ObtenerTiposClienteCredito()
+        {
+            Result<List<TipoClienteCredito>> result = new Result<List<TipoClienteCredito>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<TipoClienteCredito>("ProcCatClientesTiposClienteCreditoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<TipoListaPrecio>> ObtenerTiposListaPrecios()
+        {
+            Result<List<TipoListaPrecio>> result = new Result<List<TipoListaPrecio>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<TipoListaPrecio>("ProcCatClientesTiposListaPrecioCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

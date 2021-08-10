@@ -37,6 +37,14 @@ namespace C2HApiControlInterno.Modules
             Get("/clientes-detenidos", _ => GetClientesDetenidos());
             Get("/cobranza", _ => ObtenerClientesCobranza());
             Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusCliente(x));
+
+
+            //
+            Get("/tipos-cliente", _ => ObtenerTiposCliente());
+            Get("/segmentos", _ => ObtenerSegmentos());
+            Get("/tipos-cliente-credito", _ => ObtenerTiposClienteCredito());
+            Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
+
         }
 
 
@@ -74,6 +82,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object GetClientesCombo()
         {
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
@@ -289,5 +298,62 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
 
         }
+
+        private object ObtenerTiposCliente()
+        {
+            Result<List<TipoCliente>> result = new Result<List<TipoCliente>>();
+            try
+            {
+                result = _DAClientes.ObtenerTiposCliente();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerSegmentos()
+        {
+            Result<List<Segmento>> result = new Result<List<Segmento>>();
+            try
+            {
+                result = _DAClientes.ObtenerSegmentos();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerTiposClienteCredito()
+        {
+            Result<List<TipoClienteCredito>> result = new Result<List<TipoClienteCredito>>();
+            try
+            {
+                result = _DAClientes.ObtenerTiposClienteCredito();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerTiposListaPrecios()
+        {
+            Result<List<TipoListaPrecio>> result = new Result<List<TipoListaPrecio>>();
+            try
+            {
+                result = _DAClientes.ObtenerTiposListaPrecios();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
     }
 }
