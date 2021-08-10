@@ -116,8 +116,8 @@
     <Compile Include="Comisiones\ComisionModel.cs" />
     <Compile Include="Comisiones\EmpleadosComisionModel.cs" />
     <Compile Include="Configuracion\FuncionModel.cs" />
-    <Compile Include="Cuentas\CuentaModel.cs" />
     <Compile Include="Contactos\PuestosContactosModel.cs" />
+    <Compile Include="Cuentas\CuentaModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
     <Compile Include="Dosificador\FormulaModel.cs" />
