@@ -13,5 +13,6 @@ namespace Models.Comisiones
         public decimal Monto { get; set; }
         public decimal CantidadMaximaComision { get; set; }
         public string Descripcion { get; set; }
+        public bool Seleccionado { get; set; } = false;
     }
 }
