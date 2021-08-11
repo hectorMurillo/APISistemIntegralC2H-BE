@@ -11,9 +11,14 @@ namespace Models.Comisiones
         public int CodOperador { get; set; }
         public string Operador { get; set; }
         public int NumViajes { get; set; }
+        public decimal TotalComisionViajes { get; set; }
         public int Desayunos { get; set; }
+        public decimal TotalComisionDesayunos { get; set; }
         public int Cenas { get; set; }
+        public decimal TotalComisionCenas { get; set; }
         public int Nocturnos { get; set; }
+        public decimal TotalComisionNocturnos { get; set; }
         public int Foraneos { get; set; }
+        public decimal TotalComisionForaneos { get; set; }
     }
 }

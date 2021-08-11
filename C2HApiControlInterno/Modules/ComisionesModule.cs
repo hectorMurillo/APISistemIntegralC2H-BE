@@ -1,8 +1,10 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using DA.C2H;
 using Models;
 using Models.Comisiones;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
@@ -23,8 +25,42 @@ namespace C2HApiControlInterno.Modules
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
             Post("/rpt-comisiones", _ => ObtenerPdfNotaRemision());
             Post("/obtenerComisiones", _ => ObtenerComisiones());
+            Post("/asignar-comisiones", _ => AsignarComisiones());
             Post("/obtenerComisionesPorEmpleado", _ => ObtenerComisionesPorEmpleado());
             Post("/guardar-comisiones", _ => GuardarComisionesEmpleado());
+        }
+
+        
+        private object AsignarComisiones()
+        {
+            var r = new Result();
+            try
+            {
+                List<ComisionesXEmpleadoModel> lstComisiones = new List<ComisionesXEmpleadoModel>();
+                var parametro = this.BindModel();
+
+                var comisiones = parametro.data.comisiones;
+
+                foreach (var element in comisiones)
+                {
+                    ComisionesXEmpleadoModel comision = new ComisionesXEmpleadoModel();
+                    comision.Codigo = element.codigo;
+                    comision.CodTipoComision = element.codTipoComision;
+                    comision.Monto = element.monto;
+                    comision.Seleccionado = element.seleccionado;
+                    lstComisiones.Add(comision);
+                }
+                int codEmpleado = parametro.data.codEmpleado;
+                DateTime fechaComision = parametro.data.fechaComision;
+                r = _DAComisiones.AsignarComisionEmpleado(lstComisiones, codEmpleado, fechaComision);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
+            }
+            return Response.AsJson(r);
         }
 
         private object ObtenerPdfNotaRemision()
@@ -36,9 +72,12 @@ namespace C2HApiControlInterno.Modules
             DateTime fechaFin = parametro.fechaFinal;
             //var nota = new DatosNotaRemision();
             //var datos = new Result<List<DatosNotaRemision>>();
-            var  datos = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin);
+            var reporteEntradasSalidas = this.Bind<List<ReporteComisionesModel>>();
+            var r = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin);
 
-      
+            reporteEntradasSalidas = r.Data;
+
+
 
             var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -50,41 +89,24 @@ namespace C2HApiControlInterno.Modules
             var path = HttpRuntime.AppDomainAppPath;
             //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
             //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
-            string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
+            string rutaPdf = $"{ Globales.FolderPDF}\\prueba.pdf";
             string pdfbase64 = "";
             byte[] bytes;
-
             ReportDocument reporte = new ReportDocument();
-            //reporte.Load(path + "\\reportes\\rptnota.rpt");
-            //reporte.SetParameterValue("@folio", nota.Folio);
-            //reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-            //reporte.SetParameterValue("@cliente", nota.Cliente);
-            //reporte.SetParameterValue("@obra", nota.Obra);
-            //reporte.SetParameterValue("@producto", nota.Producto);
-            //reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            //reporte.SetParameterValue("@operador", nota.Operador);
-            //reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-            //reporte.SetParameterValue("@equipo", nota.Equipo);
-            //reporte.SetParameterValue("@vendedor", nota.Vendedor);
-            //reporte.SetParameterValue("@usuario", usuario);
-            //reporte.SetParameterValue("@bombeable", nota.Bombeable);
-            //reporte.SetParameterValue("@imper", nota.Imper);
-            //reporte.SetParameterValue("@fibra", nota.Fibra);
-            //reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+            reporte.Load(path + "\\reportes\\RptComisiones.rpt");
+            reporte.SetDataSource(reporteEntradasSalidas);
+            reporte.SetParameterValue("fechaDesde", fechaIni);
+            reporte.SetParameterValue("fechaHasta", fechaFin);
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 
-            //reporte.setparametervalue("@sello", usuario);
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfbase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfbase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
 
-            //reporte.setdatasource();
-            //reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
 
-            //bytes = File.ReadAllBytes(rutapdf);
-            //pdfbase64 = Convert.ToBase64String(bytes);
-            //result.Data = pdfbase64;
-            //File.Delete(rutapdf);
-            //result.Value = true;
-
-            return Response.AsJson(result); ;
-
+            return Response.AsJson(result);
         }
 
         private object GuardarComisionesEmpleado()

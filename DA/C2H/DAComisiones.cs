@@ -42,6 +42,30 @@ namespace DA.C2H
             }
             return r;
         }
+
+        
+          public Result AsignarComisionEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado, DateTime fechaComision)
+        {
+            var r = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.VarChar, codEmpleado);
+                parametros.Add("@pComisiones", ConexionDbType.Xml, comisiones.ToXml("Comisiones"));
+                parametros.Add("@pFechaComision", ConexionDbType.Date, fechaComision);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.Execute("ProcCatComisionesAsignadasGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
         public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado, DateTime fechaComision)
         {
             var r = new Result();
