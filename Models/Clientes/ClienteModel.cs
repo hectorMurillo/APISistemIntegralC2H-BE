@@ -54,5 +54,8 @@ namespace Models.Clientes
         public int CodSegmento { get; set; }
         public int CodTipoClienteCredito { get; set; }
         public int CodTipoListaPrecio { get; set; }
+
+        public bool FacturarPublicoGeneral { get; set; }
+
     }
 }
