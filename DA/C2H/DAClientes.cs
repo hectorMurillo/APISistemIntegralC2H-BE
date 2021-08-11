@@ -231,6 +231,7 @@ namespace DA.C2H
                 parametros.Add("@pCodTipoClienteCredito", ConexionDbType.Int, Cliente.CodTipoClienteCredito);
                 parametros.Add("@pCodTipoListaPrecio", ConexionDbType.Int, Cliente.CodTipoListaPrecio);
                 parametros.Add("@pDiaRevision", ConexionDbType.Int, Cliente.DiaRevision);
+                parametros.Add("@pFacturarPublicoGeneral", ConexionDbType.Int, Cliente.FacturarPublicoGeneral);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
