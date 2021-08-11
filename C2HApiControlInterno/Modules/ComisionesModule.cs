@@ -1,9 +1,12 @@
-﻿using DA.C2H;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using DA.C2H;
+using Models;
 using Models.Comisiones;
 using Nancy;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WarmPack.Classes;
@@ -17,11 +20,71 @@ namespace C2HApiControlInterno.Modules
         {
             //this.RequiresAuthentication();
             _DAComisiones = new DAComisiones();
-            Post("/obtenerComisiones", _ => ObtenerComisiones());
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
-
+            Post("/rpt-comisiones", _ => ObtenerPdfNotaRemision());
+            Post("/obtenerComisiones", _ => ObtenerComisiones());
             Post("/obtenerComisionesPorEmpleado", _ => ObtenerComisionesPorEmpleado());
             Post("/guardar-comisiones", _ => GuardarComisionesEmpleado());
+        }
+
+        private object ObtenerPdfNotaRemision()
+        {
+            Result result = new Result();
+            var parametro = this.BindModel();
+
+            DateTime fechaIni = parametro.fechaInicial;
+            DateTime fechaFin = parametro.fechaFinal;
+            //var nota = new DatosNotaRemision();
+            //var datos = new Result<List<DatosNotaRemision>>();
+            var  datos = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin);
+
+      
+
+            var pathdirectorio = Globales.FolderPDF;
+            //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+            if (!Directory.Exists(pathdirectorio))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
+            }
+
+            var path = HttpRuntime.AppDomainAppPath;
+            //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+            //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
+            string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
+            string pdfbase64 = "";
+            byte[] bytes;
+
+            ReportDocument reporte = new ReportDocument();
+            //reporte.Load(path + "\\reportes\\rptnota.rpt");
+            //reporte.SetParameterValue("@folio", nota.Folio);
+            //reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+            //reporte.SetParameterValue("@cliente", nota.Cliente);
+            //reporte.SetParameterValue("@obra", nota.Obra);
+            //reporte.SetParameterValue("@producto", nota.Producto);
+            //reporte.SetParameterValue("@cantidad", nota.Cantidad);
+            //reporte.SetParameterValue("@operador", nota.Operador);
+            //reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+            //reporte.SetParameterValue("@equipo", nota.Equipo);
+            //reporte.SetParameterValue("@vendedor", nota.Vendedor);
+            //reporte.SetParameterValue("@usuario", usuario);
+            //reporte.SetParameterValue("@bombeable", nota.Bombeable);
+            //reporte.SetParameterValue("@imper", nota.Imper);
+            //reporte.SetParameterValue("@fibra", nota.Fibra);
+            //reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+
+            //reporte.setparametervalue("@sello", usuario);
+
+            //reporte.setdatasource();
+            //reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+
+            //bytes = File.ReadAllBytes(rutapdf);
+            //pdfbase64 = Convert.ToBase64String(bytes);
+            //result.Data = pdfbase64;
+            //File.Delete(rutapdf);
+            //result.Value = true;
+
+            return Response.AsJson(result); ;
+
         }
 
         private object GuardarComisionesEmpleado()

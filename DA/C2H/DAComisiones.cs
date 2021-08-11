@@ -20,7 +20,28 @@ namespace DA.C2H
         }
 
         
+        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal)
+        {
+            var r = new Result<List<ReporteComisionesModel>>();
+            try
+            {
 
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFechaInicial", ConexionDbType.Date, fechaInicial);
+                parametros.Add("@pFechaFinal", ConexionDbType.Date, fechaFinal);
+                parametros.Add("@pTipoBusqueda", ConexionDbType.Int, 0);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<ReporteComisionesModel>("ProcRptComisiones", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
         public Result GuardarComisionesEmpleado(List<ComisionesXEmpleadoModel> comisiones, int codEmpleado, DateTime fechaComision)
         {
             var r = new Result();

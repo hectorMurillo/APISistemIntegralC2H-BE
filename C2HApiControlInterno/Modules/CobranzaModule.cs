@@ -31,10 +31,8 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-notas-remision/{entrada}", x => ObtenerNotasRemisionEntradasSalidas(x));
             Get("/obtener-notas-remision-cobranza/{fechaDesde}/{fechaHasta}", x => ObtenerNotasRemisionCobranza(x));
             Post("/notas-remision-guardar-pago/{idNotasRemisionEnc}/{importeAbonar}", x => GuardarPagoNotaRemision(x));
-
             Get("/obtener-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerNotaRemisionCobranza(x));
             Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
-
 
 
         }
@@ -69,6 +67,7 @@ namespace C2HApiControlInterno.Modules
                 nota = datos.Data[0];
 
                 //var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                Globales.ObtenerInformacionGlobal();
                 var pathDirectorio = Globales.FolderPDF;
                 //var pathDirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
                 if (!Directory.Exists(pathDirectorio))
@@ -77,7 +76,7 @@ namespace C2HApiControlInterno.Modules
                 }
 
                 var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = Globales.FolderPDF;
+                string rutaPdf = Globales.FolderPDF + "\\prueba.pdf";
                 //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
                 string pdfBase64 = "";
                 Byte[] bytes;
@@ -175,7 +174,6 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-
         private object ObtenerNotaRemisionCobranza(dynamic x)
         {
             Result<List<NotaRemisionCobranza>> result = new Result<List<NotaRemisionCobranza>>();

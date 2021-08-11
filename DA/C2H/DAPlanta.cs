@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using WarmPack.Classes;
 using WarmPack.Database;
-
+using Model = Models.Plantas;
 namespace DA.C2H
 {
     public class DAPlanta
@@ -19,9 +19,29 @@ namespace DA.C2H
         }
         public Result<ParametrosModel> consultaCoordenadas()
         {
-            var r = _DAHerramientas.ObtenerParametro("Coordenadas-Planta");
+            var r = _DAHerramientas.ObtenerParametro("Coordenadas-Planta-1");
 
             return r;
+        }
+        public Result<List<Model.Planta>> consultaPlantas(int codPlanta)
+        {
+
+            Result<List<Model.Planta>> result = new Result<List<Model.Planta>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                //@pCodPlanta
+                parametros.Add("@pCodPlanta", ConexionDbType.Int, codPlanta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<Model.Planta>("ProcCatPlantasCon", parametros);
+
+            }
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
         }
     }
 }
