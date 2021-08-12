@@ -62,6 +62,8 @@ namespace DA.C2H
 
                 //result = _conexion.ExecuteWithResults<Model.Clientes>("ProcCatClientesCon", parametros);
                 _conexion.RecordsetsExecute("ProcCatClientesConNUEVO", parametros);
+                //_conexion.RecordsetsExecute("ProcCatClientesCon", parametros);
+
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
