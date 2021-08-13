@@ -224,7 +224,6 @@ namespace DA.C2H
                 parametros.Add("@pCelular", ConexionDbType.VarChar, Cliente.Celular);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, Cliente.Correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cliente.FechaRegistro);
-                parametros.Add("@pCredito", ConexionDbType.Decimal, Cliente.Credito);
                 parametros.Add("@pCodVendedor", ConexionDbType.VarChar, Cliente.codEmpleadoVendedor);
                 parametros.Add("@pRegimenFiscal", ConexionDbType.VarChar, Cliente.regimenFiscal);
                 parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Cliente.NombreComercial);
