@@ -8,6 +8,7 @@ namespace Models.Cobranza
 {
     public class DatosCredito
     {
+        public int CodCliente { get; set; }
         public decimal Credito { get; set; }
         public decimal CreditoDisponible { get; set; }
         public decimal CreditoUtilizado { get; set; }

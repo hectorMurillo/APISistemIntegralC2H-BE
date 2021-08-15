@@ -67,7 +67,7 @@ namespace DA.C2H
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
 
                 _conexion2.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
 
@@ -78,7 +78,7 @@ namespace DA.C2H
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision }
+                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision,contactosXCliente }
                 };
             }
             catch (Exception ex)
