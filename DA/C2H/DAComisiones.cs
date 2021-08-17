@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Comisiones;
+using Models.Empleados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,28 @@ namespace DA.C2H
         }
 
         
-        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal)
+
+        public Result<List<TipoEmpleado>> ObtenerTipoEmpleado()
+        {
+            var r = new Result<List<TipoEmpleado>>();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<TipoEmpleado>("ProcCatTipoEmpleadoComisionCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal, int tipoEmpleado)
         {
             var r = new Result<List<ReporteComisionesModel>>();
             try
@@ -29,7 +51,7 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFechaInicial", ConexionDbType.Date, fechaInicial);
                 parametros.Add("@pFechaFinal", ConexionDbType.Date, fechaFinal);
-                parametros.Add("@pTipoBusqueda", ConexionDbType.Int, 0);
+                parametros.Add("@pTipoBusqueda", ConexionDbType.Int, tipoEmpleado);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
