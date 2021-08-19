@@ -112,6 +112,7 @@
     <Compile Include="C2H\DAOperador.cs" />
     <Compile Include="C2H\DAPedidos.cs" />
     <Compile Include="C2H\DAPlanta.cs" />
+    <Compile Include="C2H\DAProductos.cs" />
     <Compile Include="C2H\DAProveedor.cs" />
     <Compile Include="C2H\DAUsuario.cs" />
     <Compile Include="C2H\DAPortero.cs" />

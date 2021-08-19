@@ -180,6 +180,7 @@
     <Compile Include="Modules\PedidosModule.cs" />
     <Compile Include="Modules\PlantaModule.cs" />
     <Compile Include="Modules\PorteroModule.cs" />
+    <Compile Include="Modules\ProductoModule.cs" />
     <Compile Include="Modules\ProveedorModule.cs" />
     <Compile Include="Modules\RootModule.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
