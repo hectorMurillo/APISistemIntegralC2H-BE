@@ -39,5 +39,28 @@ namespace DA.C2H
             return r;
         }
 
+        public Result Guardar(TipoUnidadMedidaModel tipoUnidadMedida)
+        {
+            var r = new Result();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, tipoUnidadMedida.Codigo);
+                parametros.Add("@pDescripion", ConexionDbType.VarChar, tipoUnidadMedida.Descripcion);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, tipoUnidadMedida.Observacion);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, tipoUnidadMedida.Estatus);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.Execute("ProcTipoUnidadMedidaGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
     }
 }
