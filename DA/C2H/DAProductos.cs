@@ -18,6 +18,27 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
+        public Result<List<TipoInsumoModel>> ObtenerTipoInsumos(int codigo)
+        {
+            var r = new Result<List<TipoInsumoModel>>();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<TipoInsumoModel>("ProcTipoInsumoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
         public Result<List<TipoUnidadMedidaModel>> ObtenerTipoUnidadesMedida(int codigo)
         {
             var r = new Result<List<TipoUnidadMedidaModel>>();
@@ -39,7 +60,34 @@ namespace DA.C2H
             return r;
         }
 
-        public Result Guardar(TipoUnidadMedidaModel tipoUnidadMedida)
+
+        public Result GuardarTipoInsumo(TipoInsumoModel tipoInsumo)
+        {
+            var r = new Result();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, tipoInsumo.Codigo);
+                parametros.Add("@pIdTipoUnidadMedida", ConexionDbType.Int, tipoInsumo.Codigo);
+                parametros.Add("@pDescripion", ConexionDbType.VarChar, tipoInsumo.Descripcion);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, tipoInsumo.Observacion);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, tipoInsumo.Estatus);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.Execute("ProcTipoUnidadMedidaGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
+
+        public Result GuardarUnidadMedida(TipoUnidadMedidaModel tipoUnidadMedida)
         {
             var r = new Result();
             try

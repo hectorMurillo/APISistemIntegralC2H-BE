@@ -167,6 +167,7 @@
     <Compile Include="Porteros\PedidoCorreoModel.cs" />
     <Compile Include="Porteros\Suministro.cs" />
     <Compile Include="Porteros\SuministroModel.cs" />
+    <Compile Include="Productos\TipoInsumoModel.cs" />
     <Compile Include="Productos\TipoUnidadMedidaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedores\CuentasXProveedorModel.cs" />
