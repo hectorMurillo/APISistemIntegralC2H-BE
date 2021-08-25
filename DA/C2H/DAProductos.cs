@@ -69,14 +69,14 @@ namespace DA.C2H
 
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodigo", ConexionDbType.Int, tipoInsumo.Codigo);
-                parametros.Add("@pIdTipoUnidadMedida", ConexionDbType.Int, tipoInsumo.Codigo);
-                parametros.Add("@pDescripion", ConexionDbType.VarChar, tipoInsumo.Descripcion);
+                parametros.Add("@pIdTipoUnidadMedida", ConexionDbType.Int, tipoInsumo.CodigoUnidadMedida);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, tipoInsumo.Descripcion);
                 parametros.Add("@pObservacion", ConexionDbType.VarChar, tipoInsumo.Observacion);
                 parametros.Add("@pEstatus", ConexionDbType.VarChar, tipoInsumo.Estatus);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                r = _conexion.Execute("ProcTipoUnidadMedidaGuardar", parametros);
+                r = _conexion.Execute("ProcTipoInsumoGuardar", parametros);
             }
             catch (Exception ex)
             {
