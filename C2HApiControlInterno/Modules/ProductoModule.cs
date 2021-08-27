@@ -22,10 +22,44 @@ namespace C2HApiControlInterno.Modules
             _DAProductos = new DAProductos();
             Get("/tipos-unidad-medida/{codigo}", parametros => ObtenerTiposUnidadMedida(parametros));
             Get("/tipos-insumos/{codigo}", parametros => ObtenerTiposInsumos(parametros));
+            Get("/insumos/{codigo}", parametros => ObtenerInsumos(parametros));
+            Post("/insumo", _ => GuardarInsumo());
             Post("/tipos-insumo", _ => GuardarTipoInsumo());
             Post("/tipos-unidad-medida",_ => GuardarTipoUnidadMedida());
 
         }
+
+        private object GuardarInsumo()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var insumo = this.Bind<InsumoModel>();
+                result = _DAProductos.GuardarInsumo(insumo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerInsumos(dynamic parametros)
+        {
+            Result<List<InsumoModel>> result = new Result<List<InsumoModel>>();
+            try
+            {
+                int codigo = parametros.codigo;
+                result = _DAProductos.ObtenerInsumos(codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object GuardarTipoInsumo()
         {
             Result result = new Result();
