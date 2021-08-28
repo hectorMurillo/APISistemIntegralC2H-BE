@@ -17,9 +17,9 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
             _DAHerramientas = new DAHerramientas();
         }
-        public Result<ParametrosModel> consultaCoordenadas()
+        public Result<ParametrosModel> consultaCoordenadas(int codPlanta)
         {
-            var r = _DAHerramientas.ObtenerParametro("Coordenadas-Planta-1");
+            var r = _DAHerramientas.ObtenerParametro("Coordenadas-Planta-" + codPlanta);
 
             return r;
         }

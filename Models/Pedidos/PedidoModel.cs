@@ -20,10 +20,12 @@ namespace Models.Pedidos
         public string Estatus { get; set; }
         public bool TieneCierre { get; set; }
         public int codProducto { get; set; }
-
+        public int CodPlanta { get; set; }
         public bool TieneDescuento { get; set; }
         public decimal PorcentajeDescuento { get; set; }
         public string Observacion { get; set; }
+        public bool TieneFibra { get; set; }
+        public bool TieneImper { get; set; }
 
 
     }

@@ -190,7 +190,7 @@ namespace C2HApiControlInterno.Modules
             string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
             string pdfbase64 = "";
             byte[] bytes;
-
+            bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
             reporte.Load(path + "\\reportes\\rptnota.rpt");
             reporte.SetParameterValue("@folio", nota.Folio);
@@ -206,8 +206,11 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@usuario", usuario);
             reporte.SetParameterValue("@bombeable", nota.Bombeable);
             reporte.SetParameterValue("@imper", nota.Imper);
-            reporte.SetParameterValue("@fibra", nota.Fibra);
+            reporte.SetParameterValue("@fibra", nota.Fibra);  
             reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+            reporte.SetParameterValue("@cancelado", cancelado);
+            reporte.SetParameterValue("@fecha", nota.Fecha);
+
 
             //reporte.setparametervalue("@sello", usuario);
 

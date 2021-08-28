@@ -84,11 +84,11 @@ namespace Models
 
 
         //BD PRUEBAS OLD
-        public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
+        //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
 
         //BD PRUEBAS NUEVAS
-        //public static string ConexionPrincipal => @"data source=SQL5061.site4now.net; initial catalog=db_a55757_v2; persist security info=True;user id=db_a55757_v2_admin; password=_C0NCR3T05D0SH;";
+        public static string ConexionPrincipal => @"data source=SQL5061.site4now.net; initial catalog=db_a55757_v2; persist security info=True;user id=db_a55757_v2_admin; password=_C0NCR3T05D0SH;";
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
@@ -117,7 +117,7 @@ namespace Models
                 new Claim("codEmpleado", usuario.CodEmpleado.ToString()),
                 new Claim("usuario", usuario.Usuario),
                 new Claim("nombre", usuario.Nombre),
-                new Claim("codEmpleado",usuario.CodEmpleado.ToString()),
+                //new Claim("codEmpleado",usuario.CodEmpleado.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(), ClaimValueTypes.Integer64)
             };
