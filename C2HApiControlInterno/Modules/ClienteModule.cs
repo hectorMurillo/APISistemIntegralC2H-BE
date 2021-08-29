@@ -45,6 +45,8 @@ namespace C2HApiControlInterno.Modules
             Get("/tipos-cliente-credito", _ => ObtenerTiposClienteCredito());
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
 
+            Get("/historial-cliente/{codCliente}/{fechaDesde}/{fechaHasta}", x => ObtenerHistorialCliente(x));
+
         }
 
 
@@ -347,6 +349,24 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DAClientes.ObtenerTiposListaPrecios();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerHistorialCliente(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
+                int codCliente = x.codCliente;
+
+                result = _DAClientes.ObtenerHistorialCliente(codCliente, fechaDesde, fechaHasta);
             }
             catch (Exception ex)
             {

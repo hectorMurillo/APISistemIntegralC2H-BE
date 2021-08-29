@@ -12,5 +12,14 @@ namespace Models.Pedidos
         public int FolioPedido { get; set; }
         public decimal Cantidad { get; set; }
         public string Estatus { get; set; }
+
+        public string CantidadFormato
+        {
+            get
+            {
+                return Cantidad.ToString() + "m³";
+            }
+        }
+
     }
 }

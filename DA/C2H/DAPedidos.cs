@@ -116,6 +116,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result CancelarCierre(int folioPedido, int idCatPedidosCierres)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pIdCatPedidosCierres", ConexionDbType.Int, idCatPedidosCierres);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, 1);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcPedidosCierresCancelar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<Pedido>> ObtenerPedidosDetenidos(int folioPedido, int codUsuario)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();
