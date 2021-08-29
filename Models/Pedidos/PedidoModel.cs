@@ -26,7 +26,7 @@ namespace Models.Pedidos
         public string Observacion { get; set; }
         public bool TieneFibra { get; set; }
         public bool TieneImper { get; set; }
-        public bool Bombeable { get; set; }
+        public bool Bombeado { get; set; }
         public Decimal PrecioOriginal { get; set; }
         public Decimal PrecioDescuento { get; set; }
 

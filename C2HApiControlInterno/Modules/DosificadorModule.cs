@@ -51,8 +51,27 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
-                var formula = this.Bind<List<FormulaModel>>();
-                result = _DADosificador.GuardarProductosFormula(formula);
+                var parametro = this.BindModel();
+                var lstFormulas = new List<FormulaModel>();
+                bool modificarDatos = parametro.modificarDatos;
+                var productos = parametro.productos;
+
+                foreach (var element in productos)
+                {
+                    FormulaModel producto = new FormulaModel();
+                    producto.Nomenclatura = element.Nomenclatura;
+                    producto.Descripcion = element.Descripcion;
+                    producto.Edad = element.Edad;
+                    producto.Resistencia = element.Resistencia;
+                    producto.TMA = element.TMA;
+                    producto.Revenimiento = element.Revenimiento;
+                    producto.PrecioMinimo = element.PrecioMinimo;
+                    producto.PrecioMaximo = element.PrecioMaximo;
+                    lstFormulas.Add(producto);
+                }
+
+                //var formula = this.Bind<List<FormulaModel>>();
+                result = _DADosificador.GuardarProductosFormula(lstFormulas, modificarDatos);
             }
             catch (Exception ex)
             {

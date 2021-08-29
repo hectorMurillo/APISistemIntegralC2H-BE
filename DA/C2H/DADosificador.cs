@@ -421,7 +421,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarProductosFormula(List<FormulaModel> excelCargado)
+        public Result GuardarProductosFormula(List<FormulaModel> excelCargado,Boolean modificarDatos)
         {
             Result r = new Result();
             String productos = excelCargado.ToXml("Formula");
@@ -431,11 +431,19 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 //parametros.Add("@pCodBanco", ConexionDbType.Bit, codBan/*co);*/
                 parametros.Add("@pXML", ConexionDbType.Xml, productos);
+                parametros.Add("@pModificar", ConexionDbType.Bit, modificarDatos);           
+                parametros.Add("@pCodError", ConexionDbType.Int, System.Data.ParameterDirection.Output);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 r = _conexion.Execute("ProcCatProductosGuardar", parametros);
 
+                int codError  = parametros.Value("@pCodError").ToInt32();
+
+                if (codError > 0)
+                {
+                    r.Data = codError;
+                }      
 
             }
             catch (Exception ex)
