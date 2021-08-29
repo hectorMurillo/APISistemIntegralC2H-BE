@@ -96,7 +96,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<FormulaModel>> ObtenerFormulas(string producto)
+        public Result<List<FormulaModel>> ObtenerProductos(string producto)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try

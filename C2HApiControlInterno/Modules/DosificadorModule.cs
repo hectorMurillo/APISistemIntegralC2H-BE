@@ -26,7 +26,7 @@ namespace C2HApiControlInterno.Modules
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
-            Get("/formulas/{codigo}", parametros => Formulas(parametros));
+            Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => Operadores(parametros));
@@ -248,13 +248,13 @@ namespace C2HApiControlInterno.Modules
         }
 
 
-        private object Formulas(dynamic parametros)
+        private object Productos(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
             {
                 string producto = parametros.codigo;
-                result = _DADosificador.ObtenerFormulas(producto);
+                result = _DADosificador.ObtenerProductos(producto);
             }
             catch (Exception ex)
             {
