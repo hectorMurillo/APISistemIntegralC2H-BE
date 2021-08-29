@@ -43,6 +43,14 @@ namespace Models.Pedidos
         public bool TieneFibra { get; set; }
         public bool TieneImper { get; set; }
         public string NombrePlanta { get; set; }
+        public bool Bombeado { get; set; }
 
+        public string FormatoPorcentajeDescuento
+        {
+            get
+            {
+                return PorcentajeDescuento + " %";
+            }
+        }
     }
 }
