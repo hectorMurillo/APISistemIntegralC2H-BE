@@ -1,6 +1,7 @@
 ﻿using Models;
 using Models.Clientes;
 using Models.Cobranza;
+using Models.Pedidos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -435,6 +436,39 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<TipoListaPrecio>("ProcCatClientesTiposListaPrecioCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result ObtenerHistorialCliente(int codCliente, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                //result = _conexion.Execute("ProcPedidosClienteCon", parametros);
+                _conexion.RecordsetsExecute("ProcClientesHistorialCon", parametros);
+
+                var pedidos = _conexion.RecordsetsResults<Pedido>();
+                var notasRemision = _conexion.RecordsetsResults<NotaRemisionCobranza>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { pedidos, notasRemision }
+                };
+
             }
             catch (Exception ex)
             {
