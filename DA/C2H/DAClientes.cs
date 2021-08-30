@@ -1,6 +1,7 @@
 ﻿using Models;
 using Models.Clientes;
 using Models.Cobranza;
+using Models.Dosificador;
 using Models.Pedidos;
 using System;
 using System.Collections.Generic;
@@ -456,11 +457,10 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                //result = _conexion.Execute("ProcPedidosClienteCon", parametros);
                 _conexion.RecordsetsExecute("ProcClientesHistorialCon", parametros);
 
                 var pedidos = _conexion.RecordsetsResults<Pedido>();
-                var notasRemision = _conexion.RecordsetsResults<NotaRemisionCobranza>();
+                var notasRemision = _conexion.RecordsetsResults<DatosNotaRemision>();
 
                 return new Result()
                 {

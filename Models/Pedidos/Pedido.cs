@@ -52,5 +52,25 @@ namespace Models.Pedidos
                 return PorcentajeDescuento + " %";
             }
         }
+
+        public decimal PrecioUnitario { get; set; }
+        public decimal PrecioTotal{ get; set; }
+
+        public string PrecioUnitarioFormato
+        {
+            get
+            {
+                return string.Format("{0:C}", PrecioUnitario);
+            }
+        }
+
+        public string PrecioTotalFormato
+        {
+            get
+            {
+                return string.Format("{0:C}", PrecioTotal);
+            }
+        }
+
     }
 }
