@@ -61,11 +61,11 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 Proveedor.FechaRegistro = DateTime.Now;
                 parametros.Add("@pNombre", ConexionDbType.VarChar, Proveedor.Nombre);
-                parametros.Add("@pRazonSocial", ConexionDbType.VarChar, Proveedor.RazonSocial);
-                parametros.Add("@pRFC", ConexionDbType.VarChar, Proveedor.RFC);
-                parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Proveedor.FechaRegistro);
-                parametros.Add("@pCodigoProveedor", ConexionDbType.Int, Proveedor.IdProveedor);
-                parametros.Add("@pCodigoPostal", ConexionDbType.VarChar, Proveedor.CP);
+                parametros.Add("@pAPellidoP", ConexionDbType.VarChar, Proveedor.ApellidoP);
+                parametros.Add("@pApellidoM", ConexionDbType.VarChar, Proveedor.APellidoM);
+                parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Proveedor.NombreComercial);
+                parametros.Add("@pRFC", ConexionDbType.VarChar, Proveedor.RFC);          
+                parametros.Add("@pCP", ConexionDbType.VarChar, Proveedor.CP);
                 parametros.Add("@pEstado", ConexionDbType.VarChar, Proveedor.Estado);
                 parametros.Add("@pMunicipio", ConexionDbType.VarChar, Proveedor.Municipio);
                 parametros.Add("@pCiudad", ConexionDbType.VarChar, Proveedor.Ciudad);
@@ -75,6 +75,9 @@ namespace DA.C2H
                 parametros.Add("@pUsuario", ConexionDbType.VarChar, Proveedor.Usuario);
                 parametros.Add("@pContraseña", ConexionDbType.VarChar, Proveedor.Contraseña);
                 parametros.Add("@pConfirmarContraseña", ConexionDbType.VarChar, Proveedor.ConfirmarContraseña);
+                parametros.Add("@pRegimen", ConexionDbType.VarChar, Proveedor.Regimen);
+                parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Proveedor.FechaRegistro);
+                parametros.Add("@pCodigoProveedor", ConexionDbType.Int, Proveedor.IdProveedor);
 
 
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);

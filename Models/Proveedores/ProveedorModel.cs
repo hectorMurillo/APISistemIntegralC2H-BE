@@ -12,7 +12,11 @@ namespace Models.Proveedores
 
         public string Nombre { get; set; }
 
-        public  string  RazonSocial { get; set; }
+        public string ApellidoP { get; set; }
+
+        public string APellidoM { get; set; }
+
+        public  string  NombreComercial { get; set; }
 
         public string RFC { get; set; }
 
@@ -35,6 +39,8 @@ namespace Models.Proveedores
         public string Contraseña { get; set; }
 
         public string ConfirmarContraseña { get; set; }
+
+        public string Regimen { get; set; }
 
         public DateTime FechaRegistro { get; set; }
     } 
