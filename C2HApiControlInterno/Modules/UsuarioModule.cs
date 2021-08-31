@@ -59,6 +59,8 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+
+
         private object getMenuPrincipal()
         {
             Result<List<Model.Menu>> result = new Result<List<Model.Menu>>();

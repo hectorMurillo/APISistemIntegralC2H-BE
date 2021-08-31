@@ -59,7 +59,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<ProductosClienteModel>> ObtenerProductosPorCliente(int codAgente, int codCliente)
+        public Result<List<ProductosClienteModel>> ObtenerProductosPorCliente(int codAgente, int codCliente, int codProducto = 0)
         {
             Result<List<ProductosClienteModel>> result = new Result<List<ProductosClienteModel>>();
             try
@@ -67,6 +67,7 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pCodProducto", ConexionDbType.Int, codProducto);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

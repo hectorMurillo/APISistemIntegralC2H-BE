@@ -19,7 +19,7 @@ namespace C2HApiControlInterno.Modules
 
             _DAPlanta = new DA.C2H.DAPlanta();
 
-            Get("/ubicacion", _ => GetUbicacion());
+            Get("/ubicacion/{codPlanta}", x => GetUbicacion(x));
             Get("/{codPlanta}", x => GetPlanta(x));
         }
 
@@ -43,13 +43,14 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GetUbicacion()
+        private object GetUbicacion(dynamic x)
         {
             Result<ParametrosModel> result = new Result<ParametrosModel>();
 
             try
             {
-                result = _DAPlanta.consultaCoordenadas();
+                int codPlanta = x.codPlanta == null ? 0 : x.codPlanta;
+                result = _DAPlanta.consultaCoordenadas(codPlanta);
             }
             catch (Exception ex)
             {

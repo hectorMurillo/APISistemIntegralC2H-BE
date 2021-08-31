@@ -24,6 +24,7 @@ namespace C2HApiControlInterno.Modules
             Post("guardar", _ => GuardarPedido());
             Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
             Get("/guardar-cierres/{folioPedido}/{cantidadCierreNuevo}", x => GuardarCierres(x));
+            Get("/cancelar-cierres/{folioPedido}/{idCatPedidosCierres}", x => CancelarCierres(x));
             Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
             Get("/autorizar-pedido-detenido/{folioPedido}/{autorizado}/{observacion}", x => AutorizarPedidoDetenido(x));
             Get("/cambiar-estatus/{folioPedido}/{confirmado}", x => CambiarEstatusPedido(x));
@@ -91,6 +92,23 @@ namespace C2HApiControlInterno.Modules
                 decimal cantidadCierreNuevo = x.cantidadCierreNuevo;
 
                 result = _DAPedidos.GuardarCierre(folioPedido, cantidadCierreNuevo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object CancelarCierres(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                int folioPedido = x.folioPedido;
+                int idCatPedidosCierres = x.idCatPedidosCierres;
+
+                result = _DAPedidos.CancelarCierre(folioPedido, idCatPedidosCierres);
             }
             catch (Exception ex)
             {

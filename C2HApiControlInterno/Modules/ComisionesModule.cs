@@ -3,6 +3,7 @@ using CrystalDecisions.Shared;
 using DA.C2H;
 using Models;
 using Models.Comisiones;
+using Models.Empleados;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
@@ -23,6 +24,7 @@ namespace C2HApiControlInterno.Modules
             //this.RequiresAuthentication();
             _DAComisiones = new DAComisiones();
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
+            Get("/tiposEmpleado", _ => ObtenerTiposDeEmpleados());
             Post("/rpt-comisiones", _ => ObtenerPdfNotaRemision());
             Post("/obtenerComisiones", _ => ObtenerComisiones());
             Post("/asignar-comisiones", _ => AsignarComisiones());
@@ -31,6 +33,22 @@ namespace C2HApiControlInterno.Modules
         }
 
         
+        private object ObtenerTiposDeEmpleados()
+        {
+            var r = new Result<List<TipoEmpleado>>();
+            try
+            {
+              
+                r = _DAComisiones.ObtenerTipoEmpleado();
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
+            }
+            return Response.AsJson(r);
+        }
         private object AsignarComisiones()
         {
             var r = new Result();
@@ -70,14 +88,13 @@ namespace C2HApiControlInterno.Modules
 
             DateTime fechaIni = parametro.fechaInicial;
             DateTime fechaFin = parametro.fechaFinal;
-            //var nota = new DatosNotaRemision();
-            //var datos = new Result<List<DatosNotaRemision>>();
-            var reporteEntradasSalidas = this.Bind<List<ReporteComisionesModel>>();
-            var r = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin);
+            int tipoEmpleado = parametro.tipoEmpleado;
+            //var reporteEntradasSalidas = this.Bind<List<ReporteComisionesModel>>();
+            var r = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin, tipoEmpleado);
 
-            reporteEntradasSalidas = r.Data;
+            var reporteEntradasSalidas = r.Data;
 
-
+            var totalGral = reporteEntradasSalidas.Sum(s => s.Subtotal);
 
             var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -94,9 +111,12 @@ namespace C2HApiControlInterno.Modules
             byte[] bytes;
             ReportDocument reporte = new ReportDocument();
             reporte.Load(path + "\\reportes\\RptComisiones.rpt");
+
             reporte.SetDataSource(reporteEntradasSalidas);
             reporte.SetParameterValue("fechaDesde", fechaIni);
             reporte.SetParameterValue("fechaHasta", fechaFin);
+            reporte.SetParameterValue("tipoEmpleado", tipoEmpleado);
+            reporte.SetParameterValue("totalGral", totalGral);
             reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 
             bytes = File.ReadAllBytes(rutaPdf);

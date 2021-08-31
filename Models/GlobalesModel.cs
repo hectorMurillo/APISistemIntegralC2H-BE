@@ -121,7 +121,7 @@ namespace Models
                 new Claim("codEmpleado", usuario.CodEmpleado.ToString()),
                 new Claim("usuario", usuario.Usuario),
                 new Claim("nombre", usuario.Nombre),
-                new Claim("codEmpleado",usuario.CodEmpleado.ToString()),
+                //new Claim("codEmpleado",usuario.CodEmpleado.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(), ClaimValueTypes.Integer64)
             };

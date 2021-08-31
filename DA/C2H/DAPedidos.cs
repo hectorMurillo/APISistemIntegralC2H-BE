@@ -41,7 +41,7 @@ namespace DA.C2H
         }
 
         public Result GuardarPedido(PedidoModel pedido, int codUsuario)
-        {
+         {
             Result result = new Result();
             try
             {
@@ -60,7 +60,12 @@ namespace DA.C2H
                 parametros.Add("@pTieneDescuento", ConexionDbType.Bit, pedido.TieneDescuento);
                 parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, pedido.PorcentajeDescuento);
                 parametros.Add("@pObservacion", ConexionDbType.VarChar, pedido.Observacion);
-
+                parametros.Add("@pTieneImper", ConexionDbType.Bit, pedido.TieneImper);
+                parametros.Add("@pTieneFibra", ConexionDbType.Bit, pedido.TieneFibra);
+                parametros.Add("@pCodPlanta", ConexionDbType.Int, pedido.CodPlanta);
+                parametros.Add("@pBombeado", ConexionDbType.Bit, pedido.Bombeado);
+                parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, pedido.PrecioOriginal);
+                parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, pedido.PrecioDescuento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -103,6 +108,26 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 result = _conexion.ExecuteWithResults<PedidoCierre>("ProcPedidosCierresGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result CancelarCierre(int folioPedido, int idCatPedidosCierres)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
+                parametros.Add("@pIdCatPedidosCierres", ConexionDbType.Int, idCatPedidosCierres);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, 1);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcPedidosCierresCancelar", parametros);
             }
             catch (Exception ex)
             {

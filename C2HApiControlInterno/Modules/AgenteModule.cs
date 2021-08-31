@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
             Get("/clientes", _ => ClientesPorAgente());
-            Get("/productos-cliente/{codCliente}", parametros => ProductosXCliente(parametros));
+            Get("/productos-cliente/{codCliente}/{codProducto}", parametros => ProductosXCliente(parametros));
             Post("/guardar-precio-productoXCliente", _ => GuardarPrecioProductoXCliente());
         }
 
@@ -52,8 +52,9 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 int codAgente = this.BindUsuario().CodEmpleado;
+                int codProducto = parametros.codProducto == null || parametros.codProducto == "undefined" ? 0 : parametros.codProducto;
                 int codCliente = parametros.codCliente;
-                result = _DAAgentesVentas.ObtenerProductosPorCliente(codAgente, codCliente);
+                result = _DAAgentesVentas.ObtenerProductosPorCliente(codAgente, codCliente,codProducto);
             }
             catch (Exception ex)
             {

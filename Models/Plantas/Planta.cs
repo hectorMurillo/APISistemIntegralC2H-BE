@@ -10,6 +10,7 @@ namespace Models.Plantas
     {
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
+        public string Direccion { get; set; }
         public bool Estatus { get; set; }
         public string Coordenadas { get; set; }
     }

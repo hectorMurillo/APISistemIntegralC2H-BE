@@ -1,6 +1,8 @@
 ﻿using Models;
 using Models.Clientes;
 using Models.Cobranza;
+using Models.Dosificador;
+using Models.Pedidos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,10 +64,12 @@ namespace DA.C2H
 
                 //result = _conexion.ExecuteWithResults<Model.Clientes>("ProcCatClientesCon", parametros);
                 _conexion.RecordsetsExecute("ProcCatClientesConNUEVO", parametros);
+                //_conexion.RecordsetsExecute("ProcCatClientesCon", parametros);
+
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
                 var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
 
                 _conexion2.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
 
@@ -76,7 +80,7 @@ namespace DA.C2H
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision }
+                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision,contactosXCliente }
                 };
             }
             catch (Exception ex)
@@ -222,7 +226,6 @@ namespace DA.C2H
                 parametros.Add("@pCelular", ConexionDbType.VarChar, Cliente.Celular);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, Cliente.Correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cliente.FechaRegistro);
-                parametros.Add("@pCredito", ConexionDbType.Decimal, Cliente.Credito);
                 parametros.Add("@pCodVendedor", ConexionDbType.VarChar, Cliente.codEmpleadoVendedor);
                 parametros.Add("@pRegimenFiscal", ConexionDbType.VarChar, Cliente.regimenFiscal);
                 parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Cliente.NombreComercial);
@@ -434,6 +437,38 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<TipoListaPrecio>("ProcCatClientesTiposListaPrecioCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result ObtenerHistorialCliente(int codCliente, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcClientesHistorialCon", parametros);
+
+                var pedidos = _conexion.RecordsetsResults<Pedido>();
+                var notasRemision = _conexion.RecordsetsResults<DatosNotaRemision>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { pedidos, notasRemision }
+                };
+
             }
             catch (Exception ex)
             {

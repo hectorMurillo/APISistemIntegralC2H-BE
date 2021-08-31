@@ -17,7 +17,7 @@ namespace Models.Usuario
         {
             get
             {
-                return FechaNotificacion.ToString("dd/MM/yyyy");
+                return FechaNotificacion.ToString("dd/MM/yyyy HH:mm:ss");
             }
         }
         public bool Visto { get; set; }

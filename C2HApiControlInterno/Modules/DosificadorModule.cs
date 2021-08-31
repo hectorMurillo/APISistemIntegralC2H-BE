@@ -26,7 +26,7 @@ namespace C2HApiControlInterno.Modules
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
-            Get("/formulas/{codigo}", parametros => Formulas(parametros));
+            Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => Operadores(parametros));
@@ -51,8 +51,27 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
-                var formula = this.Bind<List<FormulaModel>>();
-                result = _DADosificador.GuardarProductosFormula(formula);
+                var parametro = this.BindModel();
+                var lstFormulas = new List<FormulaModel>();
+                bool modificarDatos = parametro.modificarDatos;
+                var productos = parametro.productos;
+
+                foreach (var element in productos)
+                {
+                    FormulaModel producto = new FormulaModel();
+                    producto.Nomenclatura = element.Nomenclatura;
+                    producto.Descripcion = element.Descripcion;
+                    producto.Edad = element.Edad;
+                    producto.Resistencia = element.Resistencia;
+                    producto.TMA = element.TMA;
+                    producto.Revenimiento = element.Revenimiento;
+                    producto.PrecioMinimo = element.PrecioMinimo;
+                    producto.PrecioMaximo = element.PrecioMaximo;
+                    lstFormulas.Add(producto);
+                }
+
+                //var formula = this.Bind<List<FormulaModel>>();
+                result = _DADosificador.GuardarProductosFormula(lstFormulas, modificarDatos);
             }
             catch (Exception ex)
             {
@@ -190,7 +209,7 @@ namespace C2HApiControlInterno.Modules
             string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
             string pdfbase64 = "";
             byte[] bytes;
-
+            bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
             reporte.Load(path + "\\reportes\\rptnota.rpt");
             reporte.SetParameterValue("@folio", nota.Folio);
@@ -206,8 +225,11 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@usuario", usuario);
             reporte.SetParameterValue("@bombeable", nota.Bombeable);
             reporte.SetParameterValue("@imper", nota.Imper);
-            reporte.SetParameterValue("@fibra", nota.Fibra);
+            reporte.SetParameterValue("@fibra", nota.Fibra);  
             reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+            reporte.SetParameterValue("@cancelado", cancelado);
+            reporte.SetParameterValue("@fecha", nota.Fecha);
+
 
             //reporte.setparametervalue("@sello", usuario);
 
@@ -245,13 +267,13 @@ namespace C2HApiControlInterno.Modules
         }
 
 
-        private object Formulas(dynamic parametros)
+        private object Productos(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
             try
             {
                 string producto = parametros.codigo;
-                result = _DADosificador.ObtenerFormulas(producto);
+                result = _DADosificador.ObtenerProductos(producto);
             }
             catch (Exception ex)
             {

@@ -39,6 +39,24 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<Empleado>> ConsultaEmpleadosNoUsuario()
+        {
+            Result<List<Empleado>> result = new Result<List<Empleado>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Empleado>("ProcCatEmpleadoNoUsuarioCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result GuardarPersonalCargaDiesel(PersonalCargaDiesel personalCargaDiesel)
         {
             Result result = new Result();

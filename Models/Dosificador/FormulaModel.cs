@@ -18,5 +18,7 @@ namespace Models.Dosificador
         public decimal PrecioMinimo { get; set; }
         public decimal PrecioMaximo { get; set; }
         public string Adicionantes { get; set; }
+        public bool Fibra { get; set; }
+        public bool Imper { get; set; }
     }
 }

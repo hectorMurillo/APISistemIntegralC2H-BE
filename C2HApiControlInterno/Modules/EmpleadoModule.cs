@@ -32,7 +32,7 @@ namespace C2HApiControlInterno.Modules
             Post("guardar/tipoEmpleado", _ => PostGuardarTipoEmpleado());
             //COMENTARIO DE PRUEBA 
             Get("/{codEmpleado}", x => ObtenerEmpleado(x));
-
+            Get("/empleadosNoUsuario", _ => ObtenerEmpleadoNoUsuario());
             Get("/comision", _ => GetTodos());
         }
 
@@ -209,6 +209,21 @@ namespace C2HApiControlInterno.Modules
                     //return 0;
                 }
 
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+        private object ObtenerEmpleadoNoUsuario()
+        {
+            Result<List<Model.Empleado>> result = new Result<List<Model.Empleado>>();
+            try
+            {
+                result = _DAempleado.ConsultaEmpleadosNoUsuario();
             }
             catch (Exception ex)
             {

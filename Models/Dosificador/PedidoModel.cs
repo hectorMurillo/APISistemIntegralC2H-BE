@@ -20,6 +20,8 @@ namespace Models.Dosificador
 		public DateTime Fecha { get; set; }
         public string Cliente { get; set; }
         public string Vendedor { get; set; }
+        public bool TieneFibra{ get; set; }
+        public bool TieneImper { get; set; }
 
     }
 }
