@@ -11,6 +11,7 @@ namespace Models.Usuario
         public int IdUsuario { get; set; }
         public int CodEmpleado { get; set; }
         public string Contrasena { get; set; }
+        public string ConfirmarContrasena { get; set; }
         //public int IdSubUsuario { get; set; }
         public string Usuario { get; set; }
         public string Nombre { get; set; }

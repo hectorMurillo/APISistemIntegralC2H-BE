@@ -57,6 +57,7 @@ namespace DA.C2H
                 parametros.Add("@pCodigoEmpleado", ConexionDbType.Int, usuario.CodEmpleado);
                 parametros.Add("@pNombreUsuario", ConexionDbType.VarChar, usuario.Usuario);
                 parametros.Add("@pContrasena", ConexionDbType.VarChar, usuario.Contrasena);
+                parametros.Add("@pConfirmarContrasena", ConexionDbType.VarChar, usuario.ConfirmarContrasena);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
