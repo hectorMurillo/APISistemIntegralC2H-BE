@@ -18,7 +18,78 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        
+        public Result GuardarProducto(ProductoModel producto)
+        {
+            var r = new Result();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdTipoProducto", ConexionDbType.Int, producto.IdTipoProducto);
+                parametros.Add("@pIdTipoResistencia", ConexionDbType.Int, producto.IdTipoResistencia);
+                parametros.Add("@pIdTipoListaPrecio", ConexionDbType.Int, producto.IdTipoListaPrecio);
+                parametros.Add("@pIdInsumo", ConexionDbType.Int, producto.IdInsumo);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, producto.Descripcion);
+                parametros.Add("@pFormula", ConexionDbType.VarChar, producto.Formula);
+                parametros.Add("@pCantidad", ConexionDbType.Int, producto.Cantidad);
+                parametros.Add("@pCostoXUnidadMedida", ConexionDbType.Decimal, producto.CostoXUnidadMedida);
+                parametros.Add("@pPrecioXUnidadMedida", ConexionDbType.Decimal, producto.PrecioXUnidadMedida);
+                parametros.Add("@pEspecificaciones", ConexionDbType.VarChar, producto.Especificaciones);
+                parametros.Add("@pObservaciones", ConexionDbType.VarChar, producto.Observaciones);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.Execute("ProcProductoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
+        public Result<List<TipoResistenciaCModel>> ObtenerTiposResistenciaContreto(int codigo)
+        {
+            var r = new Result<List<TipoResistenciaCModel>>();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<TipoResistenciaCModel>("ProcTipoResistenciaCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
+        public Result<List<TipoProductoModel>> ObtenerTiposProducto(int codigo)
+        {
+            var r = new Result<List<TipoProductoModel>>();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<TipoProductoModel>("ProcTipoProductoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
 
         public Result<List<InsumoModel>> ObtenerInsumos(int codigo)
         {

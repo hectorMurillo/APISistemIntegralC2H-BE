@@ -23,10 +23,59 @@ namespace C2HApiControlInterno.Modules
             Get("/tipos-unidad-medida/{codigo}", parametros => ObtenerTiposUnidadMedida(parametros));
             Get("/tipos-insumos/{codigo}", parametros => ObtenerTiposInsumos(parametros));
             Get("/insumos/{codigo}", parametros => ObtenerInsumos(parametros));
+            Get("/tipo-producto/{codigo}", parametros => ObtenerTiposProducto(parametros));
+            Get("/tipo-resistencia-concreto/{codigo}", parametros => ObtenerTiposResistenciaContreto(parametros));
+
+            Post("/producto", _ => GuardarProducto());
             Post("/insumo", _ => GuardarInsumo());
             Post("/tipos-insumo", _ => GuardarTipoInsumo());
             Post("/tipos-unidad-medida",_ => GuardarTipoUnidadMedida());
+        }
 
+        private object GuardarProducto()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var producto = this.Bind<ProductoModel>();
+                result = _DAProductos.GuardarProducto(producto);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerTiposResistenciaContreto(dynamic parametros)
+        {
+            Result<List<TipoResistenciaCModel>> result = new Result<List<TipoResistenciaCModel>>();
+            try
+            {
+                int codigo = parametros.codigo;
+                result = _DAProductos.ObtenerTiposResistenciaContreto(codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerTiposProducto(dynamic parametros)
+        {
+            Result<List<TipoProductoModel>> result = new Result<List<TipoProductoModel>>();
+            try
+            {
+                int codigo = parametros.codigo;
+                result = _DAProductos.ObtenerTiposProducto(codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GuardarInsumo()
