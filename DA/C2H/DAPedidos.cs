@@ -177,7 +177,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result CambiarEstatusPedido(int folio, bool confirmado)
+        public Result CambiarEstatusPedido(int folio, bool confirmado, string motivo)
         {
             Result result = new Result();
             try
@@ -185,6 +185,7 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
                 parametros.Add("@pConfirmado", ConexionDbType.Bit, confirmado);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

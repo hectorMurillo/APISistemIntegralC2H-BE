@@ -102,6 +102,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  
+  <!--Reporte pedidos cancelados-->
+
+  <xs:element name="RptPedidosCancelados">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FolioPedido" type="xs:integer"/>
+        <xs:element name="CodCliente" type="xs:integer"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="CodVendedor" type="xs:integer"/>
+        <xs:element name="Vendedor" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Fecha" type="xs:string"/>
+        <xs:element name="Hora" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Planta" type="xs:string"/>
+        <xs:element name="Motivo" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
  
 </xs:schema>
 

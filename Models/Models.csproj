@@ -102,6 +102,7 @@
     <Compile Include="Authentication\TokenResponseModel.cs" />
     <Compile Include="Bancos\BancoModel.cs" />
     <Compile Include="Clientes\ClienteModel.cs" />
+    <Compile Include="Clientes\ClienteModel2.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
     <Compile Include="Clientes\Segmento.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="RefreshTokenRepository.cs" />
     <Compile Include="Reportes\RptEntradasSalidas.cs" />
     <Compile Include="Reportes\RptEquipos.cs" />
+    <Compile Include="Reportes\RptPedidosCancelados.cs" />
     <Compile Include="Usuario\MenuModel.cs" />
     <Compile Include="Usuario\MenuPrincipalModel.cs" />
     <Compile Include="Usuario\ModuloPermisoModel.cs" />

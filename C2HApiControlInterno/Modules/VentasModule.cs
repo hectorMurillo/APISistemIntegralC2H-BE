@@ -51,6 +51,11 @@ namespace C2HApiControlInterno.Modules
             Post("/obtener-reporte-foraneos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ObtenerReporteMensualForaneos(x));
             Post("/imprimir-reporte-foraneos/{fechaDesde}/{fechaHasta}/{codEquipo}", x => ImprimirReporteMensualForaneos(x));
 
+
+            //Pediso Cancelados
+            Post("/obtener-reporte-pedidos-cancelados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ObtenerReportePedidosCancelados(x));
+            Post("/imprimir-reporte-pedidos-cancelados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ImprimirReportePedidosCancelados(x));
+
         }
 
         //NUEVOS METODOS
@@ -490,6 +495,67 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("fechaDesde", fechaDesde);
             reporte.SetParameterValue("fechaHasta", fechaHasta);
             reporte.SetParameterValue("equipo", equipoReporte);
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ObtenerReportePedidosCancelados(dynamic x)
+        {
+            Result result = new Result();
+
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            var codCliente = x.codCliente;
+            var codVendedor = x.codVendedor;
+
+            var r = new Result<List<RptPedidosCancelados>>();
+            r = _DAVentas.ObtenerReportePedidosCancelados(codCliente, codVendedor, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            result.Message = r.Message;
+
+            return Response.AsJson(result);
+
+        }
+
+        private object ImprimirReportePedidosCancelados(dynamic x)
+        {
+            Result result = new Result();
+            
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            int codCliente = x.codCliente;
+            int codVendedor = x.codVendedor;
+
+            var reportePedidosCancelados = this.Bind<List<RptPedidosCancelados>>();
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptPedidosCanceladosTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+
+            string clienteReporte = codCliente == 0 ? "Todos" : reportePedidosCancelados[0].cliente;
+            string vendedorReporte = codVendedor == 0 ? "Todos" : reportePedidosCancelados[0].vendedor;
+
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptPedidosCancelados.rpt");
+            reporte.SetDataSource(reportePedidosCancelados);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.SetParameterValue("cliente", clienteReporte);
+            reporte.SetParameterValue("vendedor", vendedorReporte);
+
 
             reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 

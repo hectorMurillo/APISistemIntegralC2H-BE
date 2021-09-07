@@ -477,5 +477,24 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<ClienteModel2>> ObtenerClientes(int codCliente)
+        {
+            Result<List<ClienteModel2>> result = new Result<List<ClienteModel2>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 100);
+
+                result = _conexion.ExecuteWithResults<ClienteModel2>("ProcCatClientesCon2", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }

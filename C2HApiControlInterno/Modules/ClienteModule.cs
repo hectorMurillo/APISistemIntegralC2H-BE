@@ -47,6 +47,11 @@ namespace C2HApiControlInterno.Modules
 
             Get("/historial-cliente/{codCliente}/{fechaDesde}/{fechaHasta}", x => ObtenerHistorialCliente(x));
 
+
+
+            Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x));
+
+
         }
 
 
@@ -367,6 +372,23 @@ namespace C2HApiControlInterno.Modules
                 int codCliente = x.codCliente;
 
                 result = _DAClientes.ObtenerHistorialCliente(codCliente, fechaDesde, fechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+        private object ObtenerClientes(dynamic x)
+        {
+            Result<List<ClienteModel2>> result = new Result<List<ClienteModel2>>();
+            int codCliente = x.codCliente;
+
+            try
+            {
+                result = _DAClientes.ObtenerClientes(codCliente);
             }
             catch (Exception ex)
             {
