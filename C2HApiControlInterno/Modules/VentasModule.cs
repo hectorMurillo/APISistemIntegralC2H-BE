@@ -56,6 +56,10 @@ namespace C2HApiControlInterno.Modules
             Post("/obtener-reporte-pedidos-cancelados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ObtenerReportePedidosCancelados(x));
             Post("/imprimir-reporte-pedidos-cancelados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ImprimirReportePedidosCancelados(x));
 
+            //Pediso Reagendados
+            Post("/obtener-reporte-pedidos-reagendados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ObtenerReportePedidosReagendados(x));
+            Post("/imprimir-reporte-pedidos-reagendados/{fechaDesde}/{fechaHasta}/{codCliente}/{codVendedor}", x => ImprimirReportePedidosReagendados(x));
+
         }
 
         //NUEVOS METODOS
@@ -570,5 +574,73 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        #region [ Pedidos Reagendados ]
+        private object ObtenerReportePedidosReagendados(dynamic x)
+        {
+            try
+            {
+                Result result = new Result();
+
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
+                var codCliente = x.codCliente;
+                var codVendedor = x.codVendedor;
+
+                var r = new Result<List<RptPedidosReagendados>>();
+                r = _DAVentas.ObtenerReportePedidosReagendados(codCliente, codVendedor, fechaDesde, fechaHasta);
+                result.Data = r.Data;
+                result.Value = r.Value;
+                result.Message = r.Message;
+
+                return Response.AsJson(result);
+            }
+            catch(Exception ex)
+            {
+                return Response.AsJson( new Result());
+            }
+
+        }
+
+        private object ImprimirReportePedidosReagendados(dynamic x)
+        {
+            Result result = new Result();
+
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+            int codCliente = x.codCliente;
+            int codVendedor = x.codVendedor;
+
+            var reportePedidosReagendados = this.Bind<List<RptPedidosReagendados>>();
+            var path = HttpRuntime.AppDomainAppPath;
+            string rutaPdf = "C:\\PRUEBAPRUEBA\\RptPedidosReagendadosTEST.pdf";
+            string pdfBase64 = "";
+            Byte[] bytes;
+
+            string clienteReporte = codCliente == 0 ? "Todos" : reportePedidosReagendados[0].cliente;
+            string vendedorReporte = codVendedor == 0 ? "Todos" : reportePedidosReagendados[0].vendedor;
+
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(path + "\\Reportes\\RptPedidosReagendados.rpt");
+            reporte.SetDataSource(reportePedidosReagendados);
+            reporte.SetParameterValue("fechaDesde", fechaDesde);
+            reporte.SetParameterValue("fechaHasta", fechaHasta);
+            reporte.SetParameterValue("cliente", clienteReporte);
+            reporte.SetParameterValue("vendedor", vendedorReporte);
+
+
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+            bytes = File.ReadAllBytes(rutaPdf);
+            pdfBase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfBase64;
+            result.Value = true;
+            File.Delete(rutaPdf);
+
+
+            return Response.AsJson(result);
+
+        }
+
+        #endregion
     }
 }

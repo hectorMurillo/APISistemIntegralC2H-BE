@@ -175,6 +175,7 @@
     <Compile Include="Reportes\RptEntradasSalidas.cs" />
     <Compile Include="Reportes\RptEquipos.cs" />
     <Compile Include="Reportes\RptPedidosCancelados.cs" />
+    <Compile Include="Reportes\RptPedidosReagendados.cs" />
     <Compile Include="Usuario\MenuModel.cs" />
     <Compile Include="Usuario\MenuPrincipalModel.cs" />
     <Compile Include="Usuario\ModuloPermisoModel.cs" />
