@@ -236,5 +236,57 @@ namespace DA.C2H
 
         }
 
+        public Result<List<RptPedidosCancelados>> ObtenerReportePedidosCancelados(int codCliente, int codVendedor, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptPedidosCancelados>> result = new Result<List<RptPedidosCancelados>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptPedidosCancelados>("ProcReportePedidosCanceladosCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
+        public Result<List<RptPedidosReagendados>> ObtenerReportePedidosReagendados(int codCliente, int codVendedor, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<RptPedidosReagendados>> result = new Result<List<RptPedidosReagendados>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<RptPedidosReagendados>("ProcReportePedidosReagendadosCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }

@@ -226,7 +226,7 @@ namespace DA.C2H
                 parametros.Add("@pCelular", ConexionDbType.VarChar, Cliente.Celular);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, Cliente.Correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cliente.FechaRegistro);
-                parametros.Add("@pCodVendedor", ConexionDbType.VarChar, Cliente.codEmpleadoVendedor);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, Cliente.codEmpleadoVendedor);
                 parametros.Add("@pRegimenFiscal", ConexionDbType.VarChar, Cliente.regimenFiscal);
                 parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Cliente.NombreComercial);
                 parametros.Add("@pCodTipoCliente", ConexionDbType.Int, Cliente.CodTipoCliente);
@@ -234,7 +234,7 @@ namespace DA.C2H
                 parametros.Add("@pCodTipoClienteCredito", ConexionDbType.Int, Cliente.CodTipoClienteCredito);
                 parametros.Add("@pCodTipoListaPrecio", ConexionDbType.Int, Cliente.CodTipoListaPrecio);
                 parametros.Add("@pDiaRevision", ConexionDbType.Int, Cliente.DiaRevision);
-                parametros.Add("@pFacturarPublicoGeneral", ConexionDbType.Int, Cliente.FacturarPublicoGeneral);
+                parametros.Add("@pFacturarPublicoGeneral", ConexionDbType.Bit, Cliente.FacturarPublicoGeneral);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -469,6 +469,25 @@ namespace DA.C2H
                     Data = new { pedidos, notasRemision }
                 };
 
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<ClienteModel2>> ObtenerClientes(int codCliente)
+        {
+            Result<List<ClienteModel2>> result = new Result<List<ClienteModel2>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 100);
+
+                result = _conexion.ExecuteWithResults<ClienteModel2>("ProcCatClientesCon2", parametros);
             }
             catch (Exception ex)
             {
