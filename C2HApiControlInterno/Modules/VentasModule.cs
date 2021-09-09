@@ -78,6 +78,7 @@ namespace C2HApiControlInterno.Modules
                 r = _DAVentas.ReporteMensualMetrosCubicos(reporteMensualMetros, fechaDesde, fechaHasta);
                 result.Data = r.Data;
                 result.Value = r.Value;
+                result.Message = r.Message;
             }
             catch (Exception ex)
             {
@@ -142,6 +143,7 @@ namespace C2HApiControlInterno.Modules
             r = _DAVentas.ReporteMensualClientes(fechaDesde, fechaHasta, agente);
             result.Data = r.Data;
             result.Value = r.Value;
+            result.Message = r.Message;
 
             return Response.AsJson(result);
 
@@ -200,6 +202,7 @@ namespace C2HApiControlInterno.Modules
             r = _DAVentas.ReporteVolumenXObras(reporteVolumenXObras, fechaDesde, fechaHasta);
             result.Data = r.Data;
             result.Value = r.Value;
+            result.Message = r.Message;
             return Response.AsJson(result);
 
         }
@@ -247,6 +250,7 @@ namespace C2HApiControlInterno.Modules
             r = _DAVentas.ReporteMensualProductos(reporteProductos, fechaDesde, fechaHasta);
             result.Data = r.Data;
             result.Value = r.Value;
+            result.Message = r.Message;
 
             return Response.AsJson(result);
 

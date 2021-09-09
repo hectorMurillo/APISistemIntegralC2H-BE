@@ -19,5 +19,21 @@ namespace Models.Reportes
         public string fecha { get; set; }
         public string planta { get; set; }
         public string motivo { get; set; }
+
+        public string fechaFormato
+        {
+            get
+            {
+                return fecha + " - " + hora;
+            }
+        }
+
+        public string CantidadFormato
+        {
+            get
+            {
+                return cantidad.ToString() + "m³";
+            }
+        }
     }
 }
