@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Cuentas
 {
-    public class CuentaModel
+    public class BancoXCuenta
     {
         public int IdCuenta { get; set; }
 
@@ -16,11 +16,15 @@ namespace Models.Cuentas
 
         public string NumeroCuenta { get; set; }
 
- 
+
         public string CLABE { get; set; }
 
         public Boolean CBPrincipal { get; set; }
 
-        public DateTime FechaRegistro { get; set; }
+        public int Clave { get; set; }
+
+        public string Nombre { get; set; }
+
+        public string RazonSocial { get; set; }
     }
 }

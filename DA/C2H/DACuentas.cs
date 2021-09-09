@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Cuentas;
+using Models.Bancos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,27 +21,66 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
-        public Result<List<CuentaModel>> consultaCuentas()
+        public Result consultaCuentas(int IdProveedor)
         {
-            Result<List<Model.CuentaModel>> result = new Result<List<Model.CuentaModel>>();
+            Result result = new Result();
 
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pIdProveedor", ConexionDbType.VarChar, IdProveedor);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<Model.CuentaModel>("ProcCatCuentasCon", parametros);
+                _conexion.RecordsetsExecute("ProcCatCuentasCon", parametros);
 
-                return result;
+                var cuenta = _conexion.RecordsetsResults<Models.Cuentas.BancoXCuenta>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { cuenta }
+                };
             }
             catch (Exception ex)
             {
                 result.Message = ex.Message;
                 result.Value = false;
                 result.Data = null;
-                return result;
             }
+            return result;
+        }
+
+        public Result consultaCuenta(int IdCuenta)
+        {
+            Result result = new Result();
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdCuenta", ConexionDbType.VarChar, IdCuenta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcCatCuentasCon", parametros);
+
+                var cuenta = _conexion.RecordsetsResults<Models.Cuentas.BancoXCuenta>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { cuenta }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Value = false;
+                result.Data = null;
+            }
+            return result;
         }
 
         public Result consultaBancosNombres()
@@ -75,24 +115,25 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<int>> CuentaGuardar(Model.CuentaModel Cuenta)
+        public Result CuentaGuardar(Model.CuentaModel Cuenta)
         {
-            Result<List<int>> result = new Result<List<int>>();
+            Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
+                
                 Cuenta.FechaRegistro = DateTime.Now;
-                parametros.Add("@pCodigoCuenta", ConexionDbType.Int, Cuenta.IdCuenta);
+                parametros.Add("@pIdCuenta", ConexionDbType.Int, Cuenta.IdCuenta);
+                parametros.Add("@pIdProveedor", ConexionDbType.Int, Cuenta.IdProveedor);
                 parametros.Add("@pIdBanco", ConexionDbType.Int, Cuenta.IdBanco);
-                parametros.Add("@pCodReferencia", ConexionDbType.Int, Cuenta.CodReferencia);
                 parametros.Add("@pNumeroCuenta", ConexionDbType.VarChar, Cuenta.NumeroCuenta);
-                parametros.Add("@pTipo", ConexionDbType.VarChar, Cuenta.Tipo);
                 parametros.Add("@pCLABE", ConexionDbType.VarChar, Cuenta.CLABE);
                 parametros.Add("@pCBPrincipal", ConexionDbType.Bit, Cuenta.CBPrincipal);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cuenta.FechaRegistro);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-                result = _conexion.ExecuteWithResults<int>("ProcCatCuentaBancariaGuardar", parametros);
+
+                result = _conexion.Execute("ProcCatCuentasGuardar", parametros);
             }
             catch (Exception ex)
             {
