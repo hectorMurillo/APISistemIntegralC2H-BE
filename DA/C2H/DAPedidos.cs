@@ -19,6 +19,26 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
+        public Result<List<DescuentoXClienteModel>> ObtenerUltimoDescuento(int codAgente, int codCliente)
+        {
+            Result<List<DescuentoXClienteModel>> result = new Result<List<DescuentoXClienteModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DescuentoXClienteModel>("ProcCatDescuentoPedidoXClienteCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<Pedido>> ObtenerPedidos(int pedido, DateTime fechaDesde, DateTime fechaHasta)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();

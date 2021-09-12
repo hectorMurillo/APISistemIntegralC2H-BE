@@ -20,6 +20,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             _DAPedidos = new DAPedidos();
+            Get("/obtener-descuento-cliente/{codAgente}/{codCliente}", x => ObtenerUltimoDescuento(x));
             Get("/obtener-pedidos/{pedido}/{fechaDesde}/{fechaHasta}", x => ObtenerPedidos(x));
             Post("guardar", _ => GuardarPedido());
             Get("/obtener-cierres/{folioPedido}", x => ObtenerCierres(x));
@@ -32,7 +33,22 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        private object ObtenerUltimoDescuento(dynamic x)
+        {
+            Result<List<DescuentoXClienteModel>> result = new Result<List<DescuentoXClienteModel>>();
+            try
+            {
+                int codAgente = x.codAgente;
+                int codCliente = x.codCliente;
 
+                result = _DAPedidos.ObtenerUltimoDescuento(codAgente, codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
         private object ObtenerPedidos(dynamic x)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();
