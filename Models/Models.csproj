@@ -159,6 +159,7 @@
     <Compile Include="Operadores\Operador.cs" />
     <Compile Include="Operadores\OperadorTipo.cs" />
     <Compile Include="Operadores\OperadorModel.cs" />
+    <Compile Include="Pedidos\DescuentoXClienteModel.cs" />
     <Compile Include="Pedidos\Pedido.cs" />
     <Compile Include="Pedidos\PedidoCierre.cs" />
     <Compile Include="Pedidos\PedidoModel.cs" />
