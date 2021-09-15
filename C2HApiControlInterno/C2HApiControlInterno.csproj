@@ -158,6 +158,7 @@
     <Compile Include="Modules\ComisionesModule.cs" />
     <Compile Include="Modules\ConfiguracionModule.cs" />
     <Compile Include="Modules\ContactosModule.cs" />
+    <Compile Include="Modules\ContactosXProveedorModule.cs" />
     <Compile Include="Modules\CorreoModule.cs" />
     <Compile Include="Modules\CuentasModule.cs" />
     <Compile Include="Modules\DosificadorModule.cs" />
@@ -199,8 +200,6 @@
     <Content Include="Reportes\RptForaneos.rpt" />
     <Content Include="Reportes\RptNocturnos.rpt" />
     <Content Include="Reportes\RptComisiones.rpt" />
-    <Content Include="Reportes\RptPedidosCancelados.rpt" />
-    <Content Include="Reportes\RptPedidosReagendados.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

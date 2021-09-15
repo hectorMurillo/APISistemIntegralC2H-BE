@@ -28,7 +28,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pIdProveedor", ConexionDbType.VarChar, IdProveedor);
+                parametros.Add("@pIdProveedor", ConexionDbType.Int, IdProveedor);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -59,7 +59,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pIdCuenta", ConexionDbType.VarChar, IdCuenta);
+                parametros.Add("@pIdCuenta", ConexionDbType.Int, IdCuenta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -114,7 +114,26 @@ namespace DA.C2H
             }
             return result;
         }
+        public Result CuentaDesactivar(Model.CuentaModel Cuenta)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
 
+                parametros.Add("@pIdCuenta", ConexionDbType.Int, Cuenta.IdCuenta);
+                parametros.Add("@pActivado", ConexionDbType.Bit, Cuenta.Activado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatCuentasGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
         public Result CuentaGuardar(Model.CuentaModel Cuenta)
         {
             Result result = new Result();
@@ -130,6 +149,7 @@ namespace DA.C2H
                 parametros.Add("@pCLABE", ConexionDbType.VarChar, Cuenta.CLABE);
                 parametros.Add("@pCBPrincipal", ConexionDbType.Bit, Cuenta.CBPrincipal);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, Cuenta.FechaRegistro);
+              
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

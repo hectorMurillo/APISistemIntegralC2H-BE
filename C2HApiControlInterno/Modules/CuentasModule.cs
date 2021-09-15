@@ -25,10 +25,12 @@ namespace C2HApiControlInterno.Modules
         Get("/{IdProveedor}", x => GetCuentas(x));
         Get("/cuenta/{IdCuenta}", x => GetCuenta(x));
         Post("/guardar", _ => PostCuenta());
+        Post("/desactivar", _ => DesactivarCuenta());
         Get("/nombresbancos", x => GetBancos());
 
     }
 
+      
     private object GetCuentas(dynamic x)
     {
 
@@ -100,5 +102,20 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-}
+
+        private object DesactivarCuenta()
+        {
+            Result result = new Result();
+            try
+            {
+                var Cuenta = this.Bind<Model.CuentaModel>();
+                result = _DACuentas.CuentaDesactivar(Cuenta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+    }
 }

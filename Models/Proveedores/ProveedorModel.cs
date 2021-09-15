@@ -14,7 +14,7 @@ namespace Models.Proveedores
 
         public string ApellidoP { get; set; }
 
-        public string APellidoM { get; set; }
+        public string ApellidoM { get; set; }
 
         public  string  NombreComercial { get; set; }
 
@@ -28,7 +28,7 @@ namespace Models.Proveedores
 
         public string Ciudad { get; set; }
 
-        public string Colonia { get; set; }
+        public int IdColonia { get; set; }
 
         public string CalleNumero { get; set; }
 

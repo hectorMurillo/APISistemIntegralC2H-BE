@@ -94,6 +94,7 @@
     <Compile Include="C2H\DAComisiones.cs" />
     <Compile Include="C2H\DAConfiguracion.cs" />
     <Compile Include="C2H\DAContactos.cs" />
+    <Compile Include="C2H\DAContactosXProveedor.cs" />
     <Compile Include="C2H\DACorreo.cs" />
     <Compile Include="C2H\DACuentas.cs" />
     <Compile Include="C2H\DADosificador.cs" />

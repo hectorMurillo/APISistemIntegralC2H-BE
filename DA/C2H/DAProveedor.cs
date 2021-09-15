@@ -62,14 +62,14 @@ namespace DA.C2H
                 Proveedor.FechaRegistro = DateTime.Now;
                 parametros.Add("@pNombre", ConexionDbType.VarChar, Proveedor.Nombre);
                 parametros.Add("@pAPellidoP", ConexionDbType.VarChar, Proveedor.ApellidoP);
-                parametros.Add("@pApellidoM", ConexionDbType.VarChar, Proveedor.APellidoM);
+                parametros.Add("@pApellidoM", ConexionDbType.VarChar, Proveedor.ApellidoM);
                 parametros.Add("@pNombreComercial", ConexionDbType.VarChar, Proveedor.NombreComercial);
                 parametros.Add("@pRFC", ConexionDbType.VarChar, Proveedor.RFC);          
                 parametros.Add("@pCP", ConexionDbType.VarChar, Proveedor.CP);
                 parametros.Add("@pEstado", ConexionDbType.VarChar, Proveedor.Estado);
                 parametros.Add("@pMunicipio", ConexionDbType.VarChar, Proveedor.Municipio);
                 parametros.Add("@pCiudad", ConexionDbType.VarChar, Proveedor.Ciudad);
-                parametros.Add("@pColonia", ConexionDbType.VarChar, Proveedor.Colonia);
+                parametros.Add("@pIdColonia", ConexionDbType.Int, Proveedor.IdColonia);
                 parametros.Add("@pCalleNumero", ConexionDbType.VarChar, Proveedor.CalleNumero);
                 parametros.Add("@pTipo", ConexionDbType.VarChar, Proveedor.Tipo);
                 parametros.Add("@pUsuario", ConexionDbType.VarChar, Proveedor.Usuario);

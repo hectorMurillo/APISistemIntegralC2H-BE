@@ -16,8 +16,10 @@ namespace Models.Cuentas
 
         public string NumeroCuenta { get; set; }
 
- 
+
         public string CLABE { get; set; }
+
+        public Boolean Activado { get; set; }
 
         public Boolean CBPrincipal { get; set; }
 
