@@ -57,5 +57,12 @@ namespace Models.Clientes
 
         public bool FacturarPublicoGeneral { get; set; }
 
+        public string CodigoNombreComercial
+        {
+            get
+            {
+                return Codigo + " - " + NombreComercial;
+            }
+        }
     }
 }
