@@ -31,5 +31,6 @@ namespace Models.Clientes
         public decimal Longitud { get; set; }
         public bool Fiscal { get; set; }
         public bool Entrega { get; set; }
+        public List<float> costoCaseta { get; set; }
     }
 }

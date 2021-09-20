@@ -58,7 +58,9 @@ namespace C2HApiControlInterno.Modules
                 DateTime fechaHasta = x.fechaHasta;
                 int pedido = x.pedido;
 
-                result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta);
+                //USUARIO PUEDE SURTIR SE REQUIERE MANDAR EL USUARIO 
+                var codUsuario = this.BindUsuario().IdUsuario;
+                result = _DAPedidos.ObtenerPedidos(pedido, fechaDesde, fechaHasta, codUsuario);
             }
             catch (Exception ex)
             {
@@ -180,8 +182,9 @@ namespace C2HApiControlInterno.Modules
                 int folioPedido = parametros.folioPedido;
                 bool confirmado = parametros.confirmado;
                 string motivo = parametros.motivo;
+                var codUsuario = this.BindUsuario().IdUsuario;
 
-                result = _DAPedidos.CambiarEstatusPedido(folioPedido, confirmado, motivo);
+                result = _DAPedidos.CambiarEstatusPedido(folioPedido, confirmado, motivo, codUsuario);
             }
             catch (Exception ex)
             {

@@ -209,12 +209,13 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<PedidoModel>> ObtenerPedido(int folioPedido)
+        public Result<List<PedidoModel>> ObtenerPedido(int folioPedido, int codUsuario)
         {
             Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);

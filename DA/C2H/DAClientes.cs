@@ -68,20 +68,26 @@ namespace DA.C2H
 
 
                 var cliente = _conexion.RecordsetsResults<Models.Clientes.ClientesModel>();
-                var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
-
-                _conexion2.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
-
-                var datosCredito = _conexion2.RecordsetsResults<DatosCredito>();
-                var notasRemision = _conexion2.RecordsetsResults<NotaRemisionCobranza>();
-
-                return new Result()
+                if(cliente.Count > 0)
                 {
-                    Value = parametros.Value("@pResultado").ToBoolean(),
-                    Message = parametros.Value("@pMsg").ToString(),
-                    Data = new { cliente, direccionesXCliente, datosCredito, notasRemision,contactosXCliente }
-                };
+                    var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
+                    var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
+
+                    _conexion2.RecordsetsExecute("ProcCatClientesDatosCreditoCon", parametros);
+
+                    var datosCredito = _conexion2.RecordsetsResults<DatosCredito>();
+                    var notasRemision = _conexion2.RecordsetsResults<NotaRemisionCobranza>();
+
+                    result.Value = parametros.Value("@pResultado").ToBoolean();
+                    result.Message = parametros.Value("@pMsg").ToString();
+                    result.Data = new { cliente, direccionesXCliente, datosCredito, notasRemision, contactosXCliente };
+                }
+                else
+                {
+                    result.Value = parametros.Value("@pResultado").ToBoolean();
+                    result.Message = parametros.Value("@pMsg").ToString();
+                    result.Data = null;
+                }
             }
             catch (Exception ex)
             {

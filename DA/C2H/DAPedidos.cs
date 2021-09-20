@@ -39,15 +39,17 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<Pedido>> ObtenerPedidos(int pedido, DateTime fechaDesde, DateTime fechaHasta)
+        public Result<List<Pedido>> ObtenerPedidos(int pedido, DateTime fechaDesde, DateTime fechaHasta, int codUsuario)
         {
             Result<List<Pedido>> result = new Result<List<Pedido>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pPedido", ConexionDbType.Int, pedido);
                 parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
                 parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                //parametros.Add("@pUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -197,7 +199,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result CambiarEstatusPedido(int folio, bool confirmado, string motivo)
+        public Result CambiarEstatusPedido(int folio, bool confirmado, string motivo, int codUsuario)
         {
             Result result = new Result();
             try
@@ -206,6 +208,7 @@ namespace DA.C2H
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
                 parametros.Add("@pConfirmado", ConexionDbType.Bit, confirmado);
                 parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
