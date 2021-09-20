@@ -92,8 +92,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result ProveedorDesactivar(Model.ProveedorModel Proveedor)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
 
+                parametros.Add("@pCodigoProveedor", ConexionDbType.Int, Proveedor.IdProveedor);
+                parametros.Add("@pActivado", ConexionDbType.Bit, Proveedor.Activado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
+                result = _conexion.Execute("ProcCatProveedorGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 

@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             Get("/todos", x => GetTodos());
             Get("/{CodProveedor}", x => GetProveedor(x));
             Post("/guardar", _ => PostProveedor());
-
+            Post("/desactivar", _ => DesactivarProveedor());
         }
 
             private object GetTodos()
@@ -94,6 +94,21 @@ namespace C2HApiControlInterno.Modules
                 }
                 return Response.AsJson(result);
             }
+
+        private object DesactivarProveedor()
+        {
+            Result result = new Result();
+            try
+            {
+                var Proveedor = this.Bind<Model.ProveedorModel>();
+                result = _DAProveedores.ProveedorDesactivar(Proveedor);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
     }
     }
 

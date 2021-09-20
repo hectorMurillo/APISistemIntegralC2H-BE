@@ -42,6 +42,8 @@ namespace Models.Proveedores
 
         public string Regimen { get; set; }
 
+        public bool Activado { get; set; }
+
         public DateTime FechaRegistro { get; set; }
     } 
 }
