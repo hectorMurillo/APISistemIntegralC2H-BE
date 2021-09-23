@@ -36,7 +36,7 @@ namespace Models.Pedidos
         public int CodProducto { get; set; }
         public string Nomenclatura { get; set; }
         public string FormatoCantidad { get; set; }
-
+        public bool UsuarioPuedeSurtir { get; set; }
         public bool TieneDescuento { get; set; }
         public decimal PorcentajeDescuento { get; set; }
         public string Observacion { get; set; }

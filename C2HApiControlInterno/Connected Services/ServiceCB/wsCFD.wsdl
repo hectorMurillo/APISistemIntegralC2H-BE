@@ -1,0 +1,3368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://staging.clickbalance.net/soap/ComprobantesFiscales" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://staging.clickbalance.net/soap/ComprobantesFiscales" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://staging.clickbalance.net/soap/ComprobantesFiscales">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="respuesta">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="contenido_archivo" type="xsd:string" />
+          <xsd:element name="nombre_archivo" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:string" />
+          <xsd:element name="uuid" type="xsd:string" />
+          <xsd:element name="id" type="xsd:string" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="mensaje" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosreceptor">
+        <xsd:all>
+          <xsd:element name="idcliente" type="xsd:integer" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="numero_referencia_asociado" type="xsd:string" />
+          <xsd:element name="numero_cliente" type="xsd:integer" />
+          <xsd:element name="email" type="xsd:string" />
+          <xsd:element name="iddireccion" type="xsd:string" />
+          <xsd:element name="calle" type="xsd:string" />
+          <xsd:element name="nexterior" type="xsd:string" />
+          <xsd:element name="ninterior" type="xsd:string" />
+          <xsd:element name="colonia" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="municipio" type="xsd:string" />
+          <xsd:element name="estado" type="xsd:string" />
+          <xsd:element name="pais" type="xsd:string" />
+          <xsd:element name="codigopostal" type="xsd:string" />
+          <xsd:element name="iddireccionentrega" type="xsd:string" />
+          <xsd:element name="direccion_entrega" type="tns:direccion_entrega" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="direccion_entrega">
+        <xsd:all>
+          <xsd:element name="telefono" type="xsd:string" />
+          <xsd:element name="ciudad" type="xsd:string" />
+          <xsd:element name="colonia" type="xsd:string" />
+          <xsd:element name="calle" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="registro_fiscal" type="xsd:string" />
+          <xsd:element name="nombre_sucursal" type="xsd:string" />
+          <xsd:element name="numero_exterior" type="xsd:string" />
+          <xsd:element name="numero_interior" type="xsd:string" />
+          <xsd:element name="codigo_postal" type="xsd:string" />
+          <xsd:element name="municipio" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="estado" type="xsd:string" />
+          <xsd:element name="pais" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="InformacionAduana">
+        <xsd:all>
+          <xsd:element name="numero" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:date" />
+          <xsd:element name="aduana" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="InformacionAduanera">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:InformacionAduana[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="InstitucionEducativa">
+        <xsd:all>
+          <xsd:element name="aut_rvoe" type="xsd:string" />
+          <xsd:element name="curp" type="xsd:string" />
+          <xsd:element name="nivel_educativo" type="xsd:string" />
+          <xsd:element name="nombre_alumno" type="xsd:string" />
+          <xsd:element name="rfc_pago" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="InformacionFiscalTercero">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="direccion_asociado_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Parte">
+        <xsd:all>
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:integer" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="unidad_id" type="xsd:integer" />
+          <xsd:element name="precio" type="xsd:float" />
+          <xsd:element name="importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Retencion">
+        <xsd:all>
+          <xsd:element name="impuesto_id" type="xsd:integer" />
+          <xsd:element name="importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Traslado">
+        <xsd:all>
+          <xsd:element name="impuesto_id" type="xsd:integer" />
+          <xsd:element name="tasa_id" type="xsd:integer" />
+          <xsd:element name="importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Partes">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:Parte[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Retenciones">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:Retencion[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Traslados">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:Traslado[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Impuestos">
+        <xsd:all>
+          <xsd:element name="Retenciones" type="tns:Retenciones" />
+          <xsd:element name="Traslados" type="tns:Traslados" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="InstitucionesEducativas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:InstitucionEducativa[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="VentaLeyendaFiscal">
+        <xsd:all>
+          <xsd:element name="disposicion_fiscal" type="xsd:string" />
+          <xsd:element name="norma" type="xsd:string" />
+          <xsd:element name="leyenda" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="VentaLeyendasFiscales">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:VentaLeyendaFiscal[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ComplementoConcepto">
+        <xsd:all>
+          <xsd:element name="CuentaTerceros" type="tns:CuentaTerceros" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CuentaTerceros">
+        <xsd:all>
+          <xsd:element name="tipo_informacion_fiscal" type="xsd:integer" />
+          <xsd:element name="InformacionFiscalTercero" type="tns:InformacionFiscalTercero" />
+          <xsd:element name="cuenta_predial" type="xsd:string" />
+          <xsd:element name="Partes" type="tns:Partes" />
+          <xsd:element name="InformacionAduanera" type="tns:InformacionAduanera" />
+          <xsd:element name="Impuestos" type="tns:Impuestos" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalleconcepto">
+        <xsd:all>
+          <xsd:element name="idproducto" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:decimal" />
+          <xsd:element name="unidad" type="xsd:string" />
+          <xsd:element name="almacen" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="valorunitario" type="xsd:decimal" />
+          <xsd:element name="tasadescuento" type="xsd:decimal" />
+          <xsd:element name="descuento" type="xsd:decimal" />
+          <xsd:element name="tasaieps" type="xsd:decimal" />
+          <xsd:element name="ieps" type="xsd:decimal" />
+          <xsd:element name="tasaiva" type="xsd:decimal" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="tasa_retencion_iva" type="xsd:decimal" />
+          <xsd:element name="importe_retencion_iva" type="xsd:decimal" />
+          <xsd:element name="tasa_retencion_isr" type="xsd:decimal" />
+          <xsd:element name="importe_retencion_isr" type="xsd:decimal" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="series" type="xsd:string" />
+          <xsd:element name="InstitucionesEducativas" type="tns:InstitucionesEducativas" />
+          <xsd:element name="InformacionAduanera" type="tns:InformacionAduanera" />
+          <xsd:element name="id_unidad_medida_sat" type="xsd:integer" />
+          <xsd:element name="clave_unidad_medida_sat" type="xsd:string" />
+          <xsd:element name="id_producto_servicio_sat" type="xsd:integer" />
+          <xsd:element name="clave_producto_servicio_sat" type="xsd:string" />
+          <xsd:element name="ComplementoConcepto" type="tns:ComplementoConcepto" />
+          <xsd:element name="unidad_id" type="xsd:integer" />
+          <xsd:element name="codigo_cliente" type="xsd:string" />
+          <xsd:element name="centro_costo_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalleconceptopos">
+        <xsd:all>
+          <xsd:element name="idproducto" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:decimal" />
+          <xsd:element name="unidad" type="xsd:string" />
+          <xsd:element name="unidad_id" type="xsd:string" />
+          <xsd:element name="unidad_medida_id" type="xsd:integer" />
+          <xsd:element name="unidad_medida_producto_id" type="xsd:integer" />
+          <xsd:element name="unidad_venta_id" type="xsd:integer" />
+          <xsd:element name="factor_conversion" type="xsd:decimal" />
+          <xsd:element name="almacen" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="valorunitario" type="xsd:decimal" />
+          <xsd:element name="tasadescuento" type="xsd:decimal" />
+          <xsd:element name="descuento" type="xsd:decimal" />
+          <xsd:element name="tasaieps" type="xsd:decimal" />
+          <xsd:element name="ieps" type="xsd:decimal" />
+          <xsd:element name="tasaiva" type="xsd:decimal" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="series" type="xsd:string" />
+          <xsd:element name="InstitucionesEducativas" type="tns:InstitucionesEducativas" />
+          <xsd:element name="InformacionAduanera" type="tns:InformacionAduanera" />
+          <xsd:element name="caracteristicas" type="xsd:string" />
+          <xsd:element name="centro_costo_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalleconceptos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detalleconcepto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detalleconceptospos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detalleconceptopos[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="impuestolocal">
+        <xsd:all>
+          <xsd:element name="tipo" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="tasa" type="xsd:decimal" />
+          <xsd:element name="importe" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalleimpuestoslocales">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:impuestolocal[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="cartaporte">
+        <xsd:all>
+          <xsd:element name="folio_guia" type="xsd:integer" />
+          <xsd:element name="cliente_origen" type="xsd:string" />
+          <xsd:element name="nombre_cliente_origen" type="xsd:string" />
+          <xsd:element name="direccion_cliente_origen" type="xsd:string" />
+          <xsd:element name="razon_cliente_origen" type="xsd:string" />
+          <xsd:element name="cliente_destino" type="xsd:string" />
+          <xsd:element name="nombre_cliente_destino" type="xsd:string" />
+          <xsd:element name="direccion_cliente_destino" type="xsd:string" />
+          <xsd:element name="razon_cliente_destino" type="xsd:string" />
+          <xsd:element name="forma_pago" type="xsd:string" />
+          <xsd:element name="flete" type="xsd:decimal" />
+          <xsd:element name="recoleccion" type="xsd:decimal" />
+          <xsd:element name="entrega_domicilio" type="xsd:decimal" />
+          <xsd:element name="seguro" type="xsd:decimal" />
+          <xsd:element name="observacion_seguro" type="xsd:string" />
+          <xsd:element name="carga" type="xsd:decimal" />
+          <xsd:element name="descarga" type="xsd:decimal" />
+          <xsd:element name="subtotal" type="xsd:decimal" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="iva_retenido" type="xsd:decimal" />
+          <xsd:element name="total" type="xsd:decimal" />
+          <xsd:element name="valor_declarado" type="xsd:decimal" />
+          <xsd:element name="tipo_embarque" type="xsd:string" />
+          <xsd:element name="cargador" type="xsd:string" />
+          <xsd:element name="documentador" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="hora" type="xsd:string" />
+          <xsd:element name="observaciones" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ventaformadepago">
+        <xsd:all>
+          <xsd:element name="forma_pago_id" type="xsd:integer" />
+          <xsd:element name="nombre_forma_pago" type="xsd:string" />
+          <xsd:element name="importe" type="xsd:decimal" />
+          <xsd:element name="cuenta_bancaria_id" type="xsd:integer" />
+          <xsd:element name="cuenta_bancaria" type="xsd:string" />
+          <xsd:element name="concepto_movimiento_bancario" type="xsd:string" />
+          <xsd:element name="cuenta_id" type="xsd:integer" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="beneficiario" type="xsd:string" />
+          <xsd:element name="rfc_beneficiario" type="xsd:string" />
+          <xsd:element name="banco_sat_id" type="xsd:integer" />
+          <xsd:element name="banco_sat_extranjero_id" type="xsd:integer" />
+          <xsd:element name="numero_cuenta" type="xsd:string" />
+          <xsd:element name="numero_cheque" type="xsd:integer" />
+          <xsd:element name="banco_sat_destino_id" type="xsd:integer" />
+          <xsd:element name="banco_sat_extranjero_destino_id" type="xsd:integer" />
+          <xsd:element name="numero_cuenta_destino" type="xsd:string" />
+          <xsd:element name="estatus_movimiento_bancario" type="xsd:integer" />
+          <xsd:element name="id_cve_sat" type="xsd:integer" />
+          <xsd:element name="cve_sat" type="xsd:string" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+          <xsd:element name="tipo_cambio" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="claveproductoservicio">
+        <xsd:all>
+          <xsd:element name="clave_producto_servicios_id" type="xsd:integer" />
+          <xsd:element name="clave_producto_servicios" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="complemento_a_incluir" type="xsd:integer" />
+          <xsd:element name="fecha_fin_vigencia" type="xsd:string" />
+          <xsd:element name="fecha_inicio_vigencia" type="xsd:string" />
+          <xsd:element name="incluir_ieps_trasladado" type="xsd:integer" />
+          <xsd:element name="incluir_iva_traslado" type="xsd:integer" />
+          <xsd:element name="updated_at" type="xsd:string" />
+          <xsd:element name="created_at" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="unidadmedidasat">
+        <xsd:all>
+          <xsd:element name="unidad_medida_sat_id" type="xsd:integer" />
+          <xsd:element name="clave_unidad" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="fecha_fin_vigencia" type="xsd:string" />
+          <xsd:element name="fecha_inicio_vigencia" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="simbolo" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="metodopagosat">
+        <xsd:all>
+          <xsd:element name="metodo_pago_sat_id" type="xsd:integer" />
+          <xsd:element name="cve_sat" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="documentotiporelacion">
+        <xsd:all>
+          <xsd:element name="tipo_relacion_id" type="xsd:integer" />
+          <xsd:element name="clave_tipo_relacion" type="xsd:string" />
+          <xsd:element name="uuid" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="tiporelacion">
+        <xsd:all>
+          <xsd:element name="tipo_relacion_id" type="xsd:integer" />
+          <xsd:element name="clave_tipo_relacion" type="xsd:string" />
+          <xsd:element name="descripcion_tipo_relacion" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="usocfdi">
+        <xsd:all>
+          <xsd:element name="uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="clave_uso_cfdi" type="xsd:string" />
+          <xsd:element name="descripcion_uso_cfdi" type="xsd:string" />
+          <xsd:element name="tipo_persona" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="impuestodetalle">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="tasa" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="conceptos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:concepto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="formas_pago">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:forma_pago[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="forma_pago">
+        <xsd:all>
+          <xsd:element name="venta_forma_pago_id" type="xsd:integer" />
+          <xsd:element name="forma_pago_id" type="xsd:integer" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="numero_cuenta" type="xsd:string" />
+          <xsd:element name="importe_forma_pago" type="xsd:float" />
+          <xsd:element name="nombre_forma_pago" type="xsd:string" />
+          <xsd:element name="abreviatura_forma_pago" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="concepto">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="almacen_id" type="xsd:integer" />
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="unidad_id" type="xsd:integer" />
+          <xsd:element name="series" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:integer" />
+          <xsd:element name="cantidad_equivalente" type="xsd:integer" />
+          <xsd:element name="precio_lista" type="xsd:float" />
+          <xsd:element name="precio_neto" type="xsd:float" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="tasa_ieps" type="xsd:float" />
+          <xsd:element name="tasa_iva" type="xsd:float" />
+          <xsd:element name="tasa_descuento" type="xsd:float" />
+          <xsd:element name="importe_ieps" type="xsd:float" />
+          <xsd:element name="importe_iva" type="xsd:float" />
+          <xsd:element name="importe_descuento" type="xsd:float" />
+          <xsd:element name="importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="documento">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="folio" type="xsd:integer" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="uuid" type="xsd:string" />
+          <xsd:element name="plaza" type="xsd:integer" />
+          <xsd:element name="cadena_original" type="xsd:string" />
+          <xsd:element name="certificado" type="xsd:string" />
+          <xsd:element name="sello_digital" type="xsd:string" />
+          <xsd:element name="codigo_transaccion" type="xsd:string" />
+          <xsd:element name="estatus" type="xsd:integer" />
+          <xsd:element name="estatus_nombre" type="xsd:string" />
+          <xsd:element name="tipo_venta_id" type="xsd:integer" />
+          <xsd:element name="tipo_venta_descripcion" type="xsd:string" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+          <xsd:element name="moneda_nombre" type="xsd:string" />
+          <xsd:element name="tipo_cambio" type="xsd:float" />
+          <xsd:element name="tipo_pago_id" type="xsd:integer" />
+          <xsd:element name="tipo_pago_nombre" type="xsd:string" />
+          <xsd:element name="total" type="xsd:float" />
+          <xsd:element name="subtotal" type="xsd:float" />
+          <xsd:element name="subtotal_sin_descuento" type="xsd:float" />
+          <xsd:element name="importe_descuento" type="xsd:float" />
+          <xsd:element name="importe_iva" type="xsd:float" />
+          <xsd:element name="importe_ieps" type="xsd:float" />
+          <xsd:element name="importe_retencion_iva" type="xsd:float" />
+          <xsd:element name="importe_retencion_isr" type="xsd:float" />
+          <xsd:element name="saldo" type="xsd:float" />
+          <xsd:element name="agente_asociado_id" type="xsd:integer" />
+          <xsd:element name="cliente_id" type="xsd:integer" />
+          <xsd:element name="nombre_cliente" type="xsd:string" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="direccion_cliente_id" type="xsd:integer" />
+          <xsd:element name="calle" type="xsd:string" />
+          <xsd:element name="numero_exterior" type="xsd:string" />
+          <xsd:element name="numero_interior" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="ciudad" type="xsd:string" />
+          <xsd:element name="municipio" type="xsd:string" />
+          <xsd:element name="estado_id" type="xsd:integer" />
+          <xsd:element name="estado" type="xsd:string" />
+          <xsd:element name="pais_id" type="xsd:integer" />
+          <xsd:element name="pais" type="xsd:string" />
+          <xsd:element name="codigo_postal" type="xsd:string" />
+          <xsd:element name="direccion_entrega_cliente_id" type="xsd:integer" />
+          <xsd:element name="fecha" type="xsd:date" />
+          <xsd:element name="fecha_entrega" type="xsd:date" />
+          <xsd:element name="conceptos" type="tns:conceptos" />
+          <xsd:element name="formas_pago" type="tns:formas_pago" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+          <xsd:element name="texto_adicional_6" type="xsd:string" />
+          <xsd:element name="texto_adicional_7" type="xsd:string" />
+          <xsd:element name="texto_adicional_8" type="xsd:string" />
+          <xsd:element name="texto_adicional_9" type="xsd:string" />
+          <xsd:element name="texto_adicional_10" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datos_factura">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos_factura" type="tns:documento" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalletiporelacion">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:documentotiporelacion[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listatiporelacion">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:tiporelacion[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listausocfdi">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:usocfdi[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listaimpuestodetalle">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:impuestodetalle[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listametodopagosat">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:metodopagosat[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listaclaveproductoservicio">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:claveproductoservicio[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listaunidadmedidasat">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:unidadmedidasat[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="catalogotiporelacion">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listatiporelacion" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="catalogousocfdi">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listausocfdi" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="catalogoimpuestodetalle">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listaimpuestodetalle" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="catalogounidadmedidasat">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listaunidadmedidasat" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="catalogometodopagosat">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listametodopagosat" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="catalogoclaveproductoservicio">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listaclaveproductoservicio" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalleformasdepago">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:ventaformadepago[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="formadepago">
+        <xsd:all>
+          <xsd:element name="forma_pago_id" type="xsd:integer" />
+          <xsd:element name="nombre_forma_pago" type="xsd:string" />
+          <xsd:element name="requiere_referencia" type="xsd:integer" />
+          <xsd:element name="longitud_minima" type="xsd:integer" />
+          <xsd:element name="tipo" type="xsd:integer" />
+          <xsd:element name="detalle" type="tns:listadoformapagodetalle" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoformapagodetalle">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:formapagodetalle[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="formapagodetalle">
+        <xsd:all>
+          <xsd:element name="id_detalle" type="xsd:integer" />
+          <xsd:element name="cuenta_bancaria_id" type="xsd:integer" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="cuenta_id" type="xsd:integer" />
+          <xsd:element name="forma_pago_id" type="xsd:integer" />
+          <xsd:element name="plaza_id" type="xsd:integer" />
+          <xsd:element name="predeterminado" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="formasdepago">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:formadepago[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoformasdepago">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:formasdepago" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="factura">
+        <xsd:all>
+          <xsd:element name="tipodocumento" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="fecha_entrega" type="xsd:string" />
+          <xsd:element name="receptor" type="tns:datosreceptor" />
+          <xsd:element name="iddireccionentrega" type="xsd:string" />
+          <xsd:element name="razon_social_comp_id" type="xsd:integer" />
+          <xsd:element name="idagente" type="xsd:integer" />
+          <xsd:element name="tipopago" type="xsd:integer" />
+          <xsd:element name="metodoDePago" type="xsd:string" />
+          <xsd:element name="RefDePago" type="xsd:string" />
+          <xsd:element name="conceptos" type="tns:detalleconceptos" />
+          <xsd:element name="subtotal" type="xsd:decimal" />
+          <xsd:element name="descuento" type="xsd:decimal" />
+          <xsd:element name="ieps" type="xsd:decimal" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="isrretenido" type="xsd:decimal" />
+          <xsd:element name="ivaretenido" type="xsd:decimal" />
+          <xsd:element name="implocales" type="tns:detalleimpuestoslocales" />
+          <xsd:element name="total" type="xsd:decimal" />
+          <xsd:element name="idaddenda" type="xsd:integer" />
+          <xsd:element name="addenda" type="xsd:string" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+          <xsd:element name="tipo_cambio" type="xsd:decimal" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+          <xsd:element name="texto_adicional_6" type="xsd:string" />
+          <xsd:element name="texto_adicional_7" type="xsd:string" />
+          <xsd:element name="texto_adicional_8" type="xsd:string" />
+          <xsd:element name="texto_adicional_9" type="xsd:string" />
+          <xsd:element name="texto_adicional_10" type="xsd:string" />
+          <xsd:element name="ventaFormasDePago" type="tns:detalleformasdepago" />
+          <xsd:element name="documentos_relacionados" type="tns:detalletiporelacion" />
+          <xsd:element name="VentaLeyendasFiscales" type="tns:VentaLeyendasFiscales" />
+          <xsd:element name="codigo_transaccion" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:integer" />
+          <xsd:element name="desglose_ieps" type="xsd:integer" />
+          <xsd:element name="sat_uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="clave_uso_cfdi" type="xsd:string" />
+          <xsd:element name="asignar_folio_siguiente_si_esta_ocupado" type="xsd:integer" />
+          <xsd:element name="comercio_exterior" type="tns:comercio_exterior" />
+          <xsd:element name="nodo_addenda" type="xsd:string" />
+          <xsd:element name="documento_produccion_id" type="xsd:integer" />
+          <xsd:element name="regimen_clave_sat" type="xsd:integer" />
+          <xsd:element name="xml" type="xsd:string" />
+          <xsd:element name="uuid" type="xsd:string" />
+          <xsd:element name="fecha_timbrado" type="xsd:string" />
+          <xsd:element name="sello_sat" type="xsd:string" />
+          <xsd:element name="certificado_sat" type="xsd:string" />
+          <xsd:element name="certificado" type="xsd:string" />
+          <xsd:element name="version_timbre" type="xsd:string" />
+          <xsd:element name="sello_digital" type="xsd:string" />
+          <xsd:element name="cadena_original" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="facturaPos">
+        <xsd:all>
+          <xsd:element name="tipodocumento" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="receptor" type="tns:datosreceptor" />
+          <xsd:element name="iddireccionentrega" type="xsd:string" />
+          <xsd:element name="razon_social_comp_id" type="xsd:integer" />
+          <xsd:element name="idagente" type="xsd:integer" />
+          <xsd:element name="tipopago" type="xsd:integer" />
+          <xsd:element name="metodoDePago" type="xsd:string" />
+          <xsd:element name="RefDePago" type="xsd:string" />
+          <xsd:element name="conceptos" type="tns:detalleconceptospos" />
+          <xsd:element name="subtotal" type="xsd:decimal" />
+          <xsd:element name="descuento" type="xsd:decimal" />
+          <xsd:element name="ieps" type="xsd:decimal" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="isrretenido" type="xsd:decimal" />
+          <xsd:element name="ivaretenido" type="xsd:decimal" />
+          <xsd:element name="implocales" type="tns:detalleimpuestoslocales" />
+          <xsd:element name="total" type="xsd:decimal" />
+          <xsd:element name="idaddenda" type="xsd:integer" />
+          <xsd:element name="addenda" type="xsd:string" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+          <xsd:element name="tipo_cambio" type="xsd:decimal" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+          <xsd:element name="texto_adicional_6" type="xsd:string" />
+          <xsd:element name="texto_adicional_7" type="xsd:string" />
+          <xsd:element name="texto_adicional_8" type="xsd:string" />
+          <xsd:element name="texto_adicional_9" type="xsd:string" />
+          <xsd:element name="texto_adicional_10" type="xsd:string" />
+          <xsd:element name="ventaFormasDePago" type="tns:detalleformasdepago" />
+          <xsd:element name="VentaLeyendasFiscales" type="tns:VentaLeyendasFiscales" />
+          <xsd:element name="codigo_transaccion" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:integer" />
+          <xsd:element name="desglose_ieps" type="xsd:integer" />
+          <xsd:element name="sat_uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="asignar_folio_siguiente_si_esta_ocupado" type="xsd:integer" />
+          <xsd:element name="pos_id" type="xsd:string" />
+          <xsd:element name="pos_version" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="asociado">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="numero" type="xsd:integer" />
+          <xsd:element name="regimen" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="apellido_paterno" type="xsd:string" />
+          <xsd:element name="apellido_materno" type="xsd:string" />
+          <xsd:element name="razon_social" type="xsd:string" />
+          <xsd:element name="curp" type="xsd:string" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="nombre_comercial" type="xsd:string" />
+          <xsd:element name="representante_legal" type="xsd:string" />
+          <xsd:element name="agente_cliente" type="xsd:integer" />
+          <xsd:element name="dias_pago_cliente" type="xsd:string" />
+          <xsd:element name="dias_revision_cliente" type="xsd:integer" />
+          <xsd:element name="precio_aplica_cliente" type="xsd:decimal" />
+          <xsd:element name="descuento_cliente" type="xsd:decimal" />
+          <xsd:element name="cuenta_contable_cliente" type="xsd:string" />
+          <xsd:element name="plazo_cliente" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:string" />
+          <xsd:element name="limite_credito_cliente" type="xsd:decimal" />
+          <xsd:element name="es_cliente" type="xsd:integer" />
+          <xsd:element name="es_proveedor" type="xsd:integer" />
+          <xsd:element name="fecha_actual" type="xsd:string" />
+          <xsd:element name="clasificacion_cliente" type="xsd:string" />
+          <xsd:element name="codigo_barra_empleado" type="xsd:string" />
+          <xsd:element name="bloquear_venta_credito" type="xsd:string" />
+          <xsd:element name="observaciones_estatus" type="xsd:string" />
+          <xsd:element name="sat_uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="cuenta_contable_gasto_proveedor_id" type="xsd:integer" />
+          <xsd:element name="sat_uso_cfdi_proveedor_id" type="xsd:integer" />
+          <xsd:element name="datos_codigo_qr" type="xsd:string" />
+          <xsd:element name="passwordpv_empleado" type="xsd:string" />
+          <xsd:element name="usuariopv_empleado" type="xsd:string" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="agente">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="asociados">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:asociado[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoclientes">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:asociados" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="cliente">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="regimen" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="apellido_paterno" type="xsd:string" />
+          <xsd:element name="apellido_materno" type="xsd:string" />
+          <xsd:element name="razon_social" type="xsd:string" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="nombre_comercial" type="xsd:string" />
+          <xsd:element name="representante_legal" type="xsd:string" />
+          <xsd:element name="es_cliente" type="xsd:integer" />
+          <xsd:element name="numero" type="xsd:integer" />
+          <xsd:element name="fecha_alta" type="xsd:date" />
+          <xsd:element name="limite_credito_cliente" type="xsd:decimal" />
+          <xsd:element name="plazo_cliente" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:string" />
+          <xsd:element name="observaciones_estatus" type="xsd:string" />
+          <xsd:element name="sat_uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="cuenta_contable_gasto_proveedor_id" type="xsd:integer" />
+          <xsd:element name="sat_uso_cfdi_proveedor_id" type="xsd:integer" />
+          <xsd:element name="datos_codigo_qr" type="xsd:string" />
+          <xsd:element name="passwordpv_empleado" type="xsd:string" />
+          <xsd:element name="usuariopv_empleado" type="xsd:string" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoproveedores">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:proveedores" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="proveedores">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:proveedor[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="proveedor">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="regimen" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="apellido_paterno" type="xsd:string" />
+          <xsd:element name="apellido_materno" type="xsd:string" />
+          <xsd:element name="razon_social" type="xsd:string" />
+          <xsd:element name="curp" type="xsd:string" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="nombre_comercial" type="xsd:string" />
+          <xsd:element name="representante_legal" type="xsd:string" />
+          <xsd:element name="operacion" type="xsd:integer" />
+          <xsd:element name="es_extranjero" type="xsd:integer" />
+          <xsd:element name="es_cliente" type="xsd:integer" />
+          <xsd:element name="es_proveedor" type="xsd:integer" />
+          <xsd:element name="plazo_proveedor" type="xsd:integer" />
+          <xsd:element name="numero_proveedor" type="xsd:integer" />
+          <xsd:element name="forma_pago_proveedor_id" type="xsd:integer" />
+          <xsd:element name="estatus_proveedor" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:string" />
+          <xsd:element name="cuenta_bancaria_proveedor" type="xsd:string" />
+          <xsd:element name="fecha_actual" type="xsd:string" />
+          <xsd:element name="observaciones_estatus" type="xsd:string" />
+          <xsd:element name="sat_uso_cfdi_id" type="xsd:integer" />
+          <xsd:element name="cuenta_contable_gasto_proveedor_id" type="xsd:integer" />
+          <xsd:element name="sat_uso_cfdi_proveedor_id" type="xsd:integer" />
+          <xsd:element name="datos_codigo_qr" type="xsd:string" />
+          <xsd:element name="passwordpv_empleado" type="xsd:string" />
+          <xsd:element name="usuariopv_empleado" type="xsd:string" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="texto_adicional_2" type="xsd:string" />
+          <xsd:element name="texto_adicional_3" type="xsd:string" />
+          <xsd:element name="texto_adicional_4" type="xsd:string" />
+          <xsd:element name="texto_adicional_5" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="agentes">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:agente[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoagentes">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:agentes" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="direccion">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="idasociado" type="xsd:integer" />
+          <xsd:element name="calle" type="xsd:string" />
+          <xsd:element name="numero_exterior" type="xsd:string" />
+          <xsd:element name="numero_interior" type="xsd:string" />
+          <xsd:element name="colonia" type="xsd:string" />
+          <xsd:element name="municipio" type="xsd:string" />
+          <xsd:element name="ciudad" type="xsd:string" />
+          <xsd:element name="codigo_postal" type="xsd:string" />
+          <xsd:element name="estado_id" type="xsd:integer" />
+          <xsd:element name="nombre_estado" type="xsd:string" />
+          <xsd:element name="pais" type="xsd:string" />
+          <xsd:element name="es_domicilio_fiscal" type="xsd:integer" />
+          <xsd:element name="es_domicilio_entrega" type="xsd:string" />
+          <xsd:element name="cuenta_contable" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="cuenta_contable_cliente" type="xsd:string" />
+          <xsd:element name="telefono" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="nombre_sucursal" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="direcciones">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:direccion[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadodirecciones">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:direcciones" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="almacen">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="tipo" type="xsd:string" />
+          <xsd:element name="plaza" type="xsd:string" />
+          <xsd:element name="tel" type="xsd:string" />
+          <xsd:element name="responsable" type="xsd:string" />
+          <xsd:element name="estatus" type="xsd:string" />
+          <xsd:element name="numero" type="xsd:string" />
+          <xsd:element name="cuentacontable" type="xsd:string" />
+          <xsd:element name="nacionalidad" type="xsd:string" />
+          <xsd:element name="maneja_ubicacion" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="almacenes">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:almacen[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoalmacenes">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:almacenes" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="componente_kit">
+        <xsd:all>
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="componente_id" type="xsd:integer" />
+          <xsd:element name="codigo_componente" type="xsd:string" />
+          <xsd:element name="cantidad_componente" type="xsd:decimal" />
+          <xsd:element name="descripcion_componente" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="componentes_kit">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:componente_kit[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadokits">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:componentes_kit" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="unidad_medida">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="abreviatura" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="unidades_medida">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:unidad_medida[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadounidadesmedida">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:unidades_medida" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="serie_producto">
+        <xsd:all>
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="almacen_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="series_producto">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:serie_producto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoseriesproducto">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:series_producto" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="producto">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="item" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="numero" type="xsd:string" />
+          <xsd:element name="moneda" type="xsd:string" />
+          <xsd:element name="unidad_id" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:string" />
+          <xsd:element name="ultimo_costo" type="xsd:decimal" />
+          <xsd:element name="precio" type="xsd:decimal" />
+          <xsd:element name="margen" type="xsd:decimal" />
+          <xsd:element name="costo_promedio" type="xsd:decimal" />
+          <xsd:element name="maximo" type="xsd:decimal" />
+          <xsd:element name="minimo" type="xsd:decimal" />
+          <xsd:element name="codigo_barra" type="xsd:string" />
+          <xsd:element name="kit" type="xsd:string" />
+          <xsd:element name="maneja_series" type="xsd:integer" />
+          <xsd:element name="costeo" type="xsd:decimal" />
+          <xsd:element name="caducidad" type="xsd:string" />
+          <xsd:element name="tiempo_reposicion" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="grupo_id" type="xsd:string" />
+          <xsd:element name="tasa_iva" type="xsd:string" />
+          <xsd:element name="tasa_ieps" type="xsd:string" />
+          <xsd:element name="vender" type="xsd:string" />
+          <xsd:element name="permite_reservacion" type="xsd:integer" />
+          <xsd:element name="capacidad_presentacion_ieps" type="xsd:decimal" />
+          <xsd:element name="importe_unidad_ieps" type="xsd:decimal" />
+          <xsd:element name="marca" type="xsd:string" />
+          <xsd:element name="imagen" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="productos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:producto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoproductos">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:productos" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listaprecio">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="listaprecio_id" type="xsd:integer" />
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="nombre_lista_precio" type="xsd:string" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="importe" type="xsd:decimal" />
+          <xsd:element name="margen" type="xsd:decimal" />
+          <xsd:element name="margen_minimo_incremento" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listaprecios">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:listaprecio[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoprecios">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listaprecios" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listaprecioporplaza">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="empresa_id" type="xsd:integer" />
+          <xsd:element name="plaza_id" type="xsd:integer" />
+          <xsd:element name="listaprecio_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listapreciosporplaza">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:listaprecioporplaza[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadopreciosporplaza">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listapreciosporplaza" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="existencia">
+        <xsd:all>
+          <xsd:element name="idalmacen" type="xsd:integer" />
+          <xsd:element name="idproducto" type="xsd:integer" />
+          <xsd:element name="existencia" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="existencias">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:existencia[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoexistencias">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:existencias" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="tipoventa">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="es_venta" type="xsd:integer" />
+          <xsd:element name="afecta_cxc" type="xsd:integer" />
+          <xsd:element name="afecta_almacen" type="xsd:integer" />
+          <xsd:element name="almacen_default_id" type="xsd:integer" />
+          <xsd:element name="afecta_contabilidad" type="xsd:integer" />
+          <xsd:element name="sistema_externo" type="xsd:integer" />
+          <xsd:element name="tipo_comprobante" type="xsd:string" />
+          <xsd:element name="documento_donativo" type="xsd:integer" />
+          <xsd:element name="permitir_desglose_ieps" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="tiposventa">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:tipoventa[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadotiposventas">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:tiposventa" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="serietipoventa">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="empresa_id" type="xsd:integer" />
+          <xsd:element name="plaza" type="xsd:integer" />
+          <xsd:element name="tipo_venta_id" type="xsd:integer" />
+          <xsd:element name="serie" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="seriestiposventa">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:serietipoventa[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoseriestiposventas">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:seriestiposventa" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datos_cancelacion">
+        <xsd:all>
+          <xsd:element name="usuario" type="xsd:string" />
+          <xsd:element name="password" type="xsd:string" />
+          <xsd:element name="empresa" type="xsd:integer" />
+          <xsd:element name="plaza" type="xsd:integer" />
+          <xsd:element name="tipoventa" type="xsd:integer" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:integer" />
+          <xsd:element name="autoriza_cancelar_sat" type="xsd:integer" />
+          <xsd:element name="documento_id" type="xsd:integer" />
+          <xsd:element name="eliminar_documento" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="serie">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="telefono" type="xsd:string" />
+          <xsd:element name="tipo" type="xsd:integer" />
+          <xsd:element name="consecutivo" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="series">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:serie[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoseriesconsecutivos">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:series" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="contacto">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="contacto_id" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="telefono" type="xsd:string" />
+          <xsd:element name="telefono_movil" type="xsd:string" />
+          <xsd:element name="email" type="xsd:string" />
+          <xsd:element name="observaciones" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="contactos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:contacto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadocontactos">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:contactos" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosplaza">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="numero" type="xsd:integer" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="iva" type="xsd:decimal" />
+          <xsd:element name="permite_estimulo_fronterizo" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosplazas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:datosplaza[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadodatosplaza">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:datosplazas" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datoslicencia">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="activo" type="xsd:boolean" />
+          <xsd:element name="licencia" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datoslicencias">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:datoslicencia[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadodatoslicencia">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:datoslicencias" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosempresa">
+        <xsd:all>
+          <xsd:element name="razon_social" type="xsd:string" />
+          <xsd:element name="rfc_empresa" type="xsd:string" />
+          <xsd:element name="nombre_comercial" type="xsd:string" />
+          <xsd:element name="domicilio" type="xsd:string" />
+          <xsd:element name="regimen" type="xsd:string" />
+          <xsd:element name="giro" type="xsd:string" />
+          <xsd:element name="telefono" type="xsd:string" />
+          <xsd:element name="logo" type="xsd:string" />
+          <xsd:element name="esquema_cfd" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosempresas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:datosempresa[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadodatosempresa">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:datosempresas" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosgrupoproducto">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="cuenta_id" type="xsd:integer" />
+          <xsd:element name="clave" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="tipo" type="xsd:integer" />
+          <xsd:element name="padre_id" type="xsd:integer" />
+          <xsd:element name="ruta_nombres" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosgruposproducto">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:datosgrupoproducto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadogruposproductos">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:datosgruposproducto" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="venta">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="tipoventa_id" type="xsd:integer" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="forma_pago_sat" type="xsd:integer" />
+          <xsd:element name="cliente_asociado_id" type="xsd:integer" />
+          <xsd:element name="subtotal_sin_descuento" type="xsd:decimal" />
+          <xsd:element name="importe_descuento" type="xsd:decimal" />
+          <xsd:element name="subtotal" type="xsd:decimal" />
+          <xsd:element name="importe_ieps" type="xsd:decimal" />
+          <xsd:element name="total" type="xsd:decimal" />
+          <xsd:element name="saldo" type="xsd:decimal" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ventas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:venta[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoventas">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:ventas" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ventafiltrada">
+        <xsd:all>
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="id" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:string" />
+          <xsd:element name="tipo_venta" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="rfc" type="xsd:string" />
+          <xsd:element name="subtotal_sin_descuento" type="xsd:decimal" />
+          <xsd:element name="importe_descuento" type="xsd:decimal" />
+          <xsd:element name="subtotal" type="xsd:decimal" />
+          <xsd:element name="importe_iva" type="xsd:decimal" />
+          <xsd:element name="importe_ieps" type="xsd:decimal" />
+          <xsd:element name="total" type="xsd:decimal" />
+          <xsd:element name="moneda_id" type="xsd:integer" />
+          <xsd:element name="tipo_pago" type="xsd:string" />
+          <xsd:element name="fecha_entrega" type="xsd:string" />
+          <xsd:element name="saldo" type="xsd:decimal" />
+          <xsd:element name="estatus" type="xsd:integer" />
+          <xsd:element name="estatus_descripcion" type="xsd:string" />
+          <xsd:element name="codigo_transaccion" type="xsd:string" />
+          <xsd:element name="agente_asociado_id" type="xsd:integer" />
+          <xsd:element name="cliente_asociado_id" type="xsd:integer" />
+          <xsd:element name="fecha_cancelacion" type="xsd:date" />
+          <xsd:element name="conceptos" type="tns:conceptos" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ventasfiltradas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:ventafiltrada[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="listadoventasfiltradas">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:ventasfiltradas" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="parametrosReportePedidosVenta">
+        <xsd:all>
+          <xsd:element name="folio" type="xsd:string" />
+          <xsd:element name="fecha_from" type="xsd:string" />
+          <xsd:element name="fecha_to" type="xsd:string" />
+          <xsd:element name="fecha_entrega_from" type="xsd:string" />
+          <xsd:element name="fecha_entrega_to" type="xsd:string" />
+          <xsd:element name="cliente" type="xsd:string" />
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="componente" type="xsd:string" />
+          <xsd:element name="documento" type="xsd:string" />
+          <xsd:element name="pedidos_pendientes" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoPedidosVenta">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datosPedidos" type="tns:datosPedidosArreglo" />
+          <xsd:element name="detalladoProductos" type="tns:detalladoProductosArreglo" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="existencias_disponibles">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="detalles_productos" type="tns:detalles_productos" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="datosPedidosArreglo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:datosPedidos[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="datosPedidos">
+        <xsd:all>
+          <xsd:element name="documento" type="xsd:string" />
+          <xsd:element name="folio" type="xsd:string" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="cliente" type="xsd:string" />
+          <xsd:element name="fecha_entrega" type="xsd:string" />
+          <xsd:element name="detalles" type="tns:detallesPedidoArreglo" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detallesPedidoArreglo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detallesPedido[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detallesPedido">
+        <xsd:all>
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="unidad" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:string" />
+          <xsd:element name="cantidad_por_entregar" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalladoProductosArreglo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detalladoProductos[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detalles_productos">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detalle_producto[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detalladoProductos">
+        <xsd:all>
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="descripcion" type="xsd:string" />
+          <xsd:element name="unidad" type="xsd:string" />
+          <xsd:element name="por_entregar" type="xsd:string" />
+          <xsd:element name="detalles" type="tns:detallesProductosPedidoArreglo" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalle_producto">
+        <xsd:all>
+          <xsd:element name="producto_id" type="xsd:integer" />
+          <xsd:element name="codigo_producto" type="xsd:string" />
+          <xsd:element name="detalles_existencias" type="tns:detalles_existencias" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detallesProductosPedidoArreglo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detallesProductosPedido[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detalles_existencias">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:detalle_existencia[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="detallesProductosPedido">
+        <xsd:all>
+          <xsd:element name="existencia" type="xsd:string" />
+          <xsd:element name="cantidad_por_recibir" type="xsd:string" />
+          <xsd:element name="almacen" type="xsd:string" />
+          <xsd:element name="cantidad_por_entregar" type="xsd:string" />
+          <xsd:element name="disponible" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="detalle_existencia">
+        <xsd:all>
+          <xsd:element name="almacen_id" type="xsd:string" />
+          <xsd:element name="existencia" type="xsd:integer" />
+          <xsd:element name="cantidad_por_entregar" type="xsd:integer" />
+          <xsd:element name="disponible" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="comercio_exterior">
+        <xsd:all>
+          <xsd:element name="motivo_traslado" type="xsd:string" />
+          <xsd:element name="tipo_operacion" type="xsd:string" />
+          <xsd:element name="clave_de_pedimento" type="xsd:string" />
+          <xsd:element name="certificado_origen" type="xsd:string" />
+          <xsd:element name="num_certificado_origen" type="xsd:string" />
+          <xsd:element name="numero_exportador_confiable" type="xsd:string" />
+          <xsd:element name="incoterm" type="xsd:string" />
+          <xsd:element name="subdivision" type="xsd:string" />
+          <xsd:element name="observaciones" type="xsd:string" />
+          <xsd:element name="tipo_cambio_usd" type="xsd:string" />
+          <xsd:element name="total_usd" type="xsd:string" />
+          <xsd:element name="propietarios" type="tns:propietarios" />
+          <xsd:element name="receptor" type="tns:receptor" />
+          <xsd:element name="destinatarios" type="tns:destinatarios" />
+          <xsd:element name="mercancias" type="tns:mercancias" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="nuevo_producto">
+        <xsd:all>
+          <xsd:element name="codigo" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="sat_clave_producto_servicio" type="xsd:string" />
+          <xsd:element name="tipo" type="xsd:string" />
+          <xsd:element name="grupo" type="xsd:integer" />
+          <xsd:element name="moneda" type="xsd:integer" />
+          <xsd:element name="unidad_medida" type="xsd:string" />
+          <xsd:element name="tipo_costeo" type="xsd:integer" />
+          <xsd:element name="maneja_series" type="xsd:integer" />
+          <xsd:element name="estatus" type="xsd:integer" />
+          <xsd:element name="costo_promedio" type="xsd:float" />
+          <xsd:element name="precio" type="xsd:float" />
+          <xsd:element name="ultimo_costo" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="receptor">
+        <xsd:all>
+          <xsd:element name="num_reg_id_trib" type="xsd:string" />
+          <xsd:element name="domicilio" type="tns:domicilio" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="destinatario">
+        <xsd:all>
+          <xsd:element name="num_reg_id_trib" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="domicilios" type="tns:domicilios" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="propietario">
+        <xsd:all>
+          <xsd:element name="num_reg_id_trib" type="xsd:string" />
+          <xsd:element name="residencia_fiscal" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="mercancias">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:mercancia[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="propietarios">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:propietario[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="destinatarios">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:destinatario[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="domicilios">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:domicilio[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="descripciones_especificas">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:descripcion_especifica[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="descripcion_especifica">
+        <xsd:all>
+          <xsd:element name="marca" type="xsd:string" />
+          <xsd:element name="modelo" type="xsd:string" />
+          <xsd:element name="sub_modelo" type="xsd:string" />
+          <xsd:element name="numero_serie" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="mercancia">
+        <xsd:all>
+          <xsd:element name="no_identificacion" type="xsd:string" />
+          <xsd:element name="fraccion_arancelaria" type="xsd:string" />
+          <xsd:element name="cantidad_aduana" type="xsd:string" />
+          <xsd:element name="unidad_aduana" type="xsd:string" />
+          <xsd:element name="valor_unitario_aduana" type="xsd:string" />
+          <xsd:element name="valor_dolares" type="xsd:string" />
+          <xsd:element name="descripciones_especificas" type="tns:descripciones_especificas" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="domicilio">
+        <xsd:all>
+          <xsd:element name="calle" type="xsd:string" />
+          <xsd:element name="numero_exterior" type="xsd:string" />
+          <xsd:element name="numero_interior" type="xsd:string" />
+          <xsd:element name="colonia" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="municipio" type="xsd:string" />
+          <xsd:element name="estado" type="xsd:string" />
+          <xsd:element name="pais" type="xsd:string" />
+          <xsd:element name="codigo_postal" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="estatuscancelacionventa">
+        <xsd:all>
+          <xsd:element name="id" type="xsd:string" />
+          <xsd:element name="venta_id" type="xsd:integer" />
+          <xsd:element name="estatus_cancelacion_sat" type="xsd:integer" />
+          <xsd:element name="fecha_cancelacion" type="xsd:string" />
+          <xsd:element name="fecha_solicitud_cancelacion" type="xsd:string" />
+          <xsd:element name="fecha_venta" type="xsd:string" />
+          <xsd:element name="total" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoestatuscancelacion">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:estatuscancelacionventa[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="saldocliente">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="saldo_actual" type="xsd:decimal" />
+          <xsd:element name="saldo_vencido" type="xsd:decimal" />
+          <xsd:element name="codigo_cliente" type="xsd:string" />
+          <xsd:element name="nombre_cliente" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadosaldocliente">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:saldocliente[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="responsesaldocliente">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listadosaldocliente" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="respuestalistadocancelacion">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listadoestatuscancelacion" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="cobro_cliente">
+        <xsd:all>
+          <xsd:element name="cliente" type="xsd:string" />
+          <xsd:element name="importe" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadocobrocliente">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:cobro_cliente[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="aplicacioncobro">
+        <xsd:all>
+          <xsd:element name="buscar_por_codigo" type="xsd:boolean" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="forma_pago_id" type="xsd:integer" />
+          <xsd:element name="referencia" type="xsd:string" />
+          <xsd:element name="plaza" type="xsd:integer" />
+          <xsd:element name="clientes" type="tns:listadocobrocliente" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="documentocaja">
+        <xsd:all>
+          <xsd:element name="folio" type="xsd:integer" />
+          <xsd:element name="id" type="xsd:integer" />
+          <xsd:element name="serie" type="xsd:string" />
+          <xsd:element name="total" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadodocumentocaja">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:documentocaja[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="cobroaplicado">
+        <xsd:all>
+          <xsd:element name="cliente_id" type="xsd:integer" />
+          <xsd:element name="codigo_cliente" type="xsd:string" />
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="documentos_caja" type="tns:listadodocumentocaja" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadocobroaplicado">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:cobroaplicado[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="responseaplicacioncobros">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="cobros_aplicados" type="tns:listadocobroaplicado" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="abono_aplicar">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="total_abonar" type="xsd:decimal" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoabonoaplicar">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:abono_aplicar[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="abonosaplicados">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:abonoaplicado[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="abonoaplicado">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="total_abonado" type="xsd:decimal" />
+          <xsd:element name="movimiento_id" type="xsd:integer" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="responseabonosaplicados">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:abonosaplicados" />
+          <xsd:element name="errores" type="tns:listadoerrores" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadoerrores">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="saldo_cliente">
+        <xsd:all>
+          <xsd:element name="asociado_id" type="xsd:integer" />
+          <xsd:element name="saldo_por_pagar" type="xsd:decimal" />
+          <xsd:element name="limite_credito" type="xsd:decimal" />
+          <xsd:element name="plaza" type="xsd:integer" />
+          <xsd:element name="nombre_plaza" type="xsd:string" />
+          <xsd:element name="texto_adicional_1" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="apellido_paterno" type="xsd:string" />
+          <xsd:element name="apellido_materno" type="xsd:string" />
+          <xsd:element name="total_ticket" type="xsd:decimal" />
+          <xsd:element name="fecha" type="xsd:string" />
+          <xsd:element name="codigo_producto" type="xsd:string" />
+          <xsd:element name="nombre_producto" type="xsd:string" />
+          <xsd:element name="cantidad" type="xsd:decimal" />
+          <xsd:element name="precio" type="xsd:decimal" />
+          <xsd:element name="ticket" type="xsd:string" />
+          <xsd:element name="bloquear_venta_credito" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="listadosaldocreditocliente">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:saldo_cliente[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="responsecreditocliente">
+        <xsd:all>
+          <xsd:element name="resultado" type="xsd:integer" />
+          <xsd:element name="datos" type="tns:listadosaldocreditocliente" />
+          <xsd:element name="errores" type="tns:listadoerrores" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="productos_ids">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="xsd:int[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getEstatusCancelacionVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getEstatusCancelacionVentaResponse">
+    <wsdl:part name="return" type="tns:respuestalistadocancelacion" />
+  </wsdl:message>
+  <wsdl:message name="getSaldosClienteRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getSaldosClienteResponse">
+    <wsdl:part name="return" type="tns:responsesaldocliente" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="datosfactura" type="tns:factura" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraVentaResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setTerminarDocumentoVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="id" type="xsd:integer" />
+    <wsdl:part name="rfc" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setTerminarDocumentoVentaResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setAutenticacionRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="setAutenticacionResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraDocumentoVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="datosfactura" type="tns:factura" />
+    <wsdl:part name="valida_credito" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraDocumentoVentaResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraDocumentoVentaPosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="datosfactura" type="tns:facturaPos" />
+    <wsdl:part name="valida_credito" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraDocumentoVentaPosResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraCartaPorteRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="datosfactura" type="tns:factura" />
+    <wsdl:part name="datoscartaporte" type="tns:cartaporte" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraCartaPorteResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setReenviodeCorreoDocumentoVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="tipoventa" type="xsd:integer" />
+    <wsdl:part name="serie" type="xsd:string" />
+    <wsdl:part name="folio" type="xsd:integer" />
+    <wsdl:part name="email" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setReenviodeCorreoDocumentoVentaResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="SetCancelaDocumentoVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="tipoventa" type="xsd:integer" />
+    <wsdl:part name="serie" type="xsd:string" />
+    <wsdl:part name="folio" type="xsd:integer" />
+    <wsdl:part name="documento_id" type="xsd:integer" />
+    <wsdl:part name="eliminar_documento" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="SetCancelaDocumentoVentaResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="SetCancelaDocumentoVentaCFDRequest">
+    <wsdl:part name="datos_cancelacion" type="tns:datos_cancelacion" />
+  </wsdl:message>
+  <wsdl:message name="SetCancelaDocumentoVentaCFDResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="getComprobantePDFRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="Plaza" type="xsd:integer" />
+    <wsdl:part name="tipoventa" type="xsd:integer" />
+    <wsdl:part name="serie" type="xsd:string" />
+    <wsdl:part name="folio" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getComprobantePDFResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="getComprobanteXMLRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="tipoventa" type="xsd:integer" />
+    <wsdl:part name="serie" type="xsd:string" />
+    <wsdl:part name="folio" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getComprobanteXMLResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="getReporteMensualCFDRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="anio" type="xsd:integer" />
+    <wsdl:part name="mes" type="xsd:integer" />
+    <wsdl:part name="tiporeporte" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getReporteMensualCFDResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraReporteMensualdeCFDRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="anio" type="xsd:integer" />
+    <wsdl:part name="mes" type="xsd:integer" />
+    <wsdl:part name="tiporeporte" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setGeneraReporteMensualdeCFDResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="getClientesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getClientesResponse">
+    <wsdl:part name="return" type="tns:listadoclientes" />
+  </wsdl:message>
+  <wsdl:message name="getAgentesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getAgentesResponse">
+    <wsdl:part name="return" type="tns:listadoagentes" />
+  </wsdl:message>
+  <wsdl:message name="getProveedoresRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getProveedoresResponse">
+    <wsdl:part name="return" type="tns:listadoproveedores" />
+  </wsdl:message>
+  <wsdl:message name="getClienteByRfcRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="rfc" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getClienteByRfcResponse">
+    <wsdl:part name="return" type="tns:listadoclientes" />
+  </wsdl:message>
+  <wsdl:message name="getDireccionesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getDireccionesResponse">
+    <wsdl:part name="return" type="tns:listadodirecciones" />
+  </wsdl:message>
+  <wsdl:message name="getAlmacenesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getAlmacenesResponse">
+    <wsdl:part name="return" type="tns:listadoalmacenes" />
+  </wsdl:message>
+  <wsdl:message name="getUnidadesMedidaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getUnidadesMedidaResponse">
+    <wsdl:part name="return" type="tns:listadounidadesmedida" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesProductoRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="almacen_id" type="xsd:integer" />
+    <wsdl:part name="limit" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesProductoResponse">
+    <wsdl:part name="return" type="tns:listadoseriesproducto" />
+  </wsdl:message>
+  <wsdl:message name="getComponentesKitsRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="limit" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getComponentesKitsResponse">
+    <wsdl:part name="return" type="tns:listadokits" />
+  </wsdl:message>
+  <wsdl:message name="getProductosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getProductosResponse">
+    <wsdl:part name="return" type="tns:listadoproductos" />
+  </wsdl:message>
+  <wsdl:message name="getProductosRutaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getProductosRutaResponse">
+    <wsdl:part name="return" type="tns:listadoproductos" />
+  </wsdl:message>
+  <wsdl:message name="getListaPreciosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getListaPreciosResponse">
+    <wsdl:part name="return" type="tns:listadoprecios" />
+  </wsdl:message>
+  <wsdl:message name="getListaPrecioPorPlazaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fechahora" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getListaPrecioPorPlazaResponse">
+    <wsdl:part name="return" type="tns:listadopreciosporplaza" />
+  </wsdl:message>
+  <wsdl:message name="getExistenciasRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="almacen" type="xsd:string" />
+    <wsdl:part name="producto" type="xsd:string" />
+    <wsdl:part name="productos_ids" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getExistenciasResponse">
+    <wsdl:part name="return" type="tns:listadoexistencias" />
+  </wsdl:message>
+  <wsdl:message name="getFormasDePagoRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getFormasDePagoResponse">
+    <wsdl:part name="return" type="tns:listadoformasdepago" />
+  </wsdl:message>
+  <wsdl:message name="getTipoRelacionRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getTipoRelacionResponse">
+    <wsdl:part name="return" type="tns:catalogotiporelacion" />
+  </wsdl:message>
+  <wsdl:message name="getUsoCfdiRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getUsoCfdiResponse">
+    <wsdl:part name="return" type="tns:catalogousocfdi" />
+  </wsdl:message>
+  <wsdl:message name="getImpuestoDetalleRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="impuesto_id" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getImpuestoDetalleResponse">
+    <wsdl:part name="return" type="tns:catalogoimpuestodetalle" />
+  </wsdl:message>
+  <wsdl:message name="getClaveProductoServicioRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="paginado" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getClaveProductoServicioResponse">
+    <wsdl:part name="return" type="tns:catalogoclaveproductoservicio" />
+  </wsdl:message>
+  <wsdl:message name="getMetodoPagoSatRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getMetodoPagoSatResponse">
+    <wsdl:part name="return" type="tns:catalogometodopagosat" />
+  </wsdl:message>
+  <wsdl:message name="getUnidadMedidaSatRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getUnidadMedidaSatResponse">
+    <wsdl:part name="return" type="tns:catalogounidadmedidasat" />
+  </wsdl:message>
+  <wsdl:message name="getTiposVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getTiposVentaResponse">
+    <wsdl:part name="return" type="tns:listadotiposventas" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesTiposVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesTiposVentaResponse">
+    <wsdl:part name="return" type="tns:listadoseriestiposventas" />
+  </wsdl:message>
+  <wsdl:message name="getEmpresaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getEmpresaResponse">
+    <wsdl:part name="return" type="xsd:Array" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesConsecutivosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getSeriesConsecutivosResponse">
+    <wsdl:part name="return" type="tns:listadoseriesconsecutivos" />
+  </wsdl:message>
+  <wsdl:message name="getContactosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="anio" type="xsd:integer" />
+    <wsdl:part name="mes" type="xsd:integer" />
+    <wsdl:part name="dia" type="xsd:integer" />
+    <wsdl:part name="ultimo_id" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getContactosResponse">
+    <wsdl:part name="return" type="tns:listadocontactos" />
+  </wsdl:message>
+  <wsdl:message name="getDatosEmpresaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getDatosEmpresaResponse">
+    <wsdl:part name="return" type="tns:listadodatosempresa" />
+  </wsdl:message>
+  <wsdl:message name="getPlazaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getPlazaResponse">
+    <wsdl:part name="return" type="tns:listadodatosplaza" />
+  </wsdl:message>
+  <wsdl:message name="getLicenciaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="licencia" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getLicenciaResponse">
+    <wsdl:part name="return" type="tns:listadodatoslicencia" />
+  </wsdl:message>
+  <wsdl:message name="getFacturaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa_id" type="xsd:integer" />
+    <wsdl:part name="documento_id" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getFacturaResponse">
+    <wsdl:part name="return" type="tns:datos_factura" />
+  </wsdl:message>
+  <wsdl:message name="setLicenciaActivaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="licencia" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setLicenciaActivaResponse">
+    <wsdl:part name="return" type="xsd:Array" />
+  </wsdl:message>
+  <wsdl:message name="getGruposProductosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getGruposProductosResponse">
+    <wsdl:part name="return" type="tns:listadogruposproductos" />
+  </wsdl:message>
+  <wsdl:message name="GuardaBitacoraSincronizacionRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="fecha" type="xsd:string" />
+    <wsdl:part name="version" type="xsd:string" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="licencia" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GuardaBitacoraSincronizacionResponse">
+    <wsdl:part name="return" type="xsd:Array" />
+  </wsdl:message>
+  <wsdl:message name="getVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="venta" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="getVentaResponse">
+    <wsdl:part name="return" type="tns:listadoventas" />
+  </wsdl:message>
+  <wsdl:message name="getVentaFiltradaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="venta" type="xsd:string" />
+    <wsdl:part name="moneda" type="xsd:string" />
+    <wsdl:part name="nombre" type="xsd:string" />
+    <wsdl:part name="tipoPago" type="xsd:string" />
+    <wsdl:part name="fechainicial" type="xsd:string" />
+    <wsdl:part name="fechafinal" type="xsd:string" />
+    <wsdl:part name="tipoVenta" type="xsd:string" />
+    <wsdl:part name="estatus" type="xsd:string" />
+    <wsdl:part name="rfcCliente" type="xsd:string" />
+    <wsdl:part name="codigoTransaccion" type="xsd:string" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="cliente_asociado_id" type="xsd:integer" />
+    <wsdl:part name="agente_asociado_id" type="xsd:integer" />
+    <wsdl:part name="fecha_cancelacion_inicial" type="xsd:date" />
+    <wsdl:part name="fecha_cancelacion_final" type="xsd:date" />
+  </wsdl:message>
+  <wsdl:message name="getVentaFiltradaResponse">
+    <wsdl:part name="return" type="tns:listadoventasfiltradas" />
+  </wsdl:message>
+  <wsdl:message name="setProveedoresRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="proveedor" type="tns:proveedor" />
+  </wsdl:message>
+  <wsdl:message name="setProveedoresResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setClientesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="cliente" type="tns:cliente" />
+  </wsdl:message>
+  <wsdl:message name="setClientesResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setDireccionesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="direccion" type="tns:direccion" />
+  </wsdl:message>
+  <wsdl:message name="setDireccionesResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setContactosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="contacto" type="tns:contacto" />
+  </wsdl:message>
+  <wsdl:message name="setContactosResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSiguienteProveedorRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSiguienteProveedorResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSiguienteClienteRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+  </wsdl:message>
+  <wsdl:message name="obtenerSiguienteClienteResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="obtenerPedidosVentaRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="parametros" type="tns:parametrosReportePedidosVenta" />
+  </wsdl:message>
+  <wsdl:message name="obtenerPedidosVentaResponse">
+    <wsdl:part name="return" type="tns:listadoPedidosVenta" />
+  </wsdl:message>
+  <wsdl:message name="getExistenciasDisponiblesRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="almacen_id" type="xsd:integer" />
+    <wsdl:part name="productos_ids" type="tns:productos_ids" />
+  </wsdl:message>
+  <wsdl:message name="getExistenciasDisponiblesResponse">
+    <wsdl:part name="return" type="tns:existencias_disponibles" />
+  </wsdl:message>
+  <wsdl:message name="setClientePosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="cliente" type="tns:asociado" />
+  </wsdl:message>
+  <wsdl:message name="setClientePosResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setProductoRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="producto" type="tns:nuevo_producto" />
+  </wsdl:message>
+  <wsdl:message name="setProductoResponse">
+    <wsdl:part name="return" type="tns:respuesta" />
+  </wsdl:message>
+  <wsdl:message name="setCobrosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="cobros" type="tns:aplicacioncobro" />
+  </wsdl:message>
+  <wsdl:message name="setCobrosResponse">
+    <wsdl:part name="return" type="tns:responseaplicacioncobros" />
+  </wsdl:message>
+  <wsdl:message name="setAbonoRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="abonos" type="tns:listadoabonoaplicar" />
+  </wsdl:message>
+  <wsdl:message name="setAbonoResponse">
+    <wsdl:part name="return" type="tns:responseabonosaplicados" />
+  </wsdl:message>
+  <wsdl:message name="getSaldoAsociadoRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="asociado" type="xsd:integer" />
+    <wsdl:part name="texto_adicional_1" type="xsd:string" />
+    <wsdl:part name="fecha_inicio" type="xsd:string" />
+    <wsdl:part name="fecha_fin" type="xsd:string" />
+    <wsdl:part name="detalle" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getSaldoAsociadoResponse">
+    <wsdl:part name="return" type="tns:responsecreditocliente" />
+  </wsdl:message>
+  <wsdl:message name="getPromocionesPosRequest">
+    <wsdl:part name="usuario" type="xsd:string" />
+    <wsdl:part name="password" type="xsd:string" />
+    <wsdl:part name="empresa" type="xsd:integer" />
+    <wsdl:part name="plaza" type="xsd:integer" />
+    <wsdl:part name="fecha_inicio" type="xsd:string" />
+    <wsdl:part name="fecha_fin" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getPromocionesPosResponse">
+    <wsdl:part name="return" type="xsd:Array" />
+  </wsdl:message>
+  <wsdl:portType name="ComprobantesFiscalesPortType">
+    <wsdl:operation name="getEstatusCancelacionVenta">
+      <documentation>Obtener listado de los estatus de cancelacion de ventas</documentation>
+      <wsdl:input message="tns:getEstatusCancelacionVentaRequest" />
+      <wsdl:output message="tns:getEstatusCancelacionVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSaldosCliente">
+      <documentation>Obtencion de saldos de cliente por plaza</documentation>
+      <wsdl:input message="tns:getSaldosClienteRequest" />
+      <wsdl:output message="tns:getSaldosClienteResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraVenta">
+      <documentation>Volver a mensaje Hola Mundo</documentation>
+      <wsdl:input message="tns:setGeneraVentaRequest" />
+      <wsdl:output message="tns:setGeneraVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setTerminarDocumentoVenta">
+      <documentation>Volver a sellar e documento</documentation>
+      <wsdl:input message="tns:setTerminarDocumentoVentaRequest" />
+      <wsdl:output message="tns:setTerminarDocumentoVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setAutenticacion">
+      <documentation>Autenticacion de usuario</documentation>
+      <wsdl:input message="tns:setAutenticacionRequest" />
+      <wsdl:output message="tns:setAutenticacionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraDocumentoVenta">
+      <documentation>Generar CFD</documentation>
+      <wsdl:input message="tns:setGeneraDocumentoVentaRequest" />
+      <wsdl:output message="tns:setGeneraDocumentoVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraDocumentoVentaPos">
+      <documentation>Generar CFD</documentation>
+      <wsdl:input message="tns:setGeneraDocumentoVentaPosRequest" />
+      <wsdl:output message="tns:setGeneraDocumentoVentaPosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraCartaPorte">
+      <documentation>Generar Carta Porte</documentation>
+      <wsdl:input message="tns:setGeneraCartaPorteRequest" />
+      <wsdl:output message="tns:setGeneraCartaPorteResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setReenviodeCorreoDocumentoVenta">
+      <documentation>Envio de CFD por correo</documentation>
+      <wsdl:input message="tns:setReenviodeCorreoDocumentoVentaRequest" />
+      <wsdl:output message="tns:setReenviodeCorreoDocumentoVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCancelaDocumentoVenta">
+      <documentation>Cancelar CFD</documentation>
+      <wsdl:input message="tns:SetCancelaDocumentoVentaRequest" />
+      <wsdl:output message="tns:SetCancelaDocumentoVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCancelaDocumentoVentaCFD">
+      <documentation>Cancelar CFDI</documentation>
+      <wsdl:input message="tns:SetCancelaDocumentoVentaCFDRequest" />
+      <wsdl:output message="tns:SetCancelaDocumentoVentaCFDResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getComprobantePDF">
+      <documentation>Descargar CFD en format PDF</documentation>
+      <wsdl:input message="tns:getComprobantePDFRequest" />
+      <wsdl:output message="tns:getComprobantePDFResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getComprobanteXML">
+      <documentation>Descargar CFD en format XML</documentation>
+      <wsdl:input message="tns:getComprobanteXMLRequest" />
+      <wsdl:output message="tns:getComprobanteXMLResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getReporteMensualCFD">
+      <documentation>Descargar Reporte mensual Existente</documentation>
+      <wsdl:input message="tns:getReporteMensualCFDRequest" />
+      <wsdl:output message="tns:getReporteMensualCFDResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraReporteMensualdeCFD">
+      <documentation>Generar Reporte mensual Existente</documentation>
+      <wsdl:input message="tns:setGeneraReporteMensualdeCFDRequest" />
+      <wsdl:output message="tns:setGeneraReporteMensualdeCFDResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getClientes">
+      <documentation>Obtener Listado de Clientes</documentation>
+      <wsdl:input message="tns:getClientesRequest" />
+      <wsdl:output message="tns:getClientesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getAgentes">
+      <documentation>Obtener Listado de Agentes</documentation>
+      <wsdl:input message="tns:getAgentesRequest" />
+      <wsdl:output message="tns:getAgentesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getProveedores">
+      <documentation>Obtener Listado de Proveedores</documentation>
+      <wsdl:input message="tns:getProveedoresRequest" />
+      <wsdl:output message="tns:getProveedoresResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getClienteByRfc">
+      <documentation>Obtener Cliente por rfc</documentation>
+      <wsdl:input message="tns:getClienteByRfcRequest" />
+      <wsdl:output message="tns:getClienteByRfcResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDirecciones">
+      <documentation>Obtener Listado de Direcciones</documentation>
+      <wsdl:input message="tns:getDireccionesRequest" />
+      <wsdl:output message="tns:getDireccionesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getAlmacenes">
+      <documentation>Obtener Listado de Almacenes</documentation>
+      <wsdl:input message="tns:getAlmacenesRequest" />
+      <wsdl:output message="tns:getAlmacenesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getUnidadesMedida">
+      <documentation>Obtener Listado de Productos</documentation>
+      <wsdl:input message="tns:getUnidadesMedidaRequest" />
+      <wsdl:output message="tns:getUnidadesMedidaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesProducto">
+      <documentation>Obtener Listado de Productos</documentation>
+      <wsdl:input message="tns:getSeriesProductoRequest" />
+      <wsdl:output message="tns:getSeriesProductoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getComponentesKits">
+      <documentation>Obtener Listado de Productos</documentation>
+      <wsdl:input message="tns:getComponentesKitsRequest" />
+      <wsdl:output message="tns:getComponentesKitsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getProductos">
+      <documentation>Obtener Listado de Productos</documentation>
+      <wsdl:input message="tns:getProductosRequest" />
+      <wsdl:output message="tns:getProductosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getProductosRuta">
+      <documentation>Obtener Listado de Productos</documentation>
+      <wsdl:input message="tns:getProductosRutaRequest" />
+      <wsdl:output message="tns:getProductosRutaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getListaPrecios">
+      <documentation>Obtener Listado de Precios</documentation>
+      <wsdl:input message="tns:getListaPreciosRequest" />
+      <wsdl:output message="tns:getListaPreciosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getListaPrecioPorPlaza">
+      <documentation>Obtener Listado de Precios por Plaza</documentation>
+      <wsdl:input message="tns:getListaPrecioPorPlazaRequest" />
+      <wsdl:output message="tns:getListaPrecioPorPlazaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getExistencias">
+      <documentation>Obtener Listado de Existencias por Bodega y Producto</documentation>
+      <wsdl:input message="tns:getExistenciasRequest" />
+      <wsdl:output message="tns:getExistenciasResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getFormasDePago">
+      <documentation>Obtener Listado de Formas de Pago de la Empresa</documentation>
+      <wsdl:input message="tns:getFormasDePagoRequest" />
+      <wsdl:output message="tns:getFormasDePagoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTipoRelacion">
+      <documentation>Obtener catalogo del SAT de Tipo de Relacion</documentation>
+      <wsdl:input message="tns:getTipoRelacionRequest" />
+      <wsdl:output message="tns:getTipoRelacionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getUsoCfdi">
+      <documentation>Obtener catalogo del SAT de uso de CFDI</documentation>
+      <wsdl:input message="tns:getUsoCfdiRequest" />
+      <wsdl:output message="tns:getUsoCfdiResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getImpuestoDetalle">
+      <documentation>Obtener catalogo de impuesto detalle</documentation>
+      <wsdl:input message="tns:getImpuestoDetalleRequest" />
+      <wsdl:output message="tns:getImpuestoDetalleResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getClaveProductoServicio">
+      <documentation>Obtener catalogo de productos servicios del SAT</documentation>
+      <wsdl:input message="tns:getClaveProductoServicioRequest" />
+      <wsdl:output message="tns:getClaveProductoServicioResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMetodoPagoSat">
+      <documentation>Obtener catalogo de metodos de pago del SAT</documentation>
+      <wsdl:input message="tns:getMetodoPagoSatRequest" />
+      <wsdl:output message="tns:getMetodoPagoSatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getUnidadMedidaSat">
+      <documentation>Obtener catalogo de unidades de medida del SAT</documentation>
+      <wsdl:input message="tns:getUnidadMedidaSatRequest" />
+      <wsdl:output message="tns:getUnidadMedidaSatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTiposVenta">
+      <documentation>Obtener Listado de Tipos de Venta</documentation>
+      <wsdl:input message="tns:getTiposVentaRequest" />
+      <wsdl:output message="tns:getTiposVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesTiposVenta">
+      <documentation>Obtener Series de los Tipos de Venta</documentation>
+      <wsdl:input message="tns:getSeriesTiposVentaRequest" />
+      <wsdl:output message="tns:getSeriesTiposVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getEmpresa">
+      <documentation>Obtener Empresa</documentation>
+      <wsdl:input message="tns:getEmpresaRequest" />
+      <wsdl:output message="tns:getEmpresaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesConsecutivos">
+      <documentation>obtener series de consecutivo por empresa</documentation>
+      <wsdl:input message="tns:getSeriesConsecutivosRequest" />
+      <wsdl:output message="tns:getSeriesConsecutivosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getContactos">
+      <documentation>obtener todos los contactos de todos los asociados de una empresa</documentation>
+      <wsdl:input message="tns:getContactosRequest" />
+      <wsdl:output message="tns:getContactosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDatosEmpresa">
+      <documentation>obtener datos de la empresa e imagen base 64</documentation>
+      <wsdl:input message="tns:getDatosEmpresaRequest" />
+      <wsdl:output message="tns:getDatosEmpresaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getPlaza">
+      <documentation>obtener las plazas de la empresa</documentation>
+      <wsdl:input message="tns:getPlazaRequest" />
+      <wsdl:output message="tns:getPlazaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getLicencia">
+      <documentation>valida que exista la licencia y si la licencia esta activa o no</documentation>
+      <wsdl:input message="tns:getLicenciaRequest" />
+      <wsdl:output message="tns:getLicenciaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getFactura">
+      <documentation>Obtener la factura de un documento</documentation>
+      <wsdl:input message="tns:getFacturaRequest" />
+      <wsdl:output message="tns:getFacturaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setLicenciaActiva">
+      <documentation>Activa la licencia cuando se asigna a un POS</documentation>
+      <wsdl:input message="tns:setLicenciaActivaRequest" />
+      <wsdl:output message="tns:setLicenciaActivaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getGruposProductos">
+      <documentation>obtener los grupos de productos de una empresa</documentation>
+      <wsdl:input message="tns:getGruposProductosRequest" />
+      <wsdl:output message="tns:getGruposProductosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardaBitacoraSincronizacion">
+      <documentation>Guarda bitacora de acceso</documentation>
+      <wsdl:input message="tns:GuardaBitacoraSincronizacionRequest" />
+      <wsdl:output message="tns:GuardaBitacoraSincronizacionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getVenta">
+      <documentation>obtener una venta y sus detalles por venta id</documentation>
+      <wsdl:input message="tns:getVentaRequest" />
+      <wsdl:output message="tns:getVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getVentaFiltrada">
+      <documentation>obtener una venta y sus detalles por venta id</documentation>
+      <wsdl:input message="tns:getVentaFiltradaRequest" />
+      <wsdl:output message="tns:getVentaFiltradaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setProveedores">
+      <documentation>registro o actualizacion de proveedores</documentation>
+      <wsdl:input message="tns:setProveedoresRequest" />
+      <wsdl:output message="tns:setProveedoresResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setClientes">
+      <documentation>registro o actualizacion de lientes</documentation>
+      <wsdl:input message="tns:setClientesRequest" />
+      <wsdl:output message="tns:setClientesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setDirecciones">
+      <documentation>registro o actualizacion de direcciones</documentation>
+      <wsdl:input message="tns:setDireccionesRequest" />
+      <wsdl:output message="tns:setDireccionesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setContactos">
+      <documentation>registro o actualizacion de contactos</documentation>
+      <wsdl:input message="tns:setContactosRequest" />
+      <wsdl:output message="tns:setContactosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSiguienteProveedor">
+      <documentation>obtiene el siguiente numero de proveedor</documentation>
+      <wsdl:input message="tns:obtenerSiguienteProveedorRequest" />
+      <wsdl:output message="tns:obtenerSiguienteProveedorResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSiguienteCliente">
+      <documentation>obtiene el siguiente numero de cliente</documentation>
+      <wsdl:input message="tns:obtenerSiguienteClienteRequest" />
+      <wsdl:output message="tns:obtenerSiguienteClienteResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerPedidosVenta">
+      <documentation>Obtener listado de los datos del reporte Pedidos de Documentos de Venta</documentation>
+      <wsdl:input message="tns:obtenerPedidosVentaRequest" />
+      <wsdl:output message="tns:obtenerPedidosVentaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getExistenciasDisponibles">
+      <documentation>Obtener listado de los estatus de las solicitudes de cancelaciÃ³n de venta</documentation>
+      <wsdl:input message="tns:getExistenciasDisponiblesRequest" />
+      <wsdl:output message="tns:getExistenciasDisponiblesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setClientePos">
+      <documentation>registro o actualizacion de clientes del punto de venta</documentation>
+      <wsdl:input message="tns:setClientePosRequest" />
+      <wsdl:output message="tns:setClientePosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setProducto">
+      <documentation>registro de producto del punto de venta</documentation>
+      <wsdl:input message="tns:setProductoRequest" />
+      <wsdl:output message="tns:setProductoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setCobros">
+      <documentation>registro de cobros a clientes a sus documentos de venta</documentation>
+      <wsdl:input message="tns:setCobrosRequest" />
+      <wsdl:output message="tns:setCobrosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setAbono">
+      <documentation>registro de cobros a clientes con saldo pendiente en punto de venta</documentation>
+      <wsdl:input message="tns:setAbonoRequest" />
+      <wsdl:output message="tns:setAbonoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSaldoAsociado">
+      <documentation>listado de saldo de ventas a crÃ©dito en punto de venta</documentation>
+      <wsdl:input message="tns:getSaldoAsociadoRequest" />
+      <wsdl:output message="tns:getSaldoAsociadoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getPromocionesPos">
+      <documentation>Obtener las promociones aplicables para la venta en POS</documentation>
+      <wsdl:input message="tns:getPromocionesPosRequest" />
+      <wsdl:output message="tns:getPromocionesPosResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ComprobantesFiscalesBinding" type="tns:ComprobantesFiscalesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getEstatusCancelacionVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getEstatusCancelacionVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSaldosCliente">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getSaldosCliente" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setGeneraVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTerminarDocumentoVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setTerminarDocumentoVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setAutenticacion">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setAutenticacion" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraDocumentoVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setGeneraDocumentoVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraDocumentoVentaPos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setGeneraDocumentoVentaPos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraCartaPorte">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setGeneraCartaPorte" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setReenviodeCorreoDocumentoVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setReenviodeCorreoDocumentoVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCancelaDocumentoVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/SetCancelaDocumentoVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCancelaDocumentoVentaCFD">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/SetCancelaDocumentoVentaCFD" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComprobantePDF">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getComprobantePDF" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComprobanteXML">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getComprobanteXML" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReporteMensualCFD">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getReporteMensualCFD" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setGeneraReporteMensualdeCFD">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setGeneraReporteMensualdeCFD" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClientes">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getClientes" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAgentes">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getAgentes" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProveedores">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getProveedores" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClienteByRfc">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getClienteByRfc" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDirecciones">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getDirecciones" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAlmacenes">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getAlmacenes" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnidadesMedida">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getUnidadesMedida" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesProducto">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getSeriesProducto" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentesKits">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getComponentesKits" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getProductos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductosRuta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getProductosRuta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListaPrecios">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getListaPrecios" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListaPrecioPorPlaza">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getListaPrecioPorPlaza" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getExistencias">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getExistencias" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFormasDePago">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getFormasDePago" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTipoRelacion">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getTipoRelacion" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUsoCfdi">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getUsoCfdi" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getImpuestoDetalle">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getImpuestoDetalle" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClaveProductoServicio">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getClaveProductoServicio" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMetodoPagoSat">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getMetodoPagoSat" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnidadMedidaSat">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getUnidadMedidaSat" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTiposVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getTiposVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesTiposVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getSeriesTiposVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEmpresa">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getEmpresa" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSeriesConsecutivos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getSeriesConsecutivos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getContactos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getContactos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDatosEmpresa">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getDatosEmpresa" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlaza">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getPlaza" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLicencia">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getLicencia" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFactura">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getFactura" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setLicenciaActiva">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setLicenciaActiva" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGruposProductos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getGruposProductos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardaBitacoraSincronizacion">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/GuardaBitacoraSincronizacion" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVentaFiltrada">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getVentaFiltrada" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setProveedores">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setProveedores" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setClientes">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setClientes" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setDirecciones">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setDirecciones" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setContactos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setContactos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSiguienteProveedor">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/obtenerSiguienteProveedor" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerSiguienteCliente">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/obtenerSiguienteCliente" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerPedidosVenta">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/obtenerPedidosVenta" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getExistenciasDisponibles">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getExistenciasDisponibles" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setClientePos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setClientePos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setProducto">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setProducto" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCobros">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setCobros" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setAbono">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/setAbono" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSaldoAsociado">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getSaldoAsociado" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPromocionesPos">
+      <soap:operation soapAction="http://staging.clickbalance.net/click/wsCFD.php/getPromocionesPos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://cfd/services" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ComprobantesFiscales">
+    <wsdl:port name="ComprobantesFiscalesPort" binding="tns:ComprobantesFiscalesBinding">
+      <soap:address location="http://staging.clickbalance.net/click/wsCFD.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
