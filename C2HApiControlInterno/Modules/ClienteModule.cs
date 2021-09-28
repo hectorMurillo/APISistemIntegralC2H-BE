@@ -2,12 +2,13 @@
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Script.Serialization;
 using WarmPack.Classes;
 using Model = Models.Clientes;
 
@@ -201,43 +202,26 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 //var cliente = this.Bind<Model.ClientesModel>();
+                var cliente = JsonConvert.DeserializeObject<ClientesModel>(Request.Form["cliente"]);
+                var documentoDetalle = JsonConvert.DeserializeObject<List<DocumentoModel>>(Request.Form["documento"]);
+                var Files = this.Request.Files;
+                List<byte[]> bufferArr = new List<byte[]>();
 
-                var parametro = this.BindModel();
-                var lstFormulas = new ClientesModel();
-                var cliente = parametro.cliente.toString();
-                var documentos = parametro.documentos;
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                ClientesModel blogObject = js.Deserialize<ClientesModel>(cliente);
-        
-                foreach (var element in cliente)
+                if (Files.Count() > 0)
                 {
-                    lstFormulas.Codigo = element.codigo;
-                    lstFormulas.Nombre = element.nombre;
-                    lstFormulas.NombreCompleto = element.nombreCompleto;
-                    lstFormulas.ApellidoP = element.apellidoP;
-                    lstFormulas.ApellidoM = element.apellidoM;
-                    lstFormulas.RFC = element.rFC;
-                    lstFormulas.regimenFiscal = element.regimenFiscal;
-                    lstFormulas.Alias = element.alias;
-                    lstFormulas.Celular = element.celular;
-                    lstFormulas.Correo = element.correo;
-                    lstFormulas.NombreComercial = element.nombreComercial;
-                    lstFormulas.RazonSocial = element.razonSocial;
-                    lstFormulas.codVendedor = element.codEmpleadoVendedor;
-                    lstFormulas.CodTipoCliente = element.codTipoCliente;
-                    lstFormulas.CodSegmento = element.codSegmento;
-                    lstFormulas.CodTipoClienteCredito = element.codTipoClienteCredito;
-                    lstFormulas.CodTipoListaPrecio = element.codTipoListaPrecio;
-                    lstFormulas.DiaRevision = element.diaRevision;
-                    lstFormulas.FacturarPublicoGeneral = element.facturarPublicoGeneral;
+                    for (int i = 0; i < Files.Count(); i++)
+                    {
+                        byte[] buffer = new byte[0];
+                        var ms = new MemoryStream();
+                        string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), " / " + Files.ElementAt(0).Name);
+                        Files.ElementAt(0).Value.CopyTo(ms);
+                        buffer = ms.ToArray();
+
+                        bufferArr.Add(buffer);
+                    }
                 }
 
-                foreach (var item in documentos)
-                {
-                    var test = "";
-                }
-
-                result = _DAClientes.ClienteGuardar(cliente);
+                result = _DAClientes.ClienteGuardar(cliente, bufferArr, documentoDetalle);
             }
             catch (Exception ex)
             {
