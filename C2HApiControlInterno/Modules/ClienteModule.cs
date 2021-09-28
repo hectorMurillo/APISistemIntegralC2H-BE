@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Script.Serialization;
 using WarmPack.Classes;
 using Model = Models.Clientes;
 
@@ -199,7 +200,43 @@ namespace C2HApiControlInterno.Modules
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                var cliente = this.Bind<Model.ClientesModel>();
+                //var cliente = this.Bind<Model.ClientesModel>();
+
+                var parametro = this.BindModel();
+                var lstFormulas = new ClientesModel();
+                var cliente = parametro.cliente.toString();
+                var documentos = parametro.documentos;
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                ClientesModel blogObject = js.Deserialize<ClientesModel>(cliente);
+        
+                foreach (var element in cliente)
+                {
+                    lstFormulas.Codigo = element.codigo;
+                    lstFormulas.Nombre = element.nombre;
+                    lstFormulas.NombreCompleto = element.nombreCompleto;
+                    lstFormulas.ApellidoP = element.apellidoP;
+                    lstFormulas.ApellidoM = element.apellidoM;
+                    lstFormulas.RFC = element.rFC;
+                    lstFormulas.regimenFiscal = element.regimenFiscal;
+                    lstFormulas.Alias = element.alias;
+                    lstFormulas.Celular = element.celular;
+                    lstFormulas.Correo = element.correo;
+                    lstFormulas.NombreComercial = element.nombreComercial;
+                    lstFormulas.RazonSocial = element.razonSocial;
+                    lstFormulas.codVendedor = element.codEmpleadoVendedor;
+                    lstFormulas.CodTipoCliente = element.codTipoCliente;
+                    lstFormulas.CodSegmento = element.codSegmento;
+                    lstFormulas.CodTipoClienteCredito = element.codTipoClienteCredito;
+                    lstFormulas.CodTipoListaPrecio = element.codTipoListaPrecio;
+                    lstFormulas.DiaRevision = element.diaRevision;
+                    lstFormulas.FacturarPublicoGeneral = element.facturarPublicoGeneral;
+                }
+
+                foreach (var item in documentos)
+                {
+                    var test = "";
+                }
+
                 result = _DAClientes.ClienteGuardar(cliente);
             }
             catch (Exception ex)
