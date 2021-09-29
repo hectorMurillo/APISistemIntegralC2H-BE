@@ -188,6 +188,7 @@
     <Content Include="Reportes\rptNota.rpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Publicados.pubxml" />
     <None Include="Reportes\Reportes.xsd">
       <SubType>Designer</SubType>
