@@ -8,9 +8,18 @@ namespace Models.Clientes
 {
     public class DocumentoModel
     {
-        public int IdDocumento { get; set; }
+        public int Codigo { get; set; }
+        public int CodCliente { get; set; }
         public string Titulo { get; set; }
+        public byte[] DocumentoBase64 { get; set; }
         public string Descripcion { get; set; }
-        public Object Imagen { get; set; }
+        public string Documento
+        {
+            get
+            {
+                return Convert.ToBase64String(DocumentoBase64);
+            }
+        }
+        public DateTime Fecha { get; set; }
     }
 }

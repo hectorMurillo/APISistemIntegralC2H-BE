@@ -43,6 +43,7 @@ namespace C2HApiControlInterno.Modules
 
             //
             Get("/tipos-cliente", _ => ObtenerTiposCliente());
+            Get("/documentos/{codCliente}", x => ObtenerDocumentosCliente(x));
             Get("/segmentos", _ => ObtenerSegmentos());
             Get("/tipos-cliente-credito", _ => ObtenerTiposClienteCredito());
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
@@ -56,7 +57,21 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        private object ObtenerDocumentosCliente(dynamic x)
+        {
+            Result<List<DocumentoModel>> result = new Result<List<DocumentoModel>>();
 
+            try
+            {
+                int codCliente = x.codCliente;
+                result = _DAClientes.ObtenerDocumentos(codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GetDireccion(dynamic x)
         {

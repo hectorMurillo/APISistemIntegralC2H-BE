@@ -272,7 +272,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pCodigo", ConexionDbType.Int, documento.IdDocumento);
+                parametros.Add("@pCodigo", ConexionDbType.Int, documento.Codigo);
                 parametros.Add("@pCodCliente", ConexionDbType.Int, CodCliente);
                 parametros.Add("@pTitulo", ConexionDbType.VarChar, documento.Titulo);
                 parametros.Add("@pDescripcion", ConexionDbType.VarChar, documento.Descripcion);
@@ -280,6 +280,24 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 result = _conexion.Execute("ProcCatClienteDocumentosGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<DocumentoModel>> ObtenerDocumentos(int CodCliente)
+        {
+            Result<List<DocumentoModel>> result = new Result<List<DocumentoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, CodCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<DocumentoModel>("ProcCatClienteDocumentosCon", parametros);
             }
             catch (Exception ex)
             {
