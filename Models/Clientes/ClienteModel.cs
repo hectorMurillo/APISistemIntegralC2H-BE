@@ -12,11 +12,17 @@ namespace Models.Clientes
         CultureInfo ci = new CultureInfo("es-MX");
         public int Indice { get; set; }
         public int Codigo { get; set; }
+
+        private string _NombreCompleto;
         public string NombreCompleto
         {
             get
             {
                 return Nombre + " " + ApellidoP + " " + ApellidoM;
+            }
+            set
+            {
+                _NombreCompleto = value;
             }
         }
         public string Nombre { get; set; }

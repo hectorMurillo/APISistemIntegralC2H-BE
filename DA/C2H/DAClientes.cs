@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
+using WarmPack.Extensions;
 using Model = Models.Clientes;
 namespace DA.C2H
 {
@@ -214,7 +215,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<int>> ClienteGuardar(Model.ClientesModel Cliente)
+        public Result<List<int>> ClienteGuardar(Model.ClientesModel Cliente, List<byte[]> lstBytes, List<DocumentoModel> documentoDetalle)
         {
             Result<List<int>> result = new Result<List<int>>();
             try
@@ -245,6 +246,58 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<int>("ProcCatClienteGuardar", parametros);
+
+                if (result.Value)
+                {
+                    for (int i = 0; i < lstBytes.Count; i++)
+                    {
+                     GuardarDocumento(result.Data[0], lstBytes[i], documentoDetalle[i]);
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+        public Result GuardarDocumento(int CodCliente, byte[] bytes, DocumentoModel documento)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, documento.Codigo);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, CodCliente);
+                parametros.Add("@pTitulo", ConexionDbType.VarChar, documento.Titulo);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, documento.Descripcion);
+                parametros.Add("@pImagen", ConexionDbType.VarBinary, bytes);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcCatClienteDocumentosGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<DocumentoModel>> ObtenerDocumentos(int CodCliente)
+        {
+            Result<List<DocumentoModel>> result = new Result<List<DocumentoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodCliente", ConexionDbType.Int, CodCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<DocumentoModel>("ProcCatClienteDocumentosCon", parametros);
             }
             catch (Exception ex)
             {

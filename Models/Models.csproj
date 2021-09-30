@@ -105,6 +105,7 @@
     <Compile Include="Clientes\ClienteModel2.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
+    <Compile Include="Clientes\DocumentoModel.cs" />
     <Compile Include="Clientes\Segmento.cs" />
     <Compile Include="Clientes\TipoCliente.cs" />
     <Compile Include="Clientes\TipoClienteCredito.cs" />

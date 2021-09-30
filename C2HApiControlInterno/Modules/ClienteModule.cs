@@ -2,8 +2,10 @@
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -41,6 +43,7 @@ namespace C2HApiControlInterno.Modules
 
             //
             Get("/tipos-cliente", _ => ObtenerTiposCliente());
+            Get("/documentos/{codCliente}", x => ObtenerDocumentosCliente(x));
             Get("/segmentos", _ => ObtenerSegmentos());
             Get("/tipos-cliente-credito", _ => ObtenerTiposClienteCredito());
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
@@ -54,7 +57,21 @@ namespace C2HApiControlInterno.Modules
 
         }
 
+        private object ObtenerDocumentosCliente(dynamic x)
+        {
+            Result<List<DocumentoModel>> result = new Result<List<DocumentoModel>>();
 
+            try
+            {
+                int codCliente = x.codCliente;
+                result = _DAClientes.ObtenerDocumentos(codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GetDireccion(dynamic x)
         {
@@ -199,8 +216,27 @@ namespace C2HApiControlInterno.Modules
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                var cliente = this.Bind<Model.ClientesModel>();
-                result = _DAClientes.ClienteGuardar(cliente);
+                //var cliente = this.Bind<Model.ClientesModel>();
+                var cliente = JsonConvert.DeserializeObject<ClientesModel>(Request.Form["cliente"]);
+                var documentoDetalle = JsonConvert.DeserializeObject<List<DocumentoModel>>(Request.Form["documento"]);
+                var Files = this.Request.Files;
+                List<byte[]> bufferArr = new List<byte[]>();
+
+                if (Files.Count() > 0)
+                {
+                    for (int i = 0; i < Files.Count(); i++)
+                    {
+                        byte[] buffer = new byte[0];
+                        var ms = new MemoryStream();
+                        string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), " / " + Files.ElementAt(0).Name);
+                        Files.ElementAt(0).Value.CopyTo(ms);
+                        buffer = ms.ToArray();
+
+                        bufferArr.Add(buffer);
+                    }
+                }
+
+                result = _DAClientes.ClienteGuardar(cliente, bufferArr, documentoDetalle);
             }
             catch (Exception ex)
             {

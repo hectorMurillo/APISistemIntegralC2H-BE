@@ -221,6 +221,27 @@ namespace DA.C2H
             return result;
         }
 
+        public Result CambiarEstatus(int folio, string estatus, string motivo)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
+                parametros.Add("@pEstatus", ConexionDbType.Char, estatus);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcPedidosEstatusChange", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result ReagendarPedido(PedidoReagendarModel pedido, int codUsuario)
         {
             Result result = new Result();

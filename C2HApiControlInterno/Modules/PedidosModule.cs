@@ -29,6 +29,7 @@ namespace C2HApiControlInterno.Modules
             Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
             Get("/autorizar-pedido-detenido/{folioPedido}/{autorizado}/{observacion}", x => AutorizarPedidoDetenido(x));
             Get("/cambiar-estatus/{folioPedido}/{confirmado}/{motivo}", x => CambiarEstatusPedido(x));
+            Get("/cambiar-status/{folioPedido}/{estatus}/{motivo}", x => CambiarEstatus(x));
             Post("/reagendar-pedido/", _ => ReagendarPedido());
 
         }
@@ -193,6 +194,24 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private object CambiarEstatus(dynamic parametros)
+        {
+            Result result = new Result();
+
+            try
+            {
+                int folioPedido = parametros.folioPedido;
+                string estatus = parametros.estatus;
+                string motivo = parametros.motivo;
+
+                result = _DAPedidos.CambiarEstatus(folioPedido, estatus, motivo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
         private object ReagendarPedido()
         {
             Result result = new Result();
