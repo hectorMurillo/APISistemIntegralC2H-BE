@@ -276,7 +276,8 @@ namespace DA.C2H
                 parametros.Add("@pCodCliente", ConexionDbType.Int, CodCliente);
                 parametros.Add("@pTitulo", ConexionDbType.VarChar, documento.Titulo);
                 parametros.Add("@pDescripcion", ConexionDbType.VarChar, documento.Descripcion);
-                parametros.Add("@pImagen", ConexionDbType.VarBinary, bytes);
+                parametros.Add("@pDocumento", ConexionDbType.VarBinary, bytes);
+                parametros.Add("@pEstatus", ConexionDbType.VarBinary, documento.Estatus);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 result = _conexion.Execute("ProcCatClienteDocumentosGuardar", parametros);
@@ -287,6 +288,30 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result EliminarDocumento(int codigo)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, 0);
+                parametros.Add("@pTitulo", ConexionDbType.VarChar, "");
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, "");
+                parametros.Add("@pDocumento", ConexionDbType.VarBinary, null);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, "I");
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcCatClienteDocumentosGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
 
         public Result<List<DocumentoModel>> ObtenerDocumentos(int CodCliente)
         {
