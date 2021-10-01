@@ -43,180 +43,31 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarPedido(PedidoModel pedido, int codUsuario)
+        public Result GuardarCotizacion(CotizacionModel cotizacion, int codUsuario)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, pedido.FolioPedido);
-                parametros.Add("@pHoraSalida", ConexionDbType.VarChar, pedido.HoraSalida);
-                parametros.Add("@pFechaSalida", ConexionDbType.VarChar, pedido.FechaSalida);
-                parametros.Add("@pCodCliente", ConexionDbType.Int, pedido.CodCliente);
-                parametros.Add("@pCodObra", ConexionDbType.Int, pedido.CodObra);
-                parametros.Add("@pCodVendedor", ConexionDbType.Int, pedido.codVendedor);
-                parametros.Add("@pCantidad", ConexionDbType.Decimal, pedido.Cantidad);
-                parametros.Add("@pCierre", ConexionDbType.Bit, pedido.Cierre);
-                parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, pedido.CantidadCierre);
+                parametros.Add("@pFolioCotizacion", ConexionDbType.Int, cotizacion.FolioCotizacion);
+                parametros.Add("@pCodCliente", ConexionDbType.Int, cotizacion.CodCliente);
+                parametros.Add("@pCodObra", ConexionDbType.Int, cotizacion.CodObra);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, cotizacion.codVendedor);
+                parametros.Add("@pCantidad", ConexionDbType.Decimal, cotizacion.Cantidad);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pCodProducto", ConexionDbType.Int, pedido.codProducto);
-                parametros.Add("@pTieneDescuento", ConexionDbType.Bit, pedido.TieneDescuento);
-                parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, pedido.PorcentajeDescuento);
-                parametros.Add("@pObservacion", ConexionDbType.VarChar, pedido.Observacion);
-                parametros.Add("@pTieneImper", ConexionDbType.Bit, pedido.TieneImper);
-                parametros.Add("@pTieneFibra", ConexionDbType.Bit, pedido.TieneFibra);
-                parametros.Add("@pCodPlanta", ConexionDbType.Int, pedido.CodPlanta);
-                parametros.Add("@pBombeado", ConexionDbType.Bit, pedido.Bombeado);
-                parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, pedido.PrecioOriginal);
-                parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, pedido.PrecioDescuento);
+                parametros.Add("@pCodProducto", ConexionDbType.Int, cotizacion.codProducto);
+                parametros.Add("@pTieneDescuento", ConexionDbType.Bit, cotizacion.TieneDescuento);
+                parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, cotizacion.PorcentajeDescuento);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, cotizacion.Observacion);
+                parametros.Add("@pTieneImper", ConexionDbType.Bit, cotizacion.TieneImper);
+                parametros.Add("@pTieneFibra", ConexionDbType.Bit, cotizacion.TieneFibra);
+                parametros.Add("@pBombeado", ConexionDbType.Bit, cotizacion.Bombeado);
+                parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, cotizacion.PrecioOriginal);
+                parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, cotizacion.PrecioDescuento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.Execute("ProcPedidosGuardar", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result<List<PedidoCierre>> ObtenerPedidosCierres(int folioPedido)
-        {
-            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-                result = _conexion.ExecuteWithResults<PedidoCierre>("ProcPedidosCierresCon", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result<List<PedidoCierre>> GuardarCierre(int folioPedido, decimal cantidadCierreNuevo)
-        {
-            Result<List<PedidoCierre>> result = new Result<List<PedidoCierre>>();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
-                parametros.Add("@pCantidadCierre", ConexionDbType.Decimal, cantidadCierreNuevo);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, 1);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-                result = _conexion.ExecuteWithResults<PedidoCierre>("ProcPedidosCierresGuardar", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result CancelarCierre(int folioPedido, int idCatPedidosCierres)
-        {
-            Result result = new Result();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
-                parametros.Add("@pIdCatPedidosCierres", ConexionDbType.Int, idCatPedidosCierres);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, 1);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-                result = _conexion.Execute("ProcPedidosCierresCancelar", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result<List<Pedido>> ObtenerPedidosDetenidos(int folioPedido, int codUsuario)
-        {
-            Result<List<Pedido>> result = new Result<List<Pedido>>();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioPedido);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-
-                result = _conexion.ExecuteWithResults<Pedido>("ProcPedidosDetenidosCon", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result AutorizarPedidoDetenido(int folio, bool autorizado, string observacion)
-        {
-            Result result = new Result();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
-                parametros.Add("@pAutorizado", ConexionDbType.Bit, autorizado);
-                parametros.Add("@pObservacion", ConexionDbType.VarChar, observacion);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-
-                result = _conexion.Execute("ProcPedidosGuardarPedidoDetenido", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result CambiarEstatusPedido(int folio, bool confirmado, string motivo, int codUsuario)
-        {
-            Result result = new Result();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
-                parametros.Add("@pConfirmado", ConexionDbType.Bit, confirmado);
-                parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-
-                result = _conexion.Execute("ProcPedidosEstatusCambiar", parametros);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return result;
-        }
-
-        public Result ReagendarPedido(PedidoReagendarModel pedido, int codUsuario)
-        {
-            Result result = new Result();
-            try
-            {
-                var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, pedido.FolioPedido);
-                parametros.Add("@pHoraSalida", ConexionDbType.VarChar, pedido.HoraSalida);
-                parametros.Add("@pFechaSalida", ConexionDbType.VarChar, pedido.FechaSalida);
-                parametros.Add("@pMotivo", ConexionDbType.VarChar, pedido.Motivo);
-                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
-                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
-
-                result = _conexion.Execute("ProcPedidoReagendadoGuardar", parametros);
+                result = _conexion.Execute("ProcCotizacionesGuardar", parametros);
             }
             catch (Exception ex)
             {

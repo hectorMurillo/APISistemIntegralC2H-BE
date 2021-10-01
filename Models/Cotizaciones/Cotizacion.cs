@@ -13,26 +13,26 @@ namespace Models.Cotizaciones
         public int CodCliente { get; set; }
         public string Cliente { get; set; }
         public int CodVendedor { get; set; }
-        public int CodPlanta { get; set; }
+        //public int CodPlanta { get; set; }
         public string Vendedor { get; set; }
         public int CodObra { get; set; }
         public string Obra { get; set; }
         public string Usuario { get; set; }
-        public string FechaSalida { get; set; }
-        public string HoraSalida { get; set; }
-        public string HoraSalidaYPlanta
-        {
-            get
-            {
-                return HoraSalida + " " + NombrePlanta;
-            }
-        }
+        //public string FechaSalida { get; set; }
+        //public string HoraSalida { get; set; }
+        //public string HoraSalidaYPlanta
+        //{
+        //    get
+        //    {
+        //        return HoraSalida + " " + NombrePlanta;
+        //    }
+        //}
         public decimal Cantidad { get; set; }
-        public bool Cierre { get; set; }
-        public decimal CantidadCierre { get; set; }
+        //public bool Cierre { get; set; }
+        //public decimal CantidadCierre { get; set; }
         //public string FechaFormato { get; set; }
         public string Estatus { get; set; }
-        public bool TieneCierres { get; set; }
+        //public bool TieneCierres { get; set; }
         public int CodProducto { get; set; }
         public string Nomenclatura { get; set; }
         public string FormatoCantidad { get; set; }
@@ -42,7 +42,7 @@ namespace Models.Cotizaciones
         public string Observacion { get; set; }
         public bool TieneFibra { get; set; }
         public bool TieneImper { get; set; }
-        public string NombrePlanta { get; set; }
+        //public string NombrePlanta { get; set; }
         public bool Bombeado { get; set; }
 
         public string FormatoPorcentajeDescuento
@@ -71,6 +71,9 @@ namespace Models.Cotizaciones
                 return string.Format("{0:C}", PrecioTotal);
             }
         }
+
+        public string FechaRecepcion { get; set; }
+
 
     }
 }
