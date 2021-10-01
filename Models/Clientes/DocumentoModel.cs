@@ -21,5 +21,6 @@ namespace Models.Clientes
             }
         }
         public DateTime Fecha { get; set; }
+        public string Estatus { get; set; }
     }
 }

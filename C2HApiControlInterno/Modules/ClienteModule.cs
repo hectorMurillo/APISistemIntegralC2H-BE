@@ -35,6 +35,9 @@ namespace C2HApiControlInterno.Modules
             Post("/direcciones/guardar", _ => PostClienteDireccion());
             Post("/contactos/guardar", _ => PostClienteContacto());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
+
+            Get("/cliente-documento/{codigo}", x => EliminarDocumentoCte(x));
+
             Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
             Get("/clientes-detenidos", _ => GetClientesDetenidos());
             Get("/cobranza", _ => ObtenerClientesCobranza());
@@ -44,6 +47,7 @@ namespace C2HApiControlInterno.Modules
             //
             Get("/tipos-cliente", _ => ObtenerTiposCliente());
             Get("/documentos/{codCliente}", x => ObtenerDocumentosCliente(x));
+            //Post("/documentos", _=> EliminarDocumentoCte());
             Get("/segmentos", _ => ObtenerSegmentos());
             Get("/tipos-cliente-credito", _ => ObtenerTiposClienteCredito());
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
@@ -55,6 +59,22 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x));
 
 
+        }
+
+        private object EliminarDocumentoCte(dynamic x)
+        {
+            Result result = new Result();
+
+            try
+            {
+                int codigo = x.codigo;
+                result = _DAClientes.EliminarDocumento(codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object ObtenerDocumentosCliente(dynamic x)
