@@ -105,6 +105,7 @@
     <Compile Include="Clientes\ClienteModel2.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
+    <Compile Include="Clientes\DocumentoModel.cs" />
     <Compile Include="Clientes\Segmento.cs" />
     <Compile Include="Clientes\TipoCliente.cs" />
     <Compile Include="Clientes\TipoClienteCredito.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="Comisiones\ReporteComisionesModel.cs" />
     <Compile Include="Configuracion\FuncionModel.cs" />
     <Compile Include="Contactos\PuestosContactosModel.cs" />
+    <Compile Include="Cotizaciones\Cotizacion.cs" />
+    <Compile Include="Cotizaciones\CotizacionModel.cs" />
     <Compile Include="Cuentas\BancoXCuenta.cs" />
     <Compile Include="Cuentas\CuentaModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />

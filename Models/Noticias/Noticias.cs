@@ -13,10 +13,27 @@ namespace Models.Noticias
         public string Descripcion { get; set; }
         public byte[] ImagenBase64 { get; set; }
         public DateTime Fecha { get; set; }
-        public int CodUsuario { get; set; }
-        public string Imagen { get
+        public string FechaFormat { 
+            get 
             {
-                return Convert.ToBase64String(ImagenBase64);
+                return Fecha.ToString("dd-MM-yyyy");
+            }   
+        }
+        public int CodUsuario { get; set; }
+        public Boolean Activado { get; set; }
+        public string Imagen { get
+
+  
+            {
+                try
+                {
+                    return Convert.ToBase64String(ImagenBase64);
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+                
             }
         }
     }

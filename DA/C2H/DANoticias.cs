@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
 using Models.Noticias;
+using Model = Models.Noticias;
 
 namespace DA.C2H
 {
@@ -57,6 +58,56 @@ namespace DA.C2H
             catch (Exception ex)
             {
                 result.Message = ex.Message;
+            }
+            return result;
+        }
+        public Result NoticiaDesactivar(Model.Noticias Noticia)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+
+                parametros.Add("@pIdNoticias", ConexionDbType.Int, Noticia.IdNoticias);
+                parametros.Add("@pActivado", ConexionDbType.Bit, Noticia.Activado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcNoticiasGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public Result consultaImagen(int idNoticias)
+        {
+            Result result = new Result();
+
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNoticias", ConexionDbType.Int, idNoticias);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcNoticiasCon", parametros);
+
+                var noticia = _conexion.RecordsetsResults<Models.Noticias.Noticias>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { noticia }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Value = false;
+                result.Data = null;
             }
             return result;
         }

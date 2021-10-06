@@ -18,5 +18,6 @@ namespace Models.Porteros
         public int NotaRemision { get; set; }
         public string Observacion { get; set; }
         public int FolioPedido { get; set; }
+        public string Planta { get; set; }
     }
 }

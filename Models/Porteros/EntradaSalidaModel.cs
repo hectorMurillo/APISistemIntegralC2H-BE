@@ -16,5 +16,7 @@ namespace Models.Porteros
         public object notaRemision { get; set; }
         public string observacion { get; set; }
         public int idNotasRemisionEnc { get; set; }
+        public int codPlanta { get; set; }
+        public int Bacha { get; set; }
     }
 }

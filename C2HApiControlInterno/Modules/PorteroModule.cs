@@ -44,10 +44,9 @@ namespace C2HApiControlInterno.Modules
 
                 if (result.CodRespuesta != 0)
                 {
-
                     var r = _DAPortero.EnviarCorreoEvaluacion(entradaSalida.idNotasRemisionEnc);
                     correo.SendMail(r.Data[0]);
-            }
+                }
 
             }
             catch (Exception ex)
