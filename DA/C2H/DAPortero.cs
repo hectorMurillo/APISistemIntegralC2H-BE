@@ -36,6 +36,7 @@ namespace DA.C2H
                 parametros.Add("@pIdNotasRemisionEnc", ConexionDbType.Int, entradaSalida.idNotasRemisionEnc);
                 parametros.Add("@pObservacion", ConexionDbType.VarChar, entradaSalida.observacion);
                 parametros.Add("@pCodPlanta", ConexionDbType.Int, entradaSalida.codPlanta);
+                parametros.Add("@pBacha", ConexionDbType.Int, entradaSalida.Bacha);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
                 parametros.Add("@pCodRespuesta", ConexionDbType.Int, System.Data.ParameterDirection.Output);
