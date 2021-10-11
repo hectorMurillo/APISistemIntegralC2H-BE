@@ -1,6 +1,7 @@
 ﻿using Models.AgenteVentas;
 using Models.Clientes;
 using Models.Dosificador;
+using Models.Pedidos;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
@@ -22,6 +23,7 @@ namespace C2HApiControlInterno.Modules
             _DAAgentesVentas = new DA.C2H.DAAgenteVentas();
             Get("/todosCombo", _ => GetTodos());
             Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
+            Get("/pedidos", _ => PedidosAgente());
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
             Get("/clientes", _ => ClientesPorAgente());
@@ -30,6 +32,20 @@ namespace C2HApiControlInterno.Modules
         }
 
         
+        private object PedidosAgente()
+        {
+            Result<List<Pedido>> result = new Result<List<Pedido>>();
+            try
+            {
+                int codAgente = this.BindUsuario().CodEmpleado;
+                result = _DAAgentesVentas.ObtenerPedidos(codAgente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GuardarPrecioProductoXCliente()
         {

@@ -11,6 +11,7 @@ namespace Models.Pedidos
         public int Codigo { get; set; }
         public int FolioPedido { get; set; }
         public int CodCliente { get; set; }
+        public int CantNotasRemision { get; set; }
         public string Cliente { get; set; }
         public int CodVendedor { get; set; }
         public int CodPlanta { get; set; }
