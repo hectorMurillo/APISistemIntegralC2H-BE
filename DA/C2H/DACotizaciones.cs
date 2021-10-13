@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
+using WarmPack.Extensions;
 
 namespace DA.C2H
 {
@@ -46,6 +47,9 @@ namespace DA.C2H
         public Result GuardarCotizacion(CotizacionModel cotizacion, int codUsuario)
         {
             Result result = new Result();
+
+
+            string xml = cotizacion.productos.ToXml("Productos");
             try
             {
                 var parametros = new ConexionParameters();
@@ -53,17 +57,20 @@ namespace DA.C2H
                 parametros.Add("@pCodCliente", ConexionDbType.Int, cotizacion.CodCliente);
                 parametros.Add("@pCodObra", ConexionDbType.Int, cotizacion.CodObra);
                 parametros.Add("@pCodVendedor", ConexionDbType.Int, cotizacion.codVendedor);
-                parametros.Add("@pCantidad", ConexionDbType.Decimal, cotizacion.Cantidad);
+                //parametros.Add("@pCantidad", ConexionDbType.Decimal, cotizacion.Cantidad);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
-                parametros.Add("@pCodProducto", ConexionDbType.Int, cotizacion.codProducto);
-                parametros.Add("@pTieneDescuento", ConexionDbType.Bit, cotizacion.TieneDescuento);
-                parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, cotizacion.PorcentajeDescuento);
-                parametros.Add("@pObservacion", ConexionDbType.VarChar, cotizacion.Observacion);
-                parametros.Add("@pTieneImper", ConexionDbType.Bit, cotizacion.TieneImper);
-                parametros.Add("@pTieneFibra", ConexionDbType.Bit, cotizacion.TieneFibra);
-                parametros.Add("@pBombeado", ConexionDbType.Bit, cotizacion.Bombeado);
-                parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, cotizacion.PrecioOriginal);
-                parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, cotizacion.PrecioDescuento);
+                //parametros.Add("@pCodProducto", ConexionDbType.Int, cotizacion.codProducto);
+                //parametros.Add("@pTieneDescuento", ConexionDbType.Bit, cotizacion.TieneDescuento);
+                //parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, cotizacion.PorcentajeDescuento);
+                //parametros.Add("@pTieneImper", ConexionDbType.Bit, cotizacion.TieneImper);
+                //parametros.Add("@pTieneFibra", ConexionDbType.Bit, cotizacion.TieneFibra);
+                //parametros.Add("@pBombeado", ConexionDbType.Bit, cotizacion.Bombeado);
+                //parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, cotizacion.PrecioOriginal);
+                //parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, cotizacion.PrecioDescuento);
+                parametros.Add("@pXml", ConexionDbType.Xml, xml);
+                parametros.Add("@pClienteNuevo", ConexionDbType.VarChar, cotizacion.OtroCliente);
+                parametros.Add("@pObraNueva", ConexionDbType.VarChar, cotizacion.OtraObra);
+
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
