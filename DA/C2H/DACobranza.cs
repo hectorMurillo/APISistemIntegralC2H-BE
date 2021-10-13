@@ -61,6 +61,28 @@ namespace DA.C2H
         }
 
 
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemision(int folioNota)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, 49);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcPedidoNotasRemisionCon", parametros);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+       
+
 
         public Result<List<DatosNotaRemision>> ObtenerNotasRemisionSurtiendo()
         {

@@ -61,7 +61,7 @@ namespace C2HApiControlInterno.Modules
 
             var nota = new DatosNotaRemision();
             var datos = new Result<List<DatosNotaRemision>>();
-            datos = _DACobranza.ObtenerDatosNota(folioNota);
+            datos = _DACobranza.ObtenerNotasRemision(folioNota);
             if (datos.Value)
             {
                 nota = datos.Data[0];
