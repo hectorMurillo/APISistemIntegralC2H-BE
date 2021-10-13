@@ -22,7 +22,7 @@ namespace C2HApiControlInterno.Modules
 
             _DACotizaciones = new DACotizaciones();
             Get("/obtener-cotizaciones/{cotizacion}/{fechaDesde}/{fechaHasta}", x => ObtenerCotizaciones(x));
-            Post("guardar", _ => GuardarCotizacion());
+            Post("/guardar", x => GuardarCotizacion(x));
 
         }
 
@@ -47,15 +47,19 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object GuardarCotizacion()
+        private object GuardarCotizacion(dynamic x)
         {
             Result result = new Result();
             try
             {
+                //int codVendedor = x.codVendedor;
+                //int codCliente = x.codCliente;
+                //int codObra = x.codObra;
+
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var usuario = this.BindUsuario().Nombre;
-                var cotizacion = this.Bind<CotizacionModel>();
-                result = _DACotizaciones.GuardarCotizacion(cotizacion, codUsuario);
+                var cotizaciones = this.Bind<CotizacionModel>();
+                result = _DACotizaciones.GuardarCotizacion(cotizaciones, codUsuario);
             }
             catch (Exception ex)
             {
