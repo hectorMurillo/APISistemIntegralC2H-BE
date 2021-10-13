@@ -2,6 +2,7 @@
 using Models.AgenteVentas;
 using Models.Clientes;
 using Models.Dosificador;
+using Models.Pedidos;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -97,6 +98,27 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<Pedido>> ObtenerPedidos(int codAgente)
+        {
+            Result<List<Pedido>> result = new Result<List<Pedido>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Pedido>("ProcPedidosAgenteCon", parametros);
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<DatosNotaRemision>> ObtenerNotasRemisionAgente(int codAgente)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
