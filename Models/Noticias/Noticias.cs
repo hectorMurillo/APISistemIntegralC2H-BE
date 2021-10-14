@@ -21,9 +21,10 @@ namespace Models.Noticias
         }
         public int CodUsuario { get; set; }
         public Boolean Activado { get; set; }
+        public int Rank { get; set; }
         public string Imagen { get
 
-  
+        
             {
                 try
                 {

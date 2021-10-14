@@ -10,12 +10,16 @@ using System.Web;
 using WarmPack.Classes;
 using Models.Noticias;
 using Model = Models.Noticias;
-
+using System.Drawing;
+using System.Text;
+using System.Drawing.Imaging;
 namespace C2HApiControlInterno.Modules
 {
     public class NoticiasModule : NancyModule
     {
         private readonly DANoticias _DANoticias = null;
+
+        public object WebPFormat { get; private set; }
 
         public NoticiasModule() : base("/noticias")
         {
@@ -25,7 +29,7 @@ namespace C2HApiControlInterno.Modules
             Post("/desactivar", _ => DesactivarNoticia());
             Post("/registrarNoticia", _ => registrarNoticia());
         }
-
+       
         private object NoticiaImagen(dynamic x)
         {
 
@@ -97,6 +101,7 @@ namespace C2HApiControlInterno.Modules
                     vieneImagen = true;
                 }
 
+                
                 result = _DANoticias.RegistrarNoticia(idNoticias, titulo, descripcion, buffer, codUsuario, vieneImagen);
 
                 return Response.AsJson(result);
