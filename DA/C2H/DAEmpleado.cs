@@ -190,17 +190,19 @@ namespace DA.C2H
                 parametros.Add("@pNombre", ConexionDbType.VarChar, empleado.nombre);
                 parametros.Add("@pApellidoP", ConexionDbType.VarChar, empleado.apellidoP);
                 parametros.Add("@pApellidoM", ConexionDbType.VarChar, empleado.apellidoM);
+                parametros.Add("@pCurp", ConexionDbType.VarChar, empleado.curp);
                 parametros.Add("@pRFC", ConexionDbType.VarChar, empleado.rFC);
                 parametros.Add("@pCodTipoEmpleado", ConexionDbType.Int, empleado.codigoTipoEmpleado);
-                parametros.Add("@pEstatus", ConexionDbType.Bit, empleado.estatus);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, empleado.estatus);
                 parametros.Add("@pTelefono", ConexionDbType.VarChar, empleado.telefono);
                 parametros.Add("@pCelular", ConexionDbType.VarChar, empleado.celular);
-                    parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
+                parametros.Add("@pCorreo", ConexionDbType.VarChar, empleado.correo);
                 parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, empleado.fechaRegistro);
                 parametros.Add("@pCP", ConexionDbType.VarChar, empleado.direccion.CP);
                 parametros.Add("@pCodColonia", ConexionDbType.Int, empleado.direccion.CodColonia);
                 parametros.Add("@pCodMunicipio", ConexionDbType.Int, empleado.direccion.CodMunicipio);
                 parametros.Add("@pCodEstado", ConexionDbType.Int, empleado.direccion.CodEstado);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, empleado.motivo);
                 parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.CalleNumero);
                 parametros.Add("@pComisionesXML", ConexionDbType.Xml,empleado.comisiones.ToXml("Comisiones"));
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
@@ -289,10 +291,11 @@ namespace DA.C2H
                         emp.rFC = dr[4].ToString();
                         emp.codigoTipoEmpleado = int.Parse(dr[5].ToString());
                         emp.tipo = dr[6].ToString();
-                        emp.estatus = bool.Parse(dr[7].ToString());
+                        emp.estatus = dr[7].ToString();
                         emp.correo = dr[8].ToString();
                         emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
+                        emp.motivo = dr[11].ToString();
                     }
 
                     if (ds.Tables.Count > 1){

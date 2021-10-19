@@ -13,12 +13,14 @@ namespace Models.Empleados
         //CultureInfo ci = new CultureInfo("es-MX");
         public string apellidoP { get; set; }
         public string apellidoM { get; set; }
+        public string curp { get; set; }
         public string celular { get; set; }
         //public int codigoTipo { get; set; }
         public int codigoTipoEmpleado { get; set; }
         public string correo { get; set; }
         public DireccionXEmpleado direccion { get; set; }
-        public bool estatus { get; set; }
+        public string estatus { get; set; }
+        public string motivo { get; set; }
         public string nombre { get; set; }
         public string nombreCompleto
         {
