@@ -3,6 +3,7 @@ using Models.Dosificador;
 using Models.Equipos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -356,11 +357,25 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
+                DataTable ds = new DataTable();
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, idNotaRemision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotaRemisionDatosCon", parametros);
+
+                //foreach (DataRow renglon in table.Rows)
+                //{
+                //    cot = new PaletTarimaModel();
+                //    cot.Palet = renglon["Palet"].ToString();
+                //    cot.Ubicacion = renglon["Ubicacion"].ToString();
+                //    cot.CodigoArticulo = Convert.ToInt32(renglon[2].ToString());
+                //    cot.Articulo = renglon["Artículo         "].ToString();
+                //    cot.Lote = renglon["Lote"].ToString();
+                //    cot.Contenido = Convert.ToInt32(renglon["con."].ToString());
+
+                //    retorno.Add(cot);
+                //}
             }
             catch (Exception ex)
             {
