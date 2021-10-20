@@ -60,8 +60,8 @@ namespace DA.C2H
                 //parametros.Add("@pCantidad", ConexionDbType.Decimal, cotizacion.Cantidad);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 //parametros.Add("@pCodProducto", ConexionDbType.Int, cotizacion.codProducto);
-                //parametros.Add("@pTieneDescuento", ConexionDbType.Bit, cotizacion.TieneDescuento);
-                //parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, cotizacion.PorcentajeDescuento);
+                parametros.Add("@pTieneDescuento", ConexionDbType.Bit, cotizacion.TieneDescuento);
+                parametros.Add("@pPorcentajeDescuento", ConexionDbType.Decimal, cotizacion.PorcentajeDescuento);
                 //parametros.Add("@pTieneImper", ConexionDbType.Bit, cotizacion.TieneImper);
                 //parametros.Add("@pTieneFibra", ConexionDbType.Bit, cotizacion.TieneFibra);
                 //parametros.Add("@pBombeado", ConexionDbType.Bit, cotizacion.Bombeado);
