@@ -179,13 +179,15 @@ namespace DA.C2H
             }
             return result;
         }
-        public Result GuardarEmpleado(Empleado empleado)
+        public Result GuardarEmpleado(Empleado empleado, int idUsuario)
         {
             Result result = new Result();
             try
             {
+
                 var parametros = new ConexionParameters();
                 empleado.fechaRegistro = DateTime.Now;
+                parametros.Add("@pIdUsuario", ConexionDbType.Int, idUsuario);
                 parametros.Add("@pCodigo", ConexionDbType.VarChar, empleado.codigo);
                 parametros.Add("@pNombre", ConexionDbType.VarChar, empleado.nombre);
                 parametros.Add("@pApellidoP", ConexionDbType.VarChar, empleado.apellidoP);
@@ -296,6 +298,8 @@ namespace DA.C2H
                         emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
                         emp.motivo = dr[11].ToString();
+                        emp.curp = dr[15].ToString();
+                        emp.motivo = dr[16].ToString();
                     }
 
                     if (ds.Tables.Count > 1){

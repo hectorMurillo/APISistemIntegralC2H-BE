@@ -15,7 +15,7 @@ namespace Models.Vendedores
         public string nombreCompleto { get; set; }
         public string rFC { get; set; }
         public int codigoTipoEmpleado { get; set; }
-        public bool estatus { get; set; }
+        public string estatus { get; set; }
         public string correo { get; set; }
         public string telefono { get; set; }
         public string celular { get; set; }
