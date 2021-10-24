@@ -30,7 +30,7 @@ namespace Models.Operadores
 
 
         public int codigoTipoEmpleado { get; set; }
-        public bool estatus { get; set; }
+        public string estatus { get; set; }
         
         //public string telefono { get; set; }
 

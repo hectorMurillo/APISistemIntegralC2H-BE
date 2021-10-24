@@ -14,7 +14,7 @@ namespace Models.Dosificador
         public int CodEquipoAsignado { get; set; }
         public string Equipo { get; set; }
         public int CodigoTipoEmpleado { get; set; }
-		public bool Estatus { get; set; }
+		public string Estatus { get; set; }
 		public string Correo { get; set; }
 		public string Telefono { get; set; }
 		public string celular { get; set; }

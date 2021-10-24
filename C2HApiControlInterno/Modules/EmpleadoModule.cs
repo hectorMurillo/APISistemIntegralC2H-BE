@@ -95,8 +95,10 @@ namespace C2HApiControlInterno.Modules
         private object PostEmpleado()
         {
             Result result = new Result();
+            var p = this.BindUsuario();
+
             var empleado = this.Bind<Model.Empleado>();
-            result = _DAempleado.GuardarEmpleado(empleado);
+            result = _DAempleado.GuardarEmpleado(empleado, p.IdUsuario);
             return Response.AsJson(result);
         }
 
