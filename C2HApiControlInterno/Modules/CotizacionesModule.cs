@@ -1,11 +1,16 @@
-﻿using DA.C2H;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using DA.C2H;
+using Models;
 using Models.Cotizaciones;
 using Models.Pedidos;
+using Models.Reportes;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WarmPack.Classes;
@@ -23,10 +28,10 @@ namespace C2HApiControlInterno.Modules
             _DACotizaciones = new DACotizaciones();
             Get("/obtener-cotizaciones/{cotizacion}/{fechaDesde}/{fechaHasta}", x => ObtenerCotizaciones(x));
             Post("/guardar", x => GuardarCotizacion(x));
-
+            Get("/obtener-cotizacion/pdf/{folioCotizacion}", parametros => ImprimirCotizacion(parametros));
         }
 
-       
+
         private object ObtenerCotizaciones(dynamic x)
         {
             Result<List<Cotizacion>> result = new Result<List<Cotizacion>>();
@@ -52,10 +57,6 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
-                //int codVendedor = x.codVendedor;
-                //int codCliente = x.codCliente;
-                //int codObra = x.codObra;
-
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var usuario = this.BindUsuario().Nombre;
                 var cotizaciones = this.Bind<CotizacionModel>();
@@ -66,6 +67,72 @@ namespace C2HApiControlInterno.Modules
                 result.Message = ex.Message;
             }
             return Response.AsJson(result);
+        }
+
+        private object ImprimirCotizacion(dynamic parametros)
+        {
+            try
+            {
+                int folioCotizacion = parametros.folioCotizacion;
+
+                var productosCotizacion = new Result<List<RptCotizaciones>>();
+                productosCotizacion = _DACotizaciones.ObtenerDatosCotizacion(folioCotizacion);
+
+                if(productosCotizacion.Value)
+                {
+                    Result result = new Result();
+
+                    //var usuario = this.BindUsuario().Nombre;
+                    var cliente = productosCotizacion.Data[0].Cliente.ToUpper();
+                    var fechaCotizacion = productosCotizacion.Data[0].FechaCotizacion;
+
+                    var pathdirectorio = Globales.FolderPDF;
+
+                    if (!Directory.Exists(pathdirectorio))
+                    {
+                        DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
+                    }
+
+                    var path = HttpRuntime.AppDomainAppPath;
+                    string rutapdf = $"{ Globales.FolderPDF}\\prueba-cotizacion.pdf";
+                    string pdfbase64 = "";
+                    byte[] bytes;
+                    ReportDocument reporte = new ReportDocument();
+                    reporte.Load(path + "\\reportes\\RptCotizacion.rpt");
+                    reporte.SetDataSource(productosCotizacion.Data);
+                    reporte.SetParameterValue("@pCliente", cliente);
+                    reporte.SetParameterValue("@pFecha", fechaCotizacion);
+
+                    //reporte.setdatasource();
+                    reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+
+                    bytes = File.ReadAllBytes(rutapdf);
+                    pdfbase64 = Convert.ToBase64String(bytes);
+                    result.Data = pdfbase64;
+                    File.Delete(rutapdf);
+                    result.Value = true;
+
+                    return Response.AsJson(result);
+                } else
+                {
+                    return new Result()
+                    {
+                        Value = false,
+                        Message = "No se encontró la cotizacion",
+                        Data = null
+                    };
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                return new Result()
+                {
+                    Value = false,
+                    Message = ex.Message,
+                    Data = null
+                };
+            }
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using Models;
 using Models.Cotizaciones;
 using Models.Pedidos;
+using Models.Reportes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,8 +74,11 @@ namespace DA.C2H
 
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                parametros.Add("@pFolioNuevo", ConexionDbType.Int, System.Data.ParameterDirection.Output);
 
                 result = _conexion.Execute("ProcCotizacionesGuardar", parametros);
+
+                result.Data = parametros.Value("@pFolioNuevo").ToInt32();
             }
             catch (Exception ex)
             {
@@ -83,18 +87,17 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<DescuentoXClienteModel>> ObtenerUltimoDescuento(int codAgente, int codCliente)
+        public Result<List<RptCotizaciones>> ObtenerDatosCotizacion(int folioCotizacion)
         {
-            Result<List<DescuentoXClienteModel>> result = new Result<List<DescuentoXClienteModel>>();
+            Result<List<RptCotizaciones>> result = new Result<List<RptCotizaciones>>();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
-                parametros.Add("@pCodCliente", ConexionDbType.Int, codCliente);
+                parametros.Add("@pFolioCotizacion", ConexionDbType.Int, folioCotizacion);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<DescuentoXClienteModel>("ProcCatDescuentoPedidoXClienteCon", parametros);
+                result = _conexion.ExecuteWithResults<RptCotizaciones>("ProcCotizacionesObtenerProductosCon", parametros);
             }
             catch (Exception ex)
             {
