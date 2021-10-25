@@ -66,7 +66,7 @@ namespace C2HApiControlInterno.Modules
             byte[] buffer;
             string regresa;
             datos = _DACobranza.ObtenerNotasRemision(folioNota);
-            string archivoFinal = "";
+           
             result.Message = datos.Message;
             result.Value = datos.Value;
 
@@ -87,7 +87,7 @@ namespace C2HApiControlInterno.Modules
 
                     var path = HttpRuntime.AppDomainAppPath;
                     //string rutaPdf = Globales.FolderPDF + "\\notaRemision_{0i}.pdf";
-                    string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.xml", i + 1);
+                    string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
 
 
                     //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
@@ -118,65 +118,63 @@ namespace C2HApiControlInterno.Modules
 
                     //bytes = File.ReadAllBytes(rutaPdf);
 
-                    using (ZipFile zip = new ZipFile())
-                    {
-
+                    }
+                using (ZipFile zip = new ZipFile())
+                {
+                    for (int i = 0; i < datos.Data.Count; i++)
+                     {
+                   
+                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
                         if (System.IO.File.Exists(rutaPdf))
                         {
                             zip.AddFile(rutaPdf, "");
                         }
 
-                        //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\asdasd.pdf");
-
-                        //if (System.IO.File.Exists(rutaPdf))
-                        //{
-                        //    zip.AddFile(rutaPdf, "");
-                        //}
-
-                        File.Delete(rutaPdf);
-
-
-                        archivoFinal = Globales.CarpetaZIPtemporal();
-
-                        if (!System.IO.Directory.Exists(Globales.FolderPDF + @"\ZIP"))
-                        {
-                            System.IO.Directory.CreateDirectory(Globales.FolderPDF + @"\ZIP");
-                        }
-
-                        zip.Save(archivoFinal);
-
-                      
-
-                        //Borrar datos generados ...
-
-
-                        //if (System.IO.File.Exists(archivoFinal))
-                        //{
-                        //    System.IO.File.Delete(archivoFinal);
-                        //}
-
-                        //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\Fasd.pdf");
-                        //File.Delete(rutaPdf);
-
                     }
 
+                    string archivoFinal = Globales.CarpetaZIPtemporal();
+
+                    if (!System.IO.Directory.Exists(Globales.FolderPDF + @"\ZIP"))
+                    {
+                        System.IO.Directory.CreateDirectory(Globales.FolderPDF + @"\ZIP");
+                    }
+
+                    zip.Save(archivoFinal);
                     buffer = System.IO.File.ReadAllBytes(archivoFinal);
 
                     regresa = Convert.ToBase64String(buffer);
 
+                    if (System.IO.File.Exists(archivoFinal))
+                    {
+                        System.IO.File.Delete(archivoFinal);
+                    }
+
+                    for (int i = 0; i < datos.Data.Count; i++)
+                    {
+
+                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
+                        if (System.IO.File.Exists(rutaPdf))
+                        {
+                            File.Delete(rutaPdf);
+                        }
+
+                    }
+
                     result.Data = regresa;
                     result.Value = true;
-
                 }
+               
 
+             
 
                
+
                 //pdfBase64 = Convert.ToBase64String(bytes);
                 //result.Data = pdfBase64;
                 //result.Value = datos.Value;
                 //File.Delete(rutaPdf);
 
-              
+
 
             }
             return result;
