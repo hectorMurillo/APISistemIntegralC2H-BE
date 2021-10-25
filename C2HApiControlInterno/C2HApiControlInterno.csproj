@@ -61,6 +61,9 @@
     <Reference Include="Imazen.WebP, Version=0.1.0.24387, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Imazen.WebP.3.4.0\lib\Imazen.WebP.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>DLL\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.9.0\lib\net45\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>

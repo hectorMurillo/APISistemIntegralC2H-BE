@@ -152,5 +152,11 @@ namespace Models
 
             return response;
         }
+
+        public static string CarpetaZIPtemporal()
+        {
+            string zip = FolderPDF + @"\ZIP\" + Guid.NewGuid() + ".zip";
+            return zip;
+        }
     }
 }

@@ -13,6 +13,7 @@ using Nancy.Security;
 using WarmPack.Classes;
 using Models;
 using Models.Cobranza;
+using Ionic.Zip;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -56,12 +57,19 @@ namespace C2HApiControlInterno.Modules
         {
             int folioNota = parametros.folio;
             var usuario = this.BindUsuario().Usuario;
+            //string regresa = string.Empty;
 
             Result result = new Result();
 
             var nota = new DatosNotaRemision();
             var datos = new Result<List<DatosNotaRemision>>();
+            byte[] buffer;
+            string regresa;
             datos = _DACobranza.ObtenerNotasRemision(folioNota);
+
+            result.Message = datos.Message;
+            result.Value = datos.Value;
+
             if (datos.Value)
             {
                 nota = datos.Data[0];
@@ -78,7 +86,7 @@ namespace C2HApiControlInterno.Modules
                 var path = HttpRuntime.AppDomainAppPath;
                 string rutaPdf = Globales.FolderPDF + "\\prueba.pdf";
                 //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
-                string pdfBase64 = "";
+                //string pdfBase64 = "";
                 Byte[] bytes;
 
                 ReportDocument reporte = new ReportDocument();
@@ -104,12 +112,61 @@ namespace C2HApiControlInterno.Modules
                 reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 
                 bytes = File.ReadAllBytes(rutaPdf);
-                pdfBase64 = Convert.ToBase64String(bytes);
-                result.Data = pdfBase64;
-                result.Value = datos.Value;
-                File.Delete(rutaPdf);
-            }
+                //pdfBase64 = Convert.ToBase64String(bytes);
+                //result.Data = pdfBase64;
+                //result.Value = datos.Value;
+                //File.Delete(rutaPdf);
 
+                using (ZipFile zip = new ZipFile())
+                {
+
+
+
+                    if (System.IO.File.Exists(rutaPdf))
+                    {
+                        zip.AddFile(rutaPdf, "");
+                    }
+
+                    rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\asdasd.pdf");
+
+                    if (System.IO.File.Exists(rutaPdf))
+                    {
+                        zip.AddFile(rutaPdf, "");
+                    }
+
+                    //File.Delete(filePath);
+
+
+                    string archivoFinal = Globales.CarpetaZIPtemporal();
+
+                    if (!System.IO.Directory.Exists(Globales.FolderPDF + @"\ZIP"))
+                    {
+                        System.IO.Directory.CreateDirectory(Globales.FolderPDF + @"\ZIP");
+                    }
+
+                    zip.Save(archivoFinal);
+
+                    buffer = System.IO.File.ReadAllBytes(archivoFinal);
+
+                    regresa = Convert.ToBase64String(buffer);
+
+                    result.Data = regresa;
+                    result.Value = true;
+
+                    //Borrar datos generados ...
+
+
+                    //if (System.IO.File.Exists(archivoFinal))
+                    //{
+                    //    System.IO.File.Delete(archivoFinal);
+                    //}
+
+                    //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\Fasd.pdf");
+                    //File.Delete(rutaPdf);
+                    
+                }
+
+            }
             return result;
         }
 
