@@ -179,6 +179,7 @@
     <Compile Include="Proveedores\CuentasXProveedorModel.cs" />
     <Compile Include="Proveedores\ProveedorModel.cs" />
     <Compile Include="RefreshTokenRepository.cs" />
+    <Compile Include="Reportes\RptCotizaciones.cs" />
     <Compile Include="Reportes\RptEntradasSalidas.cs" />
     <Compile Include="Reportes\RptEquipos.cs" />
     <Compile Include="Reportes\RptPedidosCancelados.cs" />

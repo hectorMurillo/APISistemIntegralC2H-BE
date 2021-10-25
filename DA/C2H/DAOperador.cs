@@ -89,7 +89,7 @@ namespace DA.C2H
                 parametros.Add("@pCodigoTipoEmpleado", ConexionDbType.Int, operador.codigoTipoEmpleado);
                 parametros.Add("@pCorreo", ConexionDbType.VarChar, operador.correo);
                 parametros.Add("@pCelular", ConexionDbType.VarChar, operador.celular);
-                parametros.Add("@pEstatus", ConexionDbType.Bit, operador.estatus);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, operador.estatus);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);

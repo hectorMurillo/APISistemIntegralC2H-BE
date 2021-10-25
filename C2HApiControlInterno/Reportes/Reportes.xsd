@@ -140,6 +140,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+  <!--Reporte Cotizacion-->
+  <xs:element name="RptCotizaciones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Nomenclatura" type="xs:string"/>
+        <xs:element name="Descripcion" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Precio" type="xs:decimal"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name ="FechaCotizacion" type ="xs:dateTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
  
 </xs:schema>
 

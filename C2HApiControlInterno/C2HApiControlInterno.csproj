@@ -206,6 +206,7 @@
     <Content Include="Reportes\RptForaneos.rpt" />
     <Content Include="Reportes\RptNocturnos.rpt" />
     <Content Include="Reportes\RptComisiones.rpt" />
+    <Content Include="Reportes\RptCotizacion.rpt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
