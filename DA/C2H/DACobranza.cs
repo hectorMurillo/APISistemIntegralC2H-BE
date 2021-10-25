@@ -67,7 +67,7 @@ namespace DA.C2H
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pFolioPedido", ConexionDbType.Int, 49);
+                parametros.Add("@pFolioPedido", ConexionDbType.Int, folioNota);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

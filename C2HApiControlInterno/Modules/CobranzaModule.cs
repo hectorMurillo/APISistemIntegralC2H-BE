@@ -83,20 +83,23 @@ namespace C2HApiControlInterno.Modules
 
                 ReportDocument reporte = new ReportDocument();
                 reporte.Load(path + "\\Reportes\\rptNota.rpt");
-                reporte.SetParameterValue("@Folio", nota.Folio);
-                reporte.SetParameterValue("@FolioGinco", nota.FolioGinco);
-                reporte.SetParameterValue("@Cliente", nota.Cliente);
-                reporte.SetParameterValue("@Obra", nota.Obra);
-                reporte.SetParameterValue("@Producto", nota.Producto);
-                reporte.SetParameterValue("@Cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@Operador", nota.Operador);
-                reporte.SetParameterValue("@Equipo", nota.Equipo);
-                reporte.SetParameterValue("@Vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@Usuario", usuario);
-                reporte.SetParameterValue("@Bombeable", nota.Bombeable);
-                reporte.SetParameterValue("@Imper", nota.Imper);
-                reporte.SetParameterValue("@Fibra", nota.Fibra);
-                reporte.SetParameterValue("@BombaEquipo", nota.BombaEquipo);
+                reporte.SetParameterValue("@folio", nota.Folio);
+                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                reporte.SetParameterValue("@cliente", nota.Cliente);
+                reporte.SetParameterValue("@obra", nota.Obra);
+                reporte.SetParameterValue("@producto", nota.Producto);
+                reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                reporte.SetParameterValue("@operador", nota.Operador);
+                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                reporte.SetParameterValue("@equipo", nota.Equipo);
+                reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                reporte.SetParameterValue("@usuario", usuario);
+                reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                reporte.SetParameterValue("@imper", nota.Imper);
+                reporte.SetParameterValue("@fibra", nota.Fibra);
+                reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+                reporte.SetParameterValue("@cancelado", 0);
+                reporte.SetParameterValue("@fecha", nota.Fecha);
 
                 reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
 
