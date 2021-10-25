@@ -66,85 +66,99 @@ namespace C2HApiControlInterno.Modules
             byte[] buffer;
             string regresa;
             datos = _DACobranza.ObtenerNotasRemision(folioNota);
-
+            string archivoFinal = "";
             result.Message = datos.Message;
             result.Value = datos.Value;
 
             if (datos.Value)
             {
-                nota = datos.Data[0];
-
-                //var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
-                Globales.ObtenerInformacionGlobal();
-                var pathDirectorio = Globales.FolderPDF;
-                //var pathDirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
-                if (!Directory.Exists(pathDirectorio))
+                for (int i = 0; i < datos.Data.Count; i++)
                 {
-                    DirectoryInfo di = Directory.CreateDirectory(pathDirectorio);
-                }
+                    nota = datos.Data[i];
 
-                var path = HttpRuntime.AppDomainAppPath;
-                string rutaPdf = Globales.FolderPDF + "\\prueba.pdf";
-                //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
-                //string pdfBase64 = "";
-                Byte[] bytes;
-
-                ReportDocument reporte = new ReportDocument();
-                reporte.Load(path + "\\Reportes\\rptNota.rpt");
-                reporte.SetParameterValue("@folio", nota.Folio);
-                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-                reporte.SetParameterValue("@cliente", nota.Cliente);
-                reporte.SetParameterValue("@obra", nota.Obra);
-                reporte.SetParameterValue("@producto", nota.Producto);
-                reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@operador", nota.Operador);
-                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                reporte.SetParameterValue("@equipo", nota.Equipo);
-                reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@usuario", usuario);
-                reporte.SetParameterValue("@bombeable", nota.Bombeable);
-                reporte.SetParameterValue("@imper", nota.Imper);
-                reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
-                reporte.SetParameterValue("@cancelado", 0);
-                reporte.SetParameterValue("@fecha", nota.Fecha);
-
-                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
-
-                bytes = File.ReadAllBytes(rutaPdf);
-                //pdfBase64 = Convert.ToBase64String(bytes);
-                //result.Data = pdfBase64;
-                //result.Value = datos.Value;
-                //File.Delete(rutaPdf);
-
-                using (ZipFile zip = new ZipFile())
-                {
-
-
-
-                    if (System.IO.File.Exists(rutaPdf))
+                    //var pathDirectorio = "C:\\PRUEBAPRUEBA\\";
+                    Globales.ObtenerInformacionGlobal();
+                    var pathDirectorio = Globales.FolderPDF;
+                    //var pathDirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+                    if (!Directory.Exists(pathDirectorio))
                     {
-                        zip.AddFile(rutaPdf, "");
+                        DirectoryInfo di = Directory.CreateDirectory(pathDirectorio);
                     }
 
-                    rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\asdasd.pdf");
+                    var path = HttpRuntime.AppDomainAppPath;
+                    //string rutaPdf = Globales.FolderPDF + "\\notaRemision_{0i}.pdf";
+                    string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.xml", i + 1);
 
-                    if (System.IO.File.Exists(rutaPdf))
+
+                    //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
+                    //string pdfBase64 = "";
+                    Byte[] bytes;
+
+                    ReportDocument reporte = new ReportDocument();
+                    reporte.Load(path + "\\Reportes\\rptNota.rpt");
+                    reporte.SetParameterValue("@folio", nota.Folio);
+                    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                    reporte.SetParameterValue("@cliente", nota.Cliente);
+                    reporte.SetParameterValue("@obra", nota.Obra);
+                    reporte.SetParameterValue("@producto", nota.Producto);
+                    reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                    reporte.SetParameterValue("@operador", nota.Operador);
+                    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                    reporte.SetParameterValue("@equipo", nota.Equipo);
+                    reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                    reporte.SetParameterValue("@usuario", usuario);
+                    reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                    reporte.SetParameterValue("@imper", nota.Imper);
+                    reporte.SetParameterValue("@fibra", nota.Fibra);
+                    reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+                    reporte.SetParameterValue("@cancelado", 0);
+                    reporte.SetParameterValue("@fecha", nota.Fecha);
+
+                    reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutaPdf);
+
+                    //bytes = File.ReadAllBytes(rutaPdf);
+
+                    using (ZipFile zip = new ZipFile())
                     {
-                        zip.AddFile(rutaPdf, "");
+
+                        if (System.IO.File.Exists(rutaPdf))
+                        {
+                            zip.AddFile(rutaPdf, "");
+                        }
+
+                        //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\asdasd.pdf");
+
+                        //if (System.IO.File.Exists(rutaPdf))
+                        //{
+                        //    zip.AddFile(rutaPdf, "");
+                        //}
+
+                        File.Delete(rutaPdf);
+
+
+                        archivoFinal = Globales.CarpetaZIPtemporal();
+
+                        if (!System.IO.Directory.Exists(Globales.FolderPDF + @"\ZIP"))
+                        {
+                            System.IO.Directory.CreateDirectory(Globales.FolderPDF + @"\ZIP");
+                        }
+
+                        zip.Save(archivoFinal);
+
+                      
+
+                        //Borrar datos generados ...
+
+
+                        //if (System.IO.File.Exists(archivoFinal))
+                        //{
+                        //    System.IO.File.Delete(archivoFinal);
+                        //}
+
+                        //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\Fasd.pdf");
+                        //File.Delete(rutaPdf);
+
                     }
-
-                    //File.Delete(filePath);
-
-
-                    string archivoFinal = Globales.CarpetaZIPtemporal();
-
-                    if (!System.IO.Directory.Exists(Globales.FolderPDF + @"\ZIP"))
-                    {
-                        System.IO.Directory.CreateDirectory(Globales.FolderPDF + @"\ZIP");
-                    }
-
-                    zip.Save(archivoFinal);
 
                     buffer = System.IO.File.ReadAllBytes(archivoFinal);
 
@@ -153,18 +167,16 @@ namespace C2HApiControlInterno.Modules
                     result.Data = regresa;
                     result.Value = true;
 
-                    //Borrar datos generados ...
-
-
-                    //if (System.IO.File.Exists(archivoFinal))
-                    //{
-                    //    System.IO.File.Delete(archivoFinal);
-                    //}
-
-                    //rutaPdf = Globales.FolderPDF + string.Format(@"\PDF\Fasd.pdf");
-                    //File.Delete(rutaPdf);
-                    
                 }
+
+
+               
+                //pdfBase64 = Convert.ToBase64String(bytes);
+                //result.Data = pdfBase64;
+                //result.Value = datos.Value;
+                //File.Delete(rutaPdf);
+
+              
 
             }
             return result;
