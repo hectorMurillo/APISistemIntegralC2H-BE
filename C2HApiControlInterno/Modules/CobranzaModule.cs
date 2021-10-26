@@ -86,8 +86,7 @@ namespace C2HApiControlInterno.Modules
                     }
 
                     var path = HttpRuntime.AppDomainAppPath;
-                    //string rutaPdf = Globales.FolderPDF + "\\notaRemision_{0i}.pdf";
-                    string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
+                    string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", nota.Folio);
 
 
                     //string rutaPdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
@@ -118,13 +117,13 @@ namespace C2HApiControlInterno.Modules
 
                     //bytes = File.ReadAllBytes(rutaPdf);
 
-                    }
+                }
                 using (ZipFile zip = new ZipFile())
                 {
                     for (int i = 0; i < datos.Data.Count; i++)
                      {
                    
-                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
+                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", datos.Data[i].Folio);
                         if (System.IO.File.Exists(rutaPdf))
                         {
                             zip.AddFile(rutaPdf, "");
@@ -152,7 +151,7 @@ namespace C2HApiControlInterno.Modules
                     for (int i = 0; i < datos.Data.Count; i++)
                     {
 
-                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", i + 1);
+                        string rutaPdf = Globales.FolderPDF + string.Format(@"\NotaRemision_{000}.pdf", datos.Data[i].Folio);
                         if (System.IO.File.Exists(rutaPdf))
                         {
                             File.Delete(rutaPdf);
@@ -163,19 +162,6 @@ namespace C2HApiControlInterno.Modules
                     result.Data = regresa;
                     result.Value = true;
                 }
-               
-
-             
-
-               
-
-                //pdfBase64 = Convert.ToBase64String(bytes);
-                //result.Data = pdfBase64;
-                //result.Value = datos.Value;
-                //File.Delete(rutaPdf);
-
-
-
             }
             return result;
         }
