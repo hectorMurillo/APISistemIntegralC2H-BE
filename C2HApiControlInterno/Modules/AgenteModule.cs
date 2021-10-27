@@ -26,7 +26,7 @@ namespace C2HApiControlInterno.Modules
             Get("/pedidos", _ => PedidosAgente());
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
-            Get("/clientes", _ => ClientesPorAgente());
+            Get("/clientes/{codAgente}", parametro => ClientesPorAgente(parametro));
             Get("/productos-cliente/{codCliente}/{codProducto}", parametros => ProductosXCliente(parametros));
             Post("/guardar-precio-productoXCliente", _ => GuardarPrecioProductoXCliente());
         }
@@ -79,12 +79,13 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ClientesPorAgente()
+        private object ClientesPorAgente(dynamic parametros)
         {
             Result<List<ClientesModel>> result = new Result<List<ClientesModel>>();
             try
             {
-                int codAgente = this.BindUsuario().CodEmpleado;
+                //int codAgente = this.BindUsuario().CodEmpleado;
+                int codAgente = parametros.codAgente;
                 result = _DAAgentesVentas.ObtenerClientesPorAgente(codAgente);
             }
             catch (Exception ex)
