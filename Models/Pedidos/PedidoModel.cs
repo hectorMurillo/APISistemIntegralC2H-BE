@@ -27,6 +27,7 @@ namespace Models.Pedidos
         public bool TieneFibra { get; set; }
         public bool TieneImper { get; set; }
         public bool Bombeado { get; set; }
+        public bool Maquilado { get; set; }
         public Decimal PrecioOriginal { get; set; }
         public Decimal PrecioDescuento { get; set; }
 

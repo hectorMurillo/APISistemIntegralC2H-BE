@@ -259,6 +259,8 @@ namespace DA.C2H
                 parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
                 parametros.Add("@pReubicado", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Reubicado);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pOperadorExterno", ConexionDbType.VarChar, notaRemision.OperadorExterno);
+                parametros.Add("@pEquipoExterno", ConexionDbType.VarChar, notaRemision.EquipoExterno);
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);

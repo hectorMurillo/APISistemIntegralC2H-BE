@@ -22,6 +22,7 @@ namespace Models.Dosificador
         public string Vendedor { get; set; }
         public bool TieneFibra{ get; set; }
         public bool TieneImper { get; set; }
+        public bool Maquilado { get; set; }
 
     }
 }

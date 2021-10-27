@@ -33,8 +33,9 @@ namespace Models.Dosificador
         public int CodUsuario { get; set; }
         public Decimal CantidadRestantePedido { get; set; }
         public bool Foraneo { get; set; }
-
         public ParametrosEspecialesModel parametrosEspeciales { get; set; }
+        public string OperadorExterno { get; set; }
+        public string EquipoExterno { get; set; }
     }
 }
 

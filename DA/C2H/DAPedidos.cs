@@ -86,6 +86,7 @@ namespace DA.C2H
                 parametros.Add("@pTieneFibra", ConexionDbType.Bit, pedido.TieneFibra);
                 parametros.Add("@pCodPlanta", ConexionDbType.Int, pedido.CodPlanta);
                 parametros.Add("@pBombeado", ConexionDbType.Bit, pedido.Bombeado);
+                parametros.Add("@pMaquilado", ConexionDbType.Bit, pedido.Maquilado);
                 parametros.Add("@pPrecioOriginal", ConexionDbType.Decimal, pedido.PrecioOriginal);
                 parametros.Add("@pPrecioDescuento", ConexionDbType.Decimal, pedido.PrecioDescuento);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
