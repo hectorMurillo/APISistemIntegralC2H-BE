@@ -29,6 +29,8 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-cotizaciones/{cotizacion}/{fechaDesde}/{fechaHasta}", x => ObtenerCotizaciones(x));
             Post("/guardar", x => GuardarCotizacion(x));
             Get("/obtener-cotizacion/pdf/{folioCotizacion}", parametros => ImprimirCotizacion(parametros));
+            Get("/obtener-productos/{folioCotizacion}", parametros => ObtenerProductosCotizacion(parametros));
+
         }
 
 
@@ -135,5 +137,19 @@ namespace C2HApiControlInterno.Modules
             }
         }
 
+        private object ObtenerProductosCotizacion(dynamic x)
+        {
+            Result<List<RptCotizaciones>> result = new Result<List<RptCotizaciones>>();
+            try
+            {
+                int folioCotizacion = x.folioCotizacion;
+                result = _DACotizaciones.ObtenerDatosCotizacion(folioCotizacion);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
     }
 }
