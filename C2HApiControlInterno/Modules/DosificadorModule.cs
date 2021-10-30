@@ -191,11 +191,9 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             var usuario = this.BindUsuario().Nombre;
             var folio = parametros.folio;
-            var nota = new DatosNotaRemision();
-            var datos = new Result<List<DatosNotaRemision>>();
-            datos = _DADosificador.ObtenerDatosNota(folio);
+            var datos = _DADosificador.ObtenerDatosNota(folio);
 
-            nota = datos.Data[0];
+            var nota = datos.Data[0];
 
             var pathdirectorio = Globales.FolderPDF; 
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -228,6 +226,7 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@imper", nota.Imper);
             reporte.SetParameterValue("@fibra", nota.Fibra);  
             reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+            reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
             reporte.SetParameterValue("@cancelado", cancelado);
             reporte.SetParameterValue("@fecha", nota.Fecha);
 
