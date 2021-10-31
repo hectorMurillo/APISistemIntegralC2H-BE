@@ -15,5 +15,6 @@ namespace Models.Reportes
         public string Descripcion { get; set; }
         public string Cliente { get; set; }
         public DateTime FechaCotizacion { get; set; }
+        public decimal TotalCotizacion { get; set; }
     }
 }
