@@ -206,29 +206,57 @@ namespace C2HApiControlInterno.Modules
             //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
             //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
             string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
-            string pdfbase64 = "";
             byte[] bytes;
             bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
-            reporte.Load(path + "\\reportes\\rptnota.rpt");
-            reporte.SetParameterValue("@folio", nota.Folio);
-            reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-            reporte.SetParameterValue("@cliente", nota.Cliente);
-            reporte.SetParameterValue("@obra", nota.Obra);
-            reporte.SetParameterValue("@producto", nota.Producto);
-            reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            reporte.SetParameterValue("@operador", nota.Operador);
-            reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-            reporte.SetParameterValue("@equipo", nota.Equipo);
-            reporte.SetParameterValue("@vendedor", nota.Vendedor);
-            reporte.SetParameterValue("@usuario", usuario);
-            reporte.SetParameterValue("@bombeable", nota.Bombeable);
-            reporte.SetParameterValue("@imper", nota.Imper);
-            reporte.SetParameterValue("@fibra", nota.Fibra);  
-            reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
-            reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-            reporte.SetParameterValue("@cancelado", cancelado);
-            reporte.SetParameterValue("@fecha", nota.Fecha);
+
+            if (nota.Bombeable)
+            {
+                reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
+                reporte.SetParameterValue("@folio", nota.Folio);
+                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                reporte.SetParameterValue("@cliente", nota.Cliente);
+                reporte.SetParameterValue("@obra", nota.Obra);
+                reporte.SetParameterValue("@producto", nota.Producto);
+                reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                reporte.SetParameterValue("@operadorCr", nota.Operador);
+                reporte.SetParameterValue("@equipoCr", nota.Equipo);
+                reporte.SetParameterValue("@operadorBomba", nota.Operador);
+                reporte.SetParameterValue("@equipoBombeable", nota.Equipo);
+                reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                reporte.SetParameterValue("@usuario", usuario);
+                reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                reporte.SetParameterValue("@imper", nota.Imper);
+                reporte.SetParameterValue("@fibra", nota.Fibra);
+                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                reporte.SetParameterValue("@cancelado", cancelado);
+                reporte.SetParameterValue("@fecha", nota.Fecha);
+            }
+            else
+            {
+                reporte.Load(path + "\\reportes\\rptnota.rpt");
+                reporte.SetParameterValue("@folio", nota.Folio);
+                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                reporte.SetParameterValue("@cliente", nota.Cliente);
+                reporte.SetParameterValue("@obra", nota.Obra);
+                reporte.SetParameterValue("@producto", nota.Producto);
+                reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                reporte.SetParameterValue("@operador", nota.Operador);
+                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                reporte.SetParameterValue("@equipo", nota.Equipo);
+                reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                reporte.SetParameterValue("@usuario", usuario);
+                reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                reporte.SetParameterValue("@imper", nota.Imper);
+                reporte.SetParameterValue("@fibra", nota.Fibra);
+                reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
+                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                reporte.SetParameterValue("@cancelado", cancelado);
+                reporte.SetParameterValue("@fecha", nota.Fecha);
+            }
+
+           
 
 
             //reporte.setparametervalue("@sello", usuario);
@@ -237,14 +265,12 @@ namespace C2HApiControlInterno.Modules
             reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
 
             bytes = File.ReadAllBytes(rutapdf);
-            pdfbase64 = Convert.ToBase64String(bytes);
+            string pdfbase64 = Convert.ToBase64String(bytes);
             result.Data = pdfbase64;
             File.Delete(rutapdf);
             result.Value = true;
 
             return Response.AsJson(result); ;
-
-
         }
 
         private object AgregarNotaRemisionEspecial()
