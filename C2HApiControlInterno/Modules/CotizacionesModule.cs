@@ -87,6 +87,7 @@ namespace C2HApiControlInterno.Modules
                     //var usuario = this.BindUsuario().Nombre;
                     var cliente = productosCotizacion.Data[0].Cliente.ToUpper();
                     var fechaCotizacion = productosCotizacion.Data[0].FechaCotizacion;
+                    var totalCotizacion = productosCotizacion.Data[0].TotalCotizacion;
 
                     var pathdirectorio = Globales.FolderPDF;
 
@@ -104,6 +105,8 @@ namespace C2HApiControlInterno.Modules
                     reporte.SetDataSource(productosCotizacion.Data);
                     reporte.SetParameterValue("@pCliente", cliente);
                     reporte.SetParameterValue("@pFecha", fechaCotizacion);
+                    reporte.SetParameterValue("@pTotalCotizacion", totalCotizacion);
+
 
                     //reporte.setdatasource();
                     reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);

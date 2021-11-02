@@ -210,6 +210,9 @@
     <Content Include="Reportes\RptNocturnos.rpt" />
     <Content Include="Reportes\RptComisiones.rpt" />
     <Content Include="Reportes\RptCotizacion.rpt" />
+    <Content Include="Reportes\rptNotaBombeable.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
