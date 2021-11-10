@@ -195,9 +195,9 @@ namespace C2HApiControlInterno.Modules
             var datos = new Result<List<DatosNotaRemision>>();
             datos = _DADosificador.ObtenerDatosNota(folio);
 
-            nota = datos.Data[0];
+            nota = datos.Data[0];   
 
-            var pathdirectorio = Globales.FolderPDF; 
+            var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
             if (!Directory.Exists(pathdirectorio))
             {
@@ -211,7 +211,7 @@ namespace C2HApiControlInterno.Modules
             byte[] bytes;
             bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
-<<<<<<< HEAD
+       
             reporte.Load(path + "\\reportes\\rptnota.rpt");
             reporte.SetParameterValue("@folio", nota.Folio);
             reporte.SetParameterValue("@folioginco", nota.FolioGinco);
@@ -230,7 +230,7 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@bombaequipo", nota?.BombaEquipo);
             reporte.SetParameterValue("@cancelado", cancelado);
             reporte.SetParameterValue("@fecha", nota.Fecha);
-=======
+
 
             if (nota.Bombeable)
             {
@@ -279,7 +279,7 @@ namespace C2HApiControlInterno.Modules
             }
 
            
->>>>>>> f0ab45650d8650086ea78c8f15f2defe94f6e095
+
 
 
             //reporte.setparametervalue("@sello", usuario);

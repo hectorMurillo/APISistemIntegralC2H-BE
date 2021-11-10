@@ -21,6 +21,14 @@ namespace Models.Pedidos
         public string Usuario { get; set; }
         public string FechaSalida { get; set; }
         public string HoraSalida { get; set; }
+
+        public decimal CantidadTotal { get; set; }
+        public decimal CantidadSurtida { get; set; }
+
+        public string CantidadSurtidaFormato { 
+            get { return CantidadSurtida + " m3"; } 
+        }
+
         public string HoraSalidaYPlanta
         {
             get
