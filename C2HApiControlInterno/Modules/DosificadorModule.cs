@@ -227,7 +227,7 @@ namespace C2HApiControlInterno.Modules
             reporte.SetParameterValue("@bombeable", nota.Bombeable);
             reporte.SetParameterValue("@imper", nota.Imper);
             reporte.SetParameterValue("@fibra", nota.Fibra);  
-            reporte.SetParameterValue("@bombaequipo", nota?.BombaEquipo);
+            reporte.SetParameterValue("@bombaequipo", nota?.EquipoBomba);
             reporte.SetParameterValue("@cancelado", cancelado);
             reporte.SetParameterValue("@fecha", nota.Fecha);
 
