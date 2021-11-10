@@ -20,9 +20,11 @@ namespace Models.Dosificador
         public string Formula { get; set; }
         public string Producto { get; set; }
         public string Operador { get; set; }
+        public string OperadorBomba { get; set; }
         public string Equipo { get; set; }
+        public string EquipoBomba { get; set; }
+        public int CodEquipoBomba { get; set; }
         public string Vendedor { get; set; }
-        public string BombaEquipo { get; set; }
         public DateTime Fecha { get; set; }
         public string FechaConFormato { get; set; }
         public string CodOperador_1 { get; set; }
@@ -38,7 +40,6 @@ namespace Models.Dosificador
         public string FechaFormato { get; set; }
         public string NombreUsuario { get; set; }
         public string Nomenclatura { get; set; }
-        public List<OperadorModel> Operadores { get; set; }
         public string CelularVendedor { get; set; }
         public string TelefonoEmpresa { get; set; }
         public string CorreoCliente { get; set; }

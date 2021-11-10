@@ -244,8 +244,8 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
                 reporte.SetParameterValue("@operadorCr", nota.Operador);
                 reporte.SetParameterValue("@equipoCr", nota.Equipo);
-                reporte.SetParameterValue("@operadorBomba", nota.Operador);
-                reporte.SetParameterValue("@equipoBombeable", nota.Equipo);
+                reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
+                reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
                 reporte.SetParameterValue("@vendedor", nota.Vendedor);
                 reporte.SetParameterValue("@usuario", usuario);
                 reporte.SetParameterValue("@bombeable", nota.Bombeable);
@@ -269,10 +269,8 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@equipo", nota.Equipo);
                 reporte.SetParameterValue("@vendedor", nota.Vendedor);
                 reporte.SetParameterValue("@usuario", usuario);
-                reporte.SetParameterValue("@bombeable", nota.Bombeable);
                 reporte.SetParameterValue("@imper", nota.Imper);
                 reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@bombaequipo", nota.BombaEquipo);
                 reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
