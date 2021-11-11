@@ -42,7 +42,29 @@ namespace DA.C2H
             }
             return r;
         }
-        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal, int tipoEmpleado)
+
+        public Result<List<Empleado>> ObtenerEmpleadosPorTipoEmpleado(int codTipoEmpleado)
+        {
+            var r = new Result<List<Empleado>>();
+            try
+            {
+
+                var parametros = new ConexionParameters();
+                parametros.Add("@pTipoEmpleado", ConexionDbType.Int, codTipoEmpleado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                r = _conexion.ExecuteWithResults<Empleado>("ProcEmpleadosTipoEmpleadoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+            }
+            return r;
+        }
+
+        public Result<List<ReporteComisionesModel>> ObtenerDatosComisiones(DateTime fechaInicial, DateTime fechaFinal, int tipoEmpleado, int codEmpleado)
         {
             var r = new Result<List<ReporteComisionesModel>>();
             try
@@ -52,6 +74,7 @@ namespace DA.C2H
                 parametros.Add("@pFechaInicial", ConexionDbType.Date, fechaInicial);
                 parametros.Add("@pFechaFinal", ConexionDbType.Date, fechaFinal);
                 parametros.Add("@pTipoBusqueda", ConexionDbType.Int, tipoEmpleado);
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

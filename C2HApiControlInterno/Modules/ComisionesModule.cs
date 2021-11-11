@@ -25,6 +25,7 @@ namespace C2HApiControlInterno.Modules
             _DAComisiones = new DAComisiones();
             Get("/obtenerEmpleadosComisiones", _ => ObtenerEmpleadosConComisiones());
             Get("/tiposEmpleado", _ => ObtenerTiposDeEmpleados());
+            Get("/tipo-empleado/empleados/{codTipoEmpleado}", parametros => ObtenerEmpleadosPorTipos(parametros));
             Post("/rpt-comisiones", _ => ObtenerPdfNotaRemision());
             Post("/obtenerComisiones", _ => ObtenerComisiones());
             Post("/asignar-comisiones", _ => AsignarComisiones());
@@ -32,7 +33,6 @@ namespace C2HApiControlInterno.Modules
             Post("/guardar-comisiones", _ => GuardarComisionesEmpleado());
         }
 
-        
         private object ObtenerTiposDeEmpleados()
         {
             var r = new Result<List<TipoEmpleado>>();
@@ -49,6 +49,25 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(r);
         }
+
+        private object ObtenerEmpleadosPorTipos(dynamic parametros)
+        {
+            var r = new Result<List<Empleado>>();
+            try
+            {
+                int codTipo = parametros.codTipoEmpleado;
+                r = _DAComisiones.ObtenerEmpleadosPorTipoEmpleado(codTipo);
+            }
+            catch (Exception ex)
+            {
+                r.Value = false;
+                r.Message = ex.Message;
+                return Response.AsJson(r);
+            }
+            return Response.AsJson(r);
+        }
+
+
         private object AsignarComisiones()
         {
             var r = new Result();
@@ -89,8 +108,9 @@ namespace C2HApiControlInterno.Modules
             DateTime fechaIni = parametro.fechaInicial;
             DateTime fechaFin = parametro.fechaFinal;
             int tipoEmpleado = parametro.tipoEmpleado;
+            int codEmpleado = parametro.codEmpleado;
             //var reporteEntradasSalidas = this.Bind<List<ReporteComisionesModel>>();
-            var r = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin, tipoEmpleado);
+            var r = _DAComisiones.ObtenerDatosComisiones(fechaIni, fechaFin, tipoEmpleado, codEmpleado);
 
             var reporteEntradasSalidas = r.Data;
 
