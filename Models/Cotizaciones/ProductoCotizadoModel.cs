@@ -10,5 +10,8 @@ namespace Models.Cotizaciones
     {
         public float Cantidad { get; set; }
         public int CodProducto { get; set; }
+        public bool TieneDescuento { get; set; }
+        public decimal PorcentajeDescuento { get; set; }
+
     }
 }

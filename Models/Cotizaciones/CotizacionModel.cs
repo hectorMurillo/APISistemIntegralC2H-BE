@@ -22,8 +22,8 @@ namespace Models.Cotizaciones
 
 
         public List<ProductoCotizadoModel> productos { get; set; }
-        public bool TieneDescuento { get; set; }
-        public decimal PorcentajeDescuento { get; set; }
+        //public bool TieneDescuento { get; set; }
+        //public decimal PorcentajeDescuento { get; set; }
         //public string Observacion { get; set; }
         //public bool TieneFibra { get; set; }
         //public bool TieneImper { get; set; }

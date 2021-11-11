@@ -11,6 +11,7 @@ namespace Models.Reportes
         public int Codigo { get; set; }
         public decimal Cantidad { get; set; }
         public decimal Precio { get; set; }
+        public decimal PorcentajeCotizacion { get; set; }
         public string Nomenclatura { get; set; }
         public string Descripcion { get; set; }
         public string Cliente { get; set; }
