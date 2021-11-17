@@ -36,13 +36,16 @@ namespace C2HApiControlInterno.Modules
             Post("/contactos/guardar", _ => PostClienteContacto());
             Post("/cliente-forzar/guardar", _ => PostGuardarNuevoCliente());
 
+            Post("/direccionFactura/guardar", _ => PostDireccionFactura());
+            Get("/direccionFactura/{codigoCliente}", x => GetDireccionFactura(x));
+
             Get("/cliente-documento/{codigo}", x => EliminarDocumentoCte(x));
 
             Get("/clientes-agente/{codAgente}", x => ObtenerClientesAgente(x));
             Get("/clientes-detenidos", _ => GetClientesDetenidos());
             Get("/cobranza", _ => ObtenerClientesCobranza());
             Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusCliente(x));
-
+       
 
             //
             Get("/tipos-cliente", _ => ObtenerTiposCliente());
@@ -92,6 +95,30 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+     
+
+        private object GetDireccionFactura(dynamic x)
+        {
+            int codCliente = x.codigoCliente;
+
+            Result result = new Result();
+
+            try
+            {
+                //Mando llamar al DA que manda llamar al stored y el resultado lo guardo en result
+                var r = _DAClientes.consultarDireccionesFacturaCliente(codCliente);
+
+                result.Data = r.Data;
+                result.Message = r.Message;
+                result.Value = r.Value;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+
+        }
 
         private object GetDireccion(dynamic x)
         {
@@ -119,6 +146,21 @@ namespace C2HApiControlInterno.Modules
             {
                 var contacto = this.Bind<Model.ContactoXClienteModel>();
                 result = _DAClientes.ContactoGuardar(contacto);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+       
+        private object PostDireccionFactura()
+        {
+            Result result = new Result();
+            try
+            {
+                var facturaCliente = this.Bind<Model.FacturaCliente>();
+                result = _DAClientes.DireccionFacturaGuardar(facturaCliente);
             }
             catch (Exception ex)
             {

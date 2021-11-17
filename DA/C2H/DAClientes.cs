@@ -145,6 +145,35 @@ namespace DA.C2H
             return result;
         }
 
+        public Result consultarDireccionesFacturaCliente(int codCliente)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigoCliente", ConexionDbType.VarChar, codCliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+
+                _conexion.RecordsetsExecute("ProcCatDireccionFacturasClienteCon", parametros);
+
+                var cliente = _conexion.RecordsetsResults<Models.Clientes.FacturaCliente>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { cliente }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result UsuarioClienteGuardar(Model.UsuarioClienteModel usuarioCte)
         {
             Result result = new Result();
@@ -158,6 +187,33 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
                 result = _conexion.Execute("ProcAsignarUsuarioCliente", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result DireccionFacturaGuardar(Model.FacturaCliente facturaCliente)
+        {
+            Result result = new Result();
+            try
+            {
+                
+                var parametros = new ConexionParameters();
+                facturaCliente.FechaRegistro = DateTime.Now;
+                parametros.Add("@pIdCliente", ConexionDbType.Int, facturaCliente.CodCliente);
+                parametros.Add("@pTipo", ConexionDbType.VarChar, facturaCliente.Tipo);
+                parametros.Add("@pRazonSocial", ConexionDbType.VarChar, facturaCliente.RazonSocial);
+                parametros.Add("@pRFC", ConexionDbType.VarChar, facturaCliente.RFC);
+                parametros.Add("@pDireccion", ConexionDbType.VarChar, facturaCliente.Direccion);
+                parametros.Add("@pFechaRegistro", ConexionDbType.DateTime, facturaCliente.FechaRegistro);
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatDireccionFacturasClienteGuardar", parametros);
             }
             catch (Exception ex)
             {
@@ -264,7 +320,6 @@ namespace DA.C2H
             }
             return result;
         }
-
 
         public Result GuardarDocumento(int CodCliente, byte[] bytes, DocumentoModel documento)
         {
