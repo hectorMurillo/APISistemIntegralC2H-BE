@@ -279,6 +279,53 @@ namespace DA.C2H
             return result;
         }
 
+        public Result GuardarNotaRemisionAuxiliar(NotaRemisionAuxiliarModel notaRemision, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFolioCarga", ConexionDbType.Int, notaRemision.FolioCarga);
+                parametros.Add("@pFolioNotaRemision", ConexionDbType.Int, notaRemision.FolioNotaRemision);
+                parametros.Add("@pHoraSalida", ConexionDbType.VarChar, notaRemision.HoraSalida);
+                parametros.Add("@pCliente", ConexionDbType.VarChar, notaRemision.Cliente);
+                parametros.Add("@pObra", ConexionDbType.VarChar, notaRemision.Obra);
+                parametros.Add("@pCodFormula", ConexionDbType.Int, notaRemision.CodProducto);
+                parametros.Add("@pProducto", ConexionDbType.VarChar, notaRemision.Producto);
+                parametros.Add("@pCantidad", ConexionDbType.Decimal, notaRemision.Cantidad);
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, notaRemision.CodVendedor);
+                parametros.Add("@pOperadorCamionRevolvedor", ConexionDbType.VarChar, notaRemision.OperadorCamionRevolvedor);
+                parametros.Add("@pOperadorCamionBombeable", ConexionDbType.VarChar, notaRemision.OperadorCamionBombeable);
+                parametros.Add("@pEquipoCamionRevolvedor", ConexionDbType.VarChar, notaRemision.EquipoCamionRevolvedor);
+                parametros.Add("@pEquipoCamionBombeable", ConexionDbType.VarChar, notaRemision.EquipoCamionBombeable);
+                parametros.Add("@pEsBombeable", ConexionDbType.Bit, notaRemision.ChKBombeable);
+                parametros.Add("@pMaquilado", ConexionDbType.Bit, notaRemision.Maquilado);
+                parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
+                parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
+                parametros.Add("@pForaneo", ConexionDbType.Bit, notaRemision.Foraneo);
+                parametros.Add("@pIva", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Iva);
+                parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
+                parametros.Add("@pReubicado", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Reubicado);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pOperadorExterno", ConexionDbType.VarChar, notaRemision.OperadorExterno);
+                parametros.Add("@pEquipoExterno", ConexionDbType.VarChar, notaRemision.EquipoExterno);
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.Execute("ProcNotaRemisionGuardar_Provisional", parametros);
+
+                //result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result AgregarNotaRemisionEspecial(NotaRemisionEncModel notaRemision, int codUsuario)
         {
             Result result = new Result();
@@ -351,6 +398,28 @@ namespace DA.C2H
                 result.Message = ex.Message;
             }
             return result;
+        }
+
+
+        public Result<List<DatosNotaRemision>> ObtenerDatosNotaAuxiliar(int idNotaRemision)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                DataTable ds = new DataTable();
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, idNotaRemision);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotaRemisionAuxiliarDatosCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
         }
 
         public Result<List<DatosNotaRemision>> ObtenerDatosNota(int idNotaRemision)

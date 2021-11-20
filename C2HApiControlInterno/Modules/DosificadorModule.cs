@@ -43,8 +43,116 @@ namespace C2HApiControlInterno.Modules
             Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
             Post("formula/guardar", _ => GuardarFormulaProducto());
             Post("productos-formula/guardar", _ => GuardarProductoFormula());
+
+            //NOTA REMISION AUXILIAR
+            
+            Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
+            Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
         }
 
+        private object ObtenerPdfNotaRemisionAuxiliar(dynamic parametros)
+        {
+            Result result = new Result();
+            var usuario = this.BindUsuario().Nombre;
+            var folio = parametros.folio;
+            var datos = _DADosificador.ObtenerDatosNotaAuxiliar(folio);
+
+           var nota = datos.Data[0];
+
+            var pathdirectorio = Globales.FolderPDF;
+            //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+            if (!Directory.Exists(pathdirectorio))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(pathdirectorio);
+            }
+
+            var path = HttpRuntime.AppDomainAppPath;
+            //string rutapdf = "c:\\pruebaprueba\\prueba.pdf";
+            //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
+            string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
+            byte[] bytes;
+            bool cancelado = nota.Estatus == "C";
+            ReportDocument reporte = new ReportDocument();
+
+            if (nota.Bombeable)
+            {
+                reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
+                reporte.SetParameterValue("@folio", nota.Folio);
+                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                reporte.SetParameterValue("@cliente", nota.Cliente);
+                reporte.SetParameterValue("@obra", nota.Obra);
+                reporte.SetParameterValue("@producto", nota.Producto);
+                reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                reporte.SetParameterValue("@operadorCr", nota.Operador);
+                reporte.SetParameterValue("@equipoCr", nota.Equipo);
+                reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
+                reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
+                reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                reporte.SetParameterValue("@usuario", usuario);
+                reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                reporte.SetParameterValue("@imper", nota.Imper);
+                reporte.SetParameterValue("@fibra", nota.Fibra);
+                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                reporte.SetParameterValue("@cancelado", cancelado);
+                reporte.SetParameterValue("@fecha", nota.Fecha);
+            }
+            else
+            {
+                reporte.Load(path + "\\reportes\\rptnota.rpt");
+                reporte.SetParameterValue("@folio", nota.Folio);
+                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                reporte.SetParameterValue("@cliente", nota.Cliente);
+                reporte.SetParameterValue("@obra", nota.Obra);
+                reporte.SetParameterValue("@producto", nota.Producto);
+                reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                reporte.SetParameterValue("@operador", nota.Operador);
+                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                reporte.SetParameterValue("@equipo", nota.Equipo);
+                reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                reporte.SetParameterValue("@usuario", usuario);
+                reporte.SetParameterValue("@imper", nota.Imper);
+                reporte.SetParameterValue("@fibra", nota.Fibra);
+                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                reporte.SetParameterValue("@cancelado", cancelado);
+                reporte.SetParameterValue("@fecha", nota.Fecha);
+            }
+
+
+
+
+
+            //reporte.setparametervalue("@sello", usuario);
+
+            //reporte.setdatasource();
+            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+
+            bytes = File.ReadAllBytes(rutapdf);
+            string pdfbase64 = Convert.ToBase64String(bytes);
+            result.Data = pdfbase64;
+            File.Delete(rutapdf);
+            result.Value = true;
+
+            return Response.AsJson(result); ;
+        }
+
+        private object GuardarNotaRemisionAuxiliar()
+        {
+
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var notaRemision = this.Bind<NotaRemisionAuxiliarModel>();
+                result = _DADosificador.GuardarNotaRemisionAuxiliar(notaRemision, codUsuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GuardarProductoFormula()
         {
