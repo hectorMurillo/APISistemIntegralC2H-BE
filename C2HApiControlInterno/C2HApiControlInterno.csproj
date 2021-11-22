@@ -197,6 +197,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\hector.pubxml" />
     <None Include="Properties\PublishProfiles\Publicados.pubxml" />
     <None Include="Reportes\Reportes.xsd">
       <SubType>Designer</SubType>
