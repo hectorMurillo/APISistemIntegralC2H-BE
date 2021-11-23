@@ -48,5 +48,6 @@ namespace Models.Dosificador
         public string Observacion { get; set; }
         public decimal UltimoHorometraje { get; set; }
         public decimal UltimoKilometraje { get; set; }
+        public string HoraSalidaPlanta { get; set; }
     }
 }
