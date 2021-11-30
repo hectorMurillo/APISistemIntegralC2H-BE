@@ -38,6 +38,8 @@ namespace C2HApiControlInterno.Modules
             Get("/notasRemision-especial/{codigo}/{folioGinco}", parametros => ObtenerNotasRemisionEspecial(parametros));
             Get("/notaRemision/pdf/{folio}", parametros => ObtenerPdfNotaRemision(parametros));
 
+
+
             Post("notaRemision/cancelar", _ => CancelarNotaRemision());
             Post("notaRemision/guardar", _ => GuardarNotaRemision());
             Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
@@ -48,8 +50,37 @@ namespace C2HApiControlInterno.Modules
             
             Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
+            Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
+            Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
         }
 
+        private object ObtenerOperadoresAuxiliar()
+        {
+            Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerOperadoresAux();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerEquiposAuxiliar()
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerEquiposAux();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
         private object ObtenerPdfNotaRemisionAuxiliar(dynamic parametros)
         {
             Result result = new Result();

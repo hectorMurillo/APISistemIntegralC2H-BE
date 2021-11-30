@@ -19,5 +19,6 @@ namespace Models.Dosificador
 		public string Telefono { get; set; }
 		public string celular { get; set; }
         public bool Bombeable { get; set; }
+        public string Operador { get; set; }
     }
 }

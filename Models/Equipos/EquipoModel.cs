@@ -22,5 +22,6 @@ namespace Models.Equipos
         public string TipoEquipo { get; set; }
         public bool Estatus { get; set; }
         public string NumeroSerieMotor { get; set; }
+        public string Equipo { get; set; }
     }
 }
