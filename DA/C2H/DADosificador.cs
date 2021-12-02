@@ -22,6 +22,43 @@ namespace DA.C2H
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal);
         }
 
+        public Result<List<ObrasClientesAuxModel>> ObtenerObrasCliente(string cliente)
+        {
+            Result<List<ObrasClientesAuxModel>> result = new Result<List<ObrasClientesAuxModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pNombreCliente", ConexionDbType.VarChar, cliente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ObrasClientesAuxModel>("ProcObrasAuxCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<ClientesVendedorAuxModel>> ObtenerClientesVendedor(int cod)
+        {
+            Result<List<ClientesVendedorAuxModel>> result = new Result<List<ClientesVendedorAuxModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, cod);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ClientesVendedorAuxModel>("ProcClientesAuxCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
         public Result<List<OperadorModel>> ObtenerOperadoresAux()
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();

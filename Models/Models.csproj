@@ -126,11 +126,13 @@
     <Compile Include="Cotizaciones\ProductoCotizadoModel.cs" />
     <Compile Include="Cuentas\BancoXCuenta.cs" />
     <Compile Include="Cuentas\CuentaModel.cs" />
+    <Compile Include="Dosificador\ClientesVendedorAuxModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
     <Compile Include="Dosificador\FormulaModel.cs" />
     <Compile Include="Dosificador\NotaRemisionAuxiliarModel.cs" />
     <Compile Include="Dosificador\NotaRemisionEncModel.cs" />
+    <Compile Include="Dosificador\ObrasClientesAuxModel.cs" />
     <Compile Include="Dosificador\ObrasModel.cs" />
     <Compile Include="Dosificador\OperadorModel.cs" />
     <Compile Include="Dosificador\ParametrosEspecialesModel.cs" />

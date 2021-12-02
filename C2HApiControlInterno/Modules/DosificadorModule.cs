@@ -52,8 +52,37 @@ namespace C2HApiControlInterno.Modules
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
             Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
+            Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
+            Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
         }
-
+        private object ObtenerClientesVendedor(dynamic parametros)
+        {
+            Result<List<ClientesVendedorAuxModel>> result = new Result<List<ClientesVendedorAuxModel>>();
+            try
+            {
+                int cod = parametros.cod;
+                result = _DADosificador.ObtenerClientesVendedor(cod);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        private object ObtenerObrasCliente(dynamic parametros)
+        {
+            Result<List<ObrasClientesAuxModel>> result = new Result<List<ObrasClientesAuxModel>>();
+            try
+            {
+                string cliente = parametros.cliente;
+                result = _DADosificador.ObtenerObrasCliente(cliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
         private object ObtenerOperadoresAuxiliar()
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
