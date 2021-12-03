@@ -27,6 +27,11 @@ namespace C2HApiControlInterno.Modules
 
             Post("guardar", _ => GuardarOperador());
 
+
+
+            Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
+            Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajes(x));
+
         }
 
         private object ObtenerOperadores(dynamic x)
@@ -88,5 +93,38 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object ObtenerOperadoresAUXILIAR()
+        {
+            Result<List<OperadorAuxiliar>> result = new Result<List<OperadorAuxiliar>>();
+            try
+            {
+                result = _DAOperador.ObtenerOperadoresAUXILIAR();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerViajes(dynamic x)
+        {
+            Result result = new Result();
+
+            string operador = x.operador;
+            DateTime fechaDesde = x.fechaDesde;
+            DateTime fechaHasta = x.fechaHasta;
+
+            var r = new Result<List<Viajes>>();
+            r = _DAOperador.ObtenerViajes(operador, fechaDesde, fechaHasta);
+            result.Data = r.Data;
+            result.Value = r.Value;
+            result.Message = r.Message;
+
+            return Response.AsJson(result);
+
+        }
+
     }
 }
