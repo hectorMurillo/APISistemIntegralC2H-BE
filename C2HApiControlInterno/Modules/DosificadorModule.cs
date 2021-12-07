@@ -18,7 +18,6 @@ namespace C2HApiControlInterno.Modules
 {
     public class DosificadorModule : NancyModule
     {
-
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
