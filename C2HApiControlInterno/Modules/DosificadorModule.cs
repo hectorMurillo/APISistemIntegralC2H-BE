@@ -157,6 +157,7 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
                 reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                reporte.SetParameterValue("@foraneo", nota.Foraneo);
 
             }
             else
@@ -179,6 +180,7 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
                 reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                reporte.SetParameterValue("@foraneo", nota.Foraneo);
             }
 
 
