@@ -11,8 +11,6 @@ namespace Models.Dosificador
         public int IdNotasRemisionEnc { get; set; }
         public int FolioPedido { get; set; }
         public int Folio { get; set; }
-        public int FolioCarga { get; set; }
-        public int FolioNotaRemision { get; set; }
         public int FolioGinco { get; set; }
         public string Cliente { get; set; }
         public string Domicilio { get; set; }
@@ -51,11 +49,5 @@ namespace Models.Dosificador
         public decimal UltimoHorometraje { get; set; }
         public decimal UltimoKilometraje { get; set; }
         public string HoraSalidaPlanta { get; set; }
-<<<<<<< HEAD
-        public bool Foraneo { get; set; }
-=======
-        public int Referencia { get; set; }
-
->>>>>>> Fase-1-Entrega
     }
 }
