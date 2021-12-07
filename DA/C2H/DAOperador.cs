@@ -102,5 +102,50 @@ namespace DA.C2H
             }
             return result;
         }
+
+
+        public Result<List<OperadorAuxiliar>> ObtenerOperadoresAUXILIAR()
+        {
+            Result<List<OperadorAuxiliar>> result = new Result<List<OperadorAuxiliar>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorAuxiliar>("ProcCatOperadoresConAUXILIAR", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<Viajes>> ObtenerViajes(string operador, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<Viajes>> result = new Result<List<Viajes>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@Operador", ConexionDbType.VarChar, operador);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Viajes>("ProcOperadoresViajesCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }
