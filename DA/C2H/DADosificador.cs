@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using C2HApiControlInterno.Modules;
+using Models;
 using Models.Dosificador;
 using Models.Equipos;
 using System;
@@ -627,6 +628,33 @@ namespace DA.C2H
                 result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCatClienteNotaRemision", parametros);
 
 
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarFirmaNotaRemisionAuxiliar(NotaRemisionFirmaModel notaRemision, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotaRemisionFirma", ConexionDbType.Int, notaRemision.IdNotaRemisionFirma);
+                parametros.Add("@pIdNotaRemisionEnc", ConexionDbType.Int, notaRemision.IdNotaRemisionEnc);
+                parametros.Add("@pFirmaImagen", ConexionDbType.VarBinary, notaRemision.FirmaImagen);
+                parametros.Add("@pUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, notaRemision.Estatus);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.Execute("ProcNotaRemisionFirmasGuardar", parametros);
+
+                //result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
             }
             catch (Exception ex)
             {

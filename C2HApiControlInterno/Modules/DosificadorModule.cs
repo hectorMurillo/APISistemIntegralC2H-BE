@@ -48,12 +48,32 @@ namespace C2HApiControlInterno.Modules
             //NOTA REMISION AUXILIAR
             
             Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
+            Post("nota-remision-firma/guardar", _ => GuardarFirmaNotaRemisionAuxiliar());
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
             Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
         }
+
+        private object GuardarFirmaNotaRemisionAuxiliar()
+        {
+
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var notaRemision = this.Bind<NotaRemisionFirmaModel>();
+                result = _DADosificador.GuardarFirmaNotaRemisionAuxiliar(notaRemision, codUsuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object ObtenerClientesVendedor(dynamic parametros)
         {
             Result<List<ClientesVendedorAuxModel>> result = new Result<List<ClientesVendedorAuxModel>>();

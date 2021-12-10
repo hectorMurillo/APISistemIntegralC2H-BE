@@ -52,6 +52,7 @@ namespace Models.Dosificador
         public decimal UltimoKilometraje { get; set; }
         public string HoraSalidaPlanta { get; set; }
         public int Referencia { get; set; }
+        public bool FirmaElectronica { get; set; }
 
     }
 }
