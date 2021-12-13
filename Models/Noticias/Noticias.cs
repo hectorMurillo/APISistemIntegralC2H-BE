@@ -23,8 +23,6 @@ namespace Models.Noticias
         public Boolean Activado { get; set; }
         public int Rank { get; set; }
         public string Imagen { get
-
-        
             {
                 try
                 {

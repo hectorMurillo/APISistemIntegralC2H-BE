@@ -13,7 +13,6 @@ namespace Models.Empleados
         public int CodigoTipoDocumento { get; set; }
         public byte[] Archivo { get; set; }
         public string ArchivoBase64 { get; set; }
-        public string DescripcionTipo { get; set; }
         public string Extension { get; set; }
     }
 }

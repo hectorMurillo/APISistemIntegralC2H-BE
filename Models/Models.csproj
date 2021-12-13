@@ -142,6 +142,7 @@
     <Compile Include="Empleados\Empleado.cs" />
     <Compile Include="Empleados\PersonalCargaDiesel.cs" />
     <Compile Include="Empleados\SubTiposEmpleado.cs" />
+    <Compile Include="Empleados\TipoDocumento.cs" />
     <Compile Include="Empleados\TipoEmpleado.cs" />
     <Compile Include="Empresas\EmpresaCombo.cs" />
     <Compile Include="Equipos\ConsumbibleCombo.cs" />

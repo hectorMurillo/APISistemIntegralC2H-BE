@@ -99,9 +99,9 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<DocumentosEmpleado>> consultaDocumentos(int codEmpleado)
+        public Result consultaDocumentos(int codEmpleado)
         {
-            Result<List<DocumentosEmpleado>> result = new Result<List<DocumentosEmpleado>>();
+            Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
@@ -109,14 +109,17 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
+                _conexion.RecordsetsExecute("ProcEmpleadoDocumentacionCon", parametros);
 
-                result = _conexion.ExecuteWithResults<DocumentosEmpleado>("ProcEmpleadoDocumentacionCon", parametros);
+                var tiposDocumentos = _conexion.RecordsetsResults<Models.Empleados.TipoDocumento>();
+                var documentosEmpleados = _conexion.RecordsetsResults<Models.Empleados.DocumentosEmpleado>();
 
-                if (result.Data != null)
-                    result.Data.ForEach(x => {
-                        x.ArchivoBase64 = Convert.ToBase64String(x.Archivo);
-                        x.Archivo = null;
-                    });
+                result.Data = new { tiposDocumentos, documentosEmpleados };
+                //if (result.Data != null)
+                //    result.Data.ForEach(x => {
+                //        x.ArchivoBase64 = Convert.ToBase64String(x.Archivo);
+                //        x.Archivo = null;
+                //    });
             }
             catch (Exception ex)
             {
