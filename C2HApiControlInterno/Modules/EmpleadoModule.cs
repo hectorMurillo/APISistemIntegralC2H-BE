@@ -62,7 +62,7 @@ namespace C2HApiControlInterno.Modules
 
         private object GetDocumentacionPorEmpleado(dynamic x)
         {
-            Result<List<Model.DocumentosEmpleado>> result = new Result<List<Model.DocumentosEmpleado>>();
+            Result result = new Result();
             try
             {
                 int codEmpleado = x.codEmpleado;
