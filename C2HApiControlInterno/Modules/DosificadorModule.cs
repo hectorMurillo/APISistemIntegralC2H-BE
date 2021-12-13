@@ -190,7 +190,13 @@ namespace C2HApiControlInterno.Modules
             //reporte.setparametervalue("@sello", usuario);
 
             //reporte.setdatasource();
-            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            try
+            {
+                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            }catch(Exception ex)
+            {
+                var msg = ex.Message;
+            }
 
             bytes = File.ReadAllBytes(rutapdf);
             string pdfbase64 = Convert.ToBase64String(bytes);
