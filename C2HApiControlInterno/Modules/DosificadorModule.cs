@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web;
 using WarmPack.Classes;
 using Models;
+using System.Data;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -134,6 +135,7 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             var usuario = this.BindUsuario().Nombre;
             var folio = parametros.folio;
+
             var datos = _DADosificador.ObtenerDatosNotaAuxiliar(folio);
 
            var nota = datos.Data[0];
@@ -181,6 +183,8 @@ namespace C2HApiControlInterno.Modules
             else
             {
                 reporte.Load(path + "\\reportes\\rptnota.rpt");
+                reporte.SetDataSource(datos.Data);
+
                 reporte.SetParameterValue("@folio", nota.Folio);
                 reporte.SetParameterValue("@folioginco", nota.FolioGinco);
                 reporte.SetParameterValue("@cliente", nota.Cliente);
@@ -198,6 +202,8 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
                 reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+
+          
             }
 
 

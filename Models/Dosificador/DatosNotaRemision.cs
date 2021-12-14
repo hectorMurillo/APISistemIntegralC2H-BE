@@ -54,5 +54,6 @@ namespace Models.Dosificador
         public int Referencia { get; set; }
         public bool FirmaElectronica { get; set; }
 
+        public byte[] Imagen { get; set; }
     }
 }
