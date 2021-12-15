@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,27 +9,43 @@ namespace Models.Dosificador
 {
     public class DatosNotaRemision
     {
+        CultureInfo ci = new CultureInfo("es-MX");
         public int IdNotasRemisionEnc { get; set; }
         public int FolioPedido { get; set; }
         public int Folio { get; set; }
-        public int FolioCarga { get; set; }
-        public int FolioNotaRemision { get; set; }
+        public string Folios { get; set; }
         public int FolioGinco { get; set; }
         public string Cliente { get; set; }
         public string Domicilio { get; set; }
         public string Estatus { get; set; }
+        public string EstatusNR { get; set; }
         public string Obra { get; set; }
         public string HoraSalida { get; set; }
         public string Formula { get; set; }
+        public bool Foraneo { get; set; }
         public string Producto { get; set; }
         public string Operador { get; set; }
         public string OperadorBomba { get; set; }
+        public string OperadorBB { get; set; }
+        public string EquipoBB { get; set; }
         public string Equipo { get; set; }
         public string EquipoBomba { get; set; }
         public int CodEquipoBomba { get; set; }
         public string Vendedor { get; set; }
         public DateTime Fecha { get; set; }
-        public string FechaConFormato { get; set; }
+        public string FechaConFormato {
+            get
+            {
+                return Fecha.ToString("dd / MMMM / yyyy", ci).ToUpper() ;
+            }
+        }
+        public string FechaCorta
+        {
+            get
+            {
+                return Fecha.ToString("dd/mm/yy", ci);
+            }
+        }
         public string CodOperador_1 { get; set; }
         public string CodOperador_2 { get; set; }
         public string CodEquipo_CR { get; set; }
@@ -53,6 +70,5 @@ namespace Models.Dosificador
         public string HoraSalidaPlanta { get; set; }
         public int Referencia { get; set; }
         public bool FirmaElectronica { get; set; }
-
     }
 }
