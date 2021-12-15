@@ -171,6 +171,7 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
                 reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                reporte.SetParameterValue("@foraneo", nota.Foraneo);
 
             }
             else
@@ -193,6 +194,7 @@ namespace C2HApiControlInterno.Modules
                 reporte.SetParameterValue("@cancelado", cancelado);
                 reporte.SetParameterValue("@fecha", nota.Fecha);
                 reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                reporte.SetParameterValue("@foraneo", nota.Foraneo);
             }
 
 
@@ -202,7 +204,13 @@ namespace C2HApiControlInterno.Modules
             //reporte.setparametervalue("@sello", usuario);
 
             //reporte.setdatasource();
-            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            try
+            {
+                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            }catch(Exception ex)
+            {
+                var msg = ex.Message;
+            }
 
             bytes = File.ReadAllBytes(rutapdf);
             string pdfbase64 = Convert.ToBase64String(bytes);
