@@ -70,5 +70,7 @@ namespace Models.Dosificador
         public string HoraSalidaPlanta { get; set; }
         public int Referencia { get; set; }
         public bool FirmaElectronica { get; set; }
+
+        public byte[] Imagen { get; set; }
     }
 }
