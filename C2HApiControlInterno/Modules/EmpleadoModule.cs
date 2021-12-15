@@ -6,6 +6,7 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using WarmPack.Classes;
 using Model = Models.Empleados;
@@ -34,6 +35,8 @@ namespace C2HApiControlInterno.Modules
             Get("/{codEmpleado}", x => ObtenerEmpleado(x));
             Get("/empleadosNoUsuario", _ => ObtenerEmpleadoNoUsuario());
             Get("/comision", _ => GetTodos());
+
+            Post("/guardar-archivo", _ => guardarArchivo());
         }
 
 
@@ -183,7 +186,38 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private dynamic guardarArchivo()
+        {
+            try
+            {
+                Result result = new Result();
 
+                int codigo = (int)this.Request.Form.codigo;
+                int codigoEmpleado = (int)this.Request.Form.codigoEmpleado;
+                int codigoTipoDocumento = (int)this.Request.Form.codigoTipoDocumento;
+                var Archivo = this.Request.Files;
+                byte[] buffer = new byte[0];
+                string extension = (string)this.Request.Form.extension;
+                bool vieneImagen = false;
+
+                if(Archivo.Count() > 0)
+                {
+                    var ms = new MemoryStream();
+                    string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), "/" + Archivo.ElementAt(0).Name);
+                    Archivo.ElementAt(0).Value.CopyTo(ms);
+                    buffer = ms.ToArray();
+                    vieneImagen = true;
+                }
+
+                result = _DAempleado.guardarArchivo(codigo, codigoEmpleado, codigoTipoDocumento, buffer, extension, vieneImagen);
+
+                return Response.AsJson(result);
+            }
+            catch(Exception ex)
+            {
+                return Response.AsJson(new Result());
+            }
+        }
 
 
 

@@ -182,6 +182,7 @@ namespace DA.C2H
             }
             return result;
         }
+
         public Result GuardarEmpleado(Empleado empleado, int idUsuario)
         {
             Result result = new Result();
@@ -265,8 +266,6 @@ namespace DA.C2H
             return result;
         }
 
-
-
         public Result ObtenerEmpleado(int codEmpleado)
         {
             Result result = new Result();
@@ -328,6 +327,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result guardarArchivo(int codigo, int codigoEmpleado, int codigoTipoDocumento, byte[] imagen, string extension, bool vieneImagen)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pCodigoEmpleado", ConexionDbType.Int, codigoEmpleado);
+                parametros.Add("@pCodigoTipoDocumento", ConexionDbType.Int, codigoTipoDocumento);
+                parametros.Add("@pImagen", ConexionDbType.VarBinary, imagen);
+                parametros.Add("@pExtension", ConexionDbType.VarChar, extension);
+                parametros.Add("@pVieneImagen", ConexionDbType.Bit, vieneImagen);
+                result = _conexion.Execute("ProcArchivoEmpleadoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

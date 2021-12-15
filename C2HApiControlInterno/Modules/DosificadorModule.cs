@@ -24,7 +24,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
-            Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
+            Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
@@ -51,6 +51,7 @@ namespace C2HApiControlInterno.Modules
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
             Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
+            Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
         }
@@ -88,6 +89,20 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DADosificador.ObtenerOperadoresAux();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerBombasAuxiliar()
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerBombasAux();
             }
             catch (Exception ex)
             {
