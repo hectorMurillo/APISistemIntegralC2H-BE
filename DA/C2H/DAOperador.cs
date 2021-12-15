@@ -147,5 +147,30 @@ namespace DA.C2H
 
         }
 
+        public Result<List<ViajesDetalle>> ObtenerViajesOperador(string operador, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<ViajesDetalle>> result = new Result<List<ViajesDetalle>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@Operador", ConexionDbType.VarChar, operador);
+                parametros.Add("@pFechaDesde", ConexionDbType.Date, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.Date, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ViajesDetalle>("ProcOperadoresViajesOperadorCon", parametros);
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+
+        }
+
     }
 }
