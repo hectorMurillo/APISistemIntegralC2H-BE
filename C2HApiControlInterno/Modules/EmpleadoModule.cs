@@ -26,7 +26,7 @@ namespace C2HApiControlInterno.Modules
             Post("/SubTipos", _ => GetSubTipos());
             Get("/tiposUtilizados", _ => GetTiposUtilizados());
             Post("/guardar", _ => PostEmpleado());
-            Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));            
+                   
             Post("/personalCargaDiesel/guardar", _ => PostPersonalCargaDiesel());
             Get("/personalCargaDiesel/{codPersonal}", x => GetPersonalCargaDiesel(x));
             Get("/tiposEmpleado/{codTipoEmpleado}", x => GetTiposEmpleado(x));
@@ -37,6 +37,7 @@ namespace C2HApiControlInterno.Modules
             Get("/comision", _ => GetTodos());
 
             Post("/guardar-archivo", _ => guardarArchivo());
+            Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));
         }
 
 
@@ -188,35 +189,37 @@ namespace C2HApiControlInterno.Modules
 
         private dynamic guardarArchivo()
         {
+            Result result = new Result();
             try
             {
-                Result result = new Result();
+                
 
                 int codigo = (int)this.Request.Form.codigo;
                 int codigoEmpleado = (int)this.Request.Form.codigoEmpleado;
                 int codigoTipoDocumento = (int)this.Request.Form.codigoTipoDocumento;
-                var Archivo = this.Request.Files;
+                var archivo = this.Request.Files;
                 byte[] buffer = new byte[0];
                 string extension = (string)this.Request.Form.extension;
                 bool vieneImagen = false;
 
-                if(Archivo.Count() > 0)
+                if(archivo.Count() > 0)
                 {
                     var ms = new MemoryStream();
-                    string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), "/" + Archivo.ElementAt(0).Name);
-                    Archivo.ElementAt(0).Value.CopyTo(ms);
+                    string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), "/" + archivo.ElementAt(0).Name);
+                    archivo.ElementAt(0).Value.CopyTo(ms);
                     buffer = ms.ToArray();
                     vieneImagen = true;
                 }
 
                 result = _DAempleado.guardarArchivo(codigo, codigoEmpleado, codigoTipoDocumento, buffer, extension, vieneImagen);
 
-                return Response.AsJson(result);
+               
             }
             catch(Exception ex)
             {
-                return Response.AsJson(new Result());
+                result.Message = ex.Message;
             }
+            return Response.AsJson(result);
         }
 
 

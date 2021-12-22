@@ -339,7 +339,7 @@ namespace DA.C2H
                 parametros.Add("@pImagen", ConexionDbType.VarBinary, imagen);
                 parametros.Add("@pExtension", ConexionDbType.VarChar, extension);
                 parametros.Add("@pVieneImagen", ConexionDbType.Bit, vieneImagen);
-                result = _conexion.Execute("ProcArchivoEmpleadoGuardar", parametros);
+                result = _conexion.Execute("ProcEmpleadoDocumentacionGuardar", parametros);
             }
             catch (Exception ex)
             {
