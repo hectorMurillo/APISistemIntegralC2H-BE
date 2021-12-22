@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
-            Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
+            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
@@ -55,6 +55,23 @@ namespace C2HApiControlInterno.Modules
             Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
+            Get("nota-remision-auxiliar/toExcel/{fechaDesde}/{fechaHasta}", parametros => obtenerNotaRemisionAuxExcel(parametros));
+        }
+
+        private object obtenerNotaRemisionAuxExcel(dynamic paremeters)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                DateTime FechaDesde = paremeters.fechaDesde;
+                DateTime FechaHasta = paremeters.fechaHasta;
+                result = _DADosificador.ObtenerDatosNotaRemisionAExcel(FechaDesde,FechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GuardarFirmaNotaRemisionAuxiliar()
@@ -138,7 +155,17 @@ namespace C2HApiControlInterno.Modules
 
             var datos = _DADosificador.ObtenerDatosNotaAuxiliar(folio);
 
-           var nota = datos.Data[0];
+            //var nota = datos?.Data[0];
+            //var nota = null;
+            try
+            {
+                var nota = datos.Data.length > 0 ? datos.Data[0] : "";
+            }
+            catch (Exception ex)
+            {
+                var a = ex.Message;
+            }
+
 
             var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -152,59 +179,59 @@ namespace C2HApiControlInterno.Modules
             //string rutapdf = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA\\prueba.pdf";
             string rutapdf = $"{ Globales.FolderPDF}\\prueba.pdf";
             byte[] bytes;
-            bool cancelado = nota.Estatus == "C";
+            //bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
 
-            if (nota.Bombeable)
-            {
-                reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
-                reporte.SetParameterValue("@folio", nota.Folio);
-                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-                reporte.SetParameterValue("@cliente", nota.Cliente);
-                reporte.SetParameterValue("@obra", nota.Obra);
-                reporte.SetParameterValue("@producto", nota.Producto);
-                reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                reporte.SetParameterValue("@operadorCr", nota.Operador);
-                reporte.SetParameterValue("@equipoCr", nota.Equipo);
-                reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
-                reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
-                reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-                reporte.SetParameterValue("@bombeable", nota.Bombeable);
-                reporte.SetParameterValue("@imper", nota.Imper);
-                reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-                reporte.SetParameterValue("@cancelado", cancelado);
-                reporte.SetParameterValue("@fecha", nota.Fecha);
-                reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+            //if (nota.Bombeable)
+            //{
+            //    reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
+            //    reporte.SetParameterValue("@folio", nota.Folio);
+            //    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+            //    reporte.SetParameterValue("@cliente", nota.Cliente);
+            //    reporte.SetParameterValue("@obra", nota.Obra);
+            //    reporte.SetParameterValue("@producto", nota.Producto);
+            //    reporte.SetParameterValue("@cantidad", nota.Cantidad);
+            //    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+            //    reporte.SetParameterValue("@operadorCr", nota.Operador);
+            //    reporte.SetParameterValue("@equipoCr", nota.Equipo);
+            //    reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
+            //    reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
+            //    reporte.SetParameterValue("@vendedor", nota.Vendedor);
+            //    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
+            //    reporte.SetParameterValue("@bombeable", nota.Bombeable);
+            //    reporte.SetParameterValue("@imper", nota.Imper);
+            //    reporte.SetParameterValue("@fibra", nota.Fibra);
+            //    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+            //    reporte.SetParameterValue("@cancelado", cancelado);
+            //    reporte.SetParameterValue("@fecha", nota.Fecha);
+            //    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
 
-            }
-            else
-            {
-                reporte.Load(path + "\\reportes\\rptnota.rpt");
-                reporte.SetDataSource(datos.Data);
+            //}
+            //else
+            //{
+            //    reporte.Load(path + "\\reportes\\rptnota.rpt");
+            //    reporte.SetDataSource(datos.Data);
 
-                reporte.SetParameterValue("@folio", nota.Folio);
-                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-                reporte.SetParameterValue("@cliente", nota.Cliente);
-                reporte.SetParameterValue("@obra", nota.Obra);
-                reporte.SetParameterValue("@producto", nota.Producto);
-                reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@operador", nota.Operador);
-                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                reporte.SetParameterValue("@equipo", nota.Equipo);
-                reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-                reporte.SetParameterValue("@imper", nota.Imper);
-                reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-                reporte.SetParameterValue("@cancelado", cancelado);
-                reporte.SetParameterValue("@fecha", nota.Fecha);
-                reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+            //    reporte.SetParameterValue("@folio", nota.Folio);
+            //    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+            //    reporte.SetParameterValue("@cliente", nota.Cliente);
+            //    reporte.SetParameterValue("@obra", nota.Obra);
+            //    reporte.SetParameterValue("@producto", nota.Producto);
+            //    reporte.SetParameterValue("@cantidad", nota.Cantidad);
+            //    reporte.SetParameterValue("@operador", nota.Operador);
+            //    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+            //    reporte.SetParameterValue("@equipo", nota.Equipo);
+            //    reporte.SetParameterValue("@vendedor", nota.Vendedor);
+            //    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
+            //    reporte.SetParameterValue("@imper", nota.Imper);
+            //    reporte.SetParameterValue("@fibra", nota.Fibra);
+            //    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+            //    reporte.SetParameterValue("@cancelado", cancelado);
+            //    reporte.SetParameterValue("@fecha", nota.Fecha);
+            //    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
 
-          
-            }
+
+            //}
 
 
 
@@ -321,12 +348,17 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object NotasRemisionCanceladas()
+        private object NotasRemisionCanceladas(dynamic parametros)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
-                result = _DADosificador.ObtenerNotasRemisionCanceladas();
+                int codVendedor = parametros.codVendedor;
+                string cliente = parametros.cliente;
+                string obra = parametros.obra;
+                string desde = parametros.desde;
+                string hasta = parametros.hasta;
+                result = _DADosificador.ObtenerNotasRemisionCanceladas(codVendedor,cliente,obra,desde,hasta);
             }
             catch (Exception ex)
             {

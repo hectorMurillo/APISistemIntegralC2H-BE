@@ -96,6 +96,28 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<DatosNotaRemision>> ObtenerDatosNotaRemisionAExcel(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pFechaDesde", ConexionDbType.DateTime, fechaDesde);
+                parametros.Add("@pFechaHasta", ConexionDbType.DateTime, fechaHasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcNotasRemisionEncConExcel", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+
         public Result<List<int>> ObtenerUltimoFolioGinco()
         {
             Result<List<int>> result = new Result<List<int>>();
@@ -114,12 +136,19 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionCanceladas()
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionCanceladas(int codVendedor, string cliente, string obra,string desde, string hasta)
         {
+            cliente = cliente == "0" ? "" : cliente;
+            obra = obra == "0" ? "" : obra;
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pCliente", ConexionDbType.VarChar, cliente);
+                parametros.Add("@pObra", ConexionDbType.VarChar, obra);
+                parametros.Add("@pFechaDesde", ConexionDbType.VarChar, desde);
+                parametros.Add("@pFechaHasta", ConexionDbType.VarChar, hasta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
