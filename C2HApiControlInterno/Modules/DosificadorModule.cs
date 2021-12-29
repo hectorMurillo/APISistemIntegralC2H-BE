@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web;
 using WarmPack.Classes;
 using Models;
+using Model = Models.Dosificador;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -54,7 +55,57 @@ namespace C2HApiControlInterno.Modules
             Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
+
+            //OperadorEquipo
+            Get("/operador-equipo", _ => obtenerOperadoresEquipos());
+            Get("/equipo-corto", _ => ObtenerEquipoNomCorto());
+            Post("/operador-equipo-guardar", _ => guardarOperadorEquipo());
         }
+
+        
+        private object ObtenerEquipoNomCorto()
+        {
+            Result<List<Model.EquipoNomCortoModel>> result = new Result<List<Model.EquipoNomCortoModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerEquipoNomCorto();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        private object guardarOperadorEquipo()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var operador = this.Bind<Model.OperadorEquipo>();
+                result = _DADosificador.GuardarEquipoOperador(operador);
+            }
+            catch (Exception ex)
+            {
+
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        private object obtenerOperadoresEquipos()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerEquipoOperador();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object ObtenerClientesVendedor(dynamic parametros)
         {
             Result<List<ClientesVendedorAuxModel>> result = new Result<List<ClientesVendedorAuxModel>>();

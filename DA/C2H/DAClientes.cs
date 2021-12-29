@@ -366,7 +366,6 @@ namespace DA.C2H
             }
             return result;
         }
-        
 
         public Result<List<DocumentoModel>> ObtenerDocumentos(int CodCliente)
         {
@@ -463,6 +462,7 @@ namespace DA.C2H
             }
             return result;
         }
+
         public Result ObtenerClientesCobranza()
         {
             Result result = new Result();

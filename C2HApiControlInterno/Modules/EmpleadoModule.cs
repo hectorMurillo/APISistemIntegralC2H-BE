@@ -222,9 +222,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
-
-
         // obtener usuario por cod
         private object ObtenerEmpleado(dynamic x)
         {
