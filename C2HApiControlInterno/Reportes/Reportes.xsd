@@ -154,6 +154,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
+  <!--Reporte notas -->
+  <xs:element name="RptNotas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FolioPedido" type="xs:integer"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="CodVendedor" type="xs:integer"/>
+        <xs:element name="Vendedor" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Fecha" type="xs:string"/>
+        <xs:element name="Hora" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Planta" type="xs:string"/>
+        <xs:element name="Estatus" type="xs:string"/>
+        <xs:element name="Equipo" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
  
 </xs:schema>
 

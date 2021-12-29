@@ -103,6 +103,7 @@
     <Compile Include="Bancos\BancoModel.cs" />
     <Compile Include="Clientes\ClienteModel.cs" />
     <Compile Include="Clientes\ClienteModel2.cs" />
+    <Compile Include="Clientes\ClientesModelAuxiliar.cs" />
     <Compile Include="Clientes\ContactoXClienteModel.cs" />
     <Compile Include="Clientes\DireccionesXClientesModel.cs" />
     <Compile Include="Clientes\DocumentoModel.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Proveedores\CuentasXProveedorModel.cs" />
     <Compile Include="Proveedores\ProveedorModel.cs" />
     <Compile Include="RefreshTokenRepository.cs" />
+    <Compile Include="Reportes\RptAuxiliares.cs" />
     <Compile Include="Reportes\RptCotizaciones.cs" />
     <Compile Include="Reportes\RptEntradasSalidas.cs" />
     <Compile Include="Reportes\RptEquipos.cs" />
@@ -202,12 +204,12 @@
     <Compile Include="Usuario\UsuarioPermisoModel.cs" />
     <Compile Include="Vendedores\Vendedor.cs" />
     <Compile Include="Vendedores\VendedorModel.cs" />
-    <Compile Include="Ventas\DemandaArticulo.cs" />
-    <Compile Include="Ventas\RptMensualClientes.cs" />
-    <Compile Include="Ventas\RptMensualMetros.cs" />
-    <Compile Include="Ventas\RptMensualMetrosModel.cs" />
-    <Compile Include="Ventas\RptMensualProductos.cs" />
-    <Compile Include="Ventas\RptReporteVolumenObras.cs" />
+    <Compile Include="Reportes\DemandaArticulo.cs" />
+    <Compile Include="Reportes\RptMensualClientes.cs" />
+    <Compile Include="Reportes\RptMensualMetros.cs" />
+    <Compile Include="Reportes\RptMensualMetrosModel.cs" />
+    <Compile Include="Reportes\RptMensualProductos.cs" />
+    <Compile Include="Reportes\RptReporteVolumenObras.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
