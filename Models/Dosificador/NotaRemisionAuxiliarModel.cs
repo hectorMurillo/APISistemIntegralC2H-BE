@@ -14,8 +14,8 @@ namespace Models.Dosificador
         public String Cliente { get; set; }
         public String Obra { get; set; }
         public int CodVendedor { get; set; }
-        public String OperadorCamionRevolvedor { get; set; }
-        public String OperadorCamionBombeable { get; set; }
+        public string OperadorCamionRevolvedor { get; set; }
+        public string OperadorCamionBombeable { get; set; }
         public String EquipoCamionRevolvedor { get; set; }
         public String EquipoCamionBombeable { get; set; }
         public bool ChKBombeable { get; set; }

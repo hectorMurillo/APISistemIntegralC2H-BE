@@ -51,7 +51,7 @@ namespace C2HApiControlInterno.Modules
             Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
-            Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
+            Get("/equipos-auxiliar/{codEmpleado}", parametros => ObtenerEquiposAuxiliar(parametros));
             Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
@@ -162,12 +162,13 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ObtenerEquiposAuxiliar()
+        private object ObtenerEquiposAuxiliar(dynamic parametros)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
             {
-                result = _DADosificador.ObtenerEquiposAux();
+                int codEmpleado = parametros.codEmpleado;
+                result = _DADosificador.ObtenerEquiposAux(codEmpleado);
             }
             catch (Exception ex)
             {

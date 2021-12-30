@@ -152,12 +152,13 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<EquipoModel>> ObtenerEquiposAux()
+        public Result<List<EquipoModel>> ObtenerEquiposAux(int codEmpleado)
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

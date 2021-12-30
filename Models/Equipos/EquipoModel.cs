@@ -8,6 +8,7 @@ namespace Models.Equipos
 {
     public class EquipoModel
     {
+        public int codEmpleado { get; set; }
         public int Codigo { get; set; }
         public int CodTipoEquipo { get; set; }
         public string Nombre { get; set; }
