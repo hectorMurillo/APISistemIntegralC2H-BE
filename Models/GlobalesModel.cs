@@ -87,7 +87,7 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
         //BD Coki Conexión
-        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#9796F518\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
+        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#16CE0066\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
 
 
 

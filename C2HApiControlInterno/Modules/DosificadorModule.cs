@@ -26,6 +26,7 @@ namespace C2HApiControlInterno.Modules
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
+            //Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
@@ -49,13 +50,31 @@ namespace C2HApiControlInterno.Modules
             //NOTA REMISION AUXILIAR
             
             Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
-            Post("nota-remision-firma/guardar", _ => GuardarFirmaNotaRemisionAuxiliar());
+            //Get("/nota-remision-auxiliar/")
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
+            Post("nota-remision-firma/guardar", _ => GuardarFirmaNotaRemisionAuxiliar());
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
             Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
+            Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
             Get("nota-remision-auxiliar/toExcel/{fechaDesde}/{fechaHasta}", parametros => obtenerNotaRemisionAuxExcel(parametros));
+            Post("notaRemisionAuxiliar/cancelar", _ => CancelarNotaRemisionAux());
+        }
+
+        private object CancelarNotaRemisionAux()
+        {
+            Result result = new Result();
+            try
+            {
+                var notaRemision = this.Bind<NotaRemisionAuxiliarModel>();
+                result = _DADosificador.CancelarNotaRemisionAuxiliar(notaRemision);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object obtenerNotaRemisionAuxExcel(dynamic paremeters)
@@ -126,6 +145,20 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DADosificador.ObtenerOperadoresAux();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerBombasAuxiliar()
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerBombasAux();
             }
             catch (Exception ex)
             {

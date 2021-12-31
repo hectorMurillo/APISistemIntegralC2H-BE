@@ -78,6 +78,45 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<EquipoModel>> ObtenerBombasAux()
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pBombeable", ConexionDbType.Bit, 1);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<EquipoModel>("ProcEquiposAuxCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result CancelarNotaRemisionAuxiliar(NotaRemisionAuxiliarModel notaRemision)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, notaRemision.IdNotasRemisionEnc);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, notaRemision.Observacion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcNotasRemisionAuxiliarCancelar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<EquipoModel>> ObtenerEquiposAux()
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
