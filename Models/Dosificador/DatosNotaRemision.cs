@@ -33,6 +33,7 @@ namespace Models.Dosificador
         public int CodEquipoBomba { get; set; }
         public string Vendedor { get; set; }
         public DateTime Fecha { get; set; }
+        public string FechaString { get; set; }
         public string FechaConFormato {
             get
             {
@@ -43,7 +44,7 @@ namespace Models.Dosificador
         {
             get
             {
-                return Fecha.ToString("dd/mm/yy", ci);
+                return Fecha.ToString("dd/MM/yy", ci);
             }
         }
         public string CodOperador_1 { get; set; }
@@ -68,5 +69,9 @@ namespace Models.Dosificador
         public decimal UltimoHorometraje { get; set; }
         public decimal UltimoKilometraje { get; set; }
         public string HoraSalidaPlanta { get; set; }
+        public string Referencia { get; set; }
+        public bool FirmaElectronica { get; set; }
+        public string Dosificador { get; set; }
+        public byte[] Imagen { get; set; }
     }
 }
