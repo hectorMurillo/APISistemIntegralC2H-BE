@@ -468,6 +468,7 @@ namespace DA.C2H
             return result;
         }
 
+
         public Result AgregarNotaRemisionEspecial(NotaRemisionEncModel notaRemision, int codUsuario)
         {
             Result result = new Result();
