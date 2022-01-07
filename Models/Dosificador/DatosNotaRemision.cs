@@ -69,9 +69,11 @@ namespace Models.Dosificador
         public decimal UltimoHorometraje { get; set; }
         public decimal UltimoKilometraje { get; set; }
         public string HoraSalidaPlanta { get; set; }
-        public int Referencia { get; set; }
+        public string Referencia { get; set; }
         public bool FirmaElectronica { get; set; }
         public string Dosificador { get; set; }
         public byte[] Imagen { get; set; }
+        public int FolioCarga { get; set; }
+        public int FolioNotaRemision { get; set; }
     }
 }

@@ -188,16 +188,8 @@ namespace C2HApiControlInterno.Modules
 
             var datos = _DADosificador.ObtenerDatosNotaAuxiliar(folio);
 
-            //var nota = datos?.Data[0];
+            var nota = datos?.Data[0];
             //var nota = null;
-            try
-            {
-                var nota = datos.Data.length > 0 ? datos.Data[0] : "";
-            }
-            catch (Exception ex)
-            {
-                var a = ex.Message;
-            }
 
 
             var pathdirectorio = Globales.FolderPDF;
@@ -242,26 +234,26 @@ namespace C2HApiControlInterno.Modules
             //}
             //else
             //{
-            //    reporte.Load(path + "\\reportes\\rptnota.rpt");
-            //    reporte.SetDataSource(datos.Data);
+               reporte.Load(path + "\\reportes\\rptnota.rpt");
+               reporte.SetDataSource(datos.Data);
 
-            //    reporte.SetParameterValue("@folio", nota.Folio);
-            //    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-            //    reporte.SetParameterValue("@cliente", nota.Cliente);
-            //    reporte.SetParameterValue("@obra", nota.Obra);
-            //    reporte.SetParameterValue("@producto", nota.Producto);
-            //    reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            //    reporte.SetParameterValue("@operador", nota.Operador);
-            //    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-            //    reporte.SetParameterValue("@equipo", nota.Equipo);
-            //    reporte.SetParameterValue("@vendedor", nota.Vendedor);
-            //    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-            //    reporte.SetParameterValue("@imper", nota.Imper);
-            //    reporte.SetParameterValue("@fibra", nota.Fibra);
-            //    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-            //    reporte.SetParameterValue("@cancelado", cancelado);
-            //    reporte.SetParameterValue("@fecha", nota.Fecha);
-            //    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+            reporte.SetParameterValue("@folio", nota.Folio);
+            reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+            reporte.SetParameterValue("@cliente", nota.Cliente);
+            reporte.SetParameterValue("@obra", nota.Obra);
+            reporte.SetParameterValue("@producto", nota.Producto);
+            reporte.SetParameterValue("@cantidad", nota.Cantidad);
+            reporte.SetParameterValue("@operador", nota.Operador);
+            reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+            reporte.SetParameterValue("@equipo", nota.Equipo);
+            reporte.SetParameterValue("@vendedor", nota.Vendedor);
+            reporte.SetParameterValue("@usuario", nota.NombreUsuario);
+            reporte.SetParameterValue("@imper", nota.Imper);
+            reporte.SetParameterValue("@fibra", nota.Fibra);
+            reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+            reporte.SetParameterValue("@cancelado", false);
+            reporte.SetParameterValue("@fecha", nota.Fecha);
+            reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
 
 
             //}
