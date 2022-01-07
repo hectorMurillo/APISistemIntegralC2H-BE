@@ -96,6 +96,42 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<OperadorEquipo>> ObtenerAyudantesBomba()
+        {
+            Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorEquipo>("ProcCatAyudantesBombaCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
+        public Result<List<OperadorEquipo>> ObtenerOperadoresMaquilado()
+        {
+            Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorEquipo>("ProcCatOperadoresOllaMaquiladoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<OperadorEquipo>> ObtenerEquipoOperador()
         {
             Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
@@ -113,16 +149,17 @@ namespace DA.C2H
             }
             return result;
         }
+
         public Result GuardarEquipoOperador(OperadorEquipo operador)
         {
             Result result = new Result();
             try
             {
-
                 var parametros = new ConexionParameters();
                
                 parametros.Add("@pCodEmpleado", ConexionDbType.Int, operador.CodEmpleado);
                 parametros.Add("@pEquipo", ConexionDbType.VarChar, operador.Equipo);
+                parametros.Add("@pCodAyudante", ConexionDbType.Int, operador.CodAyudante);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

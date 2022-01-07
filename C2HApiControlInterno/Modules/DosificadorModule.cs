@@ -65,8 +65,25 @@ namespace C2HApiControlInterno.Modules
             //OperadorEquipo
             Get("/operador-equipo", _ => obtenerOperadoresEquipos());
             Get("/equipo-corto", _ => ObtenerEquipoNomCorto());
+            Get("/ayudantes-bomba", _ => obtenerAyudantesBomba());
+            Get("/operador-maquilado", _ => obtenerOperadoresMaquilado()); 
+                
             Post("/operador-equipo-guardar", _ => guardarOperadorEquipo());
         }
+        private object obtenerOperadoresMaquilado()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerOperadoresMaquilado();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object ObtenerEquipoNomCorto()
         {
             Result<List<Model.EquipoNomCortoModel>> result = new Result<List<Model.EquipoNomCortoModel>>();
@@ -80,6 +97,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object guardarOperadorEquipo()
         {
             Result result = new Result();
@@ -146,6 +164,20 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+        
+        private object obtenerAyudantesBomba()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerAyudantesBomba();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object obtenerOperadoresEquipos()
         {
@@ -175,6 +207,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object ObtenerObrasCliente(dynamic parametros)
         {
             Result<List<ObrasClientesAuxModel>> result = new Result<List<ObrasClientesAuxModel>>();
@@ -189,6 +222,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object ObtenerOperadoresAuxiliar()
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
@@ -231,6 +265,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object ObtenerPdfNotaRemisionAuxiliar(dynamic parametros)
         {
             Result result = new Result();
@@ -405,7 +440,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object VerificarNotasRemisionPedido(dynamic parametros)
         {
             Result<DatoModel> result = new Result<DatoModel>();
@@ -434,6 +468,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object FolioPedido(dynamic parametros)
         {
             Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
@@ -469,7 +504,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object UltimoFolioNotaRemision()
         {
             Result<List<int>> result = new Result<List<int>>();
@@ -498,6 +532,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object GuardarNotaRemision()
         {
 
@@ -623,7 +658,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object Productos(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
@@ -669,6 +703,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object Operadores(dynamic parametros)
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
