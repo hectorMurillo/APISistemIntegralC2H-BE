@@ -115,7 +115,7 @@ namespace C2HApiControlInterno.Modules
 
         private object obtenerNotaRemisionAuxExcel(dynamic paremeters)
         {
-            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
+            Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
             try
             {
                 DateTime FechaDesde = paremeters.fechaDesde;

@@ -37,6 +37,7 @@ namespace Models.Clientes
         public string Celular { get; set; }
         public string Correo { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public int IdClickBalance { get; set; }
         public string FechaCorta
         {
             get

@@ -81,8 +81,7 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=C2HControlInterno;persist security info=True;user id=sa;password=1234;";
         //public static string ConexionPrincipal => @"data source=sql5052.site4now.net;initial catalog=DB_A55757_c2h;persist security info=True;user id=DB_A55757_c2h_admin;password=hector141093;";
         //public static string ConexionPrincipal => @"data source=DESKTOP-FDVVO85;initial catalog=DB_A55757_c2h;persist security info=True;user id=sa;password=123;";
-
-
+        #region BASES DE DATOS
         //BD PRUEBAS OLD
         //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
@@ -102,7 +101,10 @@ namespace Models
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
-        public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=produccion;Integrated Security=True;";
+        //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=produccion;Integrated Security=True;";
+        #endregion
+
+        public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
 
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";

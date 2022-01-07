@@ -32,5 +32,6 @@ namespace Models.Clientes
         public bool Fiscal { get; set; }
         public bool Entrega { get; set; }
         public List<float> costoCaseta { get; set; }
+        public string Alias { get; set; }
     }
 }
