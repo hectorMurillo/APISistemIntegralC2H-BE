@@ -550,7 +550,7 @@ namespace DA.C2H
             {
                 var parametros = new ConexionParameters();
                 DataTable ds = new DataTable();
-                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, 1118);
+                parametros.Add("@pIdNotaRemision", ConexionDbType.Int, idNotaRemision);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

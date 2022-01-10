@@ -22,7 +22,7 @@ namespace C2HApiControlInterno.Modules
         DADosificador _DADosificador = new DADosificador();
         public DosificadorModule() : base("/dosificador")
         {
-            this.RequiresAuthentication();
+           // this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
             Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
@@ -207,64 +207,18 @@ namespace C2HApiControlInterno.Modules
             //bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
 
-            //if (nota.Bombeable)
-            //{
-            //    reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
-            //    reporte.SetParameterValue("@folio", nota.Folio);
-            //    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-            //    reporte.SetParameterValue("@cliente", nota.Cliente);
-            //    reporte.SetParameterValue("@obra", nota.Obra);
-            //    reporte.SetParameterValue("@producto", nota.Producto);
-            //    reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            //    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-            //    reporte.SetParameterValue("@operadorCr", nota.Operador);
-            //    reporte.SetParameterValue("@equipoCr", nota.Equipo);
-            //    reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
-            //    reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
-            //    reporte.SetParameterValue("@vendedor", nota.Vendedor);
-            //    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-            //    reporte.SetParameterValue("@bombeable", nota.Bombeable);
-            //    reporte.SetParameterValue("@imper", nota.Imper);
-            //    reporte.SetParameterValue("@fibra", nota.Fibra);
-            //    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-            //    reporte.SetParameterValue("@cancelado", cancelado);
-            //    reporte.SetParameterValue("@fecha", nota.Fecha);
-            //    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+            if (nota.Bombeable)
+            {
+              reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
+            }
+            else
+            {
+                reporte.Load(path + "\\reportes\\rptnota.rpt");
+            }
 
-            //}
-            //else
-            //{
-               reporte.Load(path + "\\reportes\\rptnota.rpt");
-               reporte.SetDataSource(datos.Data);
-
-            reporte.SetParameterValue("@folio", nota.Folio);
-            reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-            reporte.SetParameterValue("@cliente", nota.Cliente);
-            reporte.SetParameterValue("@obra", nota.Obra);
-            reporte.SetParameterValue("@producto", nota.Producto);
-            reporte.SetParameterValue("@cantidad", nota.Cantidad);
-            reporte.SetParameterValue("@operador", nota.Operador);
-            reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-            reporte.SetParameterValue("@equipo", nota.Equipo);
-            reporte.SetParameterValue("@vendedor", nota.Vendedor);
-            reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-            reporte.SetParameterValue("@imper", nota.Imper);
-            reporte.SetParameterValue("@fibra", nota.Fibra);
-            reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+            reporte.SetDataSource(datos.Data);
             reporte.SetParameterValue("@cancelado", false);
-            reporte.SetParameterValue("@fecha", nota.Fecha);
-            reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
 
-
-            //}
-
-
-
-
-
-            //reporte.setparametervalue("@sello", usuario);
-
-            //reporte.setdatasource();
             reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
 
             bytes = File.ReadAllBytes(rutapdf);
