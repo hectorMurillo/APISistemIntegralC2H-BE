@@ -213,7 +213,7 @@ namespace DA.C2H
                 parametros.Add("@pComisionesXML", ConexionDbType.Xml,empleado.comisiones.ToXml("Comisiones"));
                 parametros.Add("@pNumSeguroSocial", ConexionDbType.VarChar, empleado.NumSeguroSocial);
                 parametros.Add("@pFechaNacimiento", ConexionDbType.Date, empleado.FechaNacimientoDate);
-                parametros.Add("@pFechaIngreso", ConexionDbType.Date, empleado.FechaIngresooDate);
+                parametros.Add("@pFechaIngreso", ConexionDbType.Date, empleado.FechaIngresoToDate);
                 parametros.Add("@pSalario", ConexionDbType.Int, empleado.Salario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);

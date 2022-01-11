@@ -57,7 +57,7 @@ namespace Models.Empleados
             }
         }
         public string FechaIngreso { get; set; }
-        public DateTime FechaIngresooDate
+        public DateTime FechaIngresoToDate
         {
             get
             {
