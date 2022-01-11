@@ -50,6 +50,7 @@ namespace Models.Empleados
         public List<ComisionModel> comisiones { get; set; }
         public string NumSeguroSocial { get; set; }
         public string FechaNacimiento { get; set; }
+
         public DateTime FechaNacimientoDate {
             get
             {
@@ -57,6 +58,7 @@ namespace Models.Empleados
             }
         }
         public string FechaIngreso { get; set; }
+
         public DateTime FechaIngresoToDate
         {
             get
