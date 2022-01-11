@@ -213,6 +213,7 @@ namespace DA.C2H
                 parametros.Add("@pComisionesXML", ConexionDbType.Xml,empleado.comisiones.ToXml("Comisiones"));
                 parametros.Add("@pNumSeguroSocial", ConexionDbType.VarChar, empleado.NumSeguroSocial);
                 parametros.Add("@pFechaNacimiento", ConexionDbType.Date, empleado.FechaNacimientoDate);
+                parametros.Add("@pFechaIngreso", ConexionDbType.Date, empleado.FechaIngresooDate);
                 parametros.Add("@pSalario", ConexionDbType.Int, empleado.Salario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
@@ -302,9 +303,12 @@ namespace DA.C2H
                         emp.correo = dr[8].ToString();
                         emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
-                        emp.motivo = dr[11].ToString();
                         emp.curp = dr[15].ToString();
                         emp.motivo = dr[16].ToString();
+                        emp.FechaNacimiento = dr[17].ToString();
+                        emp.FechaIngreso = dr[18].ToString();
+                        emp.Salario = int.Parse(dr[19].ToString());
+                        emp.NumSeguroSocial = dr[20].ToString();
                     }
 
                     if (ds.Tables.Count > 1){

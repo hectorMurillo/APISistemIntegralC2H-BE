@@ -102,6 +102,7 @@ namespace Models
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
         //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=produccion;Integrated Security=True;";
+
         #endregion
 
         public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
