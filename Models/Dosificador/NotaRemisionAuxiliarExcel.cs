@@ -10,6 +10,7 @@ namespace Models.Dosificador
     {
         public int Folio { get; set; }
         public string Equipo { get; set; }
+        public string Operador { get; set; }
         public bool Maquilado { get; set; }
         public decimal Cantidad { get; set; }
         public string Nomenclatura { get; set; }

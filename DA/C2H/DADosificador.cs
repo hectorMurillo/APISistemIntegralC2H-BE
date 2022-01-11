@@ -230,12 +230,15 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(DateTime fechaDesde, DateTime fechaHasta)
+        public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra,DateTime fechaDesde, DateTime fechaHasta)
         {
             Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pCliente", ConexionDbType.VarChar, cliente);
+                parametros.Add("@pObra", ConexionDbType.VarChar, obra);
                 parametros.Add("@pFechaDesde", ConexionDbType.DateTime, fechaDesde);
                 parametros.Add("@pFechaHasta", ConexionDbType.DateTime, fechaHasta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);

@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
-            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
+            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desdobtenerne}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
             //Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
@@ -138,7 +138,11 @@ namespace C2HApiControlInterno.Modules
             {
                 DateTime FechaDesde = paremeters.fechaDesde;
                 DateTime FechaHasta = paremeters.fechaHasta;
-                result = _DADosificador.ObtenerDatosNotaRemisionAExcel(FechaDesde,FechaHasta);
+                int codVendedor = 0;
+                string cliente = "", obra = "";
+        //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
+
+                result = _DADosificador.ObtenerDatosNotaRemisionAExcel(codVendedor,cliente,obra, FechaDesde,FechaHasta);
             }
             catch (Exception ex)
             {
