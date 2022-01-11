@@ -302,9 +302,12 @@ namespace DA.C2H
                         emp.correo = dr[8].ToString();
                         emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
-                        emp.motivo = dr[11].ToString();
                         emp.curp = dr[15].ToString();
                         emp.motivo = dr[16].ToString();
+                        emp.FechaNacimiento = dr[17].ToString();
+                        emp.FechaIngreso = dr[18].ToString();
+                        emp.Salario = int.Parse(dr[19].ToString());
+                        emp.NumSeguroSocial = dr[20].ToString();
                     }
 
                     if (ds.Tables.Count > 1){

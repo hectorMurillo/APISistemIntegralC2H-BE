@@ -86,7 +86,7 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
         //BD Coki Conexión
-        public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#DFEF0A0C\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
+        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#DFEF0A0C\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
 
 
 
@@ -102,12 +102,10 @@ namespace Models
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
         //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=produccion;Integrated Security=True;";
-<<<<<<< HEAD
+
         #endregion
 
         public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
-=======
->>>>>>> aef51b8f21166c73438d85464275b3e29e2431e3
 
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";

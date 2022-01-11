@@ -56,6 +56,16 @@ namespace Models.Empleados
                 return Convert.ToDateTime(FechaNacimiento);
             }
         }
-        public int Salario { get; set; }
+        public string FechaIngreso { get; set; }
+        public DateTime FechaIngresooDate
+        {
+            get
+            {
+                return Convert.ToDateTime(FechaIngreso);
+            }
+        }
+
+
+    public int Salario { get; set; }
     }
 }
