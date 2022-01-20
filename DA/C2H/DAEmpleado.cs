@@ -289,13 +289,13 @@ namespace DA.C2H
                 if (result.Value)
                 {
                     Empleado emp = new Empleado();
-               
+                    int salarioRef = 0;
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
                         emp.codigo = int.Parse(dr[0].ToString());
                         emp.nombre = dr[1].ToString();
-                        emp.apellidoM = dr[2].ToString();
-                        emp.apellidoP = dr[3].ToString();
+                        emp.apellidoP = dr[2].ToString();
+                        emp.apellidoM = dr[3].ToString();
                         emp.rFC = dr[4].ToString();
                         emp.codigoTipoEmpleado = int.Parse(dr[5].ToString());
                         emp.tipo = dr[6].ToString();
@@ -307,7 +307,7 @@ namespace DA.C2H
                         emp.motivo = dr[16].ToString();
                         emp.FechaNacimiento = dr[17].ToString();
                         emp.FechaIngreso = dr[18].ToString();
-                        emp.Salario = int.Parse(dr[19].ToString());
+                        emp.Salario =   int.TryParse(dr[19].ToString(),out salarioRef) ? int.Parse(dr[19].ToString()) : 0;
                         emp.NumSeguroSocial = dr[20].ToString();
                     }
 

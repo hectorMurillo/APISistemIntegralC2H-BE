@@ -100,9 +100,20 @@ namespace C2HApiControlInterno.Modules
         {
             Result result = new Result();
             var p = this.BindUsuario();
-
-            var empleado = this.Bind<Model.Empleado>();
-            result = _DAempleado.GuardarEmpleado(empleado, p.IdUsuario);
+            try
+            {
+                var empleado = this.Bind<Model.Empleado>();
+                result = _DAempleado.GuardarEmpleado(empleado, p.IdUsuario);
+            }
+            catch(Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
             return Response.AsJson(result);
         }
 

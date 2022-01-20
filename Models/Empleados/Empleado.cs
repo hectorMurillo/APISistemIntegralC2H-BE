@@ -54,7 +54,7 @@ namespace Models.Empleados
         public DateTime FechaNacimientoDate {
             get
             {
-                return Convert.ToDateTime(FechaNacimiento);
+                return FechaNacimiento == "" || FechaNacimiento == "null/null/null" ? new DateTime(1900,1,1) : Convert.ToDateTime(FechaNacimiento);
             }
         }
         public string FechaIngreso { get; set; }
@@ -63,7 +63,7 @@ namespace Models.Empleados
         {
             get
             {
-                return Convert.ToDateTime(FechaIngreso);
+                return FechaIngreso == "" || FechaIngreso == "null/null/null" ? new DateTime(1900,1,1) : Convert.ToDateTime(FechaIngreso);
             }
         }
 

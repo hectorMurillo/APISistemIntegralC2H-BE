@@ -36,9 +36,9 @@ namespace Models
 
         public static void ObtenerInformacionGlobal()
         {
-            FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
-            PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db";
-            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\";
+            FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\PRUEBAPRUEBA";
+            PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\temp\\refresh.db";
+            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\temp\\";
 
             if (!(Directory.Exists(PathTemp)))
             {

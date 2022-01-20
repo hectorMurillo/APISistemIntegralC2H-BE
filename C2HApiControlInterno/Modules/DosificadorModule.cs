@@ -25,7 +25,7 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
-            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desdobtenerne}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
+            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
             //Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
@@ -58,7 +58,7 @@ namespace C2HApiControlInterno.Modules
             Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
-            Get("nota-remision-auxiliar/toExcel/{fechaDesde}/{fechaHasta}", parametros => obtenerNotaRemisionAuxExcel(parametros));
+            Get("nota-remision-auxiliar/toExcel/{codVendedor}/{cliente}/{obra}/{fechaDesde}/{fechaHasta}", parametros => obtenerNotaRemisionAuxExcel(parametros));
             Post("notaRemisionAuxiliar/cancelar", _ => CancelarNotaRemisionAux());
 
 
@@ -136,11 +136,12 @@ namespace C2HApiControlInterno.Modules
             Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
             try
             {
-                DateTime FechaDesde = paremeters.fechaDesde;
-                DateTime FechaHasta = paremeters.fechaHasta;
-                int codVendedor = 0;
-                string cliente = "", obra = "";
-        //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
+                string FechaDesde = paremeters.fechaDesde;
+                string FechaHasta = paremeters.fechaHasta;
+                int codVendedor = paremeters.codVendedor;
+                string cliente = paremeters.cliente == "-" ? "" : paremeters.cliente;
+                string obra = paremeters.obra == "-" ? "" : paremeters.obra;
+                //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
 
                 result = _DADosificador.ObtenerDatosNotaRemisionAExcel(codVendedor,cliente,obra, FechaDesde,FechaHasta);
             }
@@ -464,7 +465,8 @@ namespace C2HApiControlInterno.Modules
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                result = _DADosificador.ObtenerUltimoFolioGinco();
+                int codUsuario = this.BindUsuario().IdUsuario;
+                result = _DADosificador.ObtenerUltimoFolioGinco(codUsuario);
             }
             catch (Exception ex)
             {
@@ -495,8 +497,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 int codVendedor = parametros.codVendedor;
-                string cliente = parametros.cliente;
-                string obra = parametros.obra;
+                string cliente = parametros.cliente == "-"? "" : parametros.cliente;
+                string obra = parametros.obra == "-" ? "" : parametros.obra;
                 string desde = parametros.desde;
                 string hasta = parametros.hasta;
                 result = _DADosificador.ObtenerNotasRemisionCanceladas(codVendedor,cliente,obra,desde,hasta);

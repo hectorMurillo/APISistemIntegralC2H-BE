@@ -5,6 +5,7 @@ using Models.Equipos;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -230,17 +231,20 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra,DateTime fechaDesde, DateTime fechaHasta)
+        public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra,string fechaDesde, string fechaHasta)
         {
             Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
             try
             {
+                var desde = DateTime.ParseExact(fechaDesde,"yyyyMMdd",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                var hasta = DateTime.ParseExact(fechaHasta,"yyyyMMdd",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                //var hasta = Convert.ToDateTime(fechaHasta);
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
                 parametros.Add("@pCliente", ConexionDbType.VarChar, cliente);
                 parametros.Add("@pObra", ConexionDbType.VarChar, obra);
-                parametros.Add("@pFechaDesde", ConexionDbType.DateTime, fechaDesde);
-                parametros.Add("@pFechaHasta", ConexionDbType.DateTime, fechaHasta);
+                parametros.Add("@pFechaDesde", ConexionDbType.DateTime, desde);
+                parametros.Add("@pFechaHasta", ConexionDbType.DateTime, hasta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -255,12 +259,13 @@ namespace DA.C2H
 
 
 
-        public Result<List<int>> ObtenerUltimoFolioGinco()
+        public Result<List<int>> ObtenerUltimoFolioGinco(int codUsuario)
         {
             Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
