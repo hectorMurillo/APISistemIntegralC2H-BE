@@ -130,11 +130,15 @@
     <Compile Include="Dosificador\ClientesVendedorAuxModel.cs" />
     <Compile Include="Dosificador\DatoModel.cs" />
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
+    <Compile Include="Dosificador\EquipoNomCortoModel.cs" />
+    <Compile Include="Dosificador\FirmaNotaRemisionModel.cs" />
     <Compile Include="Dosificador\FormulaModel.cs" />
+    <Compile Include="Dosificador\NotaRemisionAuxiliarExcel.cs" />
     <Compile Include="Dosificador\NotaRemisionAuxiliarModel.cs" />
     <Compile Include="Dosificador\NotaRemisionEncModel.cs" />
     <Compile Include="Dosificador\ObrasClientesAuxModel.cs" />
     <Compile Include="Dosificador\ObrasModel.cs" />
+    <Compile Include="Dosificador\OperadorEquipo.cs" />
     <Compile Include="Dosificador\OperadorModel.cs" />
     <Compile Include="Dosificador\ParametrosEspecialesModel.cs" />
     <Compile Include="Dosificador\PedidoModel.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="Materiales\TipoObra.cs" />
     <Compile Include="Materiales\TipoResistencia.cs" />
     <Compile Include="Materiales\TMA.cs" />
+    <Compile Include="Dosificador\NotaRemisionFirmaModel.cs" />
     <Compile Include="Noticias\Noticias.cs" />
     <Compile Include="Operadores\Operador.cs" />
     <Compile Include="Operadores\OperadorAuxiliar.cs" />

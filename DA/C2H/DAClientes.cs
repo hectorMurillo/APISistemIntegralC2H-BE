@@ -259,6 +259,7 @@ namespace DA.C2H
                 parametros.Add("@pLongitud", ConexionDbType.Decimal, direccion.Longitud);
                 parametros.Add("@pEntrega", ConexionDbType.Bit, direccion.Entrega);
                 parametros.Add("@pFiscal", ConexionDbType.Bit, direccion.Fiscal);
+                parametros.Add("@pAlias", ConexionDbType.VarChar, direccion.Alias);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -366,7 +367,6 @@ namespace DA.C2H
             }
             return result;
         }
-        
 
         public Result<List<DocumentoModel>> ObtenerDocumentos(int CodCliente)
         {
@@ -463,6 +463,7 @@ namespace DA.C2H
             }
             return result;
         }
+
         public Result ObtenerClientesCobranza()
         {
             Result result = new Result();

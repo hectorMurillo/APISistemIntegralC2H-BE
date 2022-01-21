@@ -48,5 +48,26 @@ namespace Models.Empleados
         //}
 
         public List<ComisionModel> comisiones { get; set; }
+        public string NumSeguroSocial { get; set; }
+        public string FechaNacimiento { get; set; }
+
+        public DateTime FechaNacimientoDate {
+            get
+            {
+                return FechaNacimiento == "" || FechaNacimiento == "null/null/null" ? new DateTime(1900,1,1) : Convert.ToDateTime(FechaNacimiento);
+            }
+        }
+        public string FechaIngreso { get; set; }
+
+        public DateTime FechaIngresoToDate
+        {
+            get
+            {
+                return FechaIngreso == "" || FechaIngreso == "null/null/null" ? new DateTime(1900,1,1) : Convert.ToDateTime(FechaIngreso);
+            }
+        }
+
+
+    public int Salario { get; set; }
     }
 }

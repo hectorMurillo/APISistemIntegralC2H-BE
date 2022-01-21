@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web;
 using WarmPack.Classes;
 using Models;
+using Model = Models.Dosificador;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -24,7 +25,8 @@ namespace C2HApiControlInterno.Modules
             this.RequiresAuthentication();
 
             Get("/ultimo-folio-ginco/", _ => UltimoFolioGinco());
-            Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());
+            Get("/notasRemision-canceladas/{codVendedor}/{cliente}/{obra}/{desde}/{hasta}", parametros => NotasRemisionCanceladas(parametros));
+            //Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
@@ -48,12 +50,154 @@ namespace C2HApiControlInterno.Modules
             //NOTA REMISION AUXILIAR
             
             Post("nota-remision-auxiliar/guardar", _ => GuardarNotaRemisionAuxiliar());
+            //Get("/nota-remision-auxiliar/")
             Get("/notaRemision-auxiliar/pdf/{folio}", parametros => ObtenerPdfNotaRemisionAuxiliar(parametros));
+            Post("nota-remision-firma/guardar", _ => GuardarFirmaNotaRemisionAuxiliar());
             Get("/operadores-auxiliar", _ => ObtenerOperadoresAuxiliar());
-            Get("/equipos-auxiliar", _ => ObtenerEquiposAuxiliar());
+            Get("/equipos-auxiliar/{codEmpleado}", parametros => ObtenerEquiposAuxiliar(parametros));
+            Get("/bombas-auxiliar", _ => ObtenerBombasAuxiliar());
             Get("/clientes/{cod}", parametros => ObtenerClientesVendedor(parametros));
             Get("/obras/{cliente}", parametros => ObtenerObrasCliente(parametros));
+            Get("nota-remision-auxiliar/toExcel/{codVendedor}/{cliente}/{obra}/{fechaDesde}/{fechaHasta}", parametros => obtenerNotaRemisionAuxExcel(parametros));
+            Post("notaRemisionAuxiliar/cancelar", _ => CancelarNotaRemisionAux());
+
+
+            //OperadorEquipo
+            Get("/operador-equipo", _ => obtenerOperadoresEquipos());
+            Get("/equipo-corto", _ => ObtenerEquipoNomCorto());
+            Get("/ayudantes-bomba", _ => obtenerAyudantesBomba());
+            Get("/operador-maquilado", _ => obtenerOperadoresMaquilado()); 
+                
+            Post("/operador-equipo-guardar", _ => guardarOperadorEquipo());
         }
+        private object obtenerOperadoresMaquilado()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerOperadoresMaquilado();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerEquipoNomCorto()
+        {
+            Result<List<Model.EquipoNomCortoModel>> result = new Result<List<Model.EquipoNomCortoModel>>();
+            try
+            {
+                result = _DADosificador.ObtenerEquipoNomCorto();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object guardarOperadorEquipo()
+        {
+            Result result = new Result();
+            try
+            {
+
+                var operador = this.Bind<Model.OperadorEquipo>();
+                result = _DADosificador.GuardarEquipoOperador(operador);
+            }
+            catch (Exception ex)
+            {
+
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object CancelarNotaRemisionAux()
+        {
+            Result result = new Result();
+            try
+            {
+                var notaRemision = this.Bind<NotaRemisionAuxiliarModel>();
+                var codUsuario = this.BindUsuario().IdUsuario;
+                result = _DADosificador.CancelarNotaRemisionAuxiliar(notaRemision,codUsuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object obtenerNotaRemisionAuxExcel(dynamic paremeters)
+        {
+            Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
+            try
+            {
+                string FechaDesde = paremeters.fechaDesde;
+                string FechaHasta = paremeters.fechaHasta;
+                int codVendedor = paremeters.codVendedor;
+                string cliente = paremeters.cliente == "-" ? "" : paremeters.cliente;
+                string obra = paremeters.obra == "-" ? "" : paremeters.obra;
+                //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
+
+                result = _DADosificador.ObtenerDatosNotaRemisionAExcel(codVendedor,cliente,obra, FechaDesde,FechaHasta);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarFirmaNotaRemisionAuxiliar()
+        {
+
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var notaRemision = this.Bind<NotaRemisionFirmaModel>();
+                result = _DADosificador.GuardarFirmaNotaRemisionAuxiliar(notaRemision, codUsuario);
+            }
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+        private object obtenerAyudantesBomba()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerAyudantesBomba();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object obtenerOperadoresEquipos()
+        {
+            Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
+            try
+            {
+                result = _DADosificador.ObtenerEquipoOperador();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object ObtenerClientesVendedor(dynamic parametros)
         {
             Result<List<ClientesVendedorAuxModel>> result = new Result<List<ClientesVendedorAuxModel>>();
@@ -68,6 +212,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object ObtenerObrasCliente(dynamic parametros)
         {
             Result<List<ObrasClientesAuxModel>> result = new Result<List<ObrasClientesAuxModel>>();
@@ -82,6 +227,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object ObtenerOperadoresAuxiliar()
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();
@@ -96,12 +242,12 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ObtenerEquiposAuxiliar()
+        private object ObtenerBombasAuxiliar()
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
             {
-                result = _DADosificador.ObtenerEquiposAux();
+                result = _DADosificador.ObtenerBombasAux();
             }
             catch (Exception ex)
             {
@@ -109,14 +255,40 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
+        private object ObtenerEquiposAuxiliar(dynamic parametros)
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                int codEmpleado = parametros.codEmpleado;
+                result = _DADosificador.ObtenerEquiposAux(codEmpleado);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object ObtenerPdfNotaRemisionAuxiliar(dynamic parametros)
         {
             Result result = new Result();
             var usuario = this.BindUsuario().Nombre;
             var folio = parametros.folio;
+
             var datos = _DADosificador.ObtenerDatosNotaAuxiliar(folio);
 
-           var nota = datos.Data[0];
+            //var nota = datos?.Data[0];
+            //var nota = null;
+            //try
+            //{
+                var nota = datos.Data.Count > 0 ? datos.Data[0] : "";
+            //}
+            //catch (Exception ex)
+            //{
+            //    var a = ex.Message;
+            //}
 
             var pathdirectorio = Globales.FolderPDF;
             //var pathdirectorio = "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
@@ -132,52 +304,68 @@ namespace C2HApiControlInterno.Modules
             byte[] bytes;
             bool cancelado = nota.Estatus == "C";
             ReportDocument reporte = new ReportDocument();
-
+            nota.Referencia = nota.Referencia == null ? "" : nota.Referencia;
             if (nota.Bombeable)
             {
-                reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
-                reporte.SetParameterValue("@folio", nota.Folio);
-                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-                reporte.SetParameterValue("@cliente", nota.Cliente);
-                reporte.SetParameterValue("@obra", nota.Obra);
-                reporte.SetParameterValue("@producto", nota.Producto);
-                reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                reporte.SetParameterValue("@operadorCr", nota.Operador);
-                reporte.SetParameterValue("@equipoCr", nota.Equipo);
-                reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
-                reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
-                reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-                reporte.SetParameterValue("@bombeable", nota.Bombeable);
-                reporte.SetParameterValue("@imper", nota.Imper);
-                reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-                reporte.SetParameterValue("@cancelado", cancelado);
-                reporte.SetParameterValue("@fecha", nota.Fecha);
-                reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                try
+                {
+                    reporte.Load(path + "\\reportes\\rptnotaBombeable.rpt");
+                    reporte.SetParameterValue("@folio", nota.Folio);
+                    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                    reporte.SetParameterValue("@cliente", nota.Cliente);
+                    reporte.SetParameterValue("@obra", nota.Obra);
+                    reporte.SetParameterValue("@producto", nota.Producto);
+                    reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                    reporte.SetParameterValue("@operadorCr", nota.Operador);
+                    reporte.SetParameterValue("@equipoCr", nota.Equipo);
+                    reporte.SetParameterValue("@operadorBomba", nota.OperadorBomba);
+                    reporte.SetParameterValue("@equipoBombeable", nota.EquipoBomba);
+                    reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
+                    reporte.SetParameterValue("@bombeable", nota.Bombeable);
+                    reporte.SetParameterValue("@imper", nota.Imper);
+                    reporte.SetParameterValue("@fibra", nota.Fibra);
+                    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                    reporte.SetParameterValue("@cancelado", cancelado);
+                    reporte.SetParameterValue("@fecha", nota.Fecha);
+                    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                    reporte.SetParameterValue("@referencia", nota.Referencia);
 
+                }catch(Exception ex)
+                {
+                    var msg = ex.Message;
+                }
             }
             else
             {
                 reporte.Load(path + "\\reportes\\rptnota.rpt");
-                reporte.SetParameterValue("@folio", nota.Folio);
-                reporte.SetParameterValue("@folioginco", nota.FolioGinco);
-                reporte.SetParameterValue("@cliente", nota.Cliente);
-                reporte.SetParameterValue("@obra", nota.Obra);
-                reporte.SetParameterValue("@producto", nota.Producto);
-                reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                reporte.SetParameterValue("@operador", nota.Operador);
-                reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                reporte.SetParameterValue("@equipo", nota.Equipo);
-                reporte.SetParameterValue("@vendedor", nota.Vendedor);
-                reporte.SetParameterValue("@usuario", nota.NombreUsuario);
-                reporte.SetParameterValue("@imper", nota.Imper);
-                reporte.SetParameterValue("@fibra", nota.Fibra);
-                reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-                reporte.SetParameterValue("@cancelado", cancelado);
-                reporte.SetParameterValue("@fecha", nota.Fecha);
-                reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                //reporte.SetDataSource(nota);
+                try
+                {
+                    reporte.SetParameterValue("@folio", nota.Folio);
+                    reporte.SetParameterValue("@folioginco", nota.FolioGinco);
+                    reporte.SetParameterValue("@cliente", nota.Cliente);
+                    reporte.SetParameterValue("@obra", nota.Obra);
+                    reporte.SetParameterValue("@producto", nota.Producto);
+                    reporte.SetParameterValue("@cantidad", nota.Cantidad);
+                    reporte.SetParameterValue("@operador", nota.Operador);
+                    reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
+                    reporte.SetParameterValue("@equipo", nota.Equipo);
+                    reporte.SetParameterValue("@vendedor", nota.Vendedor);
+                    reporte.SetParameterValue("@usuario", nota.NombreUsuario);
+                    reporte.SetParameterValue("@imper", nota.Imper);
+                    reporte.SetParameterValue("@fibra", nota.Fibra);
+                    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                    reporte.SetParameterValue("@cancelado", cancelado);
+                    reporte.SetParameterValue("@fecha", nota.Fecha);
+                    reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
+                    reporte.SetParameterValue("@referencia", nota.Referencia);
+                }
+                catch (Exception ex)
+                {
+                    var msg = ex.Message;
+                }
             }
 
 
@@ -187,7 +375,14 @@ namespace C2HApiControlInterno.Modules
             //reporte.setparametervalue("@sello", usuario);
 
             //reporte.setdatasource();
-            reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            try
+            {
+                reporte.ExportToDisk(ExportFormatType.PortableDocFormat, rutapdf);
+            }
+            catch(Exception ex)
+            {
+                var mensaje = ex.Message;
+            }
 
             bytes = File.ReadAllBytes(rutapdf);
             string pdfbase64 = Convert.ToBase64String(bytes);
@@ -250,7 +445,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object VerificarNotasRemisionPedido(dynamic parametros)
         {
             Result<DatoModel> result = new Result<DatoModel>();
@@ -271,7 +465,8 @@ namespace C2HApiControlInterno.Modules
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                result = _DADosificador.ObtenerUltimoFolioGinco();
+                int codUsuario = this.BindUsuario().IdUsuario;
+                result = _DADosificador.ObtenerUltimoFolioGinco(codUsuario);
             }
             catch (Exception ex)
             {
@@ -279,6 +474,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object FolioPedido(dynamic parametros)
         {
             Result<List<PedidoModel>> result = new Result<List<PedidoModel>>();
@@ -295,12 +491,17 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object NotasRemisionCanceladas()
+        private object NotasRemisionCanceladas(dynamic parametros)
         {
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
-                result = _DADosificador.ObtenerNotasRemisionCanceladas();
+                int codVendedor = parametros.codVendedor;
+                string cliente = parametros.cliente == "-"? "" : parametros.cliente;
+                string obra = parametros.obra == "-" ? "" : parametros.obra;
+                string desde = parametros.desde;
+                string hasta = parametros.hasta;
+                result = _DADosificador.ObtenerNotasRemisionCanceladas(codVendedor,cliente,obra,desde,hasta);
             }
             catch (Exception ex)
             {
@@ -308,7 +509,6 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
-
 
         private object UltimoFolioNotaRemision()
         {
@@ -338,6 +538,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object GuardarNotaRemision()
         {
 
@@ -463,7 +664,6 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-
         private object Productos(dynamic parametros)
         {
             Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
@@ -509,6 +709,7 @@ namespace C2HApiControlInterno.Modules
             }
             return Response.AsJson(result);
         }
+
         private object Operadores(dynamic parametros)
         {
             Result<List<OperadorModel>> result = new Result<List<OperadorModel>>();

@@ -182,6 +182,7 @@ namespace DA.C2H
             }
             return result;
         }
+
         public Result GuardarEmpleado(Empleado empleado, int idUsuario)
         {
             Result result = new Result();
@@ -210,6 +211,10 @@ namespace DA.C2H
                 parametros.Add("@pMotivo", ConexionDbType.VarChar, empleado.motivo);
                 parametros.Add("@pCalleNumero", ConexionDbType.VarChar, empleado.direccion.CalleNumero);
                 parametros.Add("@pComisionesXML", ConexionDbType.Xml,empleado.comisiones.ToXml("Comisiones"));
+                parametros.Add("@pNumSeguroSocial", ConexionDbType.VarChar, empleado.NumSeguroSocial);
+                parametros.Add("@pFechaNacimiento", ConexionDbType.Date, empleado.FechaNacimientoDate);
+                parametros.Add("@pFechaIngreso", ConexionDbType.Date, empleado.FechaIngresoToDate);
+                parametros.Add("@pSalario", ConexionDbType.Int, empleado.Salario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -265,8 +270,6 @@ namespace DA.C2H
             return result;
         }
 
-
-
         public Result ObtenerEmpleado(int codEmpleado)
         {
             Result result = new Result();
@@ -286,13 +289,13 @@ namespace DA.C2H
                 if (result.Value)
                 {
                     Empleado emp = new Empleado();
-               
+                    int salarioRef = 0;
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
                         emp.codigo = int.Parse(dr[0].ToString());
                         emp.nombre = dr[1].ToString();
-                        emp.apellidoM = dr[2].ToString();
-                        emp.apellidoP = dr[3].ToString();
+                        emp.apellidoP = dr[2].ToString();
+                        emp.apellidoM = dr[3].ToString();
                         emp.rFC = dr[4].ToString();
                         emp.codigoTipoEmpleado = int.Parse(dr[5].ToString());
                         emp.tipo = dr[6].ToString();
@@ -300,9 +303,12 @@ namespace DA.C2H
                         emp.correo = dr[8].ToString();
                         emp.telefono = dr[9].ToString();
                         emp.celular = dr[10].ToString();
-                        emp.motivo = dr[11].ToString();
                         emp.curp = dr[15].ToString();
                         emp.motivo = dr[16].ToString();
+                        emp.FechaNacimiento = dr[17].ToString();
+                        emp.FechaIngreso = dr[18].ToString();
+                        emp.Salario =   int.TryParse(dr[19].ToString(),out salarioRef) ? int.Parse(dr[19].ToString()) : 0;
+                        emp.NumSeguroSocial = dr[20].ToString();
                     }
 
                     if (ds.Tables.Count > 1){
@@ -328,6 +334,26 @@ namespace DA.C2H
             return result;
         }
 
+        public Result guardarArchivo(int codigo, int codigoEmpleado, int codigoTipoDocumento, byte[] imagen, string extension, bool vieneImagen)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pCodigoEmpleado", ConexionDbType.Int, codigoEmpleado);
+                parametros.Add("@pCodigoTipoDocumento", ConexionDbType.Int, codigoTipoDocumento);
+                parametros.Add("@pImagen", ConexionDbType.VarBinary, imagen);
+                parametros.Add("@pExtension", ConexionDbType.VarChar, extension);
+                parametros.Add("@pVieneImagen", ConexionDbType.Bit, vieneImagen);
+                result = _conexion.Execute("ProcEmpleadoDocumentacionGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

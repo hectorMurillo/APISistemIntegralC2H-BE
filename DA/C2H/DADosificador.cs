@@ -1,9 +1,11 @@
-﻿using Models;
+﻿using C2HApiControlInterno.Modules;
+using Models;
 using Models.Dosificador;
 using Models.Equipos;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,12 +79,106 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<EquipoModel>> ObtenerEquiposAux()
+        public Result<List<EquipoNomCortoModel>> ObtenerEquipoNomCorto()
+        {
+            Result<List<EquipoNomCortoModel>> result = new Result<List<EquipoNomCortoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<EquipoNomCortoModel>("ProcCatEquiposNomCortoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<OperadorEquipo>> ObtenerAyudantesBomba()
+        {
+            Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorEquipo>("ProcCatAyudantesBombaCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
+        public Result<List<OperadorEquipo>> ObtenerOperadoresMaquilado()
+        {
+            Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorEquipo>("ProcCatOperadoresOllaMaquiladoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<OperadorEquipo>> ObtenerEquipoOperador()
+        {
+            Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<OperadorEquipo>("ProcCatOperadorEquipoCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarEquipoOperador(OperadorEquipo operador)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+               
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, operador.CodEmpleado);
+                parametros.Add("@pEquipo", ConexionDbType.VarChar, operador.Equipo);
+                parametros.Add("@pCodAyudante", ConexionDbType.Int, operador.CodAyudante);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatOperadorEquipoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        public Result<List<EquipoModel>> ObtenerBombasAux()
         {
             Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pBombeable", ConexionDbType.Bit, 1);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -95,12 +191,81 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<int>> ObtenerUltimoFolioGinco()
+        public Result CancelarNotaRemisionAuxiliar(NotaRemisionAuxiliarModel notaRemision,int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, notaRemision.IdNotasRemisionEnc);
+                parametros.Add("@pCodigoUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pObservacion", ConexionDbType.VarChar, notaRemision.Observacion);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcNotasRemisionAuxiliarCancelar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<EquipoModel>> ObtenerEquiposAux(int codEmpleado)
+        {
+            Result<List<EquipoModel>> result = new Result<List<EquipoModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<EquipoModel>("ProcEquiposAuxCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra,string fechaDesde, string fechaHasta)
+        {
+            Result<List<NotaRemisionAuxiliarExcel>> result = new Result<List<NotaRemisionAuxiliarExcel>>();
+            try
+            {
+                var desde = DateTime.ParseExact(fechaDesde,"yyyyMMdd",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                var hasta = DateTime.ParseExact(fechaHasta,"yyyyMMdd",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                //var hasta = Convert.ToDateTime(fechaHasta);
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pCliente", ConexionDbType.VarChar, cliente);
+                parametros.Add("@pObra", ConexionDbType.VarChar, obra);
+                parametros.Add("@pFechaDesde", ConexionDbType.DateTime, desde);
+                parametros.Add("@pFechaHasta", ConexionDbType.DateTime, hasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<NotaRemisionAuxiliarExcel>("ProcNotasRemisionEncConExcel", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+
+        public Result<List<int>> ObtenerUltimoFolioGinco(int codUsuario)
         {
             Result<List<int>> result = new Result<List<int>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -113,12 +278,19 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionCanceladas()
+        public Result<List<DatosNotaRemision>> ObtenerNotasRemisionCanceladas(int codVendedor, string cliente, string obra,string desde, string hasta)
         {
+            cliente = cliente == "0" ? "" : cliente;
+            obra = obra == "0" ? "" : obra;
             Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
             try
             {
                 var parametros = new ConexionParameters();
+                parametros.Add("@pCodVendedor", ConexionDbType.Int, codVendedor);
+                parametros.Add("@pCliente", ConexionDbType.VarChar, cliente);
+                parametros.Add("@pObra", ConexionDbType.VarChar, obra);
+                parametros.Add("@pFechaDesde", ConexionDbType.VarChar, desde);
+                parametros.Add("@pFechaHasta", ConexionDbType.VarChar, hasta);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -388,7 +560,7 @@ namespace DA.C2H
 
                 _conexion.Execute("ProcNotaRemisionGuardar_Provisional", parametros);
 
-                //result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
+                result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
                 result.Value = parametros.Value("@pResultado").ToBoolean();
                 result.Message = parametros.Value("@pMsg").ToString();
             }
@@ -627,6 +799,33 @@ namespace DA.C2H
                 result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCatClienteNotaRemision", parametros);
 
 
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result GuardarFirmaNotaRemisionAuxiliar(NotaRemisionFirmaModel notaRemision, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdNotaRemisionFirma", ConexionDbType.Int, notaRemision.IdNotaRemisionFirma);
+                parametros.Add("@pIdNotaRemisionEnc", ConexionDbType.Int, notaRemision.IdNotaRemisionEnc);
+                parametros.Add("@pFirmaImagen", ConexionDbType.VarBinary, notaRemision.FirmaImagen);
+                parametros.Add("@pUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pEstatus", ConexionDbType.VarChar, notaRemision.Estatus);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.Execute("ProcNotaRemisionFirmasGuardar", parametros);
+
+                //result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
             }
             catch (Exception ex)
             {

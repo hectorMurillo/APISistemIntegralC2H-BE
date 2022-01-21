@@ -6,6 +6,7 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using WarmPack.Classes;
 using Model = Models.Empleados;
@@ -25,7 +26,7 @@ namespace C2HApiControlInterno.Modules
             Post("/SubTipos", _ => GetSubTipos());
             Get("/tiposUtilizados", _ => GetTiposUtilizados());
             Post("/guardar", _ => PostEmpleado());
-            Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));            
+                   
             Post("/personalCargaDiesel/guardar", _ => PostPersonalCargaDiesel());
             Get("/personalCargaDiesel/{codPersonal}", x => GetPersonalCargaDiesel(x));
             Get("/tiposEmpleado/{codTipoEmpleado}", x => GetTiposEmpleado(x));
@@ -34,6 +35,9 @@ namespace C2HApiControlInterno.Modules
             Get("/{codEmpleado}", x => ObtenerEmpleado(x));
             Get("/empleadosNoUsuario", _ => ObtenerEmpleadoNoUsuario());
             Get("/comision", _ => GetTodos());
+
+            Post("/guardar-archivo", _ => guardarArchivo());
+            Get("/documentacion/{codEmpleado}", x => GetDocumentacionPorEmpleado(x));
         }
 
 
@@ -96,9 +100,20 @@ namespace C2HApiControlInterno.Modules
         {
             Result result = new Result();
             var p = this.BindUsuario();
-
-            var empleado = this.Bind<Model.Empleado>();
-            result = _DAempleado.GuardarEmpleado(empleado, p.IdUsuario);
+            try
+            {
+                var empleado = this.Bind<Model.Empleado>();
+                result = _DAempleado.GuardarEmpleado(empleado, p.IdUsuario);
+            }
+            catch(Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
             return Response.AsJson(result);
         }
 
@@ -183,10 +198,40 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
+        private dynamic guardarArchivo()
+        {
+            Result result = new Result();
+            try
+            {
+                
 
+                int codigo = (int)this.Request.Form.codigo;
+                int codigoEmpleado = (int)this.Request.Form.codigoEmpleado;
+                int codigoTipoDocumento = (int)this.Request.Form.codigoTipoDocumento;
+                var archivo = this.Request.Files;
+                byte[] buffer = new byte[0];
+                string extension = (string)this.Request.Form.extension;
+                bool vieneImagen = false;
 
+                if(archivo.Count() > 0)
+                {
+                    var ms = new MemoryStream();
+                    string filePath = Path.Combine(new DefaultRootPathProvider().GetRootPath(), "/" + archivo.ElementAt(0).Name);
+                    archivo.ElementAt(0).Value.CopyTo(ms);
+                    buffer = ms.ToArray();
+                    vieneImagen = true;
+                }
 
+                result = _DAempleado.guardarArchivo(codigo, codigoEmpleado, codigoTipoDocumento, buffer, extension, vieneImagen);
 
+               
+            }
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         // obtener usuario por cod
         private object ObtenerEmpleado(dynamic x)

@@ -23,8 +23,6 @@ namespace C2HApiControlInterno.Modules
             _DAAgentesVentas = new DA.C2H.DAAgenteVentas();
             Get("/todosCombo", _ => GetTodos());
             Get("/notas-remision/{codAgente}", parametros => NotasRemisionAgente(parametros));
-            Get("/notas-remision-auxiliar/{codAgente}", parametros => NotasRemisionAuxiliarAgente(parametros));
-
             Get("/pedidos", _ => PedidosAgente());
             Get("/notas-remision-detalle/{idNotaRemision}", parametros => DetalleNotasRemisionAgente(parametros));
 
@@ -89,23 +87,6 @@ namespace C2HApiControlInterno.Modules
                 //int codAgente = this.BindUsuario().CodEmpleado;
                 int codAgente = parametros.codAgente;
                 result = _DAAgentesVentas.ObtenerClientesPorAgente(codAgente);
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-            }
-            return Response.AsJson(result);
-        }
-
-        
-        private object NotasRemisionAuxiliarAgente(dynamic parametros)
-        {
-            Result<List<DatosNotaRemision>> result = new Result<List<DatosNotaRemision>>();
-            try
-            {
-                //int codAgente = parametros.codAgente;
-                int codAgente = parametros.codAgente;
-                result = _DAAgentesVentas.ObtenerNotasRemisionAuxiliarAgente(codAgente);
             }
             catch (Exception ex)
             {
