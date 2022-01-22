@@ -18,7 +18,7 @@ namespace Models
     public class Globales
     {
         private static AppConfiguration _Configuracion;
-        private static bool produccion = false;
+        private static bool produccion = true;
         public static string CorreoAutomatico = "";
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
@@ -36,9 +36,9 @@ namespace Models
 
         public static void ObtenerInformacionGlobal()
         {
-            FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\PRUEBAPRUEBA";
-            PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\temp\\refresh.db";
-            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\ApiPruebas\\temp\\";
+            FolderPDF = !produccion ? "c:\\pruebaprueba\\" : "h:\\root\\home\\hector14-001\\www\\api\\PRUEBAPRUEBA";
+            PathDB = !produccion ? "c:\\temp\\refresh.db" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\refresh.db";
+            PathTemp = !produccion ? "c:\\temp\\" : "h:\\root\\home\\hector14-001\\www\\api\\temp\\";
 
             if (!(Directory.Exists(PathTemp)))
             {
@@ -105,8 +105,8 @@ namespace Models
 
         #endregion
 
-        public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
-
+        //public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
+        public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_producciontemp;User Id=db_a55757_producciontemp_admin;Password=C0NCRET052HPR0D";
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";
 
