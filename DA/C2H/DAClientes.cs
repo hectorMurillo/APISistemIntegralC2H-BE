@@ -636,5 +636,25 @@ namespace DA.C2H
             return result;
         }
 
+        //AUXILIAR
+        public Result<List<ClientesModelAuxiliar>> ObtenerClientesAgenteAUXILIAR(int codAgente)
+        {
+            Result<List<ClientesModelAuxiliar>> result = new Result<List<ClientesModelAuxiliar>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodAgente", ConexionDbType.Int, codAgente);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<Model.ClientesModelAuxiliar>("ProcCatClientesAgenteConAUXILIAR", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
     }
 }

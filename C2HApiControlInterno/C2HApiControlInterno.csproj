@@ -187,7 +187,7 @@
     <Compile Include="Modules\SimpleEncoder.cs" />
     <Compile Include="Modules\UsuarioModule.cs" />
     <Compile Include="Modules\VendedorModule.cs" />
-    <Compile Include="Modules\VentasModule.cs" />
+    <Compile Include="Modules\ReportesModule.cs" />
     <Compile Include="NancyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
@@ -214,6 +214,20 @@
     <Content Include="Reportes\RptComisiones.rpt" />
     <Content Include="Reportes\RptCotizacion.rpt" />
     <Content Include="Reportes\rptNotaBombeable.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\RptPedidosCancelados.rpt" />
+    <Content Include="Reportes\RptPedidosReagendados.rpt" />
+    <Content Include="Reportes\RptNotasCanceladas.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\RptNotasNocturnas.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\RptNotasForaneas.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\RptNotas.rpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Web.Debug.config">

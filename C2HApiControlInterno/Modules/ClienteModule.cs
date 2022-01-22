@@ -62,6 +62,14 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x));
 
 
+
+
+            //AUXILIAR
+            Get("/clientes-agente-auxiliar/{codAgente}", x => ObtenerClientesAgenteAUXILIAR(x));
+
+
+
+
         }
 
         private object EliminarDocumentoCte(dynamic x)
@@ -487,6 +495,25 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DAClientes.ObtenerClientes(codCliente);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+
+        //AUXILIAR
+        private object ObtenerClientesAgenteAUXILIAR(dynamic x)
+        {
+            Result<List<ClientesModelAuxiliar>> result = new Result<List<ClientesModelAuxiliar>>();
+            int codAgente = x.codAgente;
+
+            try
+            {
+                result = _DAClientes.ObtenerClientesAgenteAUXILIAR(codAgente);
             }
             catch (Exception ex)
             {

@@ -26,10 +26,10 @@ namespace C2HApiControlInterno
 
         private void CargarParametros()
         {
-            Globales.Port = int.Parse(_DAHerramientas.ObtenerParametro("PuertoCorreo").Data.Valor);
-            Globales.Host = _DAHerramientas.ObtenerParametro("HostCorreo").Data.Valor;
-            Globales.CorreoAutomatico = _DAHerramientas.ObtenerParametro("CorreoPrincipal").Data.Valor;
-            Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
+            //Globales.Port = int.Parse(_DAHerramientas.ObtenerParametro("PuertoCorreo").Data.Valor);
+            //Globales.Host = _DAHerramientas.ObtenerParametro("HostCorreo").Data.Valor;
+            //Globales.CorreoAutomatico = _DAHerramientas.ObtenerParametro("CorreoPrincipal").Data.Valor;
+            //Globales.CorreoAutomaticoPassword = _DAHerramientas.ObtenerParametro("CorreoPrincipalPassword").Data.Valor;
             //Globales.URLEncuesta = _DAHerramientas.ObtenerParametro("URLEncuesta").Data.Valor;
             //Globales.URLFacebook = _DAHerramientas.ObtenerParametro("URLFacebook").Data.Valor;
             //Globales.URLWeb = _DAHerramientas.ObtenerParametro("URLWeb").Data.Valor;

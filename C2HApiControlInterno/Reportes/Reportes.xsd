@@ -5,58 +5,175 @@
 >
  
 
-
-  <xs:element name="rptNota">
+  <xs:element name="RptMensualMetros">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="IdNotasRemisionEnc " type="xs:int"/>
-        <xs:element name="FolioPedido" type="xs:int"/>
-        <xs:element name="Folio" type="xs:int"/>
-        <xs:element name="FolioCarga" type="xs:int"/>
-        <xs:element name="FolioNotaRemision" type="xs:int"/>
-        <xs:element name="FolioGinco" type="xs:int"/>
-        <xs:element name="Cliente" type="xs:string"/>
-        <xs:element name="Domicilio" type="xs:string"/>
-        <xs:element name="Estatus" type="xs:string"/>
-        <xs:element name="Obra" type="xs:string"/>
-        <xs:element name="HoraSalida" type="xs:string"/>
-        <xs:element name="Formula" type="xs:string"/>
-        <xs:element name="Producto" type="xs:string"/>
-        <xs:element name="Operador" type="xs:string"/>
-        <xs:element name="OperadorBomba" type="xs:string"/>
-        <xs:element name="Equipo" type="xs:string"/>
-        <xs:element name="EquipoBomba" type="xs:string"/>
-        <xs:element name="CodEquipoBomba" type="xs:int"/>
-        <xs:element name="Vendedor" type="xs:string"/>
-        <xs:element name="Fecha" type="xs:dateTime"/>
-        <xs:element name="FechaConFormato" type="xs:string"/>
-        <xs:element name="CodOperador_1" type="xs:string"/>
-        <xs:element name="CodOperador_2" type="xs:string"/>
-        <xs:element name="CodEquipo_CR" type="xs:string"/>
-        <xs:element name="CodEquipo_BB" type="xs:string"/>
-        <xs:element name="Bombeable" type="xs:boolean"/>
-        <xs:element name="Fibra" type="xs:boolean"/>
-        <xs:element name="Imper" type="xs:boolean"/>
-        <xs:element name="Maquilado" type="xs:boolean"/>
         <xs:element name="Cantidad" type="xs:decimal"/>
-        <xs:element name="CantidadPedido" type="xs:decimal"/>
-        <xs:element name="FechaFormato" type="xs:string"/>
-        <xs:element name="NombreUsuario" type="xs:string"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Agente" type="xs:string"/>
+        <xs:element name ="Fecha" type ="xs:dateTime"/>
+        <xs:element name="Producto" type="xs:string"/>
         <xs:element name="Nomenclatura" type="xs:string"/>
-        <xs:element name="CelularVendedor" type="xs:string"/>
-        <xs:element name="TelefonoEmpresa" type="xs:string"/>
-        <xs:element name="CorreoCliente" type="xs:string"/>
-        <xs:element name="CodOperador" type="xs:int"/>
-        <xs:element name="CodEquipo" type="xs:int"/>
-        <xs:element name="Observacion" type="xs:string"/>
-        <xs:element name="UltimoHorometraje" type="xs:decimal"/>
-        <xs:element name="HoraSalidaPlanta" type="xs:decimal"/>
-        <xs:element name="Referencia" type="xs:int"/>
-        <xs:element name="FirmaElectronica" type="xs:boolean"/>
-        <xs:element name="Imagen" type="xs:base64Binary"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="RptMensualClientes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Agente" type="xs:string"/>
+        <xs:element name ="Fecha" type ="xs:dateTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RptMensualProductos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Descripcion" type="xs:string"/>
+        <xs:element name="Nomenclatura" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RptEquiposEntradasSalidas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CodEquipo" type="xs:integer"/>
+        <xs:element name="CodOperador" type="xs:integer"/>
+        <xs:element name="KilometrajeSalida" type="xs:decimal"/>
+        <xs:element name="HorometrajeSalida" type="xs:decimal"/>
+        <xs:element name="FechaSalida" type="xs:string"/>
+        <xs:element name="HoraSalida" type="xs:string"/>
+        <xs:element name="KilometrajeEntrada" type="xs:decimal"/>
+        <xs:element name="HorometrajeEntrada" type="xs:decimal"/>
+        <xs:element name="FechaEntrada" type="xs:string"/>
+        <xs:element name="HoraEntrada" type="xs:string"/>
+        <xs:element name="NotaRemision" type="xs:integer"/>
+        <xs:element name="TiempoFuera" type="xs:string"/>
+        <xs:element name="KilometrosRecorridos" type="xs:decimal"/>
+        <xs:element name="HorometrajeRecorrido" type="xs:decimal"/>
+        <xs:element name="Equipo" type="xs:string"/>
+        <xs:element name="Operador" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RptEquipos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CodEquipo" type="xs:integer"/>
+        <xs:element name="Equipo" type="xs:string"/>
+        <xs:element name="KilometrosRecorridos" type="xs:decimal"/>
+        <xs:element name="HorometrajeRecorrido" type="xs:decimal"/>
+        <xs:element name="Viajes" type="xs:integer"/>
+        <xs:element name="Obras" type="xs:integer"/>
+        <xs:element name="litrosConsumidos" type="xs:decimal"/>
+        <xs:element name="metros" type="xs:decimal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="RptComisiones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CodOperador" type="xs:integer"/>
+        <xs:element name="Operador" type="xs:string"/>
+        <xs:element name="CantViajes" type="xs:integer"/>
+        <xs:element name="TotalComisionViajes" type="xs:decimal"/>
+        <xs:element name="CantDesayunos" type="xs:integer"/>
+        <xs:element name="TotalComisionDesayunos" type="xs:decimal"/>
+        <xs:element name="CantCenas" type="xs:integer"/>
+        <xs:element name="TotalComisionCenas" type="xs:decimal"/>
+        <xs:element name="CantForaneos" type="xs:integer"/>
+        <xs:element name="TotalComisionForaneos" type="xs:decimal"/>
+        <xs:element name="CantNocturnos" type="xs:integer"/>
+        <xs:element name="TotalComisionNocturnos" type="xs:decimal"/>
+        <xs:element name="CantMetrosProducidos" type="xs:integer"/>
+        <xs:element name="TotalMetrosProducidos" type="xs:decimal"/>
+        <xs:element name="Subtotal" type="xs:decimal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--Reporte pedidos cancelados-->
+  <xs:element name="RptPedidosCancelados">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FolioPedido" type="xs:integer"/>
+        <xs:element name="CodCliente" type="xs:integer"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="CodVendedor" type="xs:integer"/>
+        <xs:element name="Vendedor" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Fecha" type="xs:string"/>
+        <xs:element name="Hora" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Planta" type="xs:string"/>
+        <xs:element name="Motivo" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Reporte pedidos reagendados-->
+  <xs:element name="RptPedidosReagendados">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FolioPedido" type="xs:integer"/>
+        <xs:element name="CodCliente" type="xs:integer"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="CodVendedor" type="xs:integer"/>
+        <xs:element name="Vendedor" type="xs:string"/>
+        <xs:element name="FechaAnterior" type="xs:string"/>
+        <xs:element name="HoraAnterior" type="xs:string"/>
+        <xs:element name="FechaNueva" type="xs:string"/>
+        <xs:element name="HoraNueva" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Motivo" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Reporte Cotizacion-->
+  <xs:element name="RptCotizaciones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Nomenclatura" type="xs:string"/>
+        <xs:element name="Descripcion" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Precio" type="xs:decimal"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name ="FechaCotizacion" type ="xs:dateTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <!--Reporte notas -->
+  <xs:element name="RptNotas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FolioPedido" type="xs:integer"/>
+        <xs:element name="Cliente" type="xs:string"/>
+        <xs:element name="CodVendedor" type="xs:integer"/>
+        <xs:element name="Vendedor" type="xs:string"/>
+        <xs:element name="Obra" type="xs:string"/>
+        <xs:element name="Fecha" type="xs:string"/>
+        <xs:element name="Hora" type="xs:string"/>
+        <xs:element name="Cantidad" type="xs:decimal"/>
+        <xs:element name="Planta" type="xs:string"/>
+        <xs:element name="Estatus" type="xs:string"/>
+        <xs:element name="Equipo" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+ 
 </xs:schema>
 

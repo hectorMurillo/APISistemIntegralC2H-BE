@@ -114,7 +114,7 @@
     <Compile Include="C2H\DAUsuario.cs" />
     <Compile Include="C2H\DAPortero.cs" />
     <Compile Include="C2H\DAVendedor.cs" />
-    <Compile Include="C2H\DAVentas.cs" />
+    <Compile Include="C2H\DAReportes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

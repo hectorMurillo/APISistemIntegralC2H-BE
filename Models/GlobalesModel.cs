@@ -18,7 +18,7 @@ namespace Models
     public class Globales
     {
         private static AppConfiguration _Configuracion;
-        private static bool produccion = true;
+        private static bool produccion = false;
         public static string CorreoAutomatico = "";
         public static string CorreoAutomaticoPassword = "";
         public static string Host = "";
@@ -81,12 +81,13 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=C2HControlInterno;persist security info=True;user id=sa;password=1234;";
         //public static string ConexionPrincipal => @"data source=sql5052.site4now.net;initial catalog=DB_A55757_c2h;persist security info=True;user id=DB_A55757_c2h_admin;password=hector141093;";
         //public static string ConexionPrincipal => @"data source=DESKTOP-FDVVO85;initial catalog=DB_A55757_c2h;persist security info=True;user id=sa;password=123;";
-        #region BASES DE DATOS
+
+
         //BD PRUEBAS OLD
         //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
         //BD Coki Conexión
-        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#DFEF0A0C\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
+        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#1C753DE4\tsql\query;Initial Catalog=PruebasBeforeProduction;Integrated Security=True";
 
 
 
@@ -94,19 +95,15 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_produccion; persist security info=True;user id=db_a55757_produccion_admin; password=C0NCRET052HPR0D;";
 
         //producción
-        //public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_produccion; persist security info=True;user id=db_a55757_produccion_admin; password=C0NCRET052HPR0D;";
+        public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_produccion; persist security info=True;user id=db_a55757_produccion_admin; password=C0NCRET052HPR0D;";
 
         //pruebas actuales
         //public static string ConexionPrincipal => @"data source=SQL5061.site4now.net; initial catalog=db_a55757_v2; persist security info=True;user id=db_a55757_v2_admin; password=_C0NCR3T05D0SH;";
 
         //BD LOCAL
         //public static string ConexionPrincipal => @"data source=DESKTOP-PL5JBRK\SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
-        //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=produccion;Integrated Security=True;";
+        //public static string ConexionPrincipal => @"data source=HECTOR-MURILLO\TEW_SQLEXPRESS;initial catalog=DB_A55757_prueba;persist security info=True;user id=sa;password=1234;";
 
-        #endregion
-
-        //public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_testenv;User Id=db_a55757_testenv_admin;Password=C0NCR3T05D05H";
-        public static string ConexionPrincipal => @"Data Source=SQL5079.site4now.net;Initial Catalog=db_a55757_producciontemp;User Id=db_a55757_producciontemp_admin;Password=C0NCRET052HPR0D";
 
         public static string WebBannersPath => @"c:\inetpub\wwwroot\imagenes\banners\";
 

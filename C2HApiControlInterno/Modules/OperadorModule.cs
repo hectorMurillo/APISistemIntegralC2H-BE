@@ -28,9 +28,9 @@ namespace C2HApiControlInterno.Modules
             Post("guardar", _ => GuardarOperador());
 
 
-
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
             Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajes(x));
+            Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajesOperador(x));
 
         }
 
@@ -111,19 +111,50 @@ namespace C2HApiControlInterno.Modules
         private object ObtenerViajes(dynamic x)
         {
             Result result = new Result();
+            try
+            {
+                string operador = x.operador;
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
 
-            string operador = x.operador;
-            DateTime fechaDesde = x.fechaDesde;
-            DateTime fechaHasta = x.fechaHasta;
+                var r = new Result<List<Viajes>>();
+                r = _DAOperador.ObtenerViajes(operador, fechaDesde, fechaHasta);
+                result.Data = r.Data;
+                result.Value = r.Value;
+                result.Message = r.Message;
 
-            var r = new Result<List<Viajes>>();
-            r = _DAOperador.ObtenerViajes(operador, fechaDesde, fechaHasta);
-            result.Data = r.Data;
-            result.Value = r.Value;
-            result.Message = r.Message;
+                return Response.AsJson(result);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                return Response.AsJson(result);
+            }
 
-            return Response.AsJson(result);
+        }
 
+        private object ObtenerViajesOperador(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                string operador = x.operador;
+                DateTime fechaDesde = x.fechaDesde;
+                DateTime fechaHasta = x.fechaHasta;
+
+                var r = new Result<List<ViajesDetalle>>();
+                r = _DAOperador.ObtenerViajesOperador(operador, fechaDesde, fechaHasta);
+                result.Data = r.Data;
+                result.Value = r.Value;
+                result.Message = r.Message;
+
+                return Response.AsJson(result);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                return Response.AsJson(result);
+            }
         }
 
     }
