@@ -103,9 +103,9 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
-
+                var codUsuario = this.BindUsuario().IdUsuario;
                 var operador = this.Bind<Model.OperadorEquipo>();
-                result = _DADosificador.GuardarEquipoOperador(operador);
+                result = _DADosificador.GuardarEquipoOperador(operador, codUsuario);
             }
             catch (Exception ex)
             {
