@@ -151,16 +151,18 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarEquipoOperador(OperadorEquipo operador)
+        public Result GuardarEquipoOperador(OperadorEquipo operador, int codUsuario)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-               
+
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pCodEmpleado", ConexionDbType.Int, operador.CodEmpleado);
                 parametros.Add("@pEquipo", ConexionDbType.VarChar, operador.Equipo);
                 parametros.Add("@pCodAyudante", ConexionDbType.Int, operador.CodAyudante);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, operador.Motivo);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

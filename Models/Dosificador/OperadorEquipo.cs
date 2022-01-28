@@ -14,5 +14,6 @@ namespace Models.Dosificador
         public bool Bombeable { get; set; }
         public int CodAyudante { get; set; }
         public string AyudanteNombre { get; set; }
+        public string Motivo { get; set; }
     }
 }
