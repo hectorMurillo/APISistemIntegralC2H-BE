@@ -14,9 +14,12 @@ using WarmPack.Classes;
 using Models;
 using Models.Cobranza;
 using Ionic.Zip;
+using System.Net;
+using System.Text;
 
 namespace C2HApiControlInterno.Modules
 {
+
     public class CobranzaModule : NancyModule
     {
         private readonly DACobranza _DACobranza = null;
@@ -34,8 +37,33 @@ namespace C2HApiControlInterno.Modules
             Post("/notas-remision-guardar-pago/{idNotasRemisionEnc}/{importeAbonar}", x => GuardarPagoNotaRemision(x));
             Get("/obtener-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerNotaRemisionCobranza(x));
             Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
+            Get("/CalcularDistancia/{origen}/{destino}", x => CalcularDistancia(x));
 
 
+        }
+        private object CalcularDistancia(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                string origen = x.origen;
+                string destino = x.destino;
+                // string url = "https://pokeapi.co/api/v2/pokemon/1";
+                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origen + "&destinations=" + destino + "&mode=driving&units=metric&language=en&avoid=&key=AIzaSyAbG_eyVgmdfq7xuPTvidPbj36Vf-Tfjnk";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //WebResponse myResp = request.GetResponse();
+                //string contenido = File.ReadAllText("https://pokeapi.co/api/v2/pokemon/1");
+                return readStream.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object ObtenerNotasRemision()

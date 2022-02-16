@@ -47,6 +47,27 @@ namespace DA.C2H
             }
             return result;
         }
+         
+        public Result CambiarContrasena(Model.UsuarioModel usuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pIdUsuario", ConexionDbType.Int, usuario.IdUsuario);
+                parametros.Add("@pContrasena", ConexionDbType.VarChar, usuario.Contrasena);
+                parametros.Add("@pCotrasenaNueva", ConexionDbType.VarChar, usuario.ConfirmarContrasena);
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcContrasenasGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
         public Result GuardarUsuario(Model.UsuarioModel usuario)
         {

@@ -87,7 +87,7 @@ namespace Models
         //public static string ConexionPrincipal => @"data source=SQL5081.site4now.net; initial catalog=DB_A55757_prueba; persist security info=True;user id=DB_A55757_prueba_admin; password=_C0NCR3T05D0SH;";
 
         //BD Coki Conexión
-        public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#25DB8F3D\tsql\query;Initial Catalog=PruebasBeforeProduction2;Integrated Security=True";
+        //public static string ConexionPrincipal => @"Data Source=np:\\.\pipe\LOCALDB#25DB8F3D\tsql\query;Initial Catalog=PruebasBeforeProduction2;Integrated Security=True";
 
 
 
@@ -97,7 +97,8 @@ namespace Models
         //producción
         //public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_produccion; persist security info=True;user id=db_a55757_produccion_admin; password=C0NCRET052HPR0D;";
 
-        //public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_testenv; persist security info=True;user id=db_a55757_testenv_admin; password=C0NCR3T05D05H;";
+        //testenv
+        public static string ConexionPrincipal => @"data source=SQL5079.site4now.net; initial catalog=db_a55757_testenv; persist security info=True;user id=db_a55757_testenv_admin; password=C0NCR3T05D05H;";
 
         //pruebas actuales
         //public static string ConexionPrincipal => @"data source=SQL5061.site4now.net; initial catalog=db_a55757_v2; persist security info=True;user id=db_a55757_v2_admin; password=_C0NCR3T05D0SH;";

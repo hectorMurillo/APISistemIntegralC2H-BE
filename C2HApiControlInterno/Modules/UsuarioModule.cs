@@ -26,6 +26,22 @@ namespace C2HApiControlInterno.Modules
             Get("/todos", _ => GetTodos());
             Get("/actualizar-estatus/{idUsuario}/{activar}", x => ActualizarEstatusUsuario(x));
             Post("/guardar", _ => PostGuardarUsuario());
+            Post("/contrasenaCambiar", _ => PostCambiarContrasena());
+        }
+
+        private object PostCambiarContrasena()
+        {
+            Result result = new Result();
+            try
+            {
+                var usuario = this.Bind<Model.UsuarioModel>();
+                result = _DAUsuario.CambiarContrasena(usuario);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object PostGuardarUsuario()
