@@ -110,7 +110,7 @@ namespace Models
 
 
 
-        public static string ConexionPrincipal => @"data source=SQL5079.site4now.net; initial catalog=db_a55757_testenv; persist security info=True;user id=db_a55757_testenv_admin; password=C0NCR3T05D05H;";
+        //public static string ConexionPrincipal => @"data source=SQL5079.site4now.net; initial catalog=db_a55757_testenv; persist security info=True;user id=db_a55757_testenv_admin; password=C0NCR3T05D05H;";
 
 
 
