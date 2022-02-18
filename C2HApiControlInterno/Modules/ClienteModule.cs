@@ -10,8 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using WarmPack.Classes;
-using Model = Models.Clientes;
-
+using Model = Models.Clientes; 
+using System.Net;
+using System.Text;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -56,20 +57,69 @@ namespace C2HApiControlInterno.Modules
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
 
             Get("/historial-cliente/{codCliente}/{fechaDesde}/{fechaHasta}", x => ObtenerHistorialCliente(x));
-
-
-
-            Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x));
-
-
-
+             
+            Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x)); 
+            Get("/CalcularDistancia/{origen}/{destino}", x => ObtenerDiscanciaObraPlanta(x));
+            Get("/ObtenerPlantas", _ => ObtenerPlantas());
+            Post("/GuardarPlantaObraDistanciaTiempo", _ => postPlantaObraDistanciaTiempo());
 
             //AUXILIAR
             Get("/clientes-agente-auxiliar/{codAgente}", x => ObtenerClientesAgenteAUXILIAR(x));
+          
+        }
 
+        private object postPlantaObraDistanciaTiempo()
+        {
+            Result result = new Result();
+            try
+            {
+                var dis = this.Bind<Model.plantaObraDatos>();
+                result = _DAClientes.PlantaObraDistanciaGuardar(dis);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
+        private object ObtenerPlantas()
+        {
+            Result result = new Result();
+            try
+            {
+                result = _DAClientes.ObtenerPlantas();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
-
+        private object ObtenerDiscanciaObraPlanta(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                string origen = x.origen;
+                string destino = x.destino;
+                // string url = "https://pokeapi.co/api/v2/pokemon/1";
+                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origen + "&destinations=" + destino + "&mode=driving&units=metric&language=en&avoid=&key=AIzaSyAbG_eyVgmdfq7xuPTvidPbj36Vf-Tfjnk";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //WebResponse myResp = request.GetResponse();
+                //string contenido = File.ReadAllText("https://pokeapi.co/api/v2/pokemon/1");
+                return readStream.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object EliminarDocumentoCte(dynamic x)
