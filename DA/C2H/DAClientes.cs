@@ -51,6 +51,38 @@ namespace DA.C2H
             }
         }
 
+
+        public Result<List<ClienteModel2>> ConsultaClienteXNombre(int codUsuario, string nombreCliente)
+        {
+
+            Result <List<ClienteModel2>> result = new Result<List<ClienteModel2>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pNombreCliente", ConexionDbType.VarChar, nombreCliente);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                
+                result = _conexion.ExecuteWithResults<ClienteModel2>("ProcCatClientePorNombre", parametros);
+                
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Data = null;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+
+
+
+
+
         public Result ConsultaClientes(int codUsuario, int codCliente)
         {
 

@@ -27,6 +27,7 @@ namespace C2HApiControlInterno.Modules
             Get("/todos", _ => GetTodos());
             Get("/clientes-combo", _ => GetClientesCombo());
             Get("/{codCliente}", x => GetCliente(x));
+            Get("/porNombre/{nombre}", x => GetClientePorNombre(x));
             Get("/sugerenciaUsuario/{codCliente}", x => GetSugerenciaUsuario(x));
             Get("/obtenerUsuarioCliente/{codCliente}", x => GetUsuario(x));
             Get("/direccion/{codDireccion}", x => GetDireccion(x));
@@ -70,6 +71,37 @@ namespace C2HApiControlInterno.Modules
 
 
 
+        }
+
+        private object GetClientePorNombre(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                //Si no se ha logeado marcará error aqui
+                string nombreCliente = x.nombre == null ? 0 : x.nombre;
+                var codUsuario = this.BindUsuario().IdUsuario;
+                if (nombreCliente.Length >= 3)
+                {
+                    var r = _DAClientes.ConsultaClienteXNombre(codUsuario, nombreCliente);
+                    //result.Data = r.Data.ElementAtOrDefault(0);
+                    result.Data = r.Data;
+                    result.Message = r.Message;
+                    result.Value = r.Value;
+                }
+                else
+                {
+                    result.Data = null;
+                    result.Message = "Se requiere por lo menos 3 caracteres ";
+                    result.Value = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object EliminarDocumentoCte(dynamic x)
@@ -321,6 +353,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var direccion = this.Bind<Model.DireccionesXClientesModel>();
+                //var direccion = JsonConvert.DeserializeObject<Model.DireccionesXClientesModel>((Request.Form["direccion"]));
+
                 result = _DAClientes.DireccionesGuardar(direccion);
             }
             catch (Exception ex)
