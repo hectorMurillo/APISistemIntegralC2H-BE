@@ -115,9 +115,13 @@
     <Compile Include="Clientes\TipoClienteCredito.cs" />
     <Compile Include="Clientes\TipoListaPrecio.cs" />
     <Compile Include="Clientes\UsuarioClienteModel.cs" />
+    <Compile Include="Cobranza\Anticipo.cs" />
     <Compile Include="Cobranza\DatosCredito.cs" />
     <Compile Include="Cobranza\DetalleAbonosNotaRemision.cs" />
+    <Compile Include="Cobranza\ListaPrecios.cs" />
+    <Compile Include="Cobranza\ListaPreciosDet.cs" />
     <Compile Include="Cobranza\NotaRemisionCobranza.cs" />
+    <Compile Include="Cobranza\Obra.cs" />
     <Compile Include="Comisiones\ComisionesXEmpleadoModel.cs" />
     <Compile Include="Comisiones\ComisionModel.cs" />
     <Compile Include="Comisiones\EmpleadosComisionModel.cs" />
