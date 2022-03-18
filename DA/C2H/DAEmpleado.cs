@@ -218,6 +218,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
+
                 result = _conexion.Execute("ProcCatEmpleadosGuardar", parametros);
             }
             catch (Exception ex)

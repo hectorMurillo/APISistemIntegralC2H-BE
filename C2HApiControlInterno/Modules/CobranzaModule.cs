@@ -7,6 +7,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using DA.C2H;
 using Models.Dosificador;
+using Models.Clientes;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
@@ -16,6 +17,7 @@ using Models.Cobranza;
 using Ionic.Zip;
 using System.Net;
 using System.Text;
+using Model = Models.Cobranza;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -39,8 +41,186 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
             Get("/CalcularDistancia/{origen}/{destino}", x => CalcularDistancia(x));
 
-
+            Get("/getListasPreciosDet/{codigo}", x => getListasPreciosGet(x));
+            Get("/getListasPrecios", _ => getListasPrecios());
+            Get("/getListaPreciosEnc/{codigo}", x => getListaPrecios(x));
+            Get("/obtener-obras/{codigo}", x => ObtenerObrasCliente(x));
+            Get("/obtener-anticipos/{codigo}", x => ObtenerAnticipos(x));
+            Get("/obtener-obra/{codigo}", x => ObtenerObra(x));
+            Post("/guardar-lista-precios", _ => PostListaPrecios()); 
+            Post("/guardar-anticipo", _ => PostAnticipo());
+            Post("/postPrecioProducto", _ => PostPrecioProducto());
+            
         }
+
+        private object ObtenerAnticipos(dynamic x)
+        {
+            Result<List<Anticipo>> result = new Result<List<Anticipo>>();
+            try
+            {
+                result = _DACobranza.ObtenerAnticipos(x.codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+        private object ObtenerObra(dynamic x)
+        {
+            Result<List<Obra>> result = new Result<List<Obra>>();
+            try
+            {
+                result = _DACobranza.ObtenerObra(x.codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object getListaPrecios(dynamic x)
+        {
+            Result<List<ListaPrecios>> result = new Result<List<ListaPrecios>>();
+            try
+            {
+                result = _DACobranza.ObtenerListaPrecios(x.codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object getListasPreciosGet(dynamic x)
+        {
+            Result<List<ListaPreciosDet>> result = new Result<List<ListaPreciosDet>>();
+            try
+            { 
+                result = _DACobranza.ObtenerListasPreciosDet(x.codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+         private object PostPrecioProducto()
+        {
+            Result result = new Result();
+            var p = this.BindUsuario();
+            try
+            {
+                var producto = this.Bind<Model.ListaPreciosDet>();
+                result = _DACobranza.GuardarProductoPrecio(producto, p.IdUsuario);
+            }
+            catch (Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostAnticipo()
+        {
+            Result result = new Result();
+            var p = this.BindUsuario();
+            try
+            {
+                var anticipo = this.Bind<Model.Anticipo>();
+                result = _DACobranza.GuardarAnticipo(anticipo, p.IdUsuario);
+            }catch(Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
+            return Response.AsJson(result);
+        }
+        
+
+        private object EditarListaPrecios()
+        {
+            Result result = new Result();
+            var p = this.BindUsuario();
+            try
+            {
+                var lista = this.Bind<Model.ListaPrecios>();
+                result = _DACobranza.GuardarListaPrecios(lista, p.IdUsuario);
+            }
+            catch (Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostListaPrecios()
+        {
+            Result result = new Result();
+            var p = this.BindUsuario();
+            try
+            {
+                var lista = this.Bind<Model.ListaPrecios>();
+                result = _DACobranza.GuardarListaPrecios(lista, p.IdUsuario);
+            }catch(Exception ex)
+            {
+                result = new Result
+                {
+                    Message = ex.Message,
+                    Data = null,
+                    Value = false
+                };
+            }
+            return Response.AsJson(result);
+        }
+
+        private object getListasPrecios()
+        {
+            Result<List<ListaPrecios>> result = new Result<List<ListaPrecios>>();
+            try
+            {
+                result = _DACobranza.getListasPrecios();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object ObtenerObrasCliente(dynamic x)
+        {
+            Result<List<DireccionesXClientesModel>> result = new Result<List<DireccionesXClientesModel>>();
+            try
+            {
+                //var codCliente = this.BindUsuario().IdUsuario;
+                result = _DACobranza.ObtenerObras(x.codigo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object CalcularDistancia(dynamic x)
         {
             Result result = new Result();
