@@ -130,6 +130,7 @@
     <Compile Include="C2H\DAPortero.cs" />
     <Compile Include="C2H\DAVendedor.cs" />
     <Compile Include="C2H\DAReportes.cs" />
+    <Compile Include="Models\Plantas\DistanciaTiempoPlanta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

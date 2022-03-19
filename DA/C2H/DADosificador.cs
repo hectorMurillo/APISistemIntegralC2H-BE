@@ -513,7 +513,7 @@ namespace DA.C2H
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
 
-                _conexion.Execute("ProcNotaRemisionGuardar_Provisional", parametros);
+                _conexion.Execute("ProcNotaRemisionGuardar", parametros);
 
                 result.Data = parametros.Value("@pIdNotaRemision").ToInt32();
                 result.Value = parametros.Value("@pResultado").ToBoolean();

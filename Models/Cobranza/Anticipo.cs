@@ -18,6 +18,24 @@ using System.Threading.Tasks;
             }
         }
 
+        public string MontoActualFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", MontoActual);
+            }
+        }
+
+
+        public string MontoTotalFormato
+        {
+            get
+            {
+                return String.Format("{0:C}", MontoTotal);
+            }
+        }
+
+
         public decimal MontoTotal { get; set; }
         public int UsuarioRegistro { get; set; }
         public string NombreCliente { get; set; }

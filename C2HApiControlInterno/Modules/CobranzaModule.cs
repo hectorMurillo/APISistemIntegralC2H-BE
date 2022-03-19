@@ -40,6 +40,7 @@ namespace C2HApiControlInterno.Modules
             Get("/obtener-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerNotaRemisionCobranza(x));
             Get("/obtener-detalle-abonos-nota-remision-cobranza/{idNotasRemisionEnc}", x => ObtenerDetalleAbonosNotaRemision(x));
             Get("/CalcularDistancia/{origen}/{destino}", x => CalcularDistancia(x));
+            Get("/obtenerAnticiposPorObra/{codObra}", x => getAnticipoPorObra(x));
 
             Get("/getListasPreciosDet/{codigo}", x => getListasPreciosGet(x));
             Get("/getListasPrecios", _ => getListasPrecios());
@@ -51,6 +52,20 @@ namespace C2HApiControlInterno.Modules
             Post("/guardar-anticipo", _ => PostAnticipo());
             Post("/postPrecioProducto", _ => PostPrecioProducto());
             
+        }
+
+        private object getAnticipoPorObra(dynamic x)
+        {
+            Result<List<Anticipo>> result = new Result<List<Anticipo>>();
+            try
+            {
+                result = _DACobranza.ObtenerAnticiposPorObra(x.codObra);
+            }
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object ObtenerAnticipos(dynamic x)

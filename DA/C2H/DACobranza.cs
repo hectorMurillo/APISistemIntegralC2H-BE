@@ -80,6 +80,23 @@ namespace DA.C2H
             return result;
         }
 
+        public Result<List<Anticipo>> ObtenerAnticiposPorObra(int codObra)
+        {
+            Result<List<Anticipo>> result = new Result<List<Anticipo>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigoObra", ConexionDbType.Int, codObra);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output);
+                parametros.Add("@pResultado", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<ListaPreciosDet>> ObtenerListasPreciosDet(int codLista)
         {
             Result<List<ListaPreciosDet>> result = new Result<List<ListaPreciosDet>>();
