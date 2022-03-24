@@ -56,7 +56,7 @@ namespace C2HApiControlInterno.Modules
 
         private object getAnticipoPorObra(dynamic x)
         {
-            Result<List<Anticipo>> result = new Result<List<Anticipo>>();
+            Result result = new Result();
             try
             {
                 result = _DACobranza.ObtenerAnticiposPorObra(x.codObra);

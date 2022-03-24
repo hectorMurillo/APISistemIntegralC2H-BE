@@ -80,15 +80,23 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<Anticipo>> ObtenerAnticiposPorObra(int codObra)
+        public Result ObtenerAnticiposPorObra(int codObra)
         {
-            Result<List<Anticipo>> result = new Result<List<Anticipo>>();
+            Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodigoObra", ConexionDbType.Int, codObra);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output);
-                parametros.Add("@pResultado", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output, 300);
+
+
+                _conexion.RecordsetsExecute("ProcAnticiposXClienteXObraCon", parametros);
+                //var saldoTotal = _conexion.RecordsetsResults<decimal>();
+                var detalleAnticipos = _conexion.RecordsetsResults<Anticipo>();
+                result.Value = parametros.Value("@pResultado").ToBoolean();
+                result.Message = parametros.Value("@pMsg").ToString();
+                result.Data = new {  detalleAnticipos };
             }
             catch (Exception ex)
             {

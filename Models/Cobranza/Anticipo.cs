@@ -18,7 +18,7 @@ using System.Threading.Tasks;
             }
         }
 
-        public string MontoActualFormato
+        public string MontoActualFormato 
         {
             get
             {
