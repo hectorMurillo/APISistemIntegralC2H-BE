@@ -402,6 +402,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
+
+
                 var usuario = this.BindUsuario().Nombre;
                 var notaRemision = this.Bind<NotaRemisionAuxiliarModel>();
                 result = _DADosificador.GuardarNotaRemisionAuxiliar(notaRemision, codUsuario);
