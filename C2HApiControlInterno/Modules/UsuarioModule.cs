@@ -34,8 +34,9 @@ namespace C2HApiControlInterno.Modules
             Result result = new Result();
             try
             {
+                var codUsuario = this.BindUsuario().IdUsuario;
                 var usuario = this.Bind<Model.UsuarioModel>();
-                result = _DAUsuario.CambiarContrasena(usuario);
+                result = _DAUsuario.CambiarContrasena(usuario, codUsuario);
             }
             catch (Exception ex)
             {

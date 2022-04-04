@@ -271,7 +271,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result ObtenerEmpleado(int codEmpleado)
+        public Result ObtenerEmpleado(int codEmpleado, int codUsuario)
         {
             Result result = new Result();
             DataSet ds = new DataSet();
@@ -279,6 +279,7 @@ namespace DA.C2H
             {
                 var parametros = new ConexionParameters();
                 parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
