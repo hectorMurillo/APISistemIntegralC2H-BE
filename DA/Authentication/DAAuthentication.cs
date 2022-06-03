@@ -79,7 +79,7 @@ namespace DA.Authentication
             try
             {
                 string query = $"SELECT dbo.FnVerificaPermiso({codUsuario},'{modulo}')";
-                var r = _conexion.
+                var r = _conexion.ExecuteScalar<bool>(query);
                 return r;
             }
             catch (Exception ex)

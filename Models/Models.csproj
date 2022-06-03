@@ -171,6 +171,7 @@
     <Compile Include="Herramientas\ParametrosModel.cs" />
     <Compile Include="Herramientas\ResultadoModel.cs" />
     <Compile Include="Materiales\EspecificacionesConcreto.cs" />
+    <Compile Include="Materiales\ProductosAgregadosModel.cs" />
     <Compile Include="Materiales\TipoConcreto.cs" />
     <Compile Include="Materiales\TipoObra.cs" />
     <Compile Include="Materiales\TipoResistencia.cs" />
