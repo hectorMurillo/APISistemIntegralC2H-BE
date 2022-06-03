@@ -72,6 +72,8 @@ namespace Models.Dosificador
         public string Referencia { get; set; }
         public bool FirmaElectronica { get; set; }
         public string Dosificador { get; set; }
+        public string SelloGarantiaFormato { get; set; }
+        public int SelloGarantia { get; set; }
         public byte[] Imagen { get; set; }
     }
 }

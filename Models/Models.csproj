@@ -142,6 +142,7 @@
     <Compile Include="Dosificador\OperadorModel.cs" />
     <Compile Include="Dosificador\ParametrosEspecialesModel.cs" />
     <Compile Include="Dosificador\PedidoModel.cs" />
+    <Compile Include="Dosificador\SelloGarantia.cs" />
     <Compile Include="Empleados\DireccionXEmpleado.cs" />
     <Compile Include="Empleados\DocumentosEmpleado.cs" />
     <Compile Include="Empleados\Empleado.cs" />

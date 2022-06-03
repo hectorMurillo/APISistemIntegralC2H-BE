@@ -99,6 +99,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
       <Private>True</Private>
@@ -154,6 +160,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\WarmPack.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DLL\WarmPack.Database.dll" />
@@ -161,9 +168,13 @@
     <Content Include="Images\correo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\face.jpg" />
+    <Content Include="Images\ins.jpg" />
     <Content Include="Images\logotipo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\qrLlamadas.png" />
+    <Content Include="Images\QRWhatssapp.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -211,7 +222,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Reportes\rptNota.rpt">
+    <Content Include="Reportes\rptNota_.rpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
@@ -258,6 +269,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RptMensualMetros.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="Reportes\rptNota.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />

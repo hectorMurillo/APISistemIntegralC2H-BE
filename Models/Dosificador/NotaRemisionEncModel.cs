@@ -36,6 +36,8 @@ namespace Models.Dosificador
         public ParametrosEspecialesModel parametrosEspeciales { get; set; }
         public string OperadorExterno { get; set; }
         public string EquipoExterno { get; set; }
+        public int SelloGarantiaFolio { get; set; }
+        public string SelloGarantiaFormato { get; set; }
     }
 }
 

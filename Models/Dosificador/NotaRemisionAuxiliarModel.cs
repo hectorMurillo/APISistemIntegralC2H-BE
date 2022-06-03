@@ -36,5 +36,7 @@ namespace Models.Dosificador
         public string EquipoExterno { get; set; }
         public string Observacion { get; set; }
         public int IdNotasRemisionEnc { get; set; }
+        public int selloGarantiaFolio { get; set; }
+        public string selloGarantiaFormato { get; set; }
     }
 }

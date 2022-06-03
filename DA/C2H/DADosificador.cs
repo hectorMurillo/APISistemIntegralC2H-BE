@@ -114,7 +114,25 @@ namespace DA.C2H
             }
             return result;
         }
-        
+
+        public Result<List<SelloGarantia>> ObtenerUltimoSelloGarantia()
+        {
+            Result<List<SelloGarantia>> result = new Result<List<SelloGarantia>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<SelloGarantia>("ProcObtenerUltimoFolioSelloGarantia", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<OperadorEquipo>> ObtenerOperadoresMaquilado()
         {
             Result<List<OperadorEquipo>> result = new Result<List<OperadorEquipo>>();
@@ -509,6 +527,8 @@ namespace DA.C2H
                 parametros.Add("@pOperadorExterno", ConexionDbType.VarChar, notaRemision.OperadorExterno);
                 parametros.Add("@pEquipoExterno", ConexionDbType.VarChar, notaRemision.EquipoExterno);
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
+                parametros.Add("@pSelloGarantia", ConexionDbType.Int, notaRemision.SelloGarantiaFolio);
+                parametros.Add("@pSelloGarantiaFormato", ConexionDbType.VarChar, notaRemision.SelloGarantiaFormato);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
@@ -557,6 +577,8 @@ namespace DA.C2H
                 parametros.Add("@pOperadorExterno", ConexionDbType.VarChar, notaRemision.OperadorExterno);
                 parametros.Add("@pEquipoExterno", ConexionDbType.VarChar, notaRemision.EquipoExterno);
                 parametros.Add("@pIdNotaRemision", ConexionDbType.Int, System.Data.ParameterDirection.Output);
+                parametros.Add("@pSelloGarantia", ConexionDbType.Int, notaRemision.selloGarantiaFolio);
+                parametros.Add("@pSelloGarantiaFormato", ConexionDbType.VarChar, notaRemision.selloGarantiaFormato);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 

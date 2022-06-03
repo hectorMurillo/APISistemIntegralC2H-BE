@@ -29,6 +29,7 @@ namespace C2HApiControlInterno.Modules
             //Get("/notasRemision-canceladas/", _ => NotasRemisionCanceladas());  
             Get("/formulas/{codigo}", parametros => Productos(parametros));
             Get("/ultimo-folio-notaRemision/", _ => UltimoFolioNotaRemision());
+            Get("/ultimo-sello-garantia/", _ => ObtenerUltimoSelloGarantia());
             Get("/obras-clientes/{codCliente}", parametros => ObrasCliente(parametros));
             Get("/operadores/{bombeable}", parametros => Operadores(parametros));
             Get("/operadores-camion-revolvedor", _ => ObtenerOperadoresCamionRevolvedor());
@@ -70,6 +71,21 @@ namespace C2HApiControlInterno.Modules
                 
             Post("/operador-equipo-guardar", _ => guardarOperadorEquipo());
         }
+
+        private object ObtenerUltimoSelloGarantia()
+        {
+            Result<List<Model.SelloGarantia>> result = new Result<List<SelloGarantia>>();
+            try
+            {
+                result = _DADosificador.ObtenerUltimoSelloGarantia();
+            }  
+            catch(Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
         private object obtenerOperadoresMaquilado()
         {
             Result<List<Model.OperadorEquipo>> result = new Result<List<Model.OperadorEquipo>>();
@@ -329,6 +345,7 @@ namespace C2HApiControlInterno.Modules
                     reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
                     reporte.SetParameterValue("@cancelado", cancelado);
                     reporte.SetParameterValue("@fecha", nota.Fecha);
+                    reporte.SetParameterValue("@garantia", nota.SelloGarantiaFormato);
                     reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
                     reporte.SetParameterValue("@referencia", nota.Referencia);
 
@@ -349,14 +366,15 @@ namespace C2HApiControlInterno.Modules
                     reporte.SetParameterValue("@obra", nota.Obra);
                     reporte.SetParameterValue("@producto", nota.Producto);
                     reporte.SetParameterValue("@cantidad", nota.Cantidad);
-                    reporte.SetParameterValue("@operador", nota.Operador);
+                    reporte.SetParameterValue("@operadorCr", nota.Operador);
                     reporte.SetParameterValue("@nomenclatura", nota.Nomenclatura);
-                    reporte.SetParameterValue("@equipo", nota.Equipo);
+                    reporte.SetParameterValue("@equipoCr", nota.Equipo);
                     reporte.SetParameterValue("@vendedor", nota.Vendedor);
                     reporte.SetParameterValue("@usuario", nota.NombreUsuario);
                     reporte.SetParameterValue("@imper", nota.Imper);
                     reporte.SetParameterValue("@fibra", nota.Fibra);
                     reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
+                    reporte.SetParameterValue("@garantia", nota.SelloGarantiaFormato);
                     reporte.SetParameterValue("@cancelado", cancelado);
                     reporte.SetParameterValue("@fecha", nota.Fecha);
                     reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);
