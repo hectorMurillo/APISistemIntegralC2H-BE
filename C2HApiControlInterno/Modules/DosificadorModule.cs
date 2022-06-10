@@ -47,6 +47,7 @@ namespace C2HApiControlInterno.Modules
             Post("notaRemision/agregar-nota", _ => AgregarNotaRemisionEspecial());
             Post("formula/guardar", _ => GuardarFormulaProducto());
             Post("productos-formula/guardar", _ => GuardarProductoFormula());
+            Post("producto/guardar", _ => GuardarProducto());
 
             //NOTA REMISION AUXILIAR
             
@@ -549,6 +550,24 @@ namespace C2HApiControlInterno.Modules
             {
                 var formula = this.Bind<FormulaModel>();
                 result = _DADosificador.GuardarFormula(formula);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object GuardarProducto()
+        {
+
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var usuario = this.BindUsuario().Nombre;
+                var producto = this.Bind<FormulaModel>();
+                result = _DADosificador.GuardarProducto(producto, codUsuario);
             }
             catch (Exception ex)
             {

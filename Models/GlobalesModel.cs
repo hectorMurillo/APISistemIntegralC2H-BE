@@ -96,6 +96,8 @@ namespace Models
 
         //producción
         //public static string ConexionPrincipal => @"data source=SQL5077.site4now.net; initial catalog=db_a55757_produccion; persist security info=True;user id=db_a55757_produccion_admin; password=C0NCRET052HPR0D;";
+
+        //nuevas pruebas    03-06-2022
         public static string ConexionPrincipal => @"Data Source=SQL5092.site4now.net;Initial Catalog=db_a55757_produccion2305;User Id=db_a55757_produccion2305_admin;Password=C0NCR3T05D05H;";
 
         //testenv
