@@ -569,6 +569,7 @@ namespace DA.C2H
                 parametros.Add("@pMaquilado", ConexionDbType.Bit, notaRemision.Maquilado);
                 parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
+                parametros.Add("@pHidratium", ConexionDbType.Bit, notaRemision.ChKHidratium);
                 parametros.Add("@pForaneo", ConexionDbType.Bit, notaRemision.Foraneo);
                 parametros.Add("@pIva", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Iva);
                 parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
