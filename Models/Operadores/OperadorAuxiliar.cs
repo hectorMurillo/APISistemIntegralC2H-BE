@@ -9,5 +9,6 @@ namespace Models.Operadores
     public class OperadorAuxiliar
     {
         public string Operador { get; set; }
+        public bool Bombeable { get; set; }
     }
 }

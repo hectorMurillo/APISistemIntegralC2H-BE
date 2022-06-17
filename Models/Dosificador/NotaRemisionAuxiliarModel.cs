@@ -19,6 +19,7 @@ namespace Models.Dosificador
         public String EquipoCamionRevolvedor { get; set; }
         public String EquipoCamionBombeable { get; set; }
         public bool ChKBombeable { get; set; }
+        public bool ChKHidratium { get; set; }
         public string Producto { get; set; }
         public float Cantidad { get; set; }
         public string Estatus { get; set; }

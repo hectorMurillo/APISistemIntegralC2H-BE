@@ -569,6 +569,7 @@ namespace DA.C2H
                 parametros.Add("@pMaquilado", ConexionDbType.Bit, notaRemision.Maquilado);
                 parametros.Add("@pFibra", ConexionDbType.Bit, notaRemision.ChKFibra);
                 parametros.Add("@pImper", ConexionDbType.Bit, notaRemision.ChKImper);
+                parametros.Add("@pHidratium", ConexionDbType.Bit, notaRemision.ChKHidratium);
                 parametros.Add("@pForaneo", ConexionDbType.Bit, notaRemision.Foraneo);
                 parametros.Add("@pIva", ConexionDbType.Decimal, notaRemision.parametrosEspeciales.Iva);
                 parametros.Add("@pCodOperadorReubicado", ConexionDbType.Int, notaRemision.parametrosEspeciales.CodOperador);
@@ -642,6 +643,35 @@ namespace DA.C2H
                 });
                 result.Value = parametros.Value("@pResultado").ToBoolean();
                 result.Message = parametros.Value("@pMsg").ToString();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        
+        public Result GuardarProducto(FormulaModel producto, int codUsuario)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodProducto", ConexionDbType.Int, producto.Codigo);
+                parametros.Add("@pNomenclatura", ConexionDbType.VarChar, producto.Nomenclatura);
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, producto.Descripcion);
+                parametros.Add("@pEdad", ConexionDbType.VarChar, producto.Edad);
+                parametros.Add("@pResistencia", ConexionDbType.VarChar, producto.Resistencia);
+                parametros.Add("@pTMA", ConexionDbType.Int, producto.TMA);
+                parametros.Add("@pRevenimiento", ConexionDbType.VarChar, producto.Revenimiento);
+
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCatProductoGuardar", parametros);
             }
             catch (Exception ex)
             {
