@@ -29,7 +29,7 @@ namespace C2HApiControlInterno.Modules
 
 
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
-            Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajes(x));
+            Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajes(x));
             Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajesOperador(x));
 
         }
@@ -116,9 +116,9 @@ namespace C2HApiControlInterno.Modules
                 string operador = x.operador;
                 DateTime fechaDesde = x.fechaDesde;
                 DateTime fechaHasta = x.fechaHasta;
-
+                int bombeable = x.bombeable;
                 var r = new Result<List<Viajes>>();
-                r = _DAOperador.ObtenerViajes(operador, fechaDesde, fechaHasta);
+                r = _DAOperador.ObtenerViajes(operador, fechaDesde, fechaHasta, bombeable);
                 result.Data = r.Data;
                 result.Value = r.Value;
                 result.Message = r.Message;

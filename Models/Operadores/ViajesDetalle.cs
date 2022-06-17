@@ -10,6 +10,7 @@ namespace Models.Operadores
     {
         public int IdNotaRemisionAuxiliar { get; set; }
         public int FolioNotaRemision { get; set; }
+        public string Fecha { get; set; }
         public decimal Cantidad { get; set; }
         public string Obra { get; set; }
         public string Cliente { get; set; }
