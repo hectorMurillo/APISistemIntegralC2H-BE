@@ -31,7 +31,24 @@ namespace C2HApiControlInterno.Modules
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
             Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajes(x));
             Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajesOperador(x));
+            Post("/cambiarTipoOperador/{codEmpleado}/{motivo}", x => CambiarTipoOperador(x));
+        }
 
+        private object CambiarTipoOperador(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                var codUsuario = this.BindUsuario().IdUsuario;
+                var codEmpleado = x.codEmpleado == null ? 0 : x.codEmpleado;
+                var motivo = x.motivo == null ? "" : x.motivo;
+                result = _DAOperador.GuardarCambioTipoOperador(codUsuario,codEmpleado, motivo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object ObtenerOperadores(dynamic x)

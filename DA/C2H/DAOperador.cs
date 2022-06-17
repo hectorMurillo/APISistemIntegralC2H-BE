@@ -57,6 +57,27 @@ namespace DA.C2H
             return result;
         }
 
+        public Result GuardarCambioTipoOperador(int codUsuario,int codEmpleado, string motivo)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pCodEmpleado", ConexionDbType.Int, codEmpleado);
+                parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcCambiarRolOperador", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<OperadorTipo>> ObtenerTiposOperadores()
         {
             Result<List<OperadorTipo>> result = new Result<List<OperadorTipo>>();

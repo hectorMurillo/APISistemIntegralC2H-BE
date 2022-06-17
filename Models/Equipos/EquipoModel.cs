@@ -24,5 +24,8 @@ namespace Models.Equipos
         public bool Estatus { get; set; }
         public string NumeroSerieMotor { get; set; }
         public string Equipo { get; set; }
+        public string IdentificadorCorto { get; set; }
+        public int CodOperadorTemporal { get; set; }
+        public string OperadorTemporal { get; set; }
     }
 }

@@ -19,10 +19,10 @@ namespace C2HApiControlInterno.Modules
             _DAEquipo = new DA.C2H.DAEquipo();
             Get("/todos", _ => GetTodos());
             Get("/{codEquipo}", x => GetEquipo(x));
-            Get("/modelos/{codModelo}", x=> GetModelo(x));
+            Get("/modelos/{codModelo}", x => GetModelo(x));
             Get("/marcas/{codMarca}", x => GetMarca(x));
             Get("/tanques/{codTanque}", x => GetTanque(x));
-            Get("/modelosCombo", _ => GetTodosModelosCombo());  
+            Get("/modelosCombo", _ => GetTodosModelosCombo());
             Get("/marcasCombo", _ => GetTodosMarcasCombo());
             Get("/tipoEquipoCombo", _ => GetTipoEquipoCombo());
             Get("/consumiblesCombo", _ => GetConsumibleCombo());
@@ -32,12 +32,30 @@ namespace C2HApiControlInterno.Modules
             Post("/guardar/modelo", _ => PostGuardarModelo());
             Post("guardar/tanque", _ => PostGuardarTanque());
             Post("guardar/tipoEquipo", _ => PostGuardarTipoEquipo());
+            Post("/actualizar-estatus", _ => ActualizarEstatusEquipo());
+
 
             Get("/entradasSalidas/{entrada}", x => ObtenerEquiposEntradasSalidas(x));
-            Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusEquipo(x));
+            Get("/obtenerHistorialMantenimiento/{codEquipo}", x => ObtenerHistorialMantenimiento(x));
+            //Get("/actualizar-estatus/{codigo}/{activar}", x => ActualizarEstatusEquipo(x));
 
         }
 
+        private object ObtenerHistorialMantenimiento(dynamic x)
+        {
+            Result<List<Model.MantenimietoEquipo>> result = new Result<List<Models.Equipos.MantenimietoEquipo>>();
+            try
+            {
+                //int codTanque = x.codTanque == null ? 0 : x.codTanque;
+                int codEquipo = x.codEquipo == null ? 0 : x.codEquipo;
+                result = _DAEquipo.ObtenerHistorialMantenimiento(codEquipo);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
         private object GetConsumibleCombo()
         {
@@ -285,17 +303,22 @@ namespace C2HApiControlInterno.Modules
             return Response.AsJson(result);
         }
 
-        private object ActualizarEstatusEquipo(dynamic x)
+        private object ActualizarEstatusEquipo()
         {
 
             Result result = new Result();
 
             try
             {
-                int codigo = x.codigo;
-                bool activar = x.activar;
+                var codUsuario = this.BindUsuario().IdUsuario;
+                //int codigoEquipo = x.codigo;
+                //bool activar = x.activar;
+                //string prioridadOnKey = "";
 
-                result = _DAEquipo.ActualizarEstatusEquipo(codigo, activar);
+
+                var equipo = this.Bind<Model.RazonCambioEstatusEquiposModel>();
+
+                result = _DAEquipo.ActualizarEstatusEquipo(codUsuario, equipo);
             }
             catch (Exception ex)
             {
