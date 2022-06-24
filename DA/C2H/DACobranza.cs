@@ -93,7 +93,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<DatosNotaRemision>("ProcCobranzaNotasRemisionSurtiendoCon", parametros);
+                result = _conexion.ExecuteWithResults<DatosNotaRemision>("+", parametros);
             }
             catch (Exception ex)
             {
