@@ -27,6 +27,7 @@ namespace C2HApiControlInterno.Modules
 
             Post("guardar", _ => GuardarOperador());
 
+            Get("/viajes-operadores/toExcel/{operador}/{bombeable}/{fechaDesde}/{fechaHasta}", parametros => ObtenerViajesOperadoresExcel(parametros));
 
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
             Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajes(x));
@@ -70,6 +71,27 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DAOperador.ObtenerTiposOperadores();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+         private object ObtenerViajesOperadoresExcel(dynamic paremeters)
+        {
+            Result<List<ViajesOperadoresExcel>> result = new Result<List<ViajesOperadoresExcel>>();
+            try
+            {
+                string FechaDesde = paremeters.fechaDesde;
+                string FechaHasta = paremeters.fechaHasta;
+
+                string operador = paremeters.operador == "-" ? "" : paremeters.operador;
+                int bombeable = paremeters.bombeable == "-" ? "" : paremeters.bombeable;
+                //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
+
+                result = _DAOperador.ObtenerViajesOperadoresExcel(operador, bombeable, FechaDesde, FechaHasta);
             }
             catch (Exception ex)
             {

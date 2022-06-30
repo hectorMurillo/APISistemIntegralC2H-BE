@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarmPack.Classes;
 using WarmPack.Database;
+using System.Globalization;
 
 namespace DA.C2H
 {
@@ -18,6 +19,32 @@ namespace DA.C2H
         public DAOperador()
         {
             _conexion = new Conexion(ConexionType.MSSQLServer, Globales.ConexionPrincipal); 
+        }
+
+        public Result<List<ViajesOperadoresExcel>> ObtenerViajesOperadoresExcel(string operador, int bombeable, string fechaDesde, string fechaHasta)
+        {
+            Result<List<ViajesOperadoresExcel>> result = new Result<List<ViajesOperadoresExcel>>();
+            try
+            {
+                var desde = DateTime.ParseExact(fechaDesde, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                var hasta = DateTime.ParseExact(fechaHasta, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                //var hasta = Convert.ToDateTime(fechaHasta);
+                var parametros = new ConexionParameters(); 
+                parametros.Add("@pOperador", ConexionDbType.VarChar, operador);
+                parametros.Add("@pBombeable", ConexionDbType.Int, bombeable);
+
+                parametros.Add("@pFechaDesde", ConexionDbType.DateTime, desde);
+                parametros.Add("@pFechaHasta", ConexionDbType.DateTime, hasta);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<ViajesOperadoresExcel>("ProcViajesOperadoresConExcel", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
         }
 
         public Result<List<Operador>> ObtenerOperadores(int codOperador)

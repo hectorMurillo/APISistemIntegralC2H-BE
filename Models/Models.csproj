@@ -178,6 +178,7 @@
     <Compile Include="Operadores\OperadorModel.cs" />
     <Compile Include="Operadores\Viajes.cs" />
     <Compile Include="Operadores\ViajesDetalle.cs" />
+    <Compile Include="Operadores\ViajesOperadoresExcel.cs" />
     <Compile Include="Pedidos\DescuentoXClienteModel.cs" />
     <Compile Include="Pedidos\Pedido.cs" />
     <Compile Include="Pedidos\PedidoCierre.cs" />
