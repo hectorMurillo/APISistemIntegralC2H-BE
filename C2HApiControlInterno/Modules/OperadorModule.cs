@@ -27,12 +27,17 @@ namespace C2HApiControlInterno.Modules
 
             Post("guardar", _ => GuardarOperador());
 
+            Get("/viajes-operadores/toExcel/{operador}/{bombeable}/{fechaDesde}/{fechaHasta}", parametros => ObtenerViajesOperadoresExcel(parametros));
 
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
             Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajes(x));
+<<<<<<< HEAD
             Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}", x => ObtenerViajesOperador(x));
             Post("/cambiarTipoOperador/{codEmpleado}/{motivo}", x => CambiarTipoOperador(x));
         }
+=======
+            Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajesOperador(x));
+>>>>>>> e28f452131d02ac8fd6ad4bab31aa876b96601d7
 
         private object CambiarTipoOperador(dynamic x)
         {
@@ -87,6 +92,27 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 result = _DAOperador.ObtenerTiposOperadores();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+        
+         private object ObtenerViajesOperadoresExcel(dynamic paremeters)
+        {
+            Result<List<ViajesOperadoresExcel>> result = new Result<List<ViajesOperadoresExcel>>();
+            try
+            {
+                string FechaDesde = paremeters.fechaDesde;
+                string FechaHasta = paremeters.fechaHasta;
+
+                string operador = paremeters.operador == "-" ? "" : paremeters.operador;
+                int bombeable = paremeters.bombeable == "-" ? "" : paremeters.bombeable;
+                //public Result<List<NotaRemisionAuxiliarExcel>> ObtenerDatosNotaRemisionAExcel(int codVendedor, string cliente, string obra, DateTime fechaDesde, DateTime fechaHasta)
+
+                result = _DAOperador.ObtenerViajesOperadoresExcel(operador, bombeable, FechaDesde, FechaHasta);
             }
             catch (Exception ex)
             {
@@ -158,9 +184,10 @@ namespace C2HApiControlInterno.Modules
                 string operador = x.operador;
                 DateTime fechaDesde = x.fechaDesde;
                 DateTime fechaHasta = x.fechaHasta;
+                int bombeable = x.bombeable;
 
                 var r = new Result<List<ViajesDetalle>>();
-                r = _DAOperador.ObtenerViajesOperador(operador, fechaDesde, fechaHasta);
+                r = _DAOperador.ObtenerViajesOperador(operador, fechaDesde, fechaHasta, bombeable);
                 result.Data = r.Data;
                 result.Value = r.Value;
                 result.Message = r.Message;

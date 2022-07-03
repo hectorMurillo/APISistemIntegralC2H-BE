@@ -9,7 +9,7 @@ namespace Models.Operadores
     public class Viajes
     {
         public string Operador { get; set; }
-        public int TotalMetros { get; set; }
+        public decimal TotalMetros { get; set; }
         public int Bombeable { get; set; }
         public int TotalViajes { get; set; }
         public int TotalForaneos { get; set; }
