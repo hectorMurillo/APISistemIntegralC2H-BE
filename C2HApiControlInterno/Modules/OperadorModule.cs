@@ -32,10 +32,18 @@ namespace C2HApiControlInterno.Modules
             Get("/todos/auxiliar/", _ => ObtenerOperadoresAUXILIAR());
             Post("/obtener-viajes/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajes(x));
 
+<<<<<<< HEAD
 
             Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajesOperador(x));
             Post("/cambiarTipoOperador/{codEmpleado}/{motivo}", x => CambiarTipoOperador(x));
         }
+=======
+            Post("/obtener-viajes-operador/{fechaDesde}/{fechaHasta}/{operador}/{bombeable}", x => ObtenerViajesOperador(x));
+            Post("/cambiarTipoOperador/{codEmpleado}/{motivo}", x => CambiarTipoOperador(x));
+        }
+            
+
+>>>>>>> b46a314da797d736c3c1df02737758e501283998
 
         private object CambiarTipoOperador(dynamic x)
         {
