@@ -242,19 +242,14 @@ namespace C2HApiControlInterno.Modules
                 //Si no se ha logeado marcará error aqui
                 int codEmpleado = x.codEmpleado == null ? 0 : x.codEmpleado;
                 var codUsuario = this.BindUsuario().IdUsuario;
-                if (codEmpleado > 0)
-                {
-                    var r = _DAempleado.ObtenerEmpleado(codEmpleado);
-                    //result.Data = r.Data.ElementAtOrDefault(0);
+                
+                    var r = _DAempleado.ObtenerEmpleado(codEmpleado,codUsuario);
+                
                     result.Data = r.Data;
                     result.Message = r.Message;
                     result.Value = r.Value;
-                }
-                else
-                {
-                    this.GetTodos();
-                    //return 0;
-                }
+                
+                 
 
             }
             catch (Exception ex)

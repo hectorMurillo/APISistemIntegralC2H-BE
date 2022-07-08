@@ -26,6 +26,55 @@ namespace DA.C2H
 
         }
 
+        public Result PlantaObraDistanciaGuardar(Model.plantaObraDatos dis)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodPlanta", ConexionDbType.Int, dis.CodPlanta);
+                parametros.Add("@pDistancia", ConexionDbType.Decimal, dis.Distancia);
+                parametros.Add("@pTiempo", ConexionDbType.Decimal, dis.Tiempo);
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.Execute("ProcObraPlantaDistanciaTiempoGuardar", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public Result ObtenerPlantas()
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                _conexion.RecordsetsExecute("ProcCatPlantasCon", parametros);
+
+                var planta = _conexion.RecordsetsResults<Models.Clientes.PlantasDatos>();
+
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { planta }
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result<List<DireccionesXClientesModel>> consultaDireccion(int codDireccion)
         {
             Result<List<Model.DireccionesXClientesModel>> result = new Result<List<Model.DireccionesXClientesModel>>();
@@ -50,6 +99,38 @@ namespace DA.C2H
                 return result;
             }
         }
+
+
+        public Result<List<ClienteModel2>> ConsultaClienteXNombre(int codUsuario, string nombreCliente)
+        {
+
+            Result <List<ClienteModel2>> result = new Result<List<ClienteModel2>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pNombreCliente", ConexionDbType.VarChar, nombreCliente);
+                parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                
+                result = _conexion.ExecuteWithResults<ClienteModel2>("ProcCatClientePorNombre", parametros);
+                
+            }
+            catch (Exception ex)
+            {
+                result.Value = false;
+                result.Data = null;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+
+
+
+
 
         public Result ConsultaClientes(int codUsuario, int codCliente)
         {

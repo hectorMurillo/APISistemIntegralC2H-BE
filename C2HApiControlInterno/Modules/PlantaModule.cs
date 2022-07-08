@@ -21,6 +21,26 @@ namespace C2HApiControlInterno.Modules
 
             Get("/ubicacion/{codPlanta}", x => GetUbicacion(x));
             Get("/{codPlanta}", x => GetPlanta(x));
+            Get("/distanciaTiempoPorObra/{codPlanta}/{codObra}", x => GetDistanciaTiempo(x));
+        }
+
+        private object GetDistanciaTiempo(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                int codPlanta = x.codPlanta == null ? 0 : x.codPlanta;
+                int codObra = x.codObra == null ? 0 : x.codObra;
+                var r = _DAPlanta.consultaDistanciaTiempo(codPlanta, codObra);
+                result.Data = r.Data;
+                result.Message = r.Message;
+                result.Value = r.Value;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetPlanta(dynamic x)

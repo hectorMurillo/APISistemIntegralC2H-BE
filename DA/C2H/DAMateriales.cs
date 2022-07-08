@@ -133,6 +133,29 @@ namespace DA.C2H
             }
             return result;
         }
+        
+
+        public Result GuardarProductosAgregados(int codigo, decimal cantidad,  int indicador)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodigo", ConexionDbType.Int, codigo);
+                parametros.Add("@pCantidad", ConexionDbType.Decimal, cantidad);
+                parametros.Add("@pIndicador", ConexionDbType.Int, indicador); 
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.Execute("ProcGuardarProductosAgregados", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public Result GuardarTMA(Model.TMA tma)
         {
             Result result = new Result();
@@ -153,6 +176,26 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<Model.ProductosAgregadosModel>> ObtenerProductosAgregados()
+        {
+            Result<List<Model.ProductosAgregadosModel>> result = new Result<List<Model.ProductosAgregadosModel>>();
+            try
+            {
+                var parametros = new ConexionParameters();
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output,300);
+
+                result = _conexion.ExecuteWithResults<Model.ProductosAgregadosModel>("ProcObtenerProductosAgregados", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
 
         public Result<List<Model.TipoConcreto>> consultaTipoConcreto(int codTipoConcreto)
         {

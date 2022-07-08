@@ -28,7 +28,7 @@ namespace C2HApiControlInterno.Modules
             Get("/cancelar-cierres/{folioPedido}/{idCatPedidosCierres}", x => CancelarCierres(x));
             Get("/pedidos-detenidos/{folioPedido}", x => PedidosDetenidos(x));
             Get("/autorizar-pedido-detenido/{folioPedido}/{autorizado}/{observacion}", x => AutorizarPedidoDetenido(x));
-            Get("/cambiar-estatus/{folioPedido}/{confirmado}/{motivo}", x => CambiarEstatusPedido(x));
+            Get("/cambiar-estatus/{folioPedido}/{confirmado}", x => CambiarEstatusPedido(x));
             Get("/cambiar-status/{folioPedido}/{estatus}/{motivo}", x => CambiarEstatus(x));
             Post("/reagendar-pedido/", _ => ReagendarPedido());
 

@@ -26,6 +26,23 @@ namespace C2HApiControlInterno.Modules
             Post("/tma/guardar", _ => PostTMA());
             Get("/especificaciones/todos", _ => GetEspecificacionesConcreto());
             Get("/tipoObra/todos", _ => GetTipoObras());
+
+            Get("/productos/agregados", _ => GetProductosAgregados());
+            Post("/productos-agregados-guardar", _ => PostProductosAgregados());
+        }
+
+        private object GetProductosAgregados()
+        {
+            Result<List<Model.ProductosAgregadosModel>> result = new Result<List<Model.ProductosAgregadosModel>>();
+            try
+            {
+                result = _DAMateriales.ObtenerProductosAgregados();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object GetTipoObras()
@@ -49,6 +66,25 @@ namespace C2HApiControlInterno.Modules
             {
                 var tma = this.Bind<Model.TMA>();
                 result = _DAMateriales.GuardarTMA(tma);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+        private object PostProductosAgregados()
+        {
+            Result result = new Result();
+            try
+            {
+                var p = this.BindModel();
+                int codUsuario = this.BindUsuario().IdUsuario;
+                int codigo = p.idProducto;
+                decimal cantidad = p.cantidad;
+                int indicador = p.indicador;
+                result = _DAMateriales.GuardarProductosAgregados(codigo, cantidad, indicador);
             }
             catch (Exception ex)
             {

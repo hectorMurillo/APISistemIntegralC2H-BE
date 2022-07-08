@@ -48,13 +48,13 @@ namespace DA.C2H
             return result;
         }
          
-        public Result CambiarContrasena(Model.UsuarioModel usuario)
+        public Result CambiarContrasena(Model.UsuarioModel usuario, int codUsuario)
         {
             Result result = new Result();
             try
             {
                 var parametros = new ConexionParameters();
-                parametros.Add("@pIdUsuario", ConexionDbType.Int, usuario.IdUsuario);
+                parametros.Add("@pIdUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pContrasena", ConexionDbType.VarChar, usuario.Contrasena);
                 parametros.Add("@pCotrasenaNueva", ConexionDbType.VarChar, usuario.ConfirmarContrasena);
 

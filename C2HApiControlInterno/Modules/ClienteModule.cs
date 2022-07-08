@@ -10,8 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using WarmPack.Classes;
-using Model = Models.Clientes;
-
+using Model = Models.Clientes; 
+using System.Net;
+using System.Text;
 
 namespace C2HApiControlInterno.Modules
 {
@@ -27,6 +28,7 @@ namespace C2HApiControlInterno.Modules
             Get("/todos", _ => GetTodos());
             Get("/clientes-combo", _ => GetClientesCombo());
             Get("/{codCliente}", x => GetCliente(x));
+            Get("/porNombre/{nombre}", x => GetClientePorNombre(x));
             Get("/sugerenciaUsuario/{codCliente}", x => GetSugerenciaUsuario(x));
             Get("/obtenerUsuarioCliente/{codCliente}", x => GetUsuario(x));
             Get("/direccion/{codDireccion}", x => GetDireccion(x));
@@ -56,20 +58,100 @@ namespace C2HApiControlInterno.Modules
             Get("/tipos-lista-precios", _ => ObtenerTiposListaPrecios());
 
             Get("/historial-cliente/{codCliente}/{fechaDesde}/{fechaHasta}", x => ObtenerHistorialCliente(x));
-
-
-
-            Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x));
-
-
-
+             
+            Get("/obtener-clientes/{codCliente}", x => ObtenerClientes(x)); 
+            Get("/CalcularDistancia/{origen}/{destino}", x => ObtenerDiscanciaObraPlanta(x));
+            Get("/ObtenerPlantas", _ => ObtenerPlantas());
+            Post("/GuardarPlantaObraDistanciaTiempo", _ => postPlantaObraDistanciaTiempo());
 
             //AUXILIAR
             Get("/clientes-agente-auxiliar/{codAgente}", x => ObtenerClientesAgenteAUXILIAR(x));
+          
+        }
 
+        private object postPlantaObraDistanciaTiempo()
+        {
+            Result result = new Result();
+            try
+            {
+                var dis = this.Bind<Model.plantaObraDatos>();
+                result = _DAClientes.PlantaObraDistanciaGuardar(dis);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
+        private object ObtenerPlantas()
+        {
+            Result result = new Result();
+            try
+            {
+                result = _DAClientes.ObtenerPlantas();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
+        private object ObtenerDiscanciaObraPlanta(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                string origen = x.origen;
+                string destino = x.destino;
+                // string url = "https://pokeapi.co/api/v2/pokemon/1";
+                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origen + "&destinations=" + destino + "&mode=driving&units=metric&language=en&avoid=&key=AIzaSyAbG_eyVgmdfq7xuPTvidPbj36Vf-Tfjnk";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //WebResponse myResp = request.GetResponse();
+                //string contenido = File.ReadAllText("https://pokeapi.co/api/v2/pokemon/1");
+                return readStream.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
+        private object GetClientePorNombre(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                //Si no se ha logeado marcará error aqui
+                string nombreCliente = x.nombre == null ? 0 : x.nombre;
+                var codUsuario = this.BindUsuario().IdUsuario;
+                if (nombreCliente.Length >= 3)
+                {
+                    var r = _DAClientes.ConsultaClienteXNombre(codUsuario, nombreCliente);
+                    //result.Data = r.Data.ElementAtOrDefault(0);
+                    result.Data = r.Data;
+                    result.Message = r.Message;
+                    result.Value = r.Value;
+                }
+                else
+                {
+                    result.Data = null;
+                    result.Message = "Se requiere por lo menos 3 caracteres ";
+                    result.Value = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
         }
 
         private object EliminarDocumentoCte(dynamic x)
@@ -321,6 +403,8 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var direccion = this.Bind<Model.DireccionesXClientesModel>();
+                //var direccion = JsonConvert.DeserializeObject<Model.DireccionesXClientesModel>((Request.Form["direccion"]));
+
                 result = _DAClientes.DireccionesGuardar(direccion);
             }
             catch (Exception ex)

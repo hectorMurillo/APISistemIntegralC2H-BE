@@ -43,5 +43,25 @@ namespace DA.C2H
             }
             return result;
         }
+
+        public Result<List<Model.DistanciaTiempoPlanta>> consultaDistanciaTiempo(int codPlanta, int codObra)
+        {
+            Result<List<Model.DistanciaTiempoPlanta>> result = new Result<List<Model.DistanciaTiempoPlanta>>();
+            //object result1 = new object();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodPlanta", ConexionDbType.Int, codPlanta);
+                parametros.Add("@pCodObra", ConexionDbType.Int,  codObra);
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+                result = _conexion.ExecuteWithResults<Model.DistanciaTiempoPlanta>("ProcDistanciaTiempoDePlantaAObraCon", parametros);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

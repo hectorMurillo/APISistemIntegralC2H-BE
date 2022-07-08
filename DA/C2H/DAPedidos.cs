@@ -208,7 +208,7 @@ namespace DA.C2H
                 var parametros = new ConexionParameters();
                 parametros.Add("@pFolioPedido", ConexionDbType.Int, folio);
                 parametros.Add("@pConfirmado", ConexionDbType.Bit, confirmado);
-                parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
+                //parametros.Add("@pMotivo", ConexionDbType.VarChar, motivo);
                 parametros.Add("@pCodUsuario", ConexionDbType.Int, codUsuario);
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
