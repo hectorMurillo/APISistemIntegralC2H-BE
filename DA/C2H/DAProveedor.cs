@@ -20,7 +20,6 @@ namespace DA.C2H
         }
 
 
-
         public Result ConsultaProveedores(int codUsuario, int codProveedor)
         {
             Result result = new Result();
@@ -36,15 +35,71 @@ namespace DA.C2H
                 _conexion.RecordsetsExecute("ProcCatProveedoresCon", parametros);
 
                 var proveedor = _conexion.RecordsetsResults<Models.Proveedores.ProveedorModel>();
-                //var direccionesXCliente = _conexion.RecordsetsResults<Models.Clientes.DireccionesXClientesModel>();
-                //var contactosXCliente = _conexion.RecordsetsResults<Models.Clientes.ContactoXClienteModel>();
-
+              
                 return new Result()
                 {
                     Value = parametros.Value("@pResultado").ToBoolean(),
                     Message = parametros.Value("@pMsg").ToString(),
                     Data = new { proveedor/*, direccionesXCliente, contactosXCliente */}
                 };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+
+        public Result ConsultaProductosProveedor(int codUsuario, int codProducto)
+        {
+            Result result = new Result();
+            try
+            {
+                var parametros = new ConexionParameters();
+                parametros.Add("@pCodProducto", ConexionDbType.Int, codProducto);
+                parametros.Add("@pCodUsuario", ConexionDbType.VarChar, codUsuario);
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+               _conexion.RecordsetsExecute("ProcCatProductosProveedoresCon", parametros);
+
+                var proveedor = _conexion.RecordsetsResults<Models.Proveedores.ProductoXProveedor>();
+               
+                return new Result()
+                {
+                    Value = parametros.Value("@pResultado").ToBoolean(),
+                    Message = parametros.Value("@pMsg").ToString(),
+                    Data = new { proveedor/*, direccionesXCliente, contactosXCliente */}
+                };
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+        
+
+          public Result<List<int>> ProductoGuardar(Model.ProductoXProveedor Producto)
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var parametros = new ConexionParameters(); 
+                parametros.Add("@pCodigo", ConexionDbType.Int, Producto.Codigo);
+                parametros.Add("@pTipo", ConexionDbType.VarChar, Producto.Tipo);
+                parametros.Add("@pCodProveedor", ConexionDbType.Int, Producto.CodProveedor); 
+                parametros.Add("@pDescripcion", ConexionDbType.VarChar, Producto.Descripcion);
+                parametros.Add("@pCosto", ConexionDbType.Decimal, Producto.Costo);
+                parametros.Add("@pInventario", ConexionDbType.Bit, Producto.Inventario); 
+
+
+                parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
+                parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
+
+                result = _conexion.ExecuteWithResults<int>("ProcCatProductoProveedorGuardar", parametros);
             }
             catch (Exception ex)
             {

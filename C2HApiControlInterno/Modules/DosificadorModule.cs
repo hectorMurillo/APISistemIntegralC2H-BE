@@ -375,12 +375,9 @@ namespace C2HApiControlInterno.Modules
                     reporte.SetParameterValue("@usuario", nota.NombreUsuario);
                     reporte.SetParameterValue("@imper", nota.Imper);
                     reporte.SetParameterValue("@fibra", nota.Fibra);
-                    reporte.SetParameterValue("@esMaquilado", nota.Maquilado);
-<<<<<<< HEAD
-                    reporte.SetParameterValue("@garantia", nota.SelloGarantiaFormato);
-=======
-                    reporte.SetParameterValue("@foraneo", nota.Foraneo);
->>>>>>> Fase-1-Coki
+                    reporte.SetParameterValue("@esMaquilado", nota.Maquilado); 
+                    reporte.SetParameterValue("@garantia", nota.SelloGarantiaFormato); 
+                    reporte.SetParameterValue("@foraneo", nota.Foraneo); 
                     reporte.SetParameterValue("@cancelado", cancelado);
                     reporte.SetParameterValue("@fecha", nota.Fecha);
                     reporte.SetParameterValue("@horaSalidaPlanta", nota.HoraSalidaPlanta);

@@ -26,6 +26,12 @@ namespace C2HApiControlInterno.Modules
             Get("/{CodProveedor}", x => GetProveedor(x));
             Post("/guardar", _ => PostProveedor());
             Post("/desactivar", _ => DesactivarProveedor());
+
+            //P R O D U C T O S
+            Post("/producto/guardar", _ => ProductoGuardar());
+            Get("/producto-consultar/{codProducto}", x => GetProductosProveedor(x));
+
+
         }
 
             private object GetTodos()
@@ -48,7 +54,31 @@ namespace C2HApiControlInterno.Modules
 
             }
 
-            private object GetProveedor(dynamic x)
+        private object GetProductosProveedor(dynamic x)
+        {
+            Result result = new Result();
+            try
+            {
+                //Si no se ha logeado marcará error aqui
+                int codProducto = x.codProducto == null ? 0 : x.codProducto;
+                var codUsuario = this.BindUsuario().IdUsuario;
+               
+                    var r = _DAProveedores.ConsultaProductosProveedor(codUsuario, codProducto);
+
+                    result.Data = r.Data;
+                    result.Message = r.Message;
+                    result.Value = r.Value;
+                 
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
+
+
+        private object GetProveedor(dynamic x)
             {
                 Result result = new Result();
                 try
@@ -77,7 +107,22 @@ namespace C2HApiControlInterno.Modules
                 }
                 return Response.AsJson(result);
             }
+        
 
+          private object ProductoGuardar()
+        {
+            Result<List<int>> result = new Result<List<int>>();
+            try
+            {
+                var Producto = this.Bind<Model.ProductoXProveedor>();
+                result = _DAProveedores.ProductoGuardar(Producto);
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return Response.AsJson(result);
+        }
 
 
         private object PostProveedor()
