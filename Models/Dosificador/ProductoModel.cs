@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Dosificador
 {
-    public class FormulaModel
+    public class ProductoModel
     {
         public int Codigo { get; set; }
         public string Nomenclatura { get; set; }
@@ -20,5 +20,7 @@ namespace Models.Dosificador
         public string Adicionantes { get; set; }
         public bool Fibra { get; set; }
         public bool Imper { get; set; }
+        public int CodUnidadMedida { get; set; }
+        public string UnidadMedida { get; set; }
     }
 }

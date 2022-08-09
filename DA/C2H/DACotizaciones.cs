@@ -45,7 +45,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarCotizacion(CotizacionModel cotizacion, int codUsuario)
+        public Result GuardarCotizacion(CotizacionModelEnc cotizacion, int codUsuario)
         {
             Result result = new Result();
 

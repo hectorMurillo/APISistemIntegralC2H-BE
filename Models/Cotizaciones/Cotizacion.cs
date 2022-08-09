@@ -32,6 +32,7 @@ namespace Models.Cotizaciones
         //public decimal CantidadCierre { get; set; }
         //public string FechaFormato { get; set; }
         public string Estatus { get; set; }
+        public string EstatusCorto { get; set; }
         //public bool TieneCierres { get; set; }
         public int CodProducto { get; set; }
         public string Nomenclatura { get; set; }

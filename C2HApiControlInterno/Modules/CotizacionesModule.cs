@@ -27,6 +27,7 @@ namespace C2HApiControlInterno.Modules
 
             _DACotizaciones = new DACotizaciones();
             Get("/obtener-cotizaciones/{cotizacion}/{fechaDesde}/{fechaHasta}", x => ObtenerCotizaciones(x));
+            Get("/obtener-cotizaciones-detallado/{cotizacion}",x => ObtenerCotizaciones(x));
             Post("/guardar", x => GuardarCotizacion(x));
             Get("/obtener-cotizacion/pdf/{folioCotizacion}", parametros => ImprimirCotizacion(parametros));
             Get("/obtener-productos/{folioCotizacion}", parametros => ObtenerProductosCotizacion(parametros));
@@ -61,7 +62,7 @@ namespace C2HApiControlInterno.Modules
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var usuario = this.BindUsuario().Nombre;
-                var cotizaciones = this.Bind<CotizacionModel>();
+                var cotizaciones = this.Bind<CotizacionModelEnc>();
                 result = _DACotizaciones.GuardarCotizacion(cotizaciones, codUsuario);
             }
             catch (Exception ex)
@@ -88,6 +89,9 @@ namespace C2HApiControlInterno.Modules
                     var cliente = productosCotizacion.Data[0].Cliente.ToUpper();
                     var fechaCotizacion = productosCotizacion.Data[0].FechaCotizacion;
                     var totalCotizacion = productosCotizacion.Data[0].TotalCotizacion;
+                    var vendedor = productosCotizacion.Data[0].Vendedor;
+                    var telefono = productosCotizacion.Data[0].Celular;
+                    var correo = productosCotizacion.Data[0].Correo;
 
                     var pathdirectorio = Globales.FolderPDF;
 
@@ -103,9 +107,13 @@ namespace C2HApiControlInterno.Modules
                     ReportDocument reporte = new ReportDocument();
                     reporte.Load(path + "\\reportes\\RptCotizacion.rpt");
                     reporte.SetDataSource(productosCotizacion.Data);
+                    reporte.SetParameterValue("@pFolio", folioCotizacion);
                     reporte.SetParameterValue("@pCliente", cliente);
                     reporte.SetParameterValue("@pFecha", fechaCotizacion);
                     reporte.SetParameterValue("@pTotalCotizacion", totalCotizacion);
+                    reporte.SetParameterValue("@pVendedor", vendedor);
+                    reporte.SetParameterValue("@pTelefono", telefono);
+                    reporte.SetParameterValue("@pCorreo", correo);
 
 
                     //reporte.setdatasource();

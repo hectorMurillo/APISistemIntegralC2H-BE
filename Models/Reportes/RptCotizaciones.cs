@@ -10,6 +10,8 @@ namespace Models.Reportes
     {
         public int Codigo { get; set; }
         public decimal Cantidad { get; set; }
+        //public decimal PrecioUnitario { get; set; }
+        //public decimal PrecioTotal { get; set; }
         public decimal Precio { get; set; }
         public decimal PorcentajeCotizacion { get; set; }
         public string Nomenclatura { get; set; }
@@ -17,5 +19,17 @@ namespace Models.Reportes
         public string Cliente { get; set; }
         public DateTime FechaCotizacion { get; set; }
         public decimal TotalCotizacion { get; set; }
+        public int Folio { get; set; }
+        public string Vendedor { get; set; }
+        public string Celular { get; set; }
+        public string Correo { get; set; }
+        public string UnidadMedida { get; set; }
+        public string PrecioFormato
+        {
+            get
+            {
+                return string.Format("{0:C}", Precio);
+            }
+        }
     }
 }

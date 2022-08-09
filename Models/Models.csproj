@@ -123,7 +123,7 @@
     <Compile Include="Configuracion\FuncionModel.cs" />
     <Compile Include="Contactos\PuestosContactosModel.cs" />
     <Compile Include="Cotizaciones\Cotizacion.cs" />
-    <Compile Include="Cotizaciones\CotizacionModel.cs" />
+    <Compile Include="Cotizaciones\CotizacionModelEnc.cs" />
     <Compile Include="Cotizaciones\ProductoCotizadoModel.cs" />
     <Compile Include="Cuentas\BancoXCuenta.cs" />
     <Compile Include="Cuentas\CuentaModel.cs" />
@@ -132,7 +132,7 @@
     <Compile Include="Dosificador\DatosNotaRemision.cs" />
     <Compile Include="Dosificador\EquipoNomCortoModel.cs" />
     <Compile Include="Dosificador\FirmaNotaRemisionModel.cs" />
-    <Compile Include="Dosificador\FormulaModel.cs" />
+    <Compile Include="Dosificador\ProductoModel.cs" />
     <Compile Include="Dosificador\NotaRemisionAuxiliarExcel.cs" />
     <Compile Include="Dosificador\NotaRemisionAuxiliarModel.cs" />
     <Compile Include="Dosificador\NotaRemisionEncModel.cs" />

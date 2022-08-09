@@ -12,6 +12,7 @@ namespace Models.Cotizaciones
         public int CodProducto { get; set; }
         public bool TieneDescuento { get; set; }
         public decimal PorcentajeDescuento { get; set; }
-
+        public decimal PrecioUnitario { get; set; }
+        public decimal PrecioTotal { get; set; }
     }
 }

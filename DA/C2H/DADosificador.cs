@@ -362,9 +362,9 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<FormulaModel>> ObtenerProductos(string producto)
+        public Result<List<ProductoModel>> ObtenerProductos(string producto)
         {
-            Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
+            Result<List<ProductoModel>> result = new Result<List<ProductoModel>>();
             try
             {
                 var parametros = new ConexionParameters();
@@ -372,7 +372,7 @@ namespace DA.C2H
                 parametros.Add("@pResultado", ConexionDbType.Bit, System.Data.ParameterDirection.Output);
                 parametros.Add("@pMsg", ConexionDbType.VarChar, System.Data.ParameterDirection.Output, 300);
 
-                result = _conexion.ExecuteWithResults<FormulaModel>("ProcCatProductosCon", parametros);
+                result = _conexion.ExecuteWithResults<ProductoModel>("ProcCatProductosCon", parametros);
             }
             catch (Exception ex)
             {
@@ -652,7 +652,7 @@ namespace DA.C2H
         }
 
         
-        public Result GuardarProducto(FormulaModel producto, int codUsuario)
+        public Result GuardarProducto(ProductoModel producto, int codUsuario)
         {
             Result result = new Result();
             try
@@ -680,7 +680,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result<List<int>> GuardarFormula(FormulaModel formula)
+        public Result<List<int>> GuardarFormula(ProductoModel formula)
         {
             Result<List<int>> result = new Result<List<int>>();
             try
@@ -807,7 +807,7 @@ namespace DA.C2H
             return result;
         }
 
-        public Result GuardarProductosFormula(List<FormulaModel> excelCargado,Boolean modificarDatos)
+        public Result GuardarProductosFormula(List<ProductoModel> excelCargado,Boolean modificarDatos)
         {
             Result r = new Result();
             String productos = excelCargado.ToXml("Formula");

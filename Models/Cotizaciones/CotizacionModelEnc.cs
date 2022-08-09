@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Cotizaciones
 {
-    public class CotizacionModel
+    public class CotizacionModelEnc
     {
         public int FolioCotizacion { get; set; }
         public int CodCliente { get; set; }

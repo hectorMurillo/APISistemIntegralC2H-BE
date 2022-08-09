@@ -436,13 +436,13 @@ namespace C2HApiControlInterno.Modules
             try
             {
                 var parametro = this.BindModel();
-                var lstFormulas = new List<FormulaModel>();
+                var lstFormulas = new List<ProductoModel>();
                 bool modificarDatos = parametro.modificarDatos;
                 var productos = parametro.productos;
 
                 foreach (var element in productos)
                 {
-                    FormulaModel producto = new FormulaModel();
+                    ProductoModel producto = new ProductoModel();
                     producto.Nomenclatura = element.Nomenclatura;
                     producto.Descripcion = element.Descripcion;
                     producto.Edad = element.Edad;
@@ -548,7 +548,7 @@ namespace C2HApiControlInterno.Modules
             Result<List<int>> result = new Result<List<int>>();
             try
             {
-                var formula = this.Bind<FormulaModel>();
+                var formula = this.Bind<ProductoModel>();
                 result = _DADosificador.GuardarFormula(formula);
             }
             catch (Exception ex)
@@ -566,7 +566,7 @@ namespace C2HApiControlInterno.Modules
             {
                 var codUsuario = this.BindUsuario().IdUsuario;
                 var usuario = this.BindUsuario().Nombre;
-                var producto = this.Bind<FormulaModel>();
+                var producto = this.Bind<ProductoModel>();
                 result = _DADosificador.GuardarProducto(producto, codUsuario);
             }
             catch (Exception ex)
@@ -703,7 +703,7 @@ namespace C2HApiControlInterno.Modules
 
         private object Productos(dynamic parametros)
         {
-            Result<List<FormulaModel>> result = new Result<List<FormulaModel>>();
+            Result<List<ProductoModel>> result = new Result<List<ProductoModel>>();
             try
             {
                 string producto = parametros.codigo;
